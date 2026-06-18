@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ข้อมูลสถาบัน DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #F0B74C;
+    --dark: #15130F;
+    --cream: #FAF7F1;
+    --gold-dark: #B8860B;
+    --gold-light: #FBEFD6;
+    --border: #E4DECF;
+    --muted: #A39B8C;
+    --text-body: #48433A;
+    --text-sub: #6B6459;
+  }
+
+  html, body {
+    height: 100%;
+    min-height: 100dvh;
+    background: #E7E2D7;
+    font-family: 'LINE Seed Sans TH', system-ui, -apple-system, sans-serif;
+    color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+  }
+
+  /* Mobile wrapper */
+  .app-shell {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100dvh;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ---- Views ---- */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ---- Cover ---- */
+  .cover {
+    position: relative;
+    height: 220px;
+    background: linear-gradient(135deg, #F0B74C 0%, #E0A02F 40%, #C8821A 100%);
+    overflow: hidden;
+  }
+
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(21,19,15,.22) 0%, transparent 50%);
+  }
+
+  .cover-statusbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 22px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .cover-statusbar .icons {
+    display: flex;
+    gap: 7px;
+    font-size: 15px;
+  }
+
+  .cover-back {
+    position: absolute;
+    top: 52px;
+    left: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.18);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark);
+    border: none;
+    cursor: pointer;
+  }
+
+  /* ---- Content ---- */
+  .content {
+    padding: 20px 24px 36px;
+  }
+
+  /* ---- Badges ---- */
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 7px 12px;
+    border-radius: 100px;
+  }
+
+  .badge-dark { background: var(--dark); color: var(--gold); }
+  .badge-gold { background: var(--gold-light); color: var(--gold-dark); }
+
+  /* ---- Section heading ---- */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 13px;
+  }
+
+  .sec-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--dark);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ---- Instructor cards ---- */
+  .instructor-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  .instructor-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold-dark);
+  }
+
+  /* ---- Format cards ---- */
+  .format-card {
+    background: var(--dark);
+    border-radius: 18px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .format-card:active { transform: scale(.97); }
+
+  .format-card-glow {
+    position: absolute;
+    top: -50px; right: -40px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,183,76,.18), transparent 70%);
+    pointer-events: none;
+  }
+
+  .format-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .format-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    background: rgba(240,183,76,.16);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .format-card-title {
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--cream);
+  }
+
+  .format-card-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .format-card-chevron {
+    margin-left: auto;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* Featured card slightly bigger */
+  .format-card-featured {
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 12px 26px -20px rgba(0,0,0,.3);
+  }
+
+  .format-card-featured .format-card-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+  }
+
+  .format-card-featured .format-card-title { font-size: 16px; }
+  .format-card-featured .format-card-sub { font-size: 12.5px; }
+
+  /* ---- Primary button ---- */
+  .pbtn {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 800;
+    font-size: 16px;
+    padding: 16px;
+    border-radius: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    box-shadow: 0 12px 24px -12px rgba(240,183,76,.9);
+    transition: background .15s;
+  }
+
+  .pbtn:hover { background: #E0A02F; }
+  .pbtn:active { background: #C8821A; }
+
+  /* ---- Contact ---- */
+  .contact-links {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 14px;
+    transition: opacity .15s;
+  }
+
+  .contact-link:hover { opacity: .8; }
+  .contact-link-fb { font-size: 21px; }
+  .contact-link-ig { font-size: 17px; }
+  .contact-link-tk { font-size: 13px; }
+  .contact-link-ln { font-size: 14px; }
+
+  /* ---- SVG icon helper ---- */
+  .ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ic svg {
+    width: 1em;
+    height: 1em;
+    stroke-width: 1.75;
+    display: block;
+  }
+
+  /* ---- Desktop centering chrome ---- */
+  @media (min-width: 431px) {
+    body { padding: 32px 16px; }
+    .app-shell {
+      border-radius: 42px;
+      box-shadow: 0 40px 80px -30px rgba(0,0,0,.45);
+      min-height: unset;
+    }
+  }
+
+  /* ---- Class Detail View ---- */
+  .view2-header {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+    padding: 0 28px 28px;
+    min-height: 260px;
+  }
+
+  .view2-glow {
+    position: absolute;
+    top: -70px; right: -50px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,183,76,.18), transparent 68%);
+    pointer-events: none;
+  }
+
+  .view2-statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cream);
+    position: relative;
+  }
+
+  .view2-statusbar .icons {
+    display: flex;
+    gap: 7px;
+    font-size: 15px;
+  }
+
+  .view2-content {
+    padding: 18px 28px 36px;
+    background: var(--cream);
+  }
+
+  .lock-card {
+    background: #1C1A15;
+    border: 1px solid #3A352D;
+    border-radius: 20px;
+    padding: 22px;
+    text-align: center;
+  }
+
+  .lock-icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: #221F19;
+    border: 1px solid #3A352D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: var(--gold);
+  }
+
+  .code-input-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .code-field {
+    flex: 1;
+    background: var(--dark);
+    border: 1.5px solid #3A352D;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .code-submit {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    background: #2E2A23;
+    color: var(--cream);
+    font-weight: 800;
+    font-size: 14px;
+    padding: 0 18px;
+    border-radius: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ===== VIEW 1: School Info ===== -->
+  <div id="view-school" class="view active">
+    <!-- Cover image -->
+    <div class="cover">
+      <img src="assets/cover.jpg" alt="DogBooster"
+           onerror="this.style.display='none'">
+      <div class="cover-overlay"></div>
+      <div class="cover-statusbar">
+        <span>9:41</span>
+        <div class="icons">
+          <span class="ic" style="font-size:15px"><i data-lucide="signal"></i></span>
+          <span class="ic" style="font-size:15px"><i data-lucide="wifi"></i></span>
+          <span class="ic" style="font-size:15px"><i data-lucide="battery-full"></i></span>
+        </div>
+      </div>
+      <button class="cover-back" onclick="history.back()" aria-label="ย้อนกลับ">
+        <span class="ic" style="font-size:19px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <!-- School logo overlay -->
+      <div style="position:absolute;bottom:16px;left:22px;display:flex;align-items:center;gap:12px">
+        <div style="width:52px;height:52px;border-radius:14px;background:#fff;padding:4px;box-shadow:0 4px 16px rgba(0,0,0,.25);overflow:hidden;flex-shrink:0">
+          <img src="assets/logo.png" alt="DogBooster Logo" style="width:100%;height:100%;object-fit:contain;display:block">
+        </div>
+        <div>
+          <div style="font-weight:800;font-size:17px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5)">DogBooster</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.85);font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.4)">สถาบันฝึกสุนัข</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body content -->
+    <div class="content">
+
+      <!-- Badges -->
+      <div class="badges">
+        <span class="badge badge-dark">
+          <span class="ic" style="font-size:13px"><i data-lucide="heart-handshake"></i></span>
+          Force-Free 100%
+        </span>
+        <span class="badge badge-gold">
+          <span class="ic" style="font-size:13px"><i data-lucide="award"></i></span>
+          ประสบการณ์ 30 ปี
+        </span>
+      </div>
+
+      <!-- About -->
+      <h2 style="font-size:25px;font-weight:800;letter-spacing:-.01em;margin-top:16px">เกี่ยวกับสถาบัน</h2>
+      <p style="font-size:14.5px;color:var(--text-body);line-height:1.7;margin-top:10px">
+        DogBooster ผสมผสานประสบการณ์การฝึกกว่า 30 ปี เข้ากับหลักการ Force-free ระดับโลก
+        เพื่อเปลี่ยนการฝึกสุนัขจากการ <strong>'บังคับ'</strong> เป็นการ
+        <strong style="color:var(--gold-dark)">'สร้างสายสัมพันธ์'</strong>
+        ผ่านกิจกรรมที่สนุกและเห็นผลจริง
+      </p>
+
+      <!-- Instructors -->
+      <div style="margin-top:26px">
+        <div class="section-head">
+          <div class="sec-icon">
+            <span class="ic" style="font-size:16px"><i data-lucide="users"></i></span>
+          </div>
+          ผู้สอน
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <div class="instructor-card">
+            <div class="instructor-avatar">ข</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:800;font-size:15px">ครูเข็ม · ไพรสณฑ์ ผลิพัฒน์</div>
+              <div style="font-size:12.5px;color:var(--gold-dark);font-weight:700;margin-top:2px">CEO</div>
+            </div>
+          </div>
+          <div class="instructor-card">
+            <div class="instructor-avatar">แค</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:800;font-size:15px">ครูแคทนิช · นิชา สุบิน</div>
+              <div style="font-size:12.5px;color:var(--gold-dark);font-weight:700;margin-top:2px">Managing Director &amp; Dog Training</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Learning formats -->
+      <div style="margin-top:28px">
+        <div class="section-head">
+          <div class="sec-icon">
+            <span class="ic" style="font-size:16px"><i data-lucide="layout-grid"></i></span>
+          </div>
+          เลือกรูปแบบการเรียน
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+
+          <!-- Private training -->
+          <div class="format-card" onclick="showView('view-class-detail')" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')showView('view-class-detail')">
+            <div class="format-card-glow"></div>
+            <div class="format-card-inner">
+              <div class="format-card-icon">
+                <span class="ic" style="font-size:21px"><i data-lucide="user-round"></i></span>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div class="format-card-title">ฝึกส่วนตัวกับครูที่บ้าน</div>
+                <div class="format-card-sub">1:1 กับครูฝึก · ตามนัด</div>
+              </div>
+              <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Online -->
+          <div class="format-card" onclick="showView('view-class-detail')" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')showView('view-class-detail')">
+            <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
+            <div class="format-card-inner">
+              <div class="format-card-icon">
+                <span class="ic" style="font-size:21px"><i data-lucide="monitor-play"></i></span>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div class="format-card-title">เรียนออนไลน์</div>
+                <div class="format-card-sub">เรียนเองที่บ้าน ทุกที่ทุกเวลา</div>
+              </div>
+              <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+            </div>
+          </div>
+
+          <!-- Aggression — featured -->
+          <div class="format-card format-card-featured" onclick="showView('view-class-detail')" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')showView('view-class-detail')">
+            <div class="format-card-glow"></div>
+            <div class="format-card-inner">
+              <div class="format-card-icon">
+                <span class="ic" style="font-size:23px"><i data-lucide="shield-alert"></i></span>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div class="format-card-title" style="font-size:16px">แก้ปัญหาดุ-กัด-ก้าวร้าว</div>
+                <div class="format-card-sub" style="font-size:12.5px">ครูเข้าบ้าน · Behavior Management</div>
+              </div>
+              <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="pbtn" style="margin-top:24px">
+        สอบถาม / สมัครเรียน
+        <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
+      </button>
+
+      <!-- Contact -->
+      <div style="margin-top:28px">
+        <div class="section-head">ช่องทางติดต่อ</div>
+        <div class="contact-links">
+          <a href="https://www.facebook.com/groups/1688081585221172/user/100088377250759"
+             target="_blank" rel="noopener" class="contact-link contact-link-fb"
+             aria-label="Facebook">f</a>
+          <a href="https://www.instagram.com/dogbooster.th"
+             target="_blank" rel="noopener" class="contact-link contact-link-ig"
+             aria-label="Instagram">IG</a>
+          <a href="https://www.tiktok.com/@dogbooster.th"
+             target="_blank" rel="noopener" class="contact-link contact-link-tk"
+             aria-label="TikTok">TikTok</a>
+          <a href="https://lin.ee/PTaq5zs"
+             target="_blank" rel="noopener" class="contact-link contact-link-ln"
+             aria-label="LINE">LINE</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /view-school -->
+
+
+  <!-- ===== VIEW 2: Class Detail (locked) ===== -->
+  <div id="view-class-detail" class="view">
+    <!-- Dark header area -->
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <div class="view2-statusbar">
+        <span>9:41</span>
+        <div class="icons">
+          <span class="ic" style="font-size:15px"><i data-lucide="signal"></i></span>
+          <span class="ic" style="font-size:15px"><i data-lucide="wifi"></i></span>
+          <span class="ic" style="font-size:15px"><i data-lucide="battery-full"></i></span>
+        </div>
+      </div>
+      <button onclick="showView('view-school')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(240,183,76,.14);
+                  border:1px solid rgba(240,183,76,.3);color:var(--gold);font-size:12px;font-weight:800;
+                  padding:6px 12px;border-radius:100px;margin-top:18px;position:relative">
+        <span class="ic" style="font-size:14px"><i data-lucide="star"></i></span> คลาสยอดนิยม
+      </div>
+      <h2 style="font-size:28px;font-weight:800;letter-spacing:-.01em;color:var(--cream);
+                 margin-top:14px;line-height:1.15;position:relative">
+        FBI<br>Four Basic Instinct
+      </h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:12px;position:relative">
+        ปูพื้นฐาน 4 สัญชาตญาณหลักของสุนัข ผ่านเกมและกิจกรรมรูปแบบเกมส์ · 10 บทเรียน
+      </p>
+    </div>
+
+    <!-- Light content area -->
+    <div class="view2-content">
+
+      <!-- Intro video -->
+      <div style="margin-bottom:20px">
+        <a href="https://youtu.be/gMUNOwFjylA" target="_blank" rel="noopener"
+           style="position:relative;display:block;border-radius:16px;overflow:hidden;
+                  height:200px;background:#000;text-decoration:none">
+          <img src="https://img.youtube.com/vi/gMUNOwFjylA/hqdefault.jpg" alt="วิดีโอบทนำ FBI"
+               style="width:100%;height:100%;object-fit:cover;display:block">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45),transparent 55%)"></div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+            <div style="width:58px;height:58px;border-radius:50%;background:var(--gold);
+                        display:flex;align-items:center;justify-content:center;
+                        color:var(--dark);box-shadow:0 12px 26px -8px rgba(0,0,0,.6)">
+              <span class="ic" style="font-size:24px;margin-left:3px"><i data-lucide="play"></i></span>
+            </div>
+          </div>
+          <div style="position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;
+                      background:rgba(240,183,76,.92);color:var(--dark);font-size:11px;font-weight:800;
+                      padding:5px 10px;border-radius:100px">
+            <span class="ic" style="font-size:12px"><i data-lucide="eye"></i></span>ดูฟรี
+          </div>
+        </a>
+        <div style="font-size:12.5px;color:#7E7668;font-weight:600;margin-top:9px;
+                    display:flex;align-items:center;gap:6px">
+          <span class="ic" style="font-size:14px;color:var(--gold)"><i data-lucide="sparkles"></i></span>
+          ดูตัวอย่างคลาสก่อนตัดสินใจเรียนได้
+        </div>
+      </div>
+
+      <!-- Lock card -->
+      <div class="lock-card">
+        <div class="lock-icon-wrap">
+          <span class="ic" style="font-size:24px"><i data-lucide="lock"></i></span>
+        </div>
+        <div style="font-weight:800;font-size:16px;color:var(--cream);margin-top:14px">เนื้อหานี้ล็อกอยู่</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-top:6px">
+          ชำระค่าคลาสเพื่อรับรหัสนักเรียน แล้วใช้รหัสปลดล็อกเนื้อหาทั้งหมด
+        </p>
+        <div style="display:flex;align-items:baseline;justify-content:center;gap:6px;margin-top:16px">
+          <span style="font-size:32px;font-weight:800;color:var(--gold)">฿6,900</span>
+          <span style="font-size:13px;color:#7E7668">/ คลาส</span>
+        </div>
+        <div class="code-input-row">
+          <div class="code-field">
+            <span class="ic" style="font-size:16px;color:#7E7668"><i data-lucide="key-round"></i></span>
+            <span style="font-size:14px;color:#7E7668;font-weight:600">กรอกรหัสนักเรียน</span>
+          </div>
+          <button class="code-submit">ใช้</button>
+        </div>
+      </div>
+
+      <!-- Pay CTA -->
+      <div style="margin-top:22px">
+        <button class="pbtn">
+          ชำระเงินเพื่อรับรหัส
+          <span class="ic" style="font-size:18px"><i data-lucide="arrow-right"></i></span>
+        </button>
+        <div style="display:flex;align-items:center;justify-content:center;gap:7px;
+                    margin-top:12px;font-size:12px;color:#7E7668;font-weight:600">
+          <span class="ic" style="font-size:14px;color:var(--gold)"><i data-lucide="message-circle"></i></span>
+          มีรหัสแล้ว? ติดต่อผู้ดูแลหากเข้าไม่ได้
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /view-class-detail -->
+
+</div><!-- /app-shell -->
+
+<script>
+  function showView(id) {
+    document.querySelectorAll('.view').forEach(function(v) {
+      v.classList.remove('active');
+    });
+    var target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.lucide && window.lucide.createIcons) {
+      window.lucide.createIcons();
+    } else {
+      var t = 0;
+      var retry = setInterval(function() {
+        if (window.lucide && window.lucide.createIcons) {
+          window.lucide.createIcons();
+          clearInterval(retry);
+        } else if (++t > 60) {
+          clearInterval(retry);
+        }
+      }, 100);
+    }
+  });
+</script>
+</body>
+</html>
