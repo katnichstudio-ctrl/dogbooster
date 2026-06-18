@@ -335,6 +335,19 @@
           displayName: profile.displayName,
           pictureUrl: profile.pictureUrl
         }));
+        /* ลงทะเบียนผู้ใช้กับ backend + ดึงสิทธิเข้าเรียนมา cache (ไม่บล็อกถ้า /api ยังไม่พร้อม) */
+        try {
+          var idToken = liff.getIDToken();
+          var r = await fetch('/api/me', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken: idToken })
+          });
+          if (r.ok) {
+            var data = await r.json();
+            localStorage.setItem('db_courses', JSON.stringify(data.courses || []));
+          }
+        } catch (e) { console.error('register /api/me', e); }
         /* ผู้ใช้เก่า (เคยทำ onboarding แล้ว) -> learning-path, ผู้ใช้ใหม่ -> onboarding */
         var onboarded = localStorage.getItem('db_onboarded') === 'true';
         location.href = onboarded ? 'learning-path.html' : 'onboarding.html';

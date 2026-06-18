@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DogBooster — จัดการสิทธิเข้าเรียน (Admin)</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --gold:#F0B74C; --gold-dark:#E0A02F; --dark:#15130F; --cream:#FAF7F1; --bg:#E7E2D7; --border:#E4DECF; --muted:#6B6459; }
+    html, body { font-family:'LINE Seed Sans TH',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--dark); -webkit-font-smoothing:antialiased; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px 80px; }
+    h1 { font-size: 24px; font-weight: 800; }
+    .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+    .gate { max-width: 380px; margin: 60px auto; background:#fff; border:1px solid var(--border); border-radius:18px; padding:26px; }
+    .gate h2 { font-size: 18px; font-weight: 800; }
+    .gate p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .field { width:100%; margin-top:16px; padding:13px 15px; border:1.5px solid var(--border); border-radius:12px; font-family:inherit; font-size:15px; font-weight:600; outline:none; }
+    .field:focus { border-color: var(--gold); }
+    .btn { margin-top:14px; width:100%; background:var(--gold); border:none; border-radius:12px; padding:14px; font-family:inherit; font-weight:800; font-size:15px; cursor:pointer; color:var(--dark); }
+    .btn:hover { background: var(--gold-dark); }
+    .btn.sm { width:auto; padding:9px 16px; font-size:13px; margin-top:0; }
+
+    .toolbar { display:flex; gap:12px; align-items:center; margin:20px 0 14px; flex-wrap:wrap; }
+    .search { flex:1; min-width:200px; padding:11px 14px; border:1.5px solid var(--border); border-radius:12px; font-family:inherit; font-size:14px; outline:none; }
+    .search:focus { border-color: var(--gold); }
+    .msg { font-size:13px; color:var(--muted); }
+    .msg.err { color:#B4452F; }
+
+    .tablecard { background:#fff; border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+    .tablescroll { overflow-x:auto; }
+    table { border-collapse: collapse; width:100%; min-width:720px; }
+    th, td { padding:12px 14px; text-align:left; border-bottom:1px solid var(--border); font-size:13.5px; white-space:nowrap; }
+    th { background:#F6F2E9; font-weight:800; font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; position:sticky; top:0; }
+    th.course, td.course { text-align:center; }
+    .user-cell { display:flex; align-items:center; gap:10px; }
+    .avatar { width:34px; height:34px; border-radius:50%; background:#E4DECF; object-fit:cover; flex-shrink:0; }
+    .uname { font-weight:800; }
+    .uid { font-size:11px; color:#A39B8C; font-family:ui-monospace,Menlo,monospace; }
+    .chk { width:20px; height:20px; accent-color:var(--gold); cursor:pointer; }
+    .empty { padding:40px; text-align:center; color:var(--muted); font-size:14px; }
+    .count-pill { background:var(--dark); color:var(--gold); font-size:12px; font-weight:800; padding:4px 11px; border-radius:100px; }
+  </style>
+</head>
+<body>
+  <!-- ประตูใส่ admin token -->
+  <div id="gate" class="gate">
+    <h2>เข้าสู่ระบบแอดมิน</h2>
+    <p>ใส่ Admin Token (ค่าเดียวกับ <code>ADMIN_TOKEN</code> ที่ตั้งไว้ใน Vercel)</p>
+    <input id="token" class="field" type="password" placeholder="Admin token" autocomplete="off">
+    <button class="btn" onclick="enter()">เข้าสู่ระบบ</button>
+    <p id="gate-msg" class="msg err" style="margin-top:12px"></p>
+  </div>
+
+  <!-- หน้าจัดการ -->
+  <div id="app" class="wrap" style="display:none">
+    <h1>จัดการสิทธิเข้าเรียน</h1>
+    <p class="sub">ติ๊กเพื่อให้/ถอนสิทธิคอร์สของผู้ใช้แต่ละคน — บันทึกอัตโนมัติ</p>
+
+    <div class="toolbar">
+      <input id="search" class="search" placeholder="ค้นหาชื่อ / userId" oninput="renderRows()">
+      <span id="count" class="count-pill">0 ผู้ใช้</span>
+      <button class="btn sm" onclick="loadUsers()">รีเฟรช</button>
+      <button class="btn sm" style="background:#EDE7DA" onclick="logout()">ออกจากระบบ</button>
+      <span id="msg" class="msg"></span>
+    </div>
+
+    <div class="tablecard">
+      <div class="tablescroll">
+        <table id="tbl">
+          <thead id="thead"></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty" class="empty" style="display:none">ยังไม่มีผู้ใช้ — ให้ผู้ใช้ล็อกอินด้วย LINE ก่อน แล้วกดรีเฟรช</div>
+    </div>
+  </div>
+
+  <script>
+    var TOKEN = sessionStorage.getItem('db_admin_token') || '';
+    var CATALOG = [];
+    var USERS = [];
+
+    function setMsg(t, isErr) {
+      var el = document.getElementById('msg');
+      el.textContent = t || ''; el.className = 'msg' + (isErr ? ' err' : '');
+    }
+
+    async function api(path, opts) {
+      opts = opts || {};
+      opts.headers = Object.assign({ 'x-admin-token': TOKEN }, opts.headers || {});
+      var r = await fetch(path, opts);
+      if (r.status === 401) { throw new Error('unauthorized'); }
+      if (!r.ok) { var t = await r.text(); throw new Error(t || ('error ' + r.status)); }
+      return r.json();
+    }
+
+    async function enter() {
+      TOKEN = document.getElementById('token').value.trim();
+      if (!TOKEN) return;
+      try {
+        await loadUsers();
+        sessionStorage.setItem('db_admin_token', TOKEN);
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+      } catch (e) {
+        document.getElementById('gate-msg').textContent =
+          e.message === 'unauthorized' ? 'Token ไม่ถูกต้อง' : ('ผิดพลาด: ' + e.message);
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('db_admin_token'); TOKEN = '';
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('gate').style.display = 'block';
+      document.getElementById('token').value = '';
+    }
+
+    async function loadUsers() {
+      var data = await api('/api/admin-users');
+      CATALOG = data.catalog || [];
+      USERS = data.users || [];
+      renderHead();
+      renderRows();
+      setMsg('โหลดล่าสุด ' + new Date().toLocaleTimeString('th-TH'));
+    }
+
+    function renderHead() {
+      var h = '<tr><th>ผู้ใช้</th>';
+      CATALOG.forEach(function (c) { h += '<th class="course">' + c.name + '</th>'; });
+      h += '</tr>';
+      document.getElementById('thead').innerHTML = h;
+    }
+
+    function renderRows() {
+      var q = (document.getElementById('search').value || '').toLowerCase().trim();
+      var rows = USERS.filter(function (u) {
+        if (!q) return true;
+        return (u.display_name || '').toLowerCase().indexOf(q) > -1 ||
+               (u.line_user_id || '').toLowerCase().indexOf(q) > -1;
+      });
+      document.getElementById('count').textContent = rows.length + ' ผู้ใช้';
+      document.getElementById('empty').style.display = USERS.length ? 'none' : 'block';
+
+      var html = '';
+      rows.forEach(function (u) {
+        var av = u.picture_url
+          ? '<img class="avatar" src="' + u.picture_url + '" alt="">'
+          : '<div class="avatar"></div>';
+        html += '<tr><td><div class="user-cell">' + av +
+          '<div><div class="uname">' + (u.display_name || '(ไม่มีชื่อ)') +
+          '</div><div class="uid">' + u.line_user_id + '</div></div></div></td>';
+        CATALOG.forEach(function (c) {
+          var on = (u.courses || []).indexOf(c.code) > -1 ? 'checked' : '';
+          html += '<td class="course"><input type="checkbox" class="chk" ' + on +
+            ' onchange="toggle(this,\'' + u.line_user_id + '\',\'' + c.code + '\')"></td>';
+        });
+        html += '</tr>';
+      });
+      document.getElementById('tbody').innerHTML = html;
+    }
+
+    async function toggle(el, lineUserId, courseCode) {
+      el.disabled = true;
+      try {
+        await api('/api/admin-grant', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lineUserId: lineUserId, courseCode: courseCode, grant: el.checked })
+        });
+        // อัปเดต state ในหน่วยความจำ
+        var u = USERS.find(function (x) { return x.line_user_id === lineUserId; });
+        if (u) {
+          u.courses = u.courses || [];
+          if (el.checked) { if (u.courses.indexOf(courseCode) < 0) u.courses.push(courseCode); }
+          else { u.courses = u.courses.filter(function (c) { return c !== courseCode; }); }
+        }
+        setMsg('บันทึกแล้ว ✓');
+      } catch (e) {
+        el.checked = !el.checked; // rollback
+        setMsg('บันทึกไม่สำเร็จ: ' + e.message, true);
+      } finally {
+        el.disabled = false;
+      }
+    }
+
+    // auto-login ถ้ามี token เก็บไว้
+    if (TOKEN) {
+      loadUsers().then(function () {
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+      }).catch(function () { logout(); });
+    }
+  </script>
+</body>
+</html>
