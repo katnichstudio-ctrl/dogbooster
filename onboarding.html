@@ -1,1069 +1,731 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>บุคลิกสุนัขของคุณ · DogBooster</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+Sans+TH:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --gold: #F0B74C;
-      --gold-light: #F7CE7E;
-      --gold-dark: #E0A02F;
-      --dark: #15130F;
-      --card-dark: #1C1A15;
-      --border: #3A352D;
-      --cream: #FAF7F1;
-      --muted: #A09880;
-      --muted2: #6B6355;
-      --green: #4CAF7A;
-      --green-bg: #1A2E24;
-      --orange: #E07A30;
-      --orange-bg: #2E1E0F;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      height: 100dvh;
-      font-family: 'LINE Seed Sans TH', 'Noto Sans Thai', sans-serif;
-      background: var(--dark);
-      color: var(--cream);
-      overflow-x: hidden;
-    }
-
-    .page {
-      max-width: 430px;
-      margin: 0 auto;
-      min-height: 100dvh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Status bar */
-    .status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 20px 8px;
-      color: var(--cream);
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .status-bar .time { font-size: 15px; font-weight: 700; }
-    .status-bar .icons { display: flex; gap: 6px; align-items: center; }
-    .status-bar .icons svg { width: 16px; height: 16px; }
-
-    /* Main content */
-    .content {
-      flex: 1;
-      padding: 0 16px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* Shareable card */
-    .share-card {
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      overflow: hidden;
-    }
-
-    .hero-banner {
-      position: relative;
-      height: 208px;
-      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-      overflow: hidden;
-    }
-
-    .hero-banner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 18px,
-        rgba(255,255,255,0.07) 18px,
-        rgba(255,255,255,0.07) 22px
-      );
-    }
-
-    .hero-badge {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      background: rgba(21, 19, 15, 0.75);
-      backdrop-filter: blur(8px);
-      border-radius: 100px;
-      padding: 6px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--cream);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 1;
-    }
-
-    .dog-placeholder {
-      position: absolute;
-      right: 24px;
-      bottom: -24px;
-      width: 148px;
-      height: 148px;
-      background: #E4DECF;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 56px;
-      z-index: 2;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-    }
-
-    .card-body {
-      padding: 20px 20px 0;
-    }
-
-    .type-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 12px;
-      margin-bottom: 6px;
-    }
-
-    .type-name {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    .type-code {
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--gold);
-      background: rgba(240, 183, 76, 0.15);
-      border: 1px solid rgba(240, 183, 76, 0.35);
-      border-radius: 6px;
-      padding: 3px 8px;
-      letter-spacing: 1px;
-    }
-
-    .tagline {
-      font-size: 14px;
-      font-style: italic;
-      color: var(--muted);
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-
-    .trait-bars {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .trait-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .trait-label {
-      font-size: 11px;
-      color: var(--muted);
-      width: 56px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .trait-label.right {
-      text-align: left;
-    }
-
-    .trait-bar-track {
-      flex: 1;
-      height: 6px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-
-    .trait-bar-fill {
-      height: 100%;
-      border-radius: 100px;
-      background: linear-gradient(90deg, var(--gold-light), var(--gold));
-    }
-
-    .card-footer {
-      border-top: 1px solid var(--border);
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-circle {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: var(--dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .brand-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--cream);
-    }
-
-    .brand-sub {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* Action buttons */
-    .btn-gold {
-      width: 100%;
-      background: var(--gold);
-      color: var(--dark);
-      border: none;
-      border-radius: 14px;
-      padding: 16px;
-      font-family: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-gold svg { width: 20px; height: 20px; }
-
-    .share-caption {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 14px;
-      color: var(--muted);
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .share-caption svg { width: 18px; height: 18px; }
-
-    /* Detail card */
-    .detail-card {
-      background: var(--cream);
-      color: var(--dark);
-      border-radius: 24px;
-      overflow: hidden;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 14px;
-    }
-
-    .section-title span {
-      color: var(--gold-dark);
-    }
-
-    .trait-obs {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .trait-obs-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px;
-      background: rgba(21, 19, 15, 0.05);
-      border-radius: 12px;
-    }
-
-    .obs-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: rgba(240, 183, 76, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 16px;
-    }
-
-    .obs-text { flex: 1; }
-
-    .obs-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted2);
-      margin-bottom: 2px;
-    }
-
-    .obs-desc {
-      font-size: 14px;
-      color: var(--dark);
-      line-height: 1.5;
-    }
-
-    .quote-card {
-      background: var(--dark);
-      color: var(--cream);
-      border-radius: 16px;
-      padding: 20px;
-    }
-
-    .quote-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--gold);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    .quote-text {
-      font-size: 16px;
-      font-style: italic;
-      line-height: 1.7;
-      color: #D4C9B5;
-    }
-
-    .sw-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .sw-card {
-      border-radius: 14px;
-      padding: 14px;
-    }
-
-    .sw-card.strengths {
-      background: var(--green-bg);
-      border: 1px solid rgba(76, 175, 122, 0.25);
-    }
-
-    .sw-card.warnings {
-      background: var(--orange-bg);
-      border: 1px solid rgba(224, 122, 48, 0.25);
-    }
-
-    .sw-title {
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .sw-card.strengths .sw-title { color: var(--green); }
-    .sw-card.warnings .sw-title { color: var(--orange); }
-
-    .sw-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    .sw-list li {
-      font-size: 13px;
-      color: var(--cream);
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      line-height: 1.4;
-    }
-
-    .sw-list li::before {
-      content: '•';
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .sw-card.strengths .sw-list li::before { color: var(--green); }
-    .sw-card.warnings .sw-list li::before { color: var(--orange); }
-
-    .stress-card {
-      border: 1px solid #C0A068;
-      border-radius: 14px;
-      padding: 16px;
-      background: rgba(240, 183, 76, 0.04);
-    }
-
-    .stress-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--orange);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .stress-text {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #3D3526;
-    }
-
-    .chips-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--muted2);
-      margin-bottom: 10px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .chip {
-      background: rgba(21, 19, 15, 0.08);
-      border: 1px solid rgba(21, 19, 15, 0.15);
-      border-radius: 100px;
-      padding: 6px 14px;
-      font-size: 13px;
-      color: var(--dark);
-    }
-
-    .learn-card {
-      background: var(--dark);
-      border-radius: 16px;
-      padding: 20px;
-    }
-
-    .learn-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-
-    .learn-items {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .learn-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .learn-num {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: rgba(240, 183, 76, 0.15);
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .learn-text {
-      font-size: 14px;
-      color: #C8BEA8;
-      line-height: 1.5;
-    }
-
-    .program-card {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .program-header {
-      background: var(--dark);
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .program-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-
-    .program-badge {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--dark);
-      background: var(--gold);
-      border-radius: 100px;
-      padding: 3px 10px;
-    }
-
-    .program-body {
-      background: rgba(21, 19, 15, 0.04);
-      padding: 16px;
-    }
-
-    .program-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 6px;
-    }
-
-    .program-desc {
-      font-size: 13px;
-      color: #5A5040;
-      line-height: 1.5;
-    }
-
-    .growth-items {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .growth-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px;
-      background: rgba(21, 19, 15, 0.05);
-      border-radius: 12px;
-    }
-
-    .growth-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: rgba(240, 183, 76, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .growth-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 3px;
-    }
-
-    .growth-desc {
-      font-size: 13px;
-      color: #5A5040;
-      line-height: 1.4;
-    }
-
-    .potential-card {
-      background: linear-gradient(135deg, var(--gold-light), var(--gold));
-      border-radius: 16px;
-      padding: 20px;
-    }
-
-    .potential-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: rgba(21, 19, 15, 0.6);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .potential-text {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--dark);
-      line-height: 1.6;
-    }
-
-    .class-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .class-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      background: rgba(21, 19, 15, 0.05);
-      border-radius: 12px;
-    }
-
-    .class-rank {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .class-rank.r1 { background: var(--gold); color: var(--dark); }
-    .class-rank.r2 { background: rgba(21, 19, 15, 0.12); color: var(--dark); }
-    .class-rank.r3 { background: rgba(21, 19, 15, 0.08); color: #6B6355; }
-
-    .class-info { flex: 1; }
-
-    .class-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 2px;
-    }
-
-    .class-why {
-      font-size: 12px;
-      color: #6B6355;
-    }
-
-    .class-match {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--green);
-    }
-
-    .closing {
-      text-align: center;
-      padding: 8px 0 4px;
-    }
-
-    .closing p {
-      font-size: 14px;
-      color: #5A5040;
-      line-height: 1.7;
-    }
-
-    .closing strong { color: var(--dark); }
-
-    /* School CTA */
-    .school-cta {
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
-      text-align: center;
-    }
-
-    .school-cta-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--cream);
-    }
-
-    .school-cta-sub {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-      margin-top: -6px;
-    }
-
-    .btn-school {
-      width: 100%;
-      background: var(--gold);
-      color: var(--dark);
-      border: none;
-      border-radius: 12px;
-      padding: 14px;
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .btn-school svg { width: 18px; height: 18px; }
-
-    .btn-outline {
-      width: 100%;
-      background: transparent;
-      color: var(--cream);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 15px;
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-outline svg { width: 18px; height: 18px; }
-
-    .divider {
-      height: 1px;
-      background: rgba(21, 19, 15, 0.1);
-      margin: 0 -20px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DogBooster – Onboarding</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #F0B74C;
+    --gold-dark: #E0A02F;
+    --dark: #15130F;
+    --cream: #FAF7F1;
+    --bg: #E7E2D7;
+    --border: #E4DECF;
+    --muted: #6B6459;
+    --muted2: #A39B8C;
+    --field-bg: #fff;
+    --dark-card: #221F19;
+    --dark-border: #2E2A23;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'LINE Seed Sans TH', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .phone-wrap {
+    min-height: 100dvh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .phone {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100dvh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step {
+    display: none;
+    flex-direction: column;
+    min-height: 100dvh;
+    width: 100%;
+  }
+  .step.active { display: flex; }
+
+  /* Buttons */
+  .pbtn {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 800;
+    font-size: 16px;
+    padding: 16px;
+    border-radius: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    box-shadow: 0 12px 24px -12px rgba(240,183,76,.9);
+    transition: background .15s;
+  }
+  .pbtn:hover { background: var(--gold-dark); }
+  .pbtn svg { width: 18px; height: 18px; stroke-width: 2; display: block; }
+  .pbtn-outline {
+    background: transparent;
+    border: 1.5px solid #3A352D;
+    color: var(--cream);
+    box-shadow: none;
+  }
+  .pbtn-outline:hover { background: rgba(255,255,255,.06); }
+
+  /* dot progress */
+  .dotrow { display: flex; gap: 6px; flex: 1; }
+  .dot { height: 5px; border-radius: 100px; flex: 1; background: var(--border); }
+  .dot.on { background: var(--gold); }
+
+  /* form fields */
+  .flabel { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 7px; display: block; }
+  .field {
+    background: var(--field-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 13px 15px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+  }
+  .field:focus { border-color: var(--gold); }
+  select.field {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23B8B1A4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    padding-right: 38px;
+    cursor: pointer;
+  }
+
+  .seclabel {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 11px; font-weight: 800; letter-spacing: .06em;
+    color: #B8860B; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .seclabel svg { width: 14px; height: 14px; stroke-width: 2; display: block; }
+  .tbody { font-size: 14px; line-height: 1.7; color: #48433A; }
+
+  /* trait bar */
+  .trait-bar { position: relative; height: 10px; background: #2A2620; border-radius: 100px; overflow: hidden; }
+  .trait-bar-fill { position: absolute; inset: 0 var(--gap) 0 0; background: linear-gradient(90deg,#B07A1C,var(--gold)); border-radius: 100px; }
+
+  /* ====== STEP 1 ====== */
+  #step1 { background: var(--dark); position: relative; }
+  #step1 .glow {
+    position: absolute; top: -80px; right: -60px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle,rgba(240,183,76,.22),transparent 68%);
+    pointer-events: none;
+  }
+  #step1 .content { position: relative; display: flex; flex-direction: column; flex: 1; padding: 32px 30px 36px; }
+  #step1 .logo-wrap {
+    width: 104px; height: 104px; border-radius: 50%; background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 16px 34px -16px rgba(0,0,0,.6);
+  }
+  #step1 .logo-wrap img { width: 92px; height: 92px; object-fit: contain; }
+  #step1 h2 { font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; color: var(--cream); margin-top: 18px; }
+  #step1 .desc { font-size: 15px; color: var(--muted2); line-height: 1.6; margin-top: 14px; max-width: 300px; }
+  #step1 .feat-list { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; }
+  #step1 .feat-item {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 15px;
+  }
+  #step1 .feat-icon {
+    width: 42px; height: 42px; border-radius: 12px; background: #FBEFD6; color: #B8860B;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  #step1 .feat-icon svg { width: 20px; height: 20px; stroke-width: 1.75; }
+  #step1 .feat-title { font-weight: 800; font-size: 15px; color: var(--cream); }
+  #step1 .feat-sub { font-size: 12.5px; color: #7E7668; }
+  #step1 .cta { margin-top: auto; padding-top: 24px; }
+
+  /* ====== STEP 2 ====== */
+  #step2 { background: var(--cream); }
+  #step2 .content { display: flex; flex-direction: column; flex: 1; padding: 14px 26px 28px; }
+  #step2 .topbar { display: flex; align-items: center; gap: 14px; }
+  #step2 .back-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; }
+  #step2 .back-btn svg { width: 22px; height: 22px; stroke-width: 2; color: var(--dark); }
+  #step2 h2 { font-size: 24px; font-weight: 800; letter-spacing: -.01em; margin-top: 20px; }
+  #step2 .subtitle { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+  #step2 .photo-wrap { display: flex; justify-content: center; margin-top: 20px; }
+  #step2 .photo-ph {
+    width: 104px; height: 104px; border-radius: 50%;
+    background: #E4DECF; border: 2px dashed #D9D3C6;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; color: #9A9282; cursor: pointer; font-size: 28px;
+  }
+  #step2 .photo-ph .plabel { font-size: 10px; font-weight: 700; font-family: inherit; }
+  #step2 .fields { flex: 1; margin-top: 22px; display: flex; flex-direction: column; gap: 15px; }
+  #step2 .row { display: flex; gap: 13px; }
+  #step2 .row > div { flex: 1; min-width: 0; }
+  #step2 .cta { padding-top: 18px; margin-top: auto; }
+
+  /* ====== STEP 3 ====== */
+  #step3 { background: var(--dark); position: relative; }
+  #step3 .glow {
+    position: absolute; bottom: -70px; left: 50%; transform: translateX(-50%);
+    width: 340px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle,rgba(240,183,76,.16),transparent 68%);
+    pointer-events: none;
+  }
+  #step3 .content { position: relative; display: flex; flex-direction: column; flex: 1; padding: 24px 30px 30px; }
+  #step3 .badge {
+    display: inline-flex; align-self: flex-start; align-items: center; gap: 7px;
+    background: rgba(240,183,76,.14); border: 1px solid rgba(240,183,76,.3);
+    color: var(--gold); font-size: 12px; font-weight: 800; padding: 6px 12px; border-radius: 100px;
+  }
+  #step3 .badge svg { width: 13px; height: 13px; stroke-width: 2; }
+  #step3 h2 { font-size: 27px; font-weight: 800; letter-spacing: -.01em; line-height: 1.18; color: var(--cream); margin-top: 16px; }
+  #step3 .intro-p { font-size: 14.5px; color: var(--muted2); line-height: 1.6; margin-top: 12px; }
+  #step3 .dim-list { display: flex; flex-direction: column; gap: 9px; margin-top: 20px; }
+  #step3 .dim-item {
+    background: var(--dark-card); border: 1px solid var(--dark-border);
+    border-radius: 13px; padding: 13px 15px; display: flex; align-items: center; gap: 12px;
+  }
+  #step3 .dim-item svg { width: 20px; height: 20px; stroke-width: 1.75; color: var(--gold); flex-shrink: 0; }
+  #step3 .dim-title { font-size: 13px; font-weight: 800; color: var(--cream); }
+  #step3 .dim-sub { font-size: 11.5px; color: #7E7668; line-height: 1.4; }
+  #step3 .timer { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 18px; font-size: 12.5px; color: #7E7668; font-weight: 600; }
+  #step3 .timer svg { width: 14px; height: 14px; stroke-width: 2; }
+  #step3 .cta { margin-top: auto; padding-top: 20px; }
+
+  /* ====== STEP 4 ====== */
+  #step4 { background: var(--cream); }
+  #step4 .content { display: flex; flex-direction: column; flex: 1; padding: 14px 26px 28px; }
+  #step4 .topbar { display: flex; align-items: center; gap: 14px; }
+  #step4 .back-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; }
+  #step4 .back-btn svg { width: 22px; height: 22px; stroke-width: 2; color: var(--dark); }
+  #step4 .prog-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 100px; overflow: hidden; }
+  #step4 .prog-fill { width: 3.125%; height: 100%; background: var(--gold); border-radius: 100px; transition: width .3s; }
+  #step4 .prog-label { font-family: ui-monospace,'JetBrains Mono',Menlo,monospace; font-size: 13px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  #step4 .dim-badge {
+    display: inline-flex; align-self: flex-start; align-items: center; gap: 7px;
+    background: #FBEFD6; color: #B8860B; font-size: 12px; font-weight: 800;
+    padding: 6px 12px; border-radius: 100px; margin-top: 24px;
+  }
+  #step4 .dim-badge svg { width: 14px; height: 14px; stroke-width: 2; }
+  #step4 h2 { font-size: 25px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; margin-top: 18px; }
+  #step4 .q-hint { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+  #step4 .choices { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+  #step4 .choice {
+    background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 14px;
+    padding: 14px 16px; font-size: 15px; font-weight: 700; color: var(--muted);
+    cursor: pointer; transition: border-color .15s, background .15s;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: inherit; text-align: left; width: 100%;
+  }
+  #step4 .choice:hover { border-color: var(--gold); }
+  #step4 .choice.selected { background: var(--dark); border-color: var(--dark); color: var(--gold); font-weight: 800; }
+  #step4 .choice .chk { display: none; width: 19px; height: 19px; }
+  #step4 .choice.selected .chk { display: block; }
+  #step4 .cta { margin-top: auto; padding-top: 18px; }
+
+  /* ====== STEP 5 ====== */
+  #step5 { background: var(--dark); }
+  #step5 .scroll { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 18px 28px 36px; text-align: center; }
+  #step5 .scroll::-webkit-scrollbar { width: 4px; }
+  #step5 .scroll::-webkit-scrollbar-thumb { background: #3A352D; border-radius: 4px; }
+
+  /* share card */
+  .share-card { width: 100%; background: #1C1A15; border: 1px solid #3A352D; border-radius: 24px; overflow: hidden; }
+  .card-hero {
+    position: relative; width: 100%; height: 208px;
+    background: linear-gradient(165deg,#F7CE7E,#F0B74C 55%,#E0A02F);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .card-hero-pat { position: absolute; inset: 0; background: repeating-linear-gradient(135deg,transparent,transparent 13px,rgba(255,255,255,.07) 13px,rgba(255,255,255,.07) 26px); }
+  .card-hero-badge {
+    position: absolute; top: 12px; left: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(21,19,15,.85); color: var(--gold);
+    font-size: 11px; font-weight: 800; padding: 5px 11px;
+    border-radius: 100px; backdrop-filter: blur(4px);
+  }
+  .card-dog-ph {
+    width: 148px; height: 148px; border-radius: 22px; background: #E4DECF;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px; position: relative; z-index: 1;
+  }
+  .card-body { padding: 18px 18px 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .card-sub { font-size: 12px; font-weight: 800; color: var(--muted2); letter-spacing: .04em; }
+  .card-title { font-size: 27px; font-weight: 800; letter-spacing: -.01em; color: var(--gold); margin-top: 5px; line-height: 1.1; }
+  .card-code {
+    display: inline-flex; align-items: center;
+    background: rgba(240,183,76,.14); border: 1px solid rgba(240,183,76,.35); color: var(--gold);
+    font-family: ui-monospace,'JetBrains Mono',Menlo,monospace;
+    font-size: 13px; font-weight: 800; letter-spacing: .14em; padding: 4px 13px; border-radius: 100px; margin-top: 9px;
+  }
+  .card-tagline { font-size: 13.5px; font-style: italic; color: #C9C1B2; line-height: 1.55; margin-top: 12px; max-width: 280px; }
+  .card-traits { width: 100%; padding: 16px 18px 0; margin-top: 14px; border-top: 1px solid var(--dark-border); display: flex; flex-direction: column; gap: 15px; }
+  .trait-row { width: 100%; }
+  .trait-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+  .trait-left { display: flex; align-items: center; gap: 7px; }
+  .trait-left svg { width: 15px; height: 15px; stroke-width: 2; color: var(--gold); }
+  .trait-name { font-size: 12.5px; font-weight: 800; color: var(--cream); }
+  .trait-opp { font-size: 11px; font-weight: 700; color: #7E7668; }
+  .card-brand { margin: 14px 18px 18px; padding-top: 15px; border-top: 1px solid var(--dark-border); width: calc(100% - 36px); display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .brand-logo { width: 42px; height: 42px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+  .brand-logo img { width: 38px; height: 38px; object-fit: contain; }
+  .brand-title { font-size: 13.5px; font-weight: 800; color: var(--cream); line-height: 1.35; white-space: nowrap; text-align: left; }
+  .brand-sub { font-size: 12.5px; font-weight: 800; color: var(--gold); margin-top: 2px; white-space: nowrap; text-align: left; }
+
+  /* result detail */
+  .result-detail { background: var(--cream); border: 1px solid var(--border); border-radius: 22px; padding: 24px 20px; margin-top: 18px; width: 100%; text-align: left; }
+  .insight-list { display: flex; flex-direction: column; gap: 9px; margin-top: 14px; }
+  .insight-item { display: flex; gap: 10px; align-items: center; background: var(--field-bg); border: 1px solid var(--border); border-radius: 13px; padding: 12px 14px; }
+  .insight-item svg { width: 17px; height: 17px; stroke-width: 2; color: #B8860B; flex-shrink: 0; }
+  .insight-item span { font-size: 13px; color: #2E2A23; line-height: 1.5; }
+  .mindset-box { background: var(--dark); border-radius: 18px; padding: 20px; margin-top: 24px; text-align: center; }
+  .mindset-lbl { font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--muted2); text-transform: uppercase; margin-bottom: 8px; }
+  .mindset-q { font-size: 18px; font-weight: 800; color: var(--gold); line-height: 1.3; }
+  .mindset-p { font-size: 13px; color: var(--muted2); line-height: 1.6; margin-top: 10px; }
+  .str-grid { display: flex; gap: 12px; margin-top: 24px; }
+  .str-box { flex: 1; border-radius: 16px; padding: 16px; }
+  .str-box.pos { background: #E7F0EA; border: 1px solid #CBE0D2; }
+  .str-box.neg { background: #FBEEE6; border: 1px solid #EAD3C2; }
+  .str-hdr { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 800; margin-bottom: 11px; }
+  .str-hdr svg { width: 16px; height: 16px; stroke-width: 2; }
+  .str-box.pos .str-hdr { color: #4A7359; }
+  .str-box.neg .str-hdr { color: #A65A38; }
+  .str-list { display: flex; flex-direction: column; gap: 7px; font-size: 12.5px; line-height: 1.4; }
+  .str-box.pos .str-list { color: #3C5E49; }
+  .str-box.neg .str-list { color: #8A4B30; }
+  .stress-box { border: 1.5px solid var(--border); border-radius: 16px; padding: 16px; margin-top: 16px; }
+  .stress-hdr { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+  .stress-hdr svg { width: 16px; height: 16px; stroke-width: 2; color: #C77B53; }
+  .owner-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .owner-tag { background: #FBEFD6; color: #B8860B; font-size: 12.5px; font-weight: 700; padding: 8px 13px; border-radius: 100px; }
+  .need-box { background: #1C1A15; border: 1px solid #3A352D; border-radius: 16px; padding: 16px; margin-top: 18px; }
+  .need-hdr { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 800; color: var(--gold); margin-bottom: 7px; }
+  .need-hdr svg { width: 16px; height: 16px; stroke-width: 2; }
+  .core-prog { background: var(--dark); border-radius: 18px; padding: 18px; display: flex; gap: 13px; }
+  .core-badge { width: 46px; height: 46px; border-radius: 13px; background: rgba(240,183,76,.16); color: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; font-size: 15px; }
+  .core-title { font-weight: 800; font-size: 15px; color: var(--cream); margin-bottom: 3px; }
+  .core-body { font-size: 12.5px; color: var(--muted2); line-height: 1.55; }
+  .growth-item { display: flex; gap: 12px; align-items: flex-start; background: var(--field-bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+  .growth-item svg { width: 19px; height: 19px; stroke-width: 2; color: #B8860B; flex-shrink: 0; margin-top: 1px; }
+  .growth-title { font-weight: 800; font-size: 14px; }
+  .growth-body { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+  .potential-box { background: linear-gradient(160deg,#FBEFD6,#F7E4B8); border: 1px solid #F0D89A; border-radius: 18px; padding: 20px; margin-top: 24px; }
+  .potential-hdr { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: #8A6A1E; margin-bottom: 10px; }
+  .potential-hdr svg { width: 17px; height: 17px; stroke-width: 2; }
+  .class-rank { display: flex; flex-direction: column; gap: 9px; }
+  .rank-item { display: flex; align-items: center; gap: 12px; border-radius: 13px; padding: 13px 15px; }
+  .rank-item.dark { background: var(--dark); }
+  .rank-item.light { background: var(--field-bg); border: 1px solid var(--border); }
+  .rank-item .medal { font-size: 18px; }
+  .rank-item .cname { font-weight: 800; font-size: 14px; flex: 1; }
+  .rank-item.dark .cname { color: var(--gold); }
+  .rank-item .cnote { font-size: 11px; color: #7E7668; font-weight: 700; }
+  .fsca-sum { text-align: center; margin-top: 26px; padding: 0 6px; font-size: 14.5px; font-weight: 700; color: var(--dark); line-height: 1.6; }
+  .fsca-sum .hi { color: #B8860B; }
+  .school-cta { background: linear-gradient(150deg,#2A2620,var(--dark)); border: 1px solid #3A352D; border-radius: 16px; padding: 18px; margin-top: 14px; text-align: left; width: 100%; }
+  .school-hdr { display: flex; align-items: center; gap: 10px; }
+  .school-hdr svg { width: 21px; height: 21px; stroke-width: 1.75; color: var(--gold); flex-shrink: 0; }
+  .school-title { font-weight: 800; font-size: 15px; color: var(--cream); }
+  .school-body { font-size: 12.5px; color: var(--muted2); line-height: 1.55; margin-top: 8px; }
+  .school-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--gold); color: var(--dark); font-weight: 800; font-size: 14px; padding: 13px; border-radius: 13px; margin-top: 13px; cursor: pointer; font-family: inherit; border: none; width: 100%; transition: background .15s; }
+  .school-btn svg { width: 16px; height: 16px; stroke-width: 2; }
+  .school-btn:hover { background: var(--gold-dark); }
+</style>
 </head>
 <body>
-<div class="page">
+<div class="phone-wrap">
+<div class="phone">
 
-  <!-- Status bar -->
-  <div class="status-bar">
-    <span class="time">9:41</span>
-    <div class="icons">
-      <svg data-lucide="signal" stroke="currentColor" fill="none" stroke-width="2"></svg>
-      <svg data-lucide="wifi" stroke="currentColor" fill="none" stroke-width="2"></svg>
-      <svg data-lucide="battery" stroke="currentColor" fill="none" stroke-width="2"></svg>
+  <!-- ===== STEP 1: WELCOME ===== -->
+  <div id="step1" class="step active">
+    <div class="glow"></div>
+    <div class="content">
+      <div class="logo-wrap">
+        <img src="assets/logo.png" alt="DogBooster logo">
+      </div>
+      <h2>มาทำความรู้จัก<br>สุนัขของคุณกันก่อน</h2>
+      <p class="desc">ใช้เวลาประมาณ 5 นาที เพื่อให้เราออกแบบเส้นทางการฝึกที่เหมาะกับนิสัยของสุนัขคุณที่สุด</p>
+      <div class="feat-list">
+        <div class="feat-item">
+          <div class="feat-icon"><i data-lucide="dog"></i></div>
+          <div>
+            <div class="feat-title">โปรไฟล์สุนัข</div>
+            <div class="feat-sub">ชื่อ พันธุ์ อายุ เพศ + รูป</div>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon"><i data-lucide="sparkles"></i></div>
+          <div>
+            <div class="feat-title">แบบทดสอบบุคลิกสุนัขฟรี</div>
+            <div class="feat-sub">32 ข้อ · 7 ด้าน → 8 บุคลิก</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <button class="pbtn" onclick="goStep(2)">เริ่มต้น <i data-lucide="arrow-right"></i></button>
+      </div>
     </div>
   </div>
 
-  <div class="content">
-
-    <!-- Shareable card -->
-    <div class="share-card">
-      <div class="hero-banner">
-        <div class="hero-badge">🏅 The Team Captain</div>
-        <div class="dog-placeholder">🐾</div>
-      </div>
-      <div class="card-body">
-        <div class="type-row">
-          <span class="type-name">The Team Captain</span>
-          <span class="type-code">FSCA</span>
-        </div>
-        <p class="tagline">"สุนัขที่เกิดมาเพื่อเป็นผู้นำ — กระตือรือร้น ชอบสังคม และต้องการเป้าหมายเสมอ"</p>
-        <div class="trait-bars">
-          <div class="trait-row">
-            <span class="trait-label">Calm</span>
-            <div class="trait-bar-track">
-              <div class="trait-bar-fill" style="width:78%"></div>
-            </div>
-            <span class="trait-label right">Active</span>
-          </div>
-          <div class="trait-row">
-            <span class="trait-label">Lone</span>
-            <div class="trait-bar-track">
-              <div class="trait-bar-fill" style="width:82%"></div>
-            </div>
-            <span class="trait-label right">Social</span>
-          </div>
-          <div class="trait-row">
-            <span class="trait-label">Shy</span>
-            <div class="trait-bar-track">
-              <div class="trait-bar-fill" style="width:76%"></div>
-            </div>
-            <span class="trait-label right">Confident</span>
-          </div>
-          <div class="trait-row">
-            <span class="trait-label">Scattered</span>
-            <div class="trait-bar-track">
-              <div class="trait-bar-fill" style="width:70%"></div>
-            </div>
-            <span class="trait-label right">Focused</span>
-          </div>
+  <!-- ===== STEP 2: DOG PROFILE ===== -->
+  <div id="step2" class="step">
+    <div class="content">
+      <div class="topbar">
+        <button class="back-btn" onclick="goStep(1)" aria-label="ย้อนกลับ"><i data-lucide="arrow-left"></i></button>
+        <div class="dotrow">
+          <div class="dot on"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
         </div>
       </div>
-      <div class="card-footer">
-        <div class="logo-circle">
-          <img src="assets/logo.png" alt="DogBooster" />
+      <h2>โปรไฟล์สุนัขของคุณ</h2>
+      <p class="subtitle">บอกเราหน่อยว่าน้องเป็นใคร</p>
+      <div class="photo-wrap">
+        <div class="photo-ph" title="เพิ่มรูปสุนัข">
+          🐾
+          <span class="plabel">เพิ่มรูป</span>
         </div>
-        <div class="brand-text">
-          <span class="brand-name">DogBooster</span>
-          <span class="brand-sub">ฝึกสุนัขนิสัยดี มีความสุข · ไม่บังคับ · ไม่ลงโทษ</span>
+      </div>
+      <div class="fields">
+        <div>
+          <label class="flabel" for="dog-name">ชื่อเล่น</label>
+          <input id="dog-name" class="field" type="text" placeholder="เช่น โคโค่" value="โคโค่">
         </div>
+        <div>
+          <label class="flabel" for="dog-breed">สายพันธุ์</label>
+          <select id="dog-breed" class="field">
+            <option>Border Collie</option>
+            <option>Golden Retriever</option>
+            <option>Shiba Inu</option>
+            <option>French Bulldog</option>
+            <option>Labrador Retriever</option>
+            <option>Poodle</option>
+            <option>Corgi</option>
+            <option>Beagle</option>
+            <option>Mixed / ลูกผสม</option>
+            <option>อื่น ๆ</option>
+          </select>
+        </div>
+        <div class="row">
+          <div>
+            <label class="flabel" for="dog-age">อายุ</label>
+            <select id="dog-age" class="field">
+              <option>น้อยกว่า 6 เดือน</option>
+              <option selected>1 ปี 2 เดือน</option>
+              <option>2 ปี</option>
+              <option>3 ปี</option>
+              <option>4 ปี</option>
+              <option>5 ปี+</option>
+            </select>
+          </div>
+          <div>
+            <label class="flabel" for="dog-gender">เพศ</label>
+            <select id="dog-gender" class="field">
+              <option>เมีย</option>
+              <option>ผู้</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <button class="pbtn" onclick="goStep(3)">ถัดไป <i data-lucide="arrow-right"></i></button>
       </div>
     </div>
-
-    <!-- Download button -->
-    <button class="btn-gold">
-      <svg data-lucide="download" stroke="currentColor" fill="none" stroke-width="2"></svg>
-      ดาวน์โหลดรูปบุคลิกสุนัข
-    </button>
-
-    <!-- Share caption -->
-    <div class="share-caption">
-      <svg data-lucide="share-2" stroke="currentColor" fill="none" stroke-width="2"></svg>
-      <span>แชร์ให้เพื่อนที่มีสุนัขบุคลิกเดียวกัน</span>
-    </div>
-
-    <!-- Full type detail section -->
-    <div class="detail-card">
-
-      <!-- Overview -->
-      <div>
-        <div class="section-title">ภาพรวม<span>บุคลิกภาพ</span></div>
-        <div class="trait-obs">
-          <div class="trait-obs-item">
-            <div class="obs-icon">⚡</div>
-            <div class="obs-text">
-              <div class="obs-label">พลังงาน</div>
-              <div class="obs-desc">มีพลังงานสูงมาก ต้องการการออกกำลังกายและกิจกรรมทางจิตใจทุกวัน ไม่ทนต่อความเบื่อหน่าย</div>
-            </div>
-          </div>
-          <div class="trait-obs-item">
-            <div class="obs-icon">🤝</div>
-            <div class="obs-text">
-              <div class="obs-label">สังคม</div>
-              <div class="obs-desc">ชอบเป็นศูนย์กลางของกลุ่ม เข้ากับคนและสัตว์อื่นได้ดี มีทักษะการสื่อสารที่ชัดเจน</div>
-            </div>
-          </div>
-          <div class="trait-obs-item">
-            <div class="obs-icon">🎯</div>
-            <div class="obs-text">
-              <div class="obs-label">แรงจูงใจ</div>
-              <div class="obs-desc">ทำงานได้ดีที่สุดเมื่อมีเป้าหมายชัดเจน ต้องการ "งาน" และบทบาทที่มีความหมายในชีวิต</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- World view quote -->
-      <div class="quote-card">
-        <div class="quote-label">วิธีมองโลก</div>
-        <div class="quote-text">"ทุกอย่างเป็นโอกาส ทุกคนเป็นเพื่อน ทุกวันควรมีแผน — และฉันอยากเป็นคนนำแผนนั้น"</div>
-      </div>
-
-      <!-- Strengths + Warnings -->
-      <div>
-        <div class="section-title" style="margin-bottom:12px;">จุดแข็ง <span style="color:#6B6355;font-weight:400;font-size:15px;">&amp;</span> ข้อควรระวัง</div>
-        <div class="sw-grid">
-          <div class="sw-card strengths">
-            <div class="sw-title">✦ จุดแข็ง</div>
-            <ul class="sw-list">
-              <li>เรียนรู้คำสั่งใหม่ได้เร็ว</li>
-              <li>กระตือรือร้นในการฝึก</li>
-              <li>เข้ากับสุนัขอื่นได้ดี</li>
-              <li>มีความมั่นใจในตัวเอง</li>
-            </ul>
-          </div>
-          <div class="sw-card warnings">
-            <div class="sw-title">⚠ ข้อควรระวัง</div>
-            <ul class="sw-list">
-              <li>อาจท้าทายความเป็นผู้นำ</li>
-              <li>เบื่อง่ายถ้าซ้ำซาก</li>
-              <li>ดึงสายจูงเมื่อตื่นเต้น</li>
-              <li>ต้องการกติกาที่ชัดเจน</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stress behavior -->
-      <div class="stress-card">
-        <div class="stress-label">⚡ พฤติกรรมเมื่อเครียด</div>
-        <div class="stress-text">เมื่อไม่ได้รับการกระตุ้นเพียงพอหรือรู้สึกถูกละเลย อาจแสดงออกด้วยการขุดดิน เห่าไม่หยุด หรือทำลายสิ่งของ — นี่คือสัญญาณที่บอกว่าต้องการงานและความสนใจมากขึ้น</div>
-      </div>
-
-      <!-- Ideal owner chips -->
-      <div>
-        <div class="chips-label">🏠 เจ้าของในอุดมคติ</div>
-        <div class="chips">
-          <span class="chip">ชอบออกกำลังกาย</span>
-          <span class="chip">มีเวลาฝึก</span>
-          <span class="chip">อยู่บ้านบ่อย</span>
-          <span class="chip">ชอบกิจกรรมกลางแจ้ง</span>
-          <span class="chip">สม่ำเสมอ</span>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- What FSCA needs to learn -->
-      <div class="learn-card">
-        <div class="learn-title">สิ่งที่ FSCA ต้องเรียนรู้</div>
-        <div class="learn-items">
-          <div class="learn-item">
-            <div class="learn-num">1</div>
-            <div class="learn-text">การรอคอยอย่างสงบ — ฝึก Stay และ Place ให้มั่นคงในสถานการณ์ที่มีสิ่งรบกวนสูง</div>
-          </div>
-          <div class="learn-item">
-            <div class="learn-num">2</div>
-            <div class="learn-text">การเดินสายจูงอย่างผ่อนคลาย — ลดแรงดึงสายด้วยการสร้างความเชื่อมโยงกับเจ้าของ</div>
-          </div>
-          <div class="learn-item">
-            <div class="learn-num">3</div>
-            <div class="learn-text">การหยุดพักและควบคุมพลังงาน — เรียนรู้ว่า "ช้าลง" ก็เป็นทักษะที่มีคุณค่า</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Core program -->
-      <div>
-        <div class="section-title" style="margin-bottom:12px;">เส้นทางหลัก · <span>Core Program</span></div>
-        <div class="program-card">
-          <div class="program-header">
-            <span class="program-label">⭐ แนะนำสำหรับ FSCA</span>
-            <span class="program-badge">เริ่มต้นที่นี่</span>
-          </div>
-          <div class="program-body">
-            <div class="program-name">FBI · Foundation Basics Intensive</div>
-            <div class="program-desc">โปรแกรมพื้นฐาน 8 สัปดาห์ที่ออกแบบมาเพื่อสร้างความสัมพันธ์ระหว่างเจ้าของและสุนัข สอนคำสั่งพื้นฐานด้วยวิธี Positive Reinforcement ที่ได้ผลดีกับบุคลิก FSCA</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Growth path -->
-      <div>
-        <div class="section-title" style="margin-bottom:12px;">เส้นทางต่อยอด · <span>Growth Path</span></div>
-        <div class="growth-items">
-          <div class="growth-item">
-            <div class="growth-icon">🏃</div>
-            <div>
-              <div class="growth-name">Agility Fundamentals</div>
-              <div class="growth-desc">ช่องทางระบายพลังงานที่ดีที่สุดสำหรับ FSCA — ท้าทายทั้งร่างกายและจิตใจ</div>
-            </div>
-          </div>
-          <div class="growth-item">
-            <div class="growth-icon">🎭</div>
-            <div>
-              <div class="growth-name">Trick Dog Training</div>
-              <div class="growth-desc">เสริมความมั่นใจและพัฒนาทักษะการเรียนรู้ด้วยการฝึกท่าแสดงที่สนุก</div>
-            </div>
-          </div>
-          <div class="growth-item">
-            <div class="growth-icon">👥</div>
-            <div>
-              <div class="growth-name">Group Class Advanced</div>
-              <div class="growth-desc">ฝึกในสภาพแวดล้อมที่มีสุนัขและคนอื่น — เหมาะกับ FSCA ที่เก่งด้านสังคม</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Gold potential card -->
-      <div class="potential-card">
-        <div class="potential-label">✨ ศักยภาพสูงสุด</div>
-        <div class="potential-text">FSCA ที่ได้รับการฝึกอย่างถูกต้องสามารถเป็นสุนัขที่มีวินัยสูง มีความสุขกับการทำงานร่วมกับเจ้าของ และกลายเป็นต้นแบบให้กับสุนัขตัวอื่นในสังคมได้</div>
-      </div>
-
-      <!-- Best classes ranked -->
-      <div>
-        <div class="section-title" style="margin-bottom:12px;">คลาสที่<span>เหมาะที่สุด</span></div>
-        <div class="class-list">
-          <div class="class-item">
-            <div class="class-rank r1">1</div>
-            <div class="class-info">
-              <div class="class-name">FBI · Foundation Basics Intensive</div>
-              <div class="class-why">สร้างฐานความสัมพันธ์ที่แข็งแกร่ง</div>
-            </div>
-            <span class="class-match">98%</span>
-          </div>
-          <div class="class-item">
-            <div class="class-rank r2">2</div>
-            <div class="class-info">
-              <div class="class-name">Agility Level 1</div>
-              <div class="class-why">เหมาะกับพลังงานและความมั่นใจสูง</div>
-            </div>
-            <span class="class-match">91%</span>
-          </div>
-          <div class="class-item">
-            <div class="class-rank r3">3</div>
-            <div class="class-info">
-              <div class="class-name">Group Socialization</div>
-              <div class="class-why">พัฒนาทักษะทางสังคมให้สมบูรณ์</div>
-            </div>
-            <span class="class-match" style="color:#A09880;">84%</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Closing statement -->
-      <div class="closing">
-        <p>สุนัขบุคลิก <strong>FSCA</strong> มีศักยภาพที่น่าทึ่ง<br/>ด้วยการฝึกที่สม่ำเสมอและความเข้าใจที่ถูกต้อง<br/>ความสัมพันธ์ของคุณจะเติบโตอย่างยั่งยืน 🐕</p>
-      </div>
-    </div>
-
-    <!-- School CTA -->
-    <div class="school-cta">
-      <div class="school-cta-title">พร้อมเริ่มต้นการฝึก?</div>
-      <div class="school-cta-sub">ค้นหาสถาบันฝึกสุนัขที่เข้าใจบุคลิก FSCA และใช้วิธีที่ไม่บังคับ ไม่ลงโทษ</div>
-      <a href="school.html" class="btn-school">
-        <svg data-lucide="school" stroke="currentColor" fill="none" stroke-width="2"></svg>
-        ดูข้อมูลสถาบันฝึกสุนัข
-      </a>
-    </div>
-
-    <!-- Consult outline button -->
-    <button class="btn-outline">
-      <svg data-lucide="message-circle" stroke="currentColor" fill="none" stroke-width="2"></svg>
-      สอบถามการฝึกเพิ่มเติม
-    </button>
-
   </div>
+
+  <!-- ===== STEP 3: QUIZ INTRO ===== -->
+  <div id="step3" class="step">
+    <div class="glow"></div>
+    <div class="content">
+      <div class="badge"><i data-lucide="sparkles"></i> แบบประเมินบุคลิก</div>
+      <h2>หมาของคุณ<br>Type ไหน?</h2>
+      <p class="intro-p">เพียง 5 นาที ในการรู้ถึงคำอธิบายเกี่ยวกับตัวตนของสุนัขของคุณ — ตอบ 32 ข้อตามที่สังเกตเห็น เราจะจัดเป็นรหัส 4 ตัวอักษร → 1 ใน 8 บุคลิก</p>
+      <div class="dim-list">
+        <div class="dim-item">
+          <i data-lucide="compass"></i>
+          <div>
+            <div class="dim-title">Explorer ↔ Focused</div>
+            <div class="dim-sub">ชอบสำรวจเอง หรือโฟกัสเจ้าของ</div>
+          </div>
+        </div>
+        <div class="dim-item">
+          <i data-lucide="users"></i>
+          <div>
+            <div class="dim-title">Social ↔ Reserved</div>
+            <div class="dim-sub">เข้าหาคน/หมา หรือระวังตัว</div>
+          </div>
+        </div>
+        <div class="dim-item">
+          <i data-lucide="shield"></i>
+          <div>
+            <div class="dim-title">Confident ↔ Nervous</div>
+            <div class="dim-sub">มั่นใจกล้าลอง หรือกังวลง่าย</div>
+          </div>
+        </div>
+        <div class="dim-item">
+          <i data-lucide="zap"></i>
+          <div>
+            <div class="dim-title">Active ↔ Moderate</div>
+            <div class="dim-sub">พลังงานสูง หรือปานกลาง</div>
+          </div>
+        </div>
+      </div>
+      <div class="timer">
+        <i data-lucide="clock"></i> ใช้เวลาประมาณ 5 นาที
+      </div>
+      <div class="cta">
+        <button class="pbtn" onclick="goStep(4)">เริ่มแบบประเมิน <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STEP 4: QUIZ QUESTION ===== -->
+  <div id="step4" class="step">
+    <div class="content">
+      <div class="topbar">
+        <button class="back-btn" onclick="goStep(3)" aria-label="ย้อนกลับ"><i data-lucide="arrow-left"></i></button>
+        <div class="prog-wrap">
+          <div class="prog-fill" id="quiz-prog"></div>
+        </div>
+        <span class="prog-label">1/32</span>
+      </div>
+      <div class="dim-badge"><i data-lucide="users"></i> ด้านสังคม · Social</div>
+      <h2>โคโค่ดีใจเมื่อได้เจอคนใหม่</h2>
+      <p class="q-hint">เลือกระดับที่ตรงกับน้องที่สุด</p>
+      <div class="choices">
+        <button class="choice" onclick="selectChoice(this)">ไม่ตรงเลย<i data-lucide="check" class="chk"></i></button>
+        <button class="choice" onclick="selectChoice(this)">ไม่ค่อยตรง<i data-lucide="check" class="chk"></i></button>
+        <button class="choice" onclick="selectChoice(this)">กลาง ๆ<i data-lucide="check" class="chk"></i></button>
+        <button class="choice selected" onclick="selectChoice(this)">ค่อนข้างตรง<i data-lucide="check" class="chk"></i></button>
+        <button class="choice" onclick="selectChoice(this)">ตรงมาก<i data-lucide="check" class="chk"></i></button>
+      </div>
+      <div class="cta">
+        <button class="pbtn" onclick="goStep(5)">ข้อถัดไป <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STEP 5: RESULT ===== -->
+  <div id="step5" class="step">
+    <div class="scroll">
+
+      <!-- SHAREABLE CARD -->
+      <div class="share-card" id="share-card">
+        <div class="card-hero">
+          <div class="card-hero-pat"></div>
+          <div class="card-hero-badge">🏅 The Team Captain</div>
+          <div class="card-dog-ph">🐾</div>
+        </div>
+        <div class="card-body">
+          <div class="card-sub">บุคลิกของโคโค่คือ</div>
+          <div class="card-title">The Team Captain</div>
+          <div class="card-code">FSCA</div>
+          <p class="card-tagline">"ผู้นำที่มั่นใจและเข้ากับทุกคน พร้อมพาคุณไปถึงเป้าหมายด้วยความสนุกและรอยยิ้ม"</p>
+        </div>
+        <div class="card-traits">
+          <div class="trait-row">
+            <div class="trait-hdr">
+              <div class="trait-left"><i data-lucide="zap"></i><span class="trait-name">Active</span></div>
+              <span class="trait-opp">Moderate</span>
+            </div>
+            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:20%"></div></div>
+          </div>
+          <div class="trait-row">
+            <div class="trait-hdr">
+              <div class="trait-left"><i data-lucide="users"></i><span class="trait-name">Social</span></div>
+              <span class="trait-opp">Reserved</span>
+            </div>
+            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:24%"></div></div>
+          </div>
+          <div class="trait-row">
+            <div class="trait-hdr">
+              <div class="trait-left"><i data-lucide="shield"></i><span class="trait-name">Confident</span></div>
+              <span class="trait-opp">Nervous</span>
+            </div>
+            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:26%"></div></div>
+          </div>
+          <div class="trait-row">
+            <div class="trait-hdr">
+              <div class="trait-left"><i data-lucide="compass"></i><span class="trait-name">Focused</span></div>
+              <span class="trait-opp">Explorer</span>
+            </div>
+            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:26%"></div></div>
+          </div>
+        </div>
+        <div class="card-brand">
+          <div class="brand-logo"><img src="assets/logo.png" alt="DogBooster"></div>
+          <div>
+            <div class="brand-title">ฝึกสุนัขนิสัยดี มีความสุข</div>
+            <div class="brand-sub">ไม่บังคับ · ไม่ลงโทษ</div>
+          </div>
+        </div>
+      </div>
+      <!-- /SHAREABLE CARD -->
+
+      <button class="pbtn" style="margin-top:16px" onclick="downloadCard()">
+        <i data-lucide="download"></i> ดาวน์โหลดรูปบุคลิกสุนัข
+      </button>
+      <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:10px;font-size:12px;color:#7E7668;font-weight:600">
+        <i data-lucide="share-2" style="width:14px;height:14px;color:var(--gold)"></i>
+        อวดบุคลิกน้องให้เพื่อน ๆ เห็น
+      </div>
+
+      <!-- FULL DETAIL -->
+      <div class="result-detail">
+        <div class="seclabel"><i data-lucide="sparkles"></i>ภาพรวมบุคลิกภาพ</div>
+        <p class="tbody">FSCA คือสุนัขที่เกิดมาพร้อมพรสวรรค์ในการทำงานร่วมกับมนุษย์ — ไม่ได้หลงใหลการสำรวจเหมือน ESCM ไม่ได้ใช้ชีวิตตามแรงกระตุ้นเหมือน ESCA สิ่งที่ FSCA ต้องการคือ "การได้ร่วมมือกันทำบางสิ่งให้สำเร็จ"</p>
+        <div class="insight-list">
+          <div class="insight-item"><i data-lucide="eye"></i><span>มองหน้าเจ้าของบ่อย — คอยสังเกตสัญญาณเล็ก ๆ</span></div>
+          <div class="insight-item"><i data-lucide="zap"></i><span>การฝึกไม่ใช่หน้าที่ — แต่เป็นกิจกรรมที่สนุก</span></div>
+          <div class="insight-item"><i data-lucide="target"></i><span>การเรียนรู้คือความท้าทายที่น่าตื่นเต้น</span></div>
+        </div>
+
+        <div class="mindset-box">
+          <div class="mindset-lbl">วิธีมองโลก</div>
+          <div class="mindset-q">"ความสำเร็จเกิดจากการทำงานร่วมกัน"</div>
+          <p class="mindset-p">เมื่อเจอสถานการณ์ใหม่ สิ่งแรกที่มองหาไม่ใช่สิ่งแวดล้อม แต่คือเจ้าของ — โลกของ FSCA หมุนรอบความร่วมมือมากกว่าการสำรวจ</p>
+        </div>
+
+        <div class="str-grid">
+          <div class="str-box pos">
+            <div class="str-hdr"><i data-lucide="circle-check"></i>จุดแข็ง</div>
+            <div class="str-list">
+              <div>โฟกัสเจ้าของสูง</div>
+              <div>ชอบเรียนรู้</div>
+              <div>ทำงานเป็นทีมเก่ง</div>
+              <div>มีแรงจูงใจสูง</div>
+              <div>พัฒนาได้ไกล</div>
+            </div>
+          </div>
+          <div class="str-box neg">
+            <div class="str-hdr"><i data-lucide="triangle-alert"></i>ต้องระวัง</div>
+            <div class="str-list">
+              <div>ตื่นเต้นกับงานเกินไป</div>
+              <div>พึ่งสัญญาณเจ้าของมาก</div>
+              <div>รับอารมณ์เจ้าของง่าย</div>
+              <div>คาดหวังความชัดเจน</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stress-box">
+          <div class="stress-hdr"><i data-lucide="activity"></i>เมื่อเกิดความเครียด</div>
+          <p class="tbody">FSCA ไม่หลีกหนีปัญหา แต่จะพยายามแก้ไขมากขึ้น — เสนอพฤติกรรมหลายอย่างติดกัน รีบตอบสนอง ขาดความนิ่ง ดูกังวลเมื่อทำผิด พวกเขาไม่กลัวความล้มเหลว แต่กลัวการไม่เข้าใจสิ่งที่เจ้าของต้องการ</p>
+        </div>
+
+        <div class="seclabel" style="margin-top:26px"><i data-lucide="heart-handshake"></i>เจ้าของในอุดมคติ</div>
+        <div class="owner-tags">
+          <span class="owner-tag">ชอบฝึกสุนัข</span>
+          <span class="owner-tag">ทำกิจกรรมร่วมกัน</span>
+          <span class="owner-tag">สื่อสารชัดเจน</span>
+          <span class="owner-tag">พัฒนาไปพร้อมกัน</span>
+        </div>
+
+        <div class="need-box">
+          <div class="need-hdr"><i data-lucide="lightbulb"></i>สิ่งที่ FSCA ต้องเรียนรู้</div>
+          <p style="font-size:12.5px;color:var(--muted2);line-height:1.6">"การควบคุมความตื่นเต้นและความคาดหวัง" — FSCA อยากทำได้ดีจนบางครั้งรีบเกินไป บทเรียนสำคัญคือ "ไม่ใช่ทุกอย่างต้องรีบทำให้สำเร็จ" การหยุดคิดและทำงานอย่างนิ่งมั่นคงคือสิ่งที่ปลดล็อกศักยภาพที่แท้จริง</p>
+        </div>
+
+        <div class="seclabel" style="margin-top:26px"><i data-lucide="route"></i>เส้นทางหลัก · Core Program</div>
+        <div class="core-prog">
+          <div class="core-badge">FBI</div>
+          <div>
+            <div class="core-title">Four Basic Instinct</div>
+            <p class="core-body">FBI คือรากฐานสำคัญของ FSCA — พัฒนาสมาธิ การควบคุมอารมณ์ การสื่อสาร และความเข้าใจระหว่างสุนัขกับเจ้าของ เมื่อผ่าน FBI พวกเขามักแสดงศักยภาพออกมาได้อย่างชัดเจน</p>
+          </div>
+        </div>
+
+        <div class="seclabel" style="margin-top:24px"><i data-lucide="trending-up"></i>เส้นทางต่อยอด · Growth Path</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="growth-item"><i data-lucide="activity"></i><div><div class="growth-title">Dog Fitness</div><div class="growth-body">คลาสที่เหมาะที่สุด — พัฒนาความนิ่ง ความแม่นยำ การควบคุมร่างกาย และสมาธิในการทำงาน</div></div></div>
+          <div class="growth-item"><i data-lucide="sparkles"></i><div><div class="growth-title">Dog Show Tricks</div><div class="growth-body">ได้ใช้ความสามารถในการเรียนรู้และการสื่อสารเต็มที่ เรียนรู้ท่าใหม่ได้รวดเร็ว</div></div></div>
+          <div class="growth-item"><i data-lucide="zap"></i><div><div class="growth-title">Agility Dog</div><div class="growth-body">ใช้ทั้งสมองและร่างกายไปพร้อมกัน ปลดปล่อยพลังงานในรูปแบบที่มีเป้าหมาย</div></div></div>
+        </div>
+
+        <div class="potential-box">
+          <div class="potential-hdr"><i data-lucide="award"></i>ศักยภาพสูงสุดของ FSCA</div>
+          <p style="font-size:13px;color:#5A4A28;line-height:1.65">เมื่อได้รับการพัฒนาอย่างเหมาะสม FSCA จะกลายเป็นสุนัขที่มีสมาธิสูง ควบคุมตัวเองได้ดี ทำงานเป็นทีมยอดเยี่ยม เรียนรู้รวดเร็ว และพร้อมรับความท้าทายใหม่ — สร้างความประทับใจให้ทั้งเจ้าของและผู้ฝึก เพราะพวกเขารักการเรียนรู้ร่วมกับคน</p>
+        </div>
+
+        <div class="seclabel" style="margin-top:26px"><i data-lucide="graduation-cap"></i>คลาสที่เหมาะที่สุด</div>
+        <div class="class-rank">
+          <div class="rank-item dark"><span class="medal">🥇</span><span class="cname">FBI</span><span class="cnote">รากฐาน</span></div>
+          <div class="rank-item light"><span class="medal">🥈</span><span class="cname">Dog Fitness</span></div>
+          <div class="rank-item light"><span class="medal">🥉</span><span class="cname">Dog Show Tricks</span></div>
+          <div class="rank-item light"><span class="medal">🏅</span><span class="cname">Agility Dog</span></div>
+        </div>
+
+        <div class="fsca-sum">
+          FSCA = Focused + Social + Confident + Active<br>
+          <span class="hi">"สุนัขที่เกิดมาเพื่อเรียนรู้ ทำงาน และสร้างความสำเร็จร่วมกับมนุษย์" 🐾🏆</span>
+        </div>
+      </div>
+
+      <!-- SCHOOL CTA -->
+      <div class="school-cta">
+        <div class="school-hdr"><i data-lucide="graduation-cap"></i><span class="school-title">สนใจฝึกสุนัขกับ DogBooster</span></div>
+        <p class="school-body">หลักการ Force-Free ระดับโลก "สร้างสายสัมพันธ์" ผ่านกิจกรรมที่สนุกและเห็นผลจริง</p>
+        <button class="school-btn">ดูข้อมูลสถาบันฝึกสุนัข <i data-lucide="arrow-right"></i></button>
+      </div>
+      <div style="margin-top:14px;width:100%">
+        <button class="pbtn pbtn-outline">สอบถามการฝึกเพิ่มเติม <i data-lucide="message-circle"></i></button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
 </div>
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
-  setTimeout(function() {
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
+  function goStep(n) {
+    document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+    var el = document.getElementById('step' + n);
+    el.classList.add('active');
+    window.scrollTo(0, 0);
+    var sc = el.querySelector('.scroll');
+    if (sc) sc.scrollTop = 0;
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function selectChoice(el) {
+    el.closest('.choices').querySelectorAll('.choice').forEach(function(c) { c.classList.remove('selected'); });
+    el.classList.add('selected');
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function downloadCard() {
+    var card = document.getElementById('share-card');
+    if (!card || !window.html2canvas) {
+      alert('ฟีเจอร์ดาวน์โหลดยังไม่พร้อม');
+      return;
     }
-  }, 200);
+    window.html2canvas(card, { backgroundColor: '#1C1A15', scale: 2, useCORS: true }).then(function(canvas) {
+      var a = document.createElement('a');
+      a.download = 'dogbooster-koko-fsca.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.lucide) lucide.createIcons();
+  });
 </script>
 </body>
 </html>
