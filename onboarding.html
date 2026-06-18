@@ -114,6 +114,24 @@
     cursor: pointer;
   }
 
+  /* Breed autocomplete */
+  .ac-wrap { position: relative; }
+  .ac-list {
+    position: absolute; left: 0; right: 0; top: calc(100% + 6px);
+    background: #fff; border: 1.5px solid var(--border); border-radius: 14px;
+    box-shadow: 0 18px 40px -16px rgba(21,19,15,.28);
+    max-height: 236px; overflow-y: auto; z-index: 40; padding: 6px;
+    display: none;
+  }
+  .ac-list.open { display: block; }
+  .ac-item {
+    padding: 11px 12px; border-radius: 10px; font-size: 14.5px; font-weight: 700;
+    color: var(--dark); cursor: pointer; display: flex; align-items: baseline; gap: 8px;
+  }
+  .ac-item small { color: var(--muted2); font-weight: 600; font-size: 12.5px; }
+  .ac-item.active, .ac-item:hover { background: rgba(240,183,76,.16); }
+  .ac-empty { padding: 13px 12px; font-size: 13.5px; color: var(--muted); text-align: center; }
+
   .seclabel {
     display: flex; align-items: center; gap: 9px;
     font-size: 11px; font-weight: 800; letter-spacing: .06em;
@@ -408,18 +426,12 @@
         </div>
         <div>
           <label class="flabel" for="dog-breed">สายพันธุ์</label>
-          <select id="dog-breed" class="field">
-            <option>Border Collie</option>
-            <option>Golden Retriever</option>
-            <option>Shiba Inu</option>
-            <option>French Bulldog</option>
-            <option>Labrador Retriever</option>
-            <option>Poodle</option>
-            <option>Corgi</option>
-            <option>Beagle</option>
-            <option>Mixed / ลูกผสม</option>
-            <option>อื่น ๆ</option>
-          </select>
+          <div class="ac-wrap">
+            <input id="dog-breed" class="field" type="text" autocomplete="off"
+                   placeholder="พิมพ์ชื่อสายพันธุ์ เช่น โกลเด้น, Shiba" value="Border Collie"
+                   role="combobox" aria-autocomplete="list" aria-controls="breed-ac" aria-expanded="false">
+            <ul class="ac-list" id="breed-ac" role="listbox" aria-label="รายชื่อสายพันธุ์"></ul>
+          </div>
         </div>
         <div class="row">
           <div>
@@ -724,6 +736,126 @@
       a.click();
     });
   }
+
+  /* ===== Breed autocomplete (ค้นได้ทั้งไทยและอังกฤษ พิมพ์เองได้ถ้าไม่มีในรายการ) ===== */
+  var BREEDS = [
+    {en:'Mixed / ลูกผสม', th:'พันธุ์ผสม'},
+    {en:'Thai Ridgeback', th:'ไทยหลังอาน'},
+    {en:'Thai Bangkaew', th:'ไทยบางแก้ว'},
+    {en:'Golden Retriever', th:'โกลเด้น รีทรีฟเวอร์'},
+    {en:'Labrador Retriever', th:'ลาบราดอร์ รีทรีฟเวอร์'},
+    {en:'Border Collie', th:'บอร์เดอร์ คอลลี่'},
+    {en:'Shiba Inu', th:'ชิบะ อินุ'},
+    {en:'Siberian Husky', th:'ไซบีเรียน ฮัสกี้'},
+    {en:'Pomeranian', th:'ปอมเมอเรเนียน'},
+    {en:'Poodle', th:'พุดเดิ้ล'},
+    {en:'Toy Poodle', th:'ทอย พุดเดิ้ล'},
+    {en:'French Bulldog', th:'เฟรนช์ บูลด็อก'},
+    {en:'English Bulldog', th:'อิงลิช บูลด็อก'},
+    {en:'Pug', th:'ปั๊ก'},
+    {en:'Beagle', th:'บีเกิ้ล'},
+    {en:'Corgi (Pembroke)', th:'คอร์กี้'},
+    {en:'Chihuahua', th:'ชิวาวา'},
+    {en:'Dachshund', th:'ดัชชุนด์'},
+    {en:'Shih Tzu', th:'ชิห์สุ'},
+    {en:'Maltese', th:'มอลทีส'},
+    {en:'Yorkshire Terrier', th:'ยอร์กเชียร์ เทอร์เรียร์'},
+    {en:'Jack Russell Terrier', th:'แจ็ค รัสเซลล์ เทอร์เรียร์'},
+    {en:'Miniature Schnauzer', th:'มิเนเจอร์ ชเนาเซอร์'},
+    {en:'Cavalier King Charles Spaniel', th:'คาวาเลียร์ คิง ชาร์ลส สแปเนียล'},
+    {en:'Cocker Spaniel', th:'ค็อกเกอร์ สแปเนียล'},
+    {en:'German Shepherd', th:'เยอรมัน เชพเพิร์ด'},
+    {en:'Belgian Malinois', th:'เบลเยียม มาลินอยส์'},
+    {en:'Rottweiler', th:'ร็อตไวเลอร์'},
+    {en:'Doberman Pinscher', th:'โดเบอร์แมน'},
+    {en:'Boxer', th:'บ็อกเซอร์'},
+    {en:'Great Dane', th:'เกรท เดน'},
+    {en:'Saint Bernard', th:'เซนต์ เบอร์นาร์ด'},
+    {en:'Bernese Mountain Dog', th:'เบอร์นีส เมาน์เทน ด็อก'},
+    {en:'Alaskan Malamute', th:'อลาสกัน มาลามิวท์'},
+    {en:'Samoyed', th:'ซามอยด์'},
+    {en:'Akita Inu', th:'อากิตะ อินุ'},
+    {en:'Australian Shepherd', th:'ออสเตรเลียน เชพเพิร์ด'},
+    {en:'Shetland Sheepdog', th:'เช็ตแลนด์ ชีพด็อก'},
+    {en:'Bull Terrier', th:'บูล เทอร์เรียร์'},
+    {en:'American Pit Bull Terrier', th:'พิทบูล'},
+    {en:'American Bully', th:'อเมริกัน บูลลี่'},
+    {en:'Staffordshire Bull Terrier', th:'สตาฟฟอร์ดเชียร์ บูล เทอร์เรียร์'},
+    {en:'Bichon Frise', th:'บิชอง ฟริเซ่'},
+    {en:'Havanese', th:'ฮาวานีส'},
+    {en:'Papillon', th:'พาพิยอง'},
+    {en:'Pekingese', th:'ปักกิ่ง'},
+    {en:'Basset Hound', th:'บาสเซ็ต ฮาวด์'},
+    {en:'Bloodhound', th:'บลัดฮาวด์'},
+    {en:'Weimaraner', th:'ไวมาราเนอร์'},
+    {en:'Vizsla', th:'วิซลา'},
+    {en:'Pointer', th:'พอยน์เตอร์'},
+    {en:'Brittany', th:'บริทานี'},
+    {en:'Whippet', th:'วิปเพ็ต'},
+    {en:'Greyhound', th:'เกรย์ฮาวด์'},
+    {en:'Border Terrier', th:'บอร์เดอร์ เทอร์เรียร์'},
+    {en:'West Highland White Terrier', th:'เวสต์ ไฮแลนด์ ไวต์ เทอร์เรียร์'},
+    {en:'Chow Chow', th:'เชาเชา'},
+    {en:'Shar Pei', th:'ชาร์เป่ย'},
+    {en:'Dalmatian', th:'ดัลเมเชียน'},
+    {en:'Newfoundland', th:'นิวฟันด์แลนด์'},
+    {en:'Mastiff', th:'มาสทิฟฟ์'},
+    {en:'Cane Corso', th:'เคน คอร์โซ'},
+    {en:'อื่น ๆ', th:'ระบุเอง'}
+  ];
+
+  (function initBreedAutocomplete() {
+    var input = document.getElementById('dog-breed');
+    var list = document.getElementById('breed-ac');
+    if (!input || !list) return;
+    var items = [], active = -1;
+
+    function norm(s) { return (s || '').toLowerCase().trim(); }
+
+    function render(q) {
+      var nq = norm(q);
+      items = !nq ? BREEDS.slice(0, 8) : BREEDS.filter(function (b) {
+        return norm(b.en).indexOf(nq) > -1 || norm(b.th).indexOf(nq) > -1;
+      });
+      active = -1;
+      if (!items.length) {
+        list.innerHTML = '<li class="ac-empty">ไม่พบในรายการ — พิมพ์เพื่อระบุเองได้เลย</li>';
+      } else {
+        list.innerHTML = items.map(function (b, i) {
+          return '<li class="ac-item" role="option" data-i="' + i + '">' +
+                 b.en + ' <small>' + b.th + '</small></li>';
+        }).join('');
+      }
+      open();
+    }
+    function open() { list.classList.add('open'); input.setAttribute('aria-expanded', 'true'); }
+    function close() { list.classList.remove('open'); input.setAttribute('aria-expanded', 'false'); active = -1; }
+    function choose(i) { if (items[i]) { input.value = items[i].en; close(); } }
+    function paint() {
+      Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle('active', i === active); });
+      if (active > -1 && list.children[active]) list.children[active].scrollIntoView({ block: 'nearest' });
+    }
+
+    input.addEventListener('focus', function () { render(input.value); });
+    input.addEventListener('input', function () { render(input.value); });
+    input.addEventListener('keydown', function (e) {
+      if (!list.classList.contains('open')) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(active + 1, items.length - 1); paint(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(active - 1, 0); paint(); }
+      else if (e.key === 'Enter' && active > -1) { e.preventDefault(); choose(active); }
+      else if (e.key === 'Escape') { close(); }
+    });
+    /* mousedown/touchstart: เลือกก่อน input จะ blur */
+    list.addEventListener('mousedown', function (e) {
+      var li = e.target.closest('.ac-item');
+      if (!li) return;
+      e.preventDefault();
+      choose(parseInt(li.getAttribute('data-i'), 10));
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.ac-wrap')) close();
+    });
+  })();
 
   document.addEventListener('DOMContentLoaded', function() {
     if (window.lucide) lucide.createIcons();
