@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -314,10 +315,61 @@
   <script>
     lucide.createIcons();
 
-    function handleLineLogin() {
-      // TODO: replace with actual LINE OAuth URL
-      console.log('LINE login initiated');
+    /* ===== LINE Login (LIFF) =====
+       ขั้นตอนตั้งค่า:
+       1. สร้าง LINE Login channel ใน https://developers.line.biz/console/
+       2. เพิ่ม LIFF app: Endpoint URL = URL production ของหน้านี้, Scope = profile, openid
+       3. คัดลอก LIFF ID (รูปแบบ 1234567890-abcdEfgh) มาวางที่ค่า LIFF_ID ด้านล่าง */
+    var LIFF_ID = 'PASTE_YOUR_LIFF_ID_HERE';
+
+    function liffReady() {
+      return typeof LIFF_ID === 'string' && LIFF_ID && LIFF_ID.indexOf('PASTE') === -1;
     }
+
+    /* เรียกหลังล็อกอินสำเร็จ: เก็บโปรไฟล์ แล้วพาไปหน้าถัดไปตามผู้ใช้ใหม่/เก่า */
+    async function afterLogin() {
+      try {
+        var profile = await liff.getProfile();
+        localStorage.setItem('db_user', JSON.stringify({
+          userId: profile.userId,
+          displayName: profile.displayName,
+          pictureUrl: profile.pictureUrl
+        }));
+        /* ผู้ใช้เก่า (เคยทำ onboarding แล้ว) -> learning-path, ผู้ใช้ใหม่ -> onboarding */
+        var onboarded = localStorage.getItem('db_onboarded') === 'true';
+        location.href = onboarded ? 'learning-path.html' : 'onboarding.html';
+      } catch (err) {
+        console.error('getProfile error', err);
+      }
+    }
+
+    async function initLine() {
+      if (!liffReady()) return;
+      try {
+        await liff.init({ liffId: LIFF_ID });
+        /* ถ้ากลับมาจากการ login ของ LINE และล็อกอินอยู่แล้ว -> ไปต่อทันที */
+        if (liff.isLoggedIn()) {
+          await afterLogin();
+        }
+      } catch (err) {
+        console.error('LIFF init error', err);
+      }
+    }
+
+    function handleLineLogin() {
+      if (!liffReady()) {
+        alert('ยังไม่ได้ตั้งค่า LIFF ID — กรุณาใส่ค่า LIFF_ID ใน index.html');
+        return;
+      }
+      if (liff.isLoggedIn()) {
+        afterLogin();
+      } else {
+        /* เด้งไปหน้ายินยอมของ LINE แล้ว redirect กลับมาที่หน้านี้ */
+        liff.login({ redirectUri: location.href });
+      }
+    }
+
+    initLine();
   </script>
 </body>
 </html>
