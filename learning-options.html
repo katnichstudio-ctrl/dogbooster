@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>DogBooster — เลือกรูปแบบการเรียน</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #F0B74C;
+      --gold-dark: #E0A02F;
+      --dark: #15130F;
+      --cream: #FAF7F1;
+      --muted: #A39B8C;
+      --bg: #E7E2D7;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'LINE Seed Sans TH', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    .screen {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .statusbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 26px 4px;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .statusbar-icons { display: flex; gap: 7px; }
+    .statusbar-icons svg { width: 15px; height: 15px; stroke-width: 1.75; }
+
+    .content { padding: 10px 24px 40px; flex: 1; }
+
+    .back-btn {
+      background: none; border: none; cursor: pointer; color: var(--dark); padding: 0;
+      display: inline-flex;
+    }
+    .back-btn svg { width: 22px; height: 22px; stroke-width: 2; }
+
+    h1.page-title { font-size: 25px; font-weight: 800; letter-spacing: -.01em; margin-top: 18px; }
+    p.page-desc { font-size: 14px; color: #48433A; line-height: 1.65; margin-top: 8px; }
+
+    /* Tabs */
+    .tabs {
+      display: flex; gap: 8px; margin-top: 22px;
+      overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0; font-family: inherit; font-size: 13px; font-weight: 800;
+      padding: 9px 16px; border-radius: 100px; border: 1.5px solid #E4DECF;
+      background: transparent; color: #6B6459; cursor: pointer; transition: all .15s;
+    }
+    .tab.active { background: var(--dark); color: var(--gold); border-color: var(--dark); }
+
+    /* Panels */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* Shared */
+    .info-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--dark); color: var(--gold);
+      font-size: 13px; font-weight: 800; padding: 11px 15px; border-radius: 13px; margin-top: 18px;
+    }
+    .info-badge svg { width: 16px; height: 16px; stroke-width: 1.75; flex-shrink: 0; }
+
+    .detail-card {
+      background: #fff; border: 1px solid #E4DECF; border-radius: 18px;
+      padding: 16px; margin-top: 12px; display: flex; flex-direction: column; gap: 13px;
+    }
+    .detail-row { display: flex; gap: 11px; align-items: flex-start; }
+    .detail-row svg { width: 19px; height: 19px; stroke-width: 1.75; color: #B8860B; flex-shrink: 0; margin-top: 1px; }
+    .detail-row span { font-size: 13.5px; color: #2E2A23; line-height: 1.5; }
+
+    .price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 18px; }
+    .price-label { font-size: 14px; color: #6B6459; font-weight: 700; }
+    .price-amount { font-size: 28px; font-weight: 800; color: #B8860B; }
+
+    .pbtn {
+      font-family: inherit; border: none; cursor: pointer;
+      background: var(--gold); color: var(--dark);
+      font-weight: 800; font-size: 16px; padding: 16px; border-radius: 15px;
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px;
+      box-shadow: 0 12px 24px -12px rgba(240,183,76,.9); margin-top: 14px; transition: background .15s;
+    }
+    .pbtn:hover { background: var(--gold-dark); }
+    .pbtn svg { width: 18px; height: 18px; stroke-width: 1.75; }
+
+    .consult-note {
+      display: flex; align-items: center; justify-content: center;
+      gap: 7px; margin-top: 12px; font-size: 12px; color: #6B6459; font-weight: 600;
+    }
+    .consult-note svg { width: 14px; height: 14px; stroke-width: 1.75; color: var(--gold); }
+
+    /* Dark card wrapper */
+    .dark-panel {
+      background: var(--dark); border-radius: 24px; padding: 22px 20px;
+      margin-top: 18px; position: relative; overflow: hidden;
+    }
+    .dark-panel::before {
+      content: ''; position: absolute; top: -70px; right: -50px;
+      width: 250px; height: 250px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,183,76,.18), transparent 68%);
+      pointer-events: none;
+    }
+
+    .ff-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(240,183,76,.14); border: 1px solid rgba(240,183,76,.3);
+      color: var(--gold); font-size: 12px; font-weight: 800;
+      padding: 6px 12px; border-radius: 100px; margin-bottom: 14px;
+    }
+    .ff-badge svg { width: 14px; height: 14px; stroke-width: 1.75; }
+
+    .dark-panel h2 { font-size: 24px; font-weight: 800; letter-spacing: -.01em; color: #FAF7F1; line-height: 1.15; }
+    .dark-lead { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-top: 10px; }
+    .gold-lead { font-size: 14.5px; color: var(--gold); font-weight: 700; line-height: 1.5; margin-top: 8px; }
+
+    .step-card {
+      background: #1C1A15; border: 1px solid #3A352D; border-radius: 16px;
+      padding: 16px; margin-top: 11px;
+    }
+    .step-header { display: flex; align-items: center; gap: 10px; }
+    .step-num {
+      width: 30px; height: 30px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-weight: 800; font-size: 14px;
+    }
+    .step-num.gold { background: var(--gold); color: var(--dark); }
+    .step-num.dim { background: #2E2A23; color: var(--gold); }
+    .step-num svg { width: 15px; height: 15px; stroke-width: 1.75; }
+    .step-title { font-weight: 800; font-size: 14px; color: #FAF7F1; }
+    .step-body { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin-top: 9px; }
+
+    .step-checks { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .step-check { display: flex; gap: 9px; align-items: flex-start; }
+    .step-check svg { width: 15px; height: 15px; stroke-width: 1.75; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .step-check span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+    .price-card-dark {
+      background: linear-gradient(150deg, #2A2620, #15130F);
+      border: 1px solid #3A352D; border-radius: 16px; padding: 16px; margin-top: 16px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pcd-label { font-size: 12px; color: var(--muted); font-weight: 700; }
+    .pcd-sub { font-size: 11px; color: #7E7668; }
+    .pcd-amount { font-size: 26px; font-weight: 800; color: var(--gold); }
+
+    .next-step-card {
+      border: 1.5px solid #3A352D; border-radius: 16px; padding: 15px; margin-top: 14px;
+    }
+    .nsc-head {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 800; color: #FAF7F1; margin-bottom: 7px;
+    }
+    .nsc-head svg { width: 15px; height: 15px; stroke-width: 1.75; color: var(--gold); }
+    .next-step-card p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+    .pbtn-dark {
+      font-family: inherit; border: none; cursor: pointer;
+      background: var(--gold); color: var(--dark);
+      font-weight: 800; font-size: 16px; padding: 16px; border-radius: 15px;
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 9px;
+      box-shadow: 0 12px 24px -12px rgba(240,183,76,.9);
+      margin-top: 16px; transition: background .15s;
+    }
+    .pbtn-dark:hover { background: var(--gold-dark); }
+    .pbtn-dark svg { width: 18px; height: 18px; stroke-width: 1.75; }
+
+    /* Board & Train */
+    .timeline { display: flex; flex-direction: column; gap: 11px; margin-top: 18px; }
+    .timeline .step-card { margin-top: 0; }
+
+    .bt-price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 18px; }
+    .bt-price-row .lbl { font-size: 14px; color: #7E7668; font-weight: 700; }
+    .bt-price-row .amt { font-size: 28px; font-weight: 800; color: var(--gold); }
+    .bt-price-row .unit { font-size: 13px; color: #7E7668; }
+
+    .video-note {
+      display: flex; align-items: center; justify-content: center;
+      gap: 7px; margin-top: 12px; font-size: 12px; color: #7E7668; font-weight: 600;
+    }
+    .video-note svg { width: 14px; height: 14px; stroke-width: 1.75; color: var(--gold); }
+
+    .map-link {
+      display: flex; align-items: center; gap: 12px;
+      background: #1C1A15; border: 1px solid #3A352D; border-radius: 14px;
+      padding: 14px; margin-top: 14px; text-decoration: none;
+    }
+    .map-link svg { stroke-width: 1.75; flex-shrink: 0; }
+    .map-name { font-weight: 800; font-size: 13.5px; color: #FAF7F1; }
+    .map-sub { font-size: 11.5px; color: #7E7668; }
+
+    .divider { height: 1px; background: #2E2A23; margin: 24px 0 4px; }
+
+    .sec-head {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 16px; font-weight: 800; color: #FAF7F1; margin-top: 18px;
+    }
+    .sec-head svg { width: 18px; height: 18px; stroke-width: 1.75; color: var(--gold); }
+
+    .disclaimer { font-size: 13px; color: var(--muted); line-height: 1.65; margin-top: 10px; }
+
+    .note-cards { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .note-card {
+      background: #1C1A15; border: 1px solid #3A352D;
+      border-left: 3px solid var(--gold); border-radius: 13px; padding: 13px 15px;
+    }
+    .note-card.orange { border-left-color: #C77B53; }
+    .note-card.green { border-left-color: #5C8A6B; }
+    .nc-title { font-weight: 800; font-size: 13px; color: #FAF7F1; margin-bottom: 4px; }
+    .note-card p { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+    .checklist-card {
+      background: #1C1A15; border: 1px solid #3A352D;
+      border-radius: 16px; padding: 8px 16px; margin-top: 12px;
+    }
+    .cli {
+      display: flex; align-items: center; gap: 10px; padding: 9px 0;
+      border-bottom: 1px solid #2A2620;
+    }
+    .cli:last-child { border-bottom: none; }
+    .cli svg { width: 16px; height: 16px; stroke-width: 1.75; color: var(--gold); flex-shrink: 0; }
+    .cli span { font-size: 13px; color: #E9E4DA; line-height: 1.4; }
+
+    .bring-tip {
+      display: flex; gap: 10px; align-items: flex-start;
+      background: rgba(240,183,76,.12); border: 1px solid rgba(240,183,76,.3);
+      border-radius: 14px; padding: 14px; margin-top: 14px;
+    }
+    .bring-tip svg { width: 18px; height: 18px; stroke-width: 1.75; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+    .bring-tip p { font-size: 12.5px; color: #E9E4DA; line-height: 1.55; }
+
+    /* Tab bar */
+    .tab-bar {
+      position: sticky; bottom: 0;
+      background: var(--dark); border-radius: 24px 24px 0 0;
+      padding: 16px 32px calc(16px + env(safe-area-inset-bottom, 0px));
+      display: flex; justify-content: space-around; flex-shrink: 0;
+    }
+    .tbi {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-size: 10.5px; font-weight: 700; color: #7E7668;
+      background: none; border: none; font-family: inherit; cursor: pointer;
+    }
+    .tbi svg { width: 20px; height: 20px; stroke-width: 1.75; }
+    .tbi.active { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="screen">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="statusbar-icons">
+        <i data-lucide="signal"></i>
+        <i data-lucide="wifi"></i>
+        <i data-lucide="battery-full"></i>
+      </div>
+    </div>
+
+    <div class="content">
+      <button class="back-btn" onclick="history.back()">
+        <i data-lucide="arrow-left"></i>
+      </button>
+
+      <h1 class="page-title">เลือกรูปแบบการเรียน</h1>
+      <p class="page-desc">ทุกรูปแบบยึดหลัก Force-free · choice-based เหมือนกัน</p>
+
+      <div class="tabs">
+        <button class="tab active" onclick="showPanel('private', this)">ฝึกส่วนตัวกับครู</button>
+        <button class="tab" onclick="showPanel('aggression', this)">แก้ปัญหาก้าวร้าว</button>
+        <button class="tab" onclick="showPanel('board', this)">ฝากฝึก 30 วัน</button>
+      </div>
+
+      <!-- ===== PRIVATE ===== -->
+      <div id="panel-private" class="panel active">
+        <div class="info-badge">
+          <i data-lucide="calendar-days"></i>
+          ฝึกที่บ้าน 4 ครั้ง
+        </div>
+        <div class="detail-card">
+          <div class="detail-row">
+            <i data-lucide="target"></i>
+            <span>ประเมินนิสัย + วางแผนเฉพาะตัว</span>
+          </div>
+          <div class="detail-row">
+            <i data-lucide="map-pin"></i>
+            <span>เลือกได้: ที่บ้านคุณ / หรือสถานที่ต่าง ๆ</span>
+          </div>
+          <div class="detail-row">
+            <i data-lucide="clock"></i>
+            <span>ครูสอนสัปดาห์ละ 1 ครั้ง · ครั้งละ 60 นาที (ฝึกต่อเนื่อง)</span>
+          </div>
+          <div class="detail-row">
+            <i data-lucide="users"></i>
+            <span>ฝึกร่วมกับเจ้าของ</span>
+          </div>
+          <div class="detail-row">
+            <i data-lucide="map-pinned"></i>
+            <span>เขตบริการ · <strong>ฟรีในรัศมี 20 กม.</strong><br><span style="color:#6B6459">เกิน 20 กม. คิดค่าเดินทาง 1,500–3,000 บาท/คอร์ส</span></span>
+          </div>
+        </div>
+        <div class="price-row">
+          <span class="price-label">แพ็กเกจ 4 ครั้ง</span>
+          <span class="price-amount">฿9,900</span>
+        </div>
+        <button class="pbtn">
+          จองคิวครูฝึก <i data-lucide="calendar-check"></i>
+        </button>
+        <div class="consult-note">
+          <i data-lucide="message-circle"></i>
+          ปรึกษาก่อนจองได้ ไม่มีค่าใช้จ่าย
+        </div>
+      </div>
+
+      <!-- ===== AGGRESSION ===== -->
+      <div id="panel-aggression" class="panel">
+        <div class="dark-panel">
+          <div class="ff-badge">
+            <i data-lucide="heart-handshake"></i>
+            Force-free · ไม่บังคับ ไม่ลงโทษ
+          </div>
+          <h2>แก้ปัญหาดุ กัด<br>ก้าวร้าว</h2>
+          <p class="dark-lead">ครูเข้าไปบริหารจัดการถึงบ้าน — หาต้นตอของปัญหาที่แท้จริง แล้วออกแบบทางแก้เป็นขั้นเป็นตอน พร้อมติดตามผลต่อเนื่อง</p>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num gold">1</div>
+              <div class="step-title">ครูเข้าบ้านครั้งแรก · ~2 ชม.</div>
+            </div>
+            <div class="step-checks">
+              <div class="step-check"><i data-lucide="check"></i><span>ออกแบบการเลี้ยง</span></div>
+              <div class="step-check"><i data-lucide="check"></i><span>ให้ความรู้ในการดูแล</span></div>
+              <div class="step-check"><i data-lucide="check"></i><span>มองหาปัญหาที่แท้จริง</span></div>
+              <div class="step-check"><i data-lucide="check"></i><span>ออกแบบการแก้ปัญหาเป็นขั้นเป็นตอน</span></div>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num dim"><i data-lucide="message-circle"></i></div>
+              <div class="step-title">ติดตามผล 30 วัน</div>
+            </div>
+            <p class="step-body">ปรึกษาผ่านไลน์ส่วนตัวได้ตลอด 30 วัน เพื่อติดตามผลอย่างใกล้ชิด</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-header">
+              <div class="step-num dim">2</div>
+              <div class="step-title">ครูเข้าบ้านอีกครั้ง</div>
+            </div>
+            <p class="step-body">ครบ 30 วัน เมื่อครูประเมินว่าน้องดีขึ้นจริง จะเข้าไปอัปเดต/ทบทวนอีก 1 ครั้ง</p>
+          </div>
+
+          <div class="price-card-dark">
+            <div>
+              <div class="pcd-label">ครูเข้าบ้าน 2 ครั้ง</div>
+              <div class="pcd-sub">รวมติดตามผล 30 วัน</div>
+            </div>
+            <span class="pcd-amount">฿8,900</span>
+          </div>
+
+          <div class="next-step-card">
+            <div class="nsc-head"><i data-lucide="arrow-right-circle"></i>เมื่อน้องดีขึ้นแล้ว</div>
+            <p>เมื่อน้องดีขึ้นจากการจัดการสภาพแวดล้อมแล้ว ต่อด้วยคลาสออนไลน์ หรือให้ครูไปฝึกที่บ้านต่อได้ — เพื่อสร้างความรัก ความผูกพัน วินัย และความอดทนอดกลั้น โดยไม่ต้องบังคับหรือลงโทษ</p>
+          </div>
+
+          <button class="pbtn-dark">
+            ปรึกษาปัญหาก้าวร้าว <i data-lucide="message-circle"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== BOARD & TRAIN ===== -->
+      <div id="panel-board" class="panel">
+        <div class="dark-panel">
+          <div class="ff-badge">
+            <i data-lucide="home"></i>
+            Home-Style Training
+          </div>
+          <h2>ฝากฝึก 30 วัน</h2>
+          <p class="gold-lead">ไม่ใช่แค่รับฝึก แต่ฝึกให้ใช้ชีวิตกับคนได้จริง ตามหลัก Force-free</p>
+          <p class="dark-lead">ฝากครูเลี้ยงที่บ้านจริง ๆ อบอุ่นเหมือนอยู่บ้าน มีกิจวัตรประจำวัน เด็ก ๆ ได้เรียนรู้การใช้ชีวิตร่วมกับคนในบ้าน ฝึกด้วยหัวใจ Force-free ใช้หลักการบวก (Positive Reinforcement) สร้างความเข้าใจ ไม่กดขี่</p>
+
+          <div class="timeline">
+            <div class="step-card">
+              <div class="step-header">
+                <div class="step-num gold">1</div>
+                <div class="step-title">เดือนที่ 1 · สร้างพื้นฐานสติ</div>
+              </div>
+              <p class="step-body">ปูพื้นฐานความสงบ สร้างสติ ฝึกการหักห้ามใจและสมาธิเบื้องต้น ให้น้อง "นั่ง/คอยเองเป็นโดยไม่ต้องสั่ง" เรียนรู้ความสงบด้วยตัวเอง ลดความตื่นเต้นภายในบ้าน</p>
+            </div>
+            <div class="step-card">
+              <div class="step-header">
+                <div class="step-num dim">2</div>
+                <div class="step-title">เดือนที่ 2 · นำสติมาใช้จริง</div>
+              </div>
+              <p class="step-body">นำความสงบมาใช้กับกิจวัตรประจำวัน เพิ่มสมาธิ (Focus) ท่ามกลางสิ่งเร้า สร้างความเชื่อใจต่อผู้ฝึก รักษาสมาธิได้นานขึ้น มั่นใจสูงขึ้น เรียกสติกลับได้ไว นั่งรอ-หมอบคอยได้</p>
+            </div>
+            <div class="step-card">
+              <div class="step-header">
+                <div class="step-num dim">3</div>
+                <div class="step-title">เดือนที่ 3 · Skill Selection</div>
+              </div>
+              <p class="step-body">นำสติ 2 เดือนมาแก้ปัญหา/ฝึกทักษะเฉพาะที่เจ้าของต้องการ ปรับให้เข้ากับไลฟ์สไตล์ เช่น Recall · เดินในสายจูง · ลดความไวต่อสิ่งเร้า <span style="color:#7E7668">(เลือกตามความต้องการ)</span></p>
+            </div>
+          </div>
+
+          <div class="bt-price-row">
+            <span class="lbl">แพ็กเกจ 30 วัน เริ่มต้น</span>
+            <span class="amt">฿15,000</span>
+            <span class="unit">/ เดือน</span>
+          </div>
+
+          <button class="pbtn-dark">
+            สอบถาม / จองโปรแกรม <i data-lucide="arrow-right"></i>
+          </button>
+
+          <div class="video-note">
+            <i data-lucide="video"></i>
+            มีคลิปรายงานความคืบหน้าทุกวัน
+          </div>
+
+          <a href="https://maps.app.goo.gl/WjJUiiMsb68KnfMLA" target="_blank" rel="noopener" class="map-link">
+            <i data-lucide="map-pin" style="width:20px;height:20px;color:var(--gold)"></i>
+            <div style="flex:1;min-width:0">
+              <div class="map-name">แผนที่บ้านครูแคทนิช · นครปฐม</div>
+              <div class="map-sub">กดเพื่อดูใน Google Maps</div>
+            </div>
+            <i data-lucide="external-link" style="width:16px;height:16px;color:#7E7668"></i>
+          </a>
+
+          <div class="divider"></div>
+
+          <div class="sec-head">
+            <i data-lucide="info"></i>
+            สิ่งที่ควรรู้
+          </div>
+          <p class="disclaimer">สุนัขแต่ละตัวมีพื้นฐานนิสัย สภาพจิตใจ และความสามารถในการเรียนรู้ต่างกัน ผลลัพธ์ของการฝึกจึงอาจแตกต่างกันไปในแต่ละตัว</p>
+
+          <div class="note-cards">
+            <div class="note-card">
+              <div class="nc-title">ฝึกระยะสั้น (1–2 เดือน)</div>
+              <p>ครูเน้นสร้างพื้นฐานสมาธิ + มอบ "คู่มือ/แนวทางปฏิบัติ" ให้เจ้าของไปต่อยอดที่บ้าน เพราะความสำเร็จระยะยาวขึ้นกับสภาพแวดล้อมที่สอดคล้องกันระหว่างบ้านและที่ฝึก</p>
+            </div>
+            <div class="note-card orange">
+              <div class="nc-title">น้องที่เห่า / Reactive</div>
+              <p>ครูเน้นปรับพฤติกรรมเป็นอันดับแรก เริ่มจากบทเรียนพื้นฐานเพื่อลดความเครียดและสร้างความพร้อมในการเรียนรู้</p>
+            </div>
+            <div class="note-card green">
+              <div class="nc-title">ฝึกต่อเนื่องระยะยาว</div>
+              <p>หากต้องการเน้นทักษะต่าง ๆ สามารถฝากฝึกต่อเนื่องได้ตามความต้องการ</p>
+            </div>
+          </div>
+
+          <div class="sec-head" style="margin-top:24px">
+            <i data-lucide="clipboard-list"></i>
+            สิ่งที่ต้องเตรียมมา
+          </div>
+
+          <div class="checklist-card">
+            <div class="cli"><i data-lucide="square-check"></i><span>อาหารหลัก</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>ขนม / อาหารเสริม</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>ชามอาหาร / ชามน้ำ</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>สายจูง / ปลอกคอ / รัดอก</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>ที่นอน / ผ้า</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>ของเล่น</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>ยาประจำตัว (ถ้ามี)</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>สำเนาบัตรประชาชน (เจ้าของ)</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>สำเนาสมุดวัคซีน (หน้าชื่อเจ้าของ + วัคซีนล่าสุด)</span></div>
+            <div class="cli"><i data-lucide="square-check"></i><span>เลขไมโครชิพ / ทะเบียนสัตว์เลี้ยง (ถ้ามี)</span></div>
+            <div class="cli" style="border-bottom:none"><i data-lucide="square-check"></i><span>ผลตรวจสุขภาพ + โรคติดต่อ (อายุไม่เกิน 7 วัน)</span></div>
+          </div>
+
+          <div class="bring-tip">
+            <i data-lucide="shopping-bag"></i>
+            <p><strong style="color:var(--gold)">ฝากซื้อได้</strong> — อาหาร / ขนม / ของใช้ทั่วไป จ่ายตามราคาจริง</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tab-bar">
+      <button class="tbi" onclick="location.href='index.html'">
+        <i data-lucide="home"></i>
+        หน้าหลัก
+      </button>
+      <button class="tbi active">
+        <i data-lucide="book-open"></i>
+        เรียน
+      </button>
+      <button class="tbi">
+        <i data-lucide="clipboard-list"></i>
+        แบบทดสอบ
+      </button>
+      <button class="tbi">
+        <i data-lucide="user"></i>
+        โปรไฟล์
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function showPanel(name, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
