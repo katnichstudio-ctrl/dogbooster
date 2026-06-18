@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>DogBooster — รายละเอียดบุคลิก</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #F0B74C;
+      --gold-light: #F7CE7E;
+      --gold-dark: #E0A02F;
+      --dark: #15130F;
+      --cream: #FAF7F1;
+      --muted: #A39B8C;
+      --bg: #E7E2D7;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'LINE Seed Sans TH', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    .screen {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      background: linear-gradient(165deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
+      padding-bottom: 28px;
+      flex-shrink: 0;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(135deg, transparent, transparent 14px, rgba(255,255,255,.07) 14px, rgba(255,255,255,.07) 28px);
+      pointer-events: none;
+    }
+
+    .statusbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 26px 4px;
+      font-size: 14px;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+    .statusbar-icons { display: flex; gap: 7px; }
+    .statusbar-icons svg { width: 15px; height: 15px; stroke-width: 1.75; }
+
+    .hero-nav {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 22px 0;
+    }
+    .back-circle {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(21,19,15,.16);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--dark);
+      border: none; cursor: pointer; font-size: 0;
+    }
+    .back-circle svg { width: 19px; height: 19px; stroke-width: 1.75; }
+
+    .category-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(21,19,15,.85); color: var(--gold);
+      font-size: 11px; font-weight: 800;
+      padding: 5px 12px; border-radius: 100px;
+    }
+
+    /* Illustration placeholder */
+    .dog-illustration {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .dog-img-placeholder {
+      width: 172px; height: 172px;
+      border-radius: 26px;
+      background: #E4DECF;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .dog-img-placeholder svg { width: 56px; height: 56px; stroke-width: 1.5; color: #B8A88A; }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-top: 14px;
+      padding: 0 24px;
+    }
+    .type-code {
+      font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+      display: inline-flex; align-items: center;
+      background: rgba(21,19,15,.85); color: var(--gold);
+      font-size: 13px; font-weight: 800; letter-spacing: .16em;
+      padding: 4px 14px; border-radius: 100px;
+    }
+    .type-name { font-size: 28px; font-weight: 800; letter-spacing: -.01em; color: var(--dark); margin-top: 11px; line-height: 1.05; }
+    .type-thai { font-size: 15px; font-weight: 700; color: #5A4A28; margin-top: 2px; }
+    .type-quote { font-size: 13.5px; font-style: italic; color: #5A4A28; line-height: 1.55; margin-top: 12px; }
+
+    /* ===== BODY ===== */
+    .body-content { padding: 26px 24px 30px; }
+
+    .sec-label {
+      display: flex; align-items: center; gap: 9px;
+      font-size: 11px; font-weight: 800; letter-spacing: .06em;
+      color: #B8860B; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .sec-label svg { width: 14px; height: 14px; stroke-width: 1.75; }
+
+    .body-text { font-size: 14px; line-height: 1.7; color: #48433A; }
+
+    .trait-cards { display: flex; flex-direction: column; gap: 9px; margin-top: 14px; }
+    .trait-card {
+      display: flex; gap: 10px; align-items: center;
+      background: #fff; border: 1px solid #E4DECF; border-radius: 13px; padding: 12px 14px;
+    }
+    .trait-card svg { width: 17px; height: 17px; stroke-width: 1.75; color: #B8860B; flex-shrink: 0; }
+    .trait-card span { font-size: 13px; color: #2E2A23; line-height: 1.5; }
+
+    .worldview-card {
+      background: var(--dark); border-radius: 18px; padding: 20px; margin-top: 24px; text-align: center;
+    }
+    .wv-label { font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+    .wv-quote { font-size: 19px; font-weight: 800; color: var(--gold); line-height: 1.3; }
+    .wv-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 10px; }
+
+    .sw-grid { display: flex; gap: 12px; margin-top: 24px; }
+    .sw-col { flex: 1; border-radius: 16px; padding: 16px; }
+    .sw-col.strengths { background: #E7F0EA; border: 1px solid #CBE0D2; }
+    .sw-col.watchouts { background: #FBEEE6; border: 1px solid #EAD3C2; }
+    .sw-head {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 800; margin-bottom: 11px;
+    }
+    .sw-head svg { width: 16px; height: 16px; stroke-width: 1.75; }
+    .sw-col.strengths .sw-head { color: #4A7359; }
+    .sw-col.watchouts .sw-head { color: #A65A38; }
+    .sw-list { display: flex; flex-direction: column; gap: 7px; font-size: 12.5px; line-height: 1.4; }
+    .sw-col.strengths .sw-list { color: #3C5E49; }
+    .sw-col.watchouts .sw-list { color: #8A4B30; }
+
+    .stress-card {
+      border: 1.5px solid #E4DECF; border-radius: 16px; padding: 16px; margin-top: 16px;
+    }
+    .stress-head {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 800; color: var(--dark); margin-bottom: 8px;
+    }
+    .stress-head svg { width: 16px; height: 16px; stroke-width: 1.75; color: #C77B53; }
+    .stress-card p { font-size: 13px; color: #48433A; line-height: 1.6; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip-gold {
+      background: #FBEFD6; color: #B8860B;
+      font-size: 12.5px; font-weight: 700;
+      padding: 8px 13px; border-radius: 100px;
+    }
+
+    .learn-card {
+      background: #1C1A15; border: 1px solid #3A352D;
+      border-radius: 16px; padding: 16px; margin-top: 18px;
+    }
+    .learn-head {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 13px; font-weight: 800; color: var(--gold); margin-bottom: 7px;
+    }
+    .learn-head svg { width: 16px; height: 16px; stroke-width: 1.75; }
+    .learn-card p { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+
+    .core-card {
+      background: var(--dark); border-radius: 18px; padding: 18px;
+      display: flex; gap: 13px;
+    }
+    .core-badge {
+      width: 46px; height: 46px; border-radius: 13px;
+      background: rgba(240,183,76,.16); color: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-weight: 800; font-size: 15px;
+      font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+    }
+    .core-title { font-weight: 800; font-size: 15px; color: #FAF7F1; margin-bottom: 3px; }
+    .core-desc { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+    .growth-cards { display: flex; flex-direction: column; gap: 10px; }
+    .growth-card {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: #fff; border: 1px solid #E4DECF; border-radius: 14px; padding: 14px;
+    }
+    .growth-card svg { width: 19px; height: 19px; stroke-width: 1.75; color: #B8860B; flex-shrink: 0; margin-top: 1px; }
+    .growth-title { font-weight: 800; font-size: 14px; }
+    .growth-desc { font-size: 12px; color: #6B6459; line-height: 1.5; margin-top: 2px; }
+
+    .potential-card {
+      background: linear-gradient(160deg, #FBEFD6, #F7E4B8);
+      border: 1px solid #F0D89A; border-radius: 18px; padding: 20px; margin-top: 24px;
+    }
+    .pot-head {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 800; color: #8A6A1E; margin-bottom: 10px;
+    }
+    .pot-head svg { width: 17px; height: 17px; stroke-width: 1.75; }
+    .potential-card p { font-size: 13px; color: #5A4A28; line-height: 1.65; }
+
+    .ranked-list { display: flex; flex-direction: column; gap: 9px; }
+    .rank-item {
+      display: flex; align-items: center; gap: 12px;
+      border-radius: 13px; padding: 13px 15px;
+    }
+    .rank-item.gold-bg { background: var(--dark); }
+    .rank-item.light-bg { background: #fff; border: 1px solid #E4DECF; }
+    .rank-emoji { font-size: 18px; }
+    .rank-name { font-weight: 800; font-size: 14px; flex: 1; }
+    .rank-item.gold-bg .rank-name { color: var(--gold); }
+    .rank-item.light-bg .rank-name { color: var(--dark); }
+    .rank-tag { font-size: 11px; color: #7E7668; font-weight: 700; }
+
+    .closing {
+      text-align: center; margin-top: 26px; padding: 0 6px;
+    }
+    .closing p { font-size: 14.5px; font-weight: 700; color: var(--dark); line-height: 1.6; }
+
+    /* Tab Bar */
+    .tab-bar {
+      position: sticky; bottom: 0;
+      background: var(--dark); border-radius: 24px 24px 0 0;
+      padding: 16px 32px calc(16px + env(safe-area-inset-bottom, 0px));
+      display: flex; justify-content: space-around; flex-shrink: 0;
+    }
+    .tbi {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-size: 10.5px; font-weight: 700; color: #7E7668;
+      background: none; border: none; font-family: inherit; cursor: pointer;
+    }
+    .tbi svg { width: 20px; height: 20px; stroke-width: 1.75; }
+    .tbi.active { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="screen">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="statusbar-icons">
+          <i data-lucide="signal"></i>
+          <i data-lucide="wifi"></i>
+          <i data-lucide="battery-full"></i>
+        </div>
+      </div>
+
+      <div class="hero-nav">
+        <button class="back-circle" onclick="history.back()">
+          <i data-lucide="arrow-left"></i>
+        </button>
+        <div class="category-badge">
+          <span>⭐</span> Social Energizer
+        </div>
+      </div>
+
+      <div class="dog-illustration">
+        <div class="dog-img-placeholder">
+          <i data-lucide="paw-print"></i>
+        </div>
+      </div>
+
+      <div class="hero-text">
+        <div class="type-code">ESCA</div>
+        <h2 class="type-name">THE SUPERSTAR</h2>
+        <div class="type-thai">นักผจญภัยดาวเด่น</div>
+        <p class="type-quote">"ชีวิตมีไว้เพื่อออกไปใช้ และโลกมีไว้เพื่อค้นพบ"</p>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="body-content">
+
+      <!-- Overview -->
+      <div class="sec-label">
+        <i data-lucide="sparkles"></i>ภาพรวมบุคลิกภาพ
+      </div>
+      <p class="body-text">ESCA คือสุนัขที่มีพลังงานสูง มั่นใจ เข้าสังคมเก่ง และพร้อมเผชิญกับทุกประสบการณ์ใหม่ พวกเขามักทำให้คนรอบข้างยิ้มได้เสมอ เพราะเต็มไปด้วยความกระตือรือร้น ความสนุก และความกล้าที่จะลองสิ่งใหม่</p>
+
+      <div class="trait-cards">
+        <div class="trait-card">
+          <i data-lucide="compass"></i>
+          <span>เข้าสถานที่ใหม่ — เป็นตัวแรกที่ออกสำรวจ</span>
+        </div>
+        <div class="trait-card">
+          <i data-lucide="users"></i>
+          <span>เจอคนใหม่ — เป็นตัวแรกที่เข้าไปทัก</span>
+        </div>
+        <div class="trait-card">
+          <i data-lucide="zap"></i>
+          <span>มีกิจกรรมใหม่ — เป็นตัวแรกที่พร้อมลงมือ</span>
+        </div>
+      </div>
+
+      <!-- Worldview -->
+      <div class="worldview-card">
+        <div class="wv-label">วิธีมองโลก</div>
+        <div class="wv-quote">"โลกเต็มไปด้วยโอกาส"</div>
+        <p class="wv-desc">ตอบสนองต่อสิ่งใหม่ด้วยความตื่นเต้นมากกว่าความกังวล สำหรับ ESCA การค้นพบสิ่งใหม่คือรางวัลในตัวเอง</p>
+      </div>
+
+      <!-- Strengths / Watch-outs -->
+      <div class="sw-grid">
+        <div class="sw-col strengths">
+          <div class="sw-head"><i data-lucide="circle-check"></i>จุดแข็ง</div>
+          <div class="sw-list">
+            <div>มั่นใจ</div>
+            <div>กล้าลองสิ่งใหม่</div>
+            <div>เรียนรู้เร็ว</div>
+            <div>ฟื้นตัวจากความเครียดได้ดี</div>
+            <div>ปรับตัวเก่ง</div>
+          </div>
+        </div>
+        <div class="sw-col watchouts">
+          <div class="sw-head"><i data-lucide="triangle-alert"></i>ต้องระวัง</div>
+          <div class="sw-list">
+            <div>สมาธิสั้นเมื่อมีสิ่งเร้า</div>
+            <div>ตื่นเต้นเกินไป</div>
+            <div>ควบคุมอารมณ์ยาก</div>
+            <div>ดึงสายจูง</div>
+            <div>พุ่งเข้าหาสิ่งที่สนใจ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stress -->
+      <div class="stress-card">
+        <div class="stress-head"><i data-lucide="activity"></i>เมื่อเกิดความเครียด</div>
+        <p>ESCA มักไม่ถอยหนี แต่แสดงออกด้วยการเพิ่มระดับพลังงาน — วิ่งมากขึ้น เห่ามากขึ้น กระโดดมากขึ้น และควบคุมตัวเองยากขึ้น</p>
+      </div>
+
+      <!-- Ideal Owner -->
+      <div class="sec-label" style="margin-top:26px">
+        <i data-lucide="heart-handshake"></i>เจ้าของในอุดมคติ
+      </div>
+      <div class="chips">
+        <span class="chip-gold">ชอบทำกิจกรรม</span>
+        <span class="chip-gold">มีเวลาใช้ชีวิตร่วมกัน</span>
+        <span class="chip-gold">สนุกกับการเรียนรู้</span>
+        <span class="chip-gold">เป็นผู้นำที่มั่นคง</span>
+      </div>
+
+      <div class="learn-card">
+        <div class="learn-head"><i data-lucide="lightbulb"></i>สิ่งที่ ESCA ต้องเรียนรู้</div>
+        <p>ESCA มีความกล้า พลังงาน และความมั่นใจ พร้อมเผชิญโลกเสมอ — แต่หลายครั้งตอบสนองเร็วกว่าเวลาที่ใช้คิด เห็นสิ่งที่ชอบก็อยากเข้าไปทันที ตื่นเต้นก็แสดงออกทันที สิ่งเหล่านี้ไม่ใช่ความดื้อ แต่เป็นธรรมชาติของ ESCA ที่ต้องเรียนรู้ "การหยุดคิดก่อนลงมือ"</p>
+      </div>
+
+      <!-- Core Program -->
+      <div class="sec-label" style="margin-top:26px">
+        <i data-lucide="route"></i>เส้นทางหลัก · Core Program
+      </div>
+      <div class="core-card">
+        <div class="core-badge">FBI</div>
+        <div>
+          <div class="core-title">Four Basic Instinct</div>
+          <p class="core-desc">ก่อนพัฒนาสู่ศักยภาพสูงสุด ESCA ต้องเรียนรู้การควบคุมตัวเอง — FBI สร้างสมาธิ การสื่อสาร ความสัมพันธ์กับเจ้าของ และการจัดการอารมณ์</p>
+        </div>
+      </div>
+
+      <!-- Growth Path -->
+      <div class="sec-label" style="margin-top:24px">
+        <i data-lucide="trending-up"></i>เส้นทางต่อยอด · Growth Path
+      </div>
+      <div class="growth-cards">
+        <div class="growth-card">
+          <i data-lucide="zap"></i>
+          <div>
+            <div class="growth-title">Agility Dog</div>
+            <div class="growth-desc">คลาสที่เหมาะที่สุด — ได้ใช้พลังงาน ความกล้า และการเรียนรู้อย่างเต็มที่</div>
+          </div>
+        </div>
+        <div class="growth-card">
+          <i data-lucide="sparkles"></i>
+          <div>
+            <div class="growth-title">Dog Show Tricks</div>
+            <div class="growth-desc">พัฒนาความคิดสร้างสรรค์ การเรียนรู้ และการทำงานร่วมกับเจ้าของ</div>
+          </div>
+        </div>
+        <div class="growth-card">
+          <i data-lucide="activity"></i>
+          <div>
+            <div class="growth-title">Dog Fitness</div>
+            <div class="growth-desc">สร้าง Body Awareness และเพิ่มการควบคุมร่างกาย ที่ ESCA มักขาดเมื่อตื่นเต้น</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Potential -->
+      <div class="potential-card">
+        <div class="pot-head"><i data-lucide="award"></i>ศักยภาพสูงสุดของ ESCA</div>
+        <p>เมื่อได้รับการฝึกอย่างเหมาะสม ESCA จะกลายเป็นสุนัขที่มีความมั่นใจ มีสมาธิ พร้อมทำงาน พร้อมเรียนรู้ และพร้อมเผชิญความท้าทาย — เปล่งประกายได้ในแทบทุกกิจกรรม หากได้รับรากฐานที่ถูกต้องตั้งแต่แรก</p>
+      </div>
+
+      <!-- Best Classes -->
+      <div class="sec-label" style="margin-top:26px">
+        <i data-lucide="graduation-cap"></i>คลาสที่เหมาะที่สุด
+      </div>
+      <div class="ranked-list">
+        <div class="rank-item gold-bg">
+          <span class="rank-emoji">🥇</span>
+          <span class="rank-name">FBI</span>
+          <span class="rank-tag">รากฐาน</span>
+        </div>
+        <div class="rank-item light-bg">
+          <span class="rank-emoji">🥈</span>
+          <span class="rank-name">Agility Dog</span>
+        </div>
+        <div class="rank-item light-bg">
+          <span class="rank-emoji">🥉</span>
+          <span class="rank-name">Dog Show Tricks</span>
+        </div>
+        <div class="rank-item light-bg">
+          <span class="rank-emoji">🏅</span>
+          <span class="rank-name">Dog Fitness</span>
+        </div>
+      </div>
+
+      <!-- Closing -->
+      <div class="closing">
+        <p>ESCA ไม่ได้เกิดมาเพื่ออยู่นิ่ง ๆ<br><span style="color:#B8860B">พวกเขาเกิดมาเพื่อเรียนรู้ สำรวจ และใช้ชีวิตอย่างเต็มศักยภาพในทุกวัน</span></p>
+      </div>
+
+    </div>
+
+    <nav class="tab-bar">
+      <button class="tbi" onclick="location.href='index.html'">
+        <i data-lucide="home"></i>
+        หน้าหลัก
+      </button>
+      <button class="tbi">
+        <i data-lucide="book-open"></i>
+        เรียน
+      </button>
+      <button class="tbi active">
+        <i data-lucide="clipboard-list"></i>
+        แบบทดสอบ
+      </button>
+      <button class="tbi">
+        <i data-lucide="user"></i>
+        โปรไฟล์
+      </button>
+    </nav>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

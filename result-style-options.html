@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>DogBooster — รูปแบบแสดงผลบุคลิก</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #F0B74C;
+      --gold-dark: #E0A02F;
+      --dark: #15130F;
+      --cream: #FAF7F1;
+      --muted: #A39B8C;
+      --bg: #E7E2D7;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'LINE Seed Sans TH', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    .screen {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .statusbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 26px 4px;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .statusbar-icons { display: flex; gap: 7px; }
+    .statusbar-icons svg { width: 15px; height: 15px; stroke-width: 1.75; }
+
+    .content { padding: 10px 24px 40px; flex: 1; }
+
+    .back-btn {
+      background: none; border: none; cursor: pointer; color: var(--dark); padding: 0;
+      display: inline-flex;
+    }
+    .back-btn svg { width: 22px; height: 22px; stroke-width: 2; }
+
+    h1.page-title { font-size: 24px; font-weight: 800; letter-spacing: -.01em; margin-top: 18px; }
+    p.page-desc { font-size: 14px; color: #6B6459; line-height: 1.65; margin-top: 6px; }
+
+    /* Style selector tabs */
+    .style-tabs {
+      display: flex; gap: 8px; margin-top: 22px;
+      overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
+    }
+    .style-tabs::-webkit-scrollbar { display: none; }
+    .stab {
+      flex-shrink: 0; font-family: inherit; font-size: 13px; font-weight: 800;
+      padding: 9px 16px; border-radius: 100px; border: 1.5px solid #E4DECF;
+      background: transparent; color: #6B6459; cursor: pointer; transition: all .15s;
+    }
+    .stab.active { background: var(--dark); color: var(--gold); border-color: var(--dark); }
+
+    /* Panels */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ===== SHARED RESULT CARD ===== */
+    .result-card {
+      background: #1C1A15;
+      border: 1px solid #3A352D;
+      border-radius: 24px;
+      padding: 24px 22px;
+      margin-top: 20px;
+    }
+    .rc-code {
+      font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+      font-size: 15px; font-weight: 800; letter-spacing: .12em;
+      color: var(--gold);
+      background: rgba(240,183,76,.14); border: 1px solid rgba(240,183,76,.35);
+      padding: 5px 14px; border-radius: 100px;
+      display: inline-block;
+    }
+    .rc-title { font-size: 25px; font-weight: 800; color: var(--gold); margin-top: 10px; }
+    .rc-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+    /* ===== A: BARS ===== */
+    .bars-section { width: 100%; margin-top: 20px; display: flex; flex-direction: column; gap: 15px; }
+
+    .bar-item {}
+    .bar-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px;
+    }
+    .bar-left { display: flex; align-items: center; gap: 7px; }
+    .bar-left svg { width: 15px; height: 15px; stroke-width: 1.75; color: var(--gold); }
+    .bar-left span { font-size: 12.5px; font-weight: 800; color: #FAF7F1; }
+    .bar-right { font-size: 11px; font-weight: 700; color: #7E7668; }
+    .bar-track {
+      position: relative; height: 10px; background: #2A2620; border-radius: 100px; overflow: hidden;
+    }
+    .bar-fill {
+      position: absolute; inset: 0; border-radius: 100px;
+      background: linear-gradient(90deg, #B07A1C, var(--gold));
+    }
+
+    /* ===== B: 2x2 TILES ===== */
+    .tiles-grid {
+      width: 100%; margin-top: 20px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 11px;
+    }
+    .tile {
+      background: #15130F; border: 1px solid #2E2A23; border-radius: 16px;
+      padding: 15px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .tile-top { display: flex; align-items: center; justify-content: space-between; }
+    .tile-top svg { width: 19px; height: 19px; stroke-width: 1.75; color: var(--gold); }
+    .tile-letter {
+      font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+      font-size: 20px; font-weight: 800; color: var(--gold);
+    }
+    .tile-name { font-size: 13px; font-weight: 800; color: #FAF7F1; }
+    .tile-thai { font-size: 11px; color: #7E7668; }
+
+    /* ===== C: RADAR ===== */
+    .radar-wrap {
+      position: relative; width: 240px; height: 248px;
+      margin: 14px auto 0;
+    }
+    .radar-wrap svg { position: absolute; left: 20px; top: 20px; }
+    .radar-label {
+      position: absolute;
+      display: flex; flex-direction: column; align-items: center; gap: 1px;
+    }
+    .radar-label svg { width: 15px; height: 15px; stroke-width: 1.75; color: var(--gold); }
+    .radar-label span { font-size: 10.5px; font-weight: 800; color: #FAF7F1; }
+    .rl-top { left: 0; right: 0; top: 0; }
+    .rl-right { right: 0; top: 110px; }
+    .rl-bottom { left: 0; right: 0; bottom: 0; }
+    .rl-left { left: 0; top: 110px; }
+
+    /* ===== D: TRAIT ROWS ===== */
+    .trait-rows { width: 100%; margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .trait-row {
+      display: flex; align-items: center; gap: 13px;
+      background: #15130F; border: 1px solid #2E2A23; border-radius: 14px; padding: 13px 15px;
+    }
+    .trait-row svg { width: 20px; height: 20px; stroke-width: 1.75; color: var(--gold); }
+    .trait-row-info { flex: 1; }
+    .trait-row-name { font-size: 14px; font-weight: 800; color: #FAF7F1; }
+    .trait-row-thai { font-size: 11px; color: #7E7668; }
+    .dots { display: flex; gap: 4px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; }
+    .dot.on { background: var(--gold); }
+    .dot.off { background: #3A352D; }
+
+    /* Style description */
+    .style-desc {
+      margin-top: 16px;
+      background: rgba(240,183,76,.08);
+      border: 1px solid rgba(240,183,76,.2);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .style-desc p { font-size: 13px; color: #48433A; line-height: 1.6; }
+    .style-desc strong { color: #8A6A1E; }
+
+    /* Tab bar */
+    .tab-bar {
+      position: sticky; bottom: 0;
+      background: var(--dark); border-radius: 24px 24px 0 0;
+      padding: 16px 32px calc(16px + env(safe-area-inset-bottom, 0px));
+      display: flex; justify-content: space-around; flex-shrink: 0;
+    }
+    .tbi {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-size: 10.5px; font-weight: 700; color: #7E7668;
+      background: none; border: none; font-family: inherit; cursor: pointer;
+    }
+    .tbi svg { width: 20px; height: 20px; stroke-width: 1.75; }
+    .tbi.active { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="screen">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="statusbar-icons">
+        <i data-lucide="signal"></i>
+        <i data-lucide="wifi"></i>
+        <i data-lucide="battery-full"></i>
+      </div>
+    </div>
+
+    <div class="content">
+      <button class="back-btn" onclick="history.back()">
+        <i data-lucide="arrow-left"></i>
+      </button>
+
+      <h1 class="page-title">รูปแบบแสดงผลบุคลิก</h1>
+      <p class="page-desc">4 ตัวเลือก — เลือกแบบที่ชอบสำหรับแสดงในหน้าผลลัพธ์</p>
+
+      <!-- Style Tabs -->
+      <div class="style-tabs">
+        <button class="stab active" onclick="showStyle('a', this)">A · แถบไล่สี</button>
+        <button class="stab" onclick="showStyle('b', this)">B · ไทล์ 2×2</button>
+        <button class="stab" onclick="showStyle('c', this)">C · Radar</button>
+        <button class="stab" onclick="showStyle('d', this)">D · รายการ</button>
+      </div>
+
+      <!-- ===== STYLE A: BARS ===== -->
+      <div id="panel-a" class="panel active">
+        <div class="result-card">
+          <span class="rc-code">FSCA</span>
+          <div class="rc-title">The Team Captain</div>
+          <div class="rc-sub">กัปตันทีม</div>
+
+          <div class="bars-section">
+            <div class="bar-item">
+              <div class="bar-header">
+                <div class="bar-left"><i data-lucide="zap"></i><span>Active</span></div>
+                <span class="bar-right">Moderate</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="right:20%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-header">
+                <div class="bar-left"><i data-lucide="users"></i><span>Social</span></div>
+                <span class="bar-right">Reserved</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="right:24%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-header">
+                <div class="bar-left"><i data-lucide="shield"></i><span>Confident</span></div>
+                <span class="bar-right">Nervous</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="right:26%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-header">
+                <div class="bar-left"><i data-lucide="compass"></i><span>Focused</span></div>
+                <span class="bar-right">Explorer</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="right:26%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="style-desc">
+          <p><strong>สไตล์ A — แถบไล่สี + ไอคอน:</strong> อ่านง่าย เห็นตำแหน่งบนสเปกตรัมได้ชัดเจน เหมาะสำหรับผู้ใช้ที่ต้องการเปรียบเทียบแต่ละ trait</p>
+        </div>
+      </div>
+
+      <!-- ===== STYLE B: TILES ===== -->
+      <div id="panel-b" class="panel">
+        <div class="result-card">
+          <span class="rc-code">FSCA</span>
+          <div class="rc-title">The Team Captain</div>
+          <div class="rc-sub">กัปตันทีม</div>
+
+          <div class="tiles-grid">
+            <div class="tile">
+              <div class="tile-top">
+                <i data-lucide="compass"></i>
+                <span class="tile-letter">F</span>
+              </div>
+              <div class="tile-name">Focused</div>
+              <div class="tile-thai">โฟกัสเจ้าของ</div>
+            </div>
+            <div class="tile">
+              <div class="tile-top">
+                <i data-lucide="users"></i>
+                <span class="tile-letter">S</span>
+              </div>
+              <div class="tile-name">Social</div>
+              <div class="tile-thai">เข้าสังคม</div>
+            </div>
+            <div class="tile">
+              <div class="tile-top">
+                <i data-lucide="shield"></i>
+                <span class="tile-letter">C</span>
+              </div>
+              <div class="tile-name">Confident</div>
+              <div class="tile-thai">มั่นใจ</div>
+            </div>
+            <div class="tile">
+              <div class="tile-top">
+                <i data-lucide="zap"></i>
+                <span class="tile-letter">A</span>
+              </div>
+              <div class="tile-name">Active</div>
+              <div class="tile-thai">พลังงานสูง</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="style-desc">
+          <p><strong>สไตล์ B — ไทล์บุคลิก 2×2:</strong> เด่น โมเดิร์น เน้นตัวอักษรรหัส เหมาะสำหรับแสดงแบบเน้น visual ที่โดดเด่น</p>
+        </div>
+      </div>
+
+      <!-- ===== STYLE C: RADAR ===== -->
+      <div id="panel-c" class="panel">
+        <div class="result-card">
+          <span class="rc-code">FSCA</span>
+          <div class="rc-title">The Team Captain</div>
+          <div class="rc-sub">กัปตันทีม</div>
+
+          <div class="radar-wrap">
+            <svg viewBox="0 0 200 200" width="200" height="200" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#F0B74C" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#F0B74C" stop-opacity="0.12"/>
+                </radialGradient>
+              </defs>
+              <!-- Grid rings -->
+              <circle cx="100" cy="100" r="70" fill="none" stroke="#2E2A23" stroke-width="1.5"/>
+              <circle cx="100" cy="100" r="47" fill="none" stroke="#2A2620" stroke-width="1.5"/>
+              <circle cx="100" cy="100" r="24" fill="none" stroke="#2A2620" stroke-width="1.5"/>
+              <!-- Axes -->
+              <line x1="100" y1="100" x2="100" y2="30" stroke="#2A2620" stroke-width="1"/>
+              <line x1="100" y1="100" x2="170" y2="100" stroke="#2A2620" stroke-width="1"/>
+              <line x1="100" y1="100" x2="100" y2="170" stroke="#2A2620" stroke-width="1"/>
+              <line x1="100" y1="100" x2="30" y2="100" stroke="#2A2620" stroke-width="1"/>
+              <!-- Data polygon (FSCA: F=74%, S=76%, C=74%, A=80%) -->
+              <polygon points="100,44 153.2,100 100,151.8 48.2,100"
+                fill="url(#rg)" stroke="#F0B74C" stroke-width="2.5" stroke-linejoin="round"/>
+              <!-- Corner dots -->
+              <circle cx="100" cy="44" r="4" fill="#F0B74C" stroke="#1C1A15" stroke-width="2"/>
+              <circle cx="153.2" cy="100" r="4" fill="#F0B74C" stroke="#1C1A15" stroke-width="2"/>
+              <circle cx="100" cy="151.8" r="4" fill="#F0B74C" stroke="#1C1A15" stroke-width="2"/>
+              <circle cx="48.2" cy="100" r="4" fill="#F0B74C" stroke="#1C1A15" stroke-width="2"/>
+            </svg>
+
+            <!-- Labels -->
+            <div class="radar-label rl-top">
+              <i data-lucide="zap"></i><span>Active</span>
+            </div>
+            <div class="radar-label rl-right">
+              <i data-lucide="users"></i><span>Social</span>
+            </div>
+            <div class="radar-label rl-bottom">
+              <span>Focused</span><i data-lucide="compass"></i>
+            </div>
+            <div class="radar-label rl-left">
+              <i data-lucide="shield"></i><span>Confident</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="style-desc">
+          <p><strong>สไตล์ C — ใยแมงมุมเนียน + เรืองแสง:</strong> มีเอกลักษณ์ เหมาะสำหรับผู้ที่ต้องการเห็นภาพรวมทั้ง 4 มิติในครั้งเดียว</p>
+        </div>
+      </div>
+
+      <!-- ===== STYLE D: TRAIT ROWS ===== -->
+      <div id="panel-d" class="panel">
+        <div class="result-card">
+          <span class="rc-code">FSCA</span>
+          <div class="rc-title">The Team Captain</div>
+          <div class="rc-sub">กัปตันทีม</div>
+
+          <div class="trait-rows">
+            <div class="trait-row">
+              <i data-lucide="zap"></i>
+              <div class="trait-row-info">
+                <div class="trait-row-name">Active</div>
+                <div class="trait-row-thai">พลังงานสูง</div>
+              </div>
+              <div class="dots">
+                <div class="dot on"></div><div class="dot on"></div>
+                <div class="dot on"></div><div class="dot on"></div>
+                <div class="dot off"></div>
+              </div>
+            </div>
+            <div class="trait-row">
+              <i data-lucide="users"></i>
+              <div class="trait-row-info">
+                <div class="trait-row-name">Social</div>
+                <div class="trait-row-thai">เข้าสังคม</div>
+              </div>
+              <div class="dots">
+                <div class="dot on"></div><div class="dot on"></div>
+                <div class="dot on"></div><div class="dot on"></div>
+                <div class="dot off"></div>
+              </div>
+            </div>
+            <div class="trait-row">
+              <i data-lucide="shield"></i>
+              <div class="trait-row-info">
+                <div class="trait-row-name">Confident</div>
+                <div class="trait-row-thai">มั่นใจ</div>
+              </div>
+              <div class="dots">
+                <div class="dot on"></div><div class="dot on"></div>
+                <div class="dot on"></div><div class="dot off"></div>
+                <div class="dot off"></div>
+              </div>
+            </div>
+            <div class="trait-row">
+              <i data-lucide="compass"></i>
+              <div class="trait-row-info">
+                <div class="trait-row-name">Focused</div>
+                <div class="trait-row-thai">โฟกัสเจ้าของ</div>
+              </div>
+              <div class="dots">
+                <div class="dot on"></div><div class="dot on"></div>
+                <div class="dot on"></div><div class="dot off"></div>
+                <div class="dot off"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="style-desc">
+          <p><strong>สไตล์ D — รายการบุคลิก เรียบหรู:</strong> มินิมอล อ่านเป็นคำ ดูพรีเมียม เหมาะสำหรับ UX ที่ต้องการความเรียบง่ายและชัดเจน</p>
+        </div>
+      </div>
+
+    </div>
+
+    <nav class="tab-bar">
+      <button class="tbi" onclick="location.href='index.html'">
+        <i data-lucide="home"></i>
+        หน้าหลัก
+      </button>
+      <button class="tbi">
+        <i data-lucide="book-open"></i>
+        เรียน
+      </button>
+      <button class="tbi active">
+        <i data-lucide="clipboard-list"></i>
+        แบบทดสอบ
+      </button>
+      <button class="tbi">
+        <i data-lucide="user"></i>
+        โปรไฟล์
+      </button>
+    </nav>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function showStyle(name, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.stab').forEach(t => t.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
