@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>DogBooster — เส้นทางการฝึก</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #F0B74C;
+      --dark: #15130F;
+      --cream: #FAF7F1;
+      --bg: #E7E2D7;
+      --tabbar: #1A1813;
+      --muted: #6B6459;
+    }
+
+    @keyframes db_pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(240,183,76,0.5); }
+      50% { box-shadow: 0 0 0 12px rgba(240,183,76,0); }
+    }
+
+    @keyframes db_float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    html, body {
+      height: 100dvh;
+      font-family: 'LINE Seed Sans TH', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 430px;
+      margin: 0 auto;
+      height: 100dvh;
+      position: relative;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100dvh;
+      background: var(--dark);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Radial gold glow at top */
+    .screen::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(ellipse at center, rgba(240,183,76,0.22) 0%, rgba(240,183,76,0.06) 55%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Header ── */
+    .header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px 14px;
+      flex-shrink: 0;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-logo img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .header-logo-fallback {
+      width: 34px;
+      height: 34px;
+      background: var(--gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--dark);
+      flex-shrink: 0;
+    }
+
+    .header-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.2px;
+    }
+
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(240,183,76,0.14);
+      border: 1px solid rgba(240,183,76,0.3);
+      border-radius: 20px;
+      padding: 5px 12px;
+    }
+
+    .streak-badge i {
+      width: 15px;
+      height: 15px;
+      color: var(--gold);
+    }
+
+    .streak-badge span {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    /* ── Dog + path intro card ── */
+    .path-intro {
+      position: relative;
+      z-index: 10;
+      margin: 0 20px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .dog-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: #E4DECF;
+      flex-shrink: 0;
+      animation: db_float 3.6s ease-in-out infinite;
+    }
+
+    .path-intro-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .path-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .path-subtitle {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 3px;
+    }
+
+    .path-progress {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .path-progress strong {
+      color: var(--gold);
+    }
+
+    /* ── Scrollable content ── */
+    .scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      position: relative;
+      z-index: 5;
+    }
+
+    .scroll-area::-webkit-scrollbar { display: none; }
+
+    .trail-wrapper {
+      position: relative;
+      width: 100%;
+      padding: 0 20px 0;
+    }
+
+    /* ── SVG Trail ── */
+    .trail-svg-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .trail-svg-container svg {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── Trail nodes ── */
+    .trail-nodes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .node {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .node-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Completed node */
+    .node--completed .node-circle {
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(240,183,76,0.25);
+    }
+
+    .node--completed .node-circle i {
+      width: 22px;
+      height: 22px;
+      color: var(--dark);
+      stroke-width: 2.5;
+    }
+
+    /* Current node */
+    .node--current .node-circle {
+      background: #fff;
+      animation: db_pulse 2s ease-in-out infinite;
+    }
+
+    .node--current .node-circle i {
+      width: 22px;
+      height: 22px;
+      color: var(--dark);
+    }
+
+    /* Ready node */
+    .node--ready .node-circle {
+      background: rgba(255,255,255,0.06);
+      border: 2px solid var(--gold);
+    }
+
+    .node--ready .node-circle span {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    /* Locked node */
+    .node--locked .node-circle {
+      background: rgba(255,255,255,0.04);
+      border: 2px dashed #3A352D;
+    }
+
+    .node--locked .node-circle i {
+      width: 20px;
+      height: 20px;
+      color: #4A453D;
+    }
+
+    /* Node label card */
+    .node-label {
+      margin-top: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 7px 12px;
+      text-align: center;
+      min-width: 120px;
+      max-width: 155px;
+    }
+
+    .node-label-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.35;
+    }
+
+    .node-label-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .node-label-sub.gold {
+      color: var(--gold);
+    }
+
+    .node-label-sub.locked-sub {
+      color: #4A453D;
+    }
+
+    /* FREE badge */
+    .node-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ── Tab bar ── */
+    .tabbar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      height: 64px;
+      background: var(--tabbar);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 8px;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 100;
+    }
+
+    .tab-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      cursor: pointer;
+      padding: 6px 0;
+      border: none;
+      background: transparent;
+    }
+
+    .tab-item i {
+      width: 22px;
+      height: 22px;
+      color: var(--muted);
+    }
+
+    .tab-item.active i {
+      color: var(--gold);
+    }
+
+    .tab-label {
+      font-size: 10px;
+      color: var(--muted);
+      font-family: 'LINE Seed Sans TH', sans-serif;
+    }
+
+    .tab-item.active .tab-label {
+      color: var(--gold);
+    }
+
+    .scroll-bottom-pad {
+      height: 80px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="screen">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-logo">
+        <img src="assets/logo.png" alt="DogBooster"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="header-logo-fallback" style="display:none">D</div>
+        <span class="header-name">DogBooster</span>
+      </div>
+      <div class="streak-badge">
+        <i data-lucide="flame"></i>
+        <span>5 วัน</span>
+      </div>
+    </header>
+
+    <!-- Dog + path intro -->
+    <div class="path-intro">
+      <div class="dog-avatar"></div>
+      <div class="path-intro-text">
+        <div class="path-title">เส้นทางการฝึก</div>
+        <div class="path-subtitle">โคโค่ · เกมรากฐาน</div>
+        <div class="path-progress"><strong>1/5</strong> ผ่านแล้ว</div>
+      </div>
+    </div>
+
+    <!-- Scrollable trail -->
+    <div class="scroll-area">
+      <div class="trail-wrapper">
+        <div class="trail-svg-container">
+
+          <!-- SVG winding path -->
+          <svg viewBox="0 0 390 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dark track — full winding path -->
+            <path
+              d="M130,52 C100,90 60,120 220,160 C320,185 350,240 195,282 C75,315 65,385 210,422 C340,455 355,522 198,558 C75,587 65,648 195,688"
+              stroke="#2A2520"
+              stroke-width="26"
+              stroke-linecap="round"
+              fill="none"
+            />
+            <!-- Completed gold dashed segment (node 1 → node 2) -->
+            <path
+              d="M130,52 C100,90 60,120 220,160 C320,185 350,240 195,282"
+              stroke="rgba(240,183,76,0.75)"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-dasharray="8 7"
+              fill="none"
+            />
+          </svg>
+
+          <!-- Trail nodes -->
+          <div class="trail-nodes">
+
+            <!-- Node 1: Completed — left, top ~26px -->
+            <div class="node node--completed" style="left: 13%; top: 10px;">
+              <div class="node-circle">
+                <i data-lucide="check"></i>
+              </div>
+              <div class="node-label">
+                <div class="node-label-title">เกมการเลือก</div>
+                <div class="node-badge">บทฟรี</div>
+              </div>
+            </div>
+
+            <!-- Node 2: Current — right, top ~176px -->
+            <div class="node node--current" style="right: 5%; top: 162px;">
+              <div class="node-circle">
+                <i data-lucide="crosshair"></i>
+              </div>
+              <div class="node-label">
+                <div class="node-label-title">การโฟกัส</div>
+                <div class="node-label-sub gold">60% · Focus</div>
+              </div>
+            </div>
+
+            <!-- Node 3: Ready — left, top ~326px -->
+            <div class="node node--ready" style="left: 8%; top: 312px;">
+              <div class="node-circle">
+                <span>3</span>
+              </div>
+              <div class="node-label">
+                <div class="node-label-title">Recall</div>
+                <div class="node-label-sub">พร้อมเรียน</div>
+              </div>
+            </div>
+
+            <!-- Node 4: Locked — right, top ~476px -->
+            <div class="node node--locked" style="right: 5%; top: 460px;">
+              <div class="node-circle">
+                <i data-lucide="lock"></i>
+              </div>
+              <div class="node-label">
+                <div class="node-label-title">Station / Crate</div>
+                <div class="node-label-sub locked-sub">ติดต่อผู้ดูแล</div>
+              </div>
+            </div>
+
+            <!-- Node 5: Locked — left, top ~626px -->
+            <div class="node node--locked" style="left: 8%; top: 612px;">
+              <div class="node-circle">
+                <i data-lucide="lock"></i>
+              </div>
+              <div class="node-label">
+                <div class="node-label-title">การควบคุม<br>แรงกระตุ้น</div>
+                <div class="node-label-sub locked-sub">ติดต่อผู้ดูแล</div>
+              </div>
+            </div>
+
+          </div><!-- /.trail-nodes -->
+        </div><!-- /.trail-svg-container -->
+
+        <div class="scroll-bottom-pad"></div>
+      </div><!-- /.trail-wrapper -->
+    </div><!-- /.scroll-area -->
+
+    <!-- Tab bar -->
+    <nav class="tabbar">
+      <button class="tab-item active">
+        <i data-lucide="route"></i>
+        <span class="tab-label">เส้นทาง</span>
+      </button>
+      <button class="tab-item">
+        <i data-lucide="notebook-pen"></i>
+        <span class="tab-label">บันทึก</span>
+      </button>
+      <button class="tab-item">
+        <i data-lucide="trending-up"></i>
+        <span class="tab-label">ความก้าวหน้า</span>
+      </button>
+      <button class="tab-item">
+        <i data-lucide="user"></i>
+        <span class="tab-label">โปรไฟล์</span>
+      </button>
+    </nav>
+
+  </div><!-- /.screen -->
+</div><!-- /.container -->
+
+<script>
+  setTimeout(function() {
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }, 50);
+</script>
+</body>
+</html>
