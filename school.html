@@ -425,23 +425,15 @@
 
   <!-- ===== VIEW 1: School Info ===== -->
   <div id="view-school" class="view active">
-    <!-- Cover image -->
-    <div class="cover">
-      <img src="assets/cover.jpg" alt="DogBooster"
-           onerror="this.style.display='none'">
-      <div class="cover-overlay"></div>
+    <!-- Cover: logo + tagline -->
+    <div class="cover" style="background:linear-gradient(135deg,#F0B74C 0%,#E0A02F 50%,#C8821A 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;position:relative;">
       <button class="cover-back" onclick="history.back()" aria-label="ย้อนกลับ">
         <span class="ic" style="font-size:19px"><i data-lucide="arrow-left"></i></span>
       </button>
-      <!-- School logo overlay -->
-      <div style="position:absolute;bottom:16px;left:22px;display:flex;align-items:center;gap:12px">
-        <div style="width:52px;height:52px;border-radius:14px;background:#fff;padding:4px;box-shadow:0 4px 16px rgba(0,0,0,.25);overflow:hidden;flex-shrink:0">
-          <img src="assets/logo.png" alt="DogBooster Logo" style="width:100%;height:100%;object-fit:contain;display:block">
-        </div>
-        <div>
-          <div style="font-weight:800;font-size:17px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5)">DogBooster</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.85);font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.4)">สถาบันฝึกสุนัข</div>
-        </div>
+      <img src="assets/logo.png" alt="DogBooster Logo" style="width:120px;height:120px;object-fit:contain;display:block;filter:drop-shadow(0 4px 16px rgba(0,0,0,.25));">
+      <div style="margin-top:14px;text-align:center;">
+        <div style="font-weight:800;font-size:18px;color:var(--dark);letter-spacing:-.01em;">สร้างสุนัขนิสัยดีมีความสุข</div>
+        <div style="font-size:13px;color:rgba(21,19,15,.65);font-weight:700;margin-top:4px;">ฝึกสุนัข ไม่บังคับ ไม่ลงโทษ</div>
       </div>
     </div>
 
