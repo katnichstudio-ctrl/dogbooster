@@ -383,10 +383,143 @@
     </div>
   </div>
 
-  <!-- ══ STEP 3 · QUIZ INTRO ══ -->
+  <!-- ══ STEP 3 · OWNER INFO ══ -->
   <div id="s3" class="step">
     <div class="dark-header">
       <button class="step-back" onclick="goStep(2)"><i data-lucide="arrow-left"></i> กลับ</button>
+      <div style="color:var(--cream);font-size:22px;font-weight:800;">ข้อมูลเจ้าของ</div>
+      <div style="color:#A39B8C;font-size:13px;margin-top:6px;">เพื่อให้เราช่วยคุณได้ตรงจุดยิ่งขึ้น</div>
+    </div>
+    <div class="form-body">
+      <div>
+        <div class="form-label">ชื่อ-นามสกุล</div>
+        <input class="form-input" type="text" id="ownerName" placeholder="เช่น สมชาย ใจดี">
+      </div>
+      <div>
+        <div class="form-label">Email</div>
+        <input class="form-input" type="email" id="ownerEmail" placeholder="example@email.com">
+      </div>
+      <div>
+        <div class="form-label">เบอร์ติดต่อ</div>
+        <input class="form-input" type="tel" id="ownerPhone" placeholder="08X-XXX-XXXX">
+      </div>
+      <div class="form-row">
+        <div>
+          <div class="form-label">เพศ</div>
+          <select class="form-input" id="ownerGender">
+            <option value="">เลือก</option>
+            <option>ชาย</option>
+            <option>หญิง</option>
+            <option>ไม่ระบุ</option>
+          </select>
+        </div>
+        <div>
+          <div class="form-label">ช่วงอายุ</div>
+          <select class="form-input" id="ownerAge">
+            <option value="">เลือก</option>
+            <option>ต่ำกว่า 18 ปี</option>
+            <option>18-24 ปี</option>
+            <option>25-34 ปี</option>
+            <option>35-44 ปี</option>
+            <option>45-54 ปี</option>
+            <option>55 ปีขึ้นไป</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="form-label">จังหวัดที่อาศัย</div>
+        <select class="form-input" id="ownerProvince">
+          <option value="">— เลือกจังหวัด —</option>
+          <option>กระบี่</option>
+          <option>กรุงเทพมหานคร</option>
+          <option>กาญจนบุรี</option>
+          <option>กาฬสินธุ์</option>
+          <option>กำแพงเพชร</option>
+          <option>ขอนแก่น</option>
+          <option>จันทบุรี</option>
+          <option>ฉะเชิงเทรา</option>
+          <option>ชลบุรี</option>
+          <option>ชัยนาท</option>
+          <option>ชัยภูมิ</option>
+          <option>ชุมพร</option>
+          <option>เชียงราย</option>
+          <option>เชียงใหม่</option>
+          <option>ตรัง</option>
+          <option>ตราด</option>
+          <option>ตาก</option>
+          <option>นครนายก</option>
+          <option>นครปฐม</option>
+          <option>นครพนม</option>
+          <option>นครราชสีมา</option>
+          <option>นครศรีธรรมราช</option>
+          <option>นครสวรรค์</option>
+          <option>นนทบุรี</option>
+          <option>นราธิวาส</option>
+          <option>น่าน</option>
+          <option>บึงกาฬ</option>
+          <option>บุรีรัมย์</option>
+          <option>ปทุมธานี</option>
+          <option>ประจวบคีรีขันธ์</option>
+          <option>ปราจีนบุรี</option>
+          <option>ปัตตานี</option>
+          <option>พระนครศรีอยุธยา</option>
+          <option>พะเยา</option>
+          <option>พังงา</option>
+          <option>พัทลุง</option>
+          <option>พิจิตร</option>
+          <option>พิษณุโลก</option>
+          <option>เพชรบุรี</option>
+          <option>เพชรบูรณ์</option>
+          <option>แพร่</option>
+          <option>ภูเก็ต</option>
+          <option>มหาสารคาม</option>
+          <option>มุกดาหาร</option>
+          <option>แม่ฮ่องสอน</option>
+          <option>ยโสธร</option>
+          <option>ยะลา</option>
+          <option>ร้อยเอ็ด</option>
+          <option>ระนอง</option>
+          <option>ระยอง</option>
+          <option>ราชบุรี</option>
+          <option>ลพบุรี</option>
+          <option>ลำปาง</option>
+          <option>ลำพูน</option>
+          <option>เลย</option>
+          <option>ศรีสะเกษ</option>
+          <option>สกลนคร</option>
+          <option>สงขลา</option>
+          <option>สตูล</option>
+          <option>สมุทรปราการ</option>
+          <option>สมุทรสงคราม</option>
+          <option>สมุทรสาคร</option>
+          <option>สระแก้ว</option>
+          <option>สระบุรี</option>
+          <option>สิงห์บุรี</option>
+          <option>สุโขทัย</option>
+          <option>สุพรรณบุรี</option>
+          <option>สุราษฎร์ธานี</option>
+          <option>สุรินทร์</option>
+          <option>หนองคาย</option>
+          <option>หนองบัวลำภู</option>
+          <option>อ่างทอง</option>
+          <option>อำนาจเจริญ</option>
+          <option>อุดรธานี</option>
+          <option>อุตรดิตถ์</option>
+          <option>อุทัยธานี</option>
+          <option>อุบลราชธานี</option>
+        </select>
+      </div>
+      <div id="ownerError" style="display:none;color:#E05252;font-size:13px;font-weight:700;text-align:center;padding:8px 0;">กรุณากรอกข้อมูลให้ครบทุกช่อง</div>
+      <div style="margin-top:auto;">
+        <button class="btn-primary" onclick="validateOwner()">ถัดไป <i data-lucide="arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 4 · QUIZ INTRO ══ -->
+  <div id="s4" class="step">
+    <div class="dark-header">
+      <button class="step-back" onclick="goStep(3)"><i data-lucide="arrow-left"></i> กลับ</button>
       <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(240,183,76,.15);color:var(--gold);font-size:12px;font-weight:800;padding:6px 13px;border-radius:100px;margin-bottom:14px;">
         <i data-lucide="clipboard-list" style="width:14px;height:14px;stroke-width:1.75;"></i> แบบประเมินบุคลิก
       </div>
@@ -405,8 +538,8 @@
     </div>
   </div>
 
-  <!-- ══ STEP 4 · QUESTION ══ -->
-  <div id="s4" class="step" style="background:var(--cream);">
+  <!-- ══ STEP 5 · QUESTION ══ -->
+  <div id="s5" class="step" style="background:var(--cream);">
     <div class="q-header">
       <div class="q-nav">
         <button onclick="prevQ()"><i data-lucide="arrow-left"></i></button>
@@ -431,8 +564,8 @@
     </div>
   </div>
 
-  <!-- ══ STEP 5 · RESULT ══ -->
-  <div id="s5" class="step">
+  <!-- ══ STEP 6 · RESULT ══ -->
+  <div id="s6" class="step">
     <div class="result-page">
       <div style="padding:52px 16px 16px;">
         <div style="font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;">ผลแบบประเมิน</div>
@@ -546,6 +679,22 @@ function validateProfile() {
   goStep(3);
 }
 
+function validateOwner() {
+  const name     = document.getElementById('ownerName').value.trim();
+  const email    = document.getElementById('ownerEmail').value.trim();
+  const phone    = document.getElementById('ownerPhone').value.trim();
+  const gender   = document.getElementById('ownerGender').value;
+  const age      = document.getElementById('ownerAge').value;
+  const province = document.getElementById('ownerProvince').value;
+  const err = document.getElementById('ownerError');
+  if (!name || !email || !phone || !gender || !age || !province) {
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+  goStep(4);
+}
+
 function previewPhoto(input) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
@@ -566,7 +715,7 @@ function goStep(n) {
   setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 60);
 }
 
-function startQuiz() { currentQ = 0; renderQuestion(); goStep(4); }
+function startQuiz() { currentQ = 0; renderQuestion(); goStep(5); }
 
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
@@ -597,7 +746,7 @@ function nextQ() {
 }
 
 function prevQ() {
-  if (currentQ > 0) { currentQ--; renderQuestion(); } else goStep(3);
+  if (currentQ > 0) { currentQ--; renderQuestion(); } else goStep(4);
 }
 
 function showResult() {
@@ -633,7 +782,7 @@ function showResult() {
   document.getElementById('resultWatchouts').innerHTML = (p.watchouts.length ? p.watchouts : ['ไม่มีข้อระวังพิเศษ']).map(t => chip(t,'chip-warn')).join('');
   document.getElementById('resultClasses').innerHTML = p.classes.map(t => chip(t,'chip-class')).join('');
 
-  goStep(5);
+  goStep(6);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
