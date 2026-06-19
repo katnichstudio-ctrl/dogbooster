@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Sensitive Soul · THE HOPEFUL HEART — DogBooster</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #F0B74C; --gold-light: #F7CE7E; --gold-dark: #E0A02F;
+      --dark: #15130F; --dark2: #2E2A23; --dark3: #3A352D;
+      --cream: #FAF7F1; --muted: #6B6459; --amber: #B8860B;
+      --accent: #7B9E8A; --green-bg: #1A2E24; --orange-bg: #2E1E0F;
+    }
+    html, body { font-family: 'LINE Seed Sans TH', system-ui, sans-serif; -webkit-font-smoothing: antialiased; background: var(--dark); color: var(--cream); }
+    .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--dark); }
+    svg.icon { width: 1em; height: 1em; stroke-width: 1.75; display: inline-block; vertical-align: middle; }
+
+    /* Hero */
+    .hero { position: relative; height: 280px; background: linear-gradient(160deg, #8BB5A0, #6A9A84 50%, #4D7A66); overflow: hidden; }
+    .hero-stripe { position: absolute; inset: 0; background: repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255,255,255,.06) 20px, rgba(255,255,255,.06) 40px); }
+    .statusbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px 0; font-size: 14px; font-weight: 700; position: relative; z-index: 2; }
+    .hero-back { position: absolute; top: 52px; left: 20px; z-index: 3; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,.3); display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; color: #fff; }
+    .hero-back svg { width: 18px; height: 18px; stroke-width: 2; }
+    .group-badge { position: absolute; top: 52px; right: 20px; z-index: 3; background: rgba(0,0,0,.4); color: #fff; font-size: 11px; font-weight: 800; padding: 6px 12px; border-radius: 100px; letter-spacing: .04em; }
+    .dog-placeholder { position: absolute; bottom: -56px; left: 50%; transform: translateX(-50%); width: 112px; height: 112px; border-radius: 20px; background: #E4DECF; border: 4px solid var(--dark); display: flex; align-items: center; justify-content: center; font-size: 40px; z-index: 3; }
+
+    /* Body */
+    .body { padding: 68px 20px 40px; }
+    .type-code { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; background: rgba(240,183,76,.15); color: var(--gold); padding: 4px 10px; border-radius: 8px; letter-spacing: .08em; }
+    .type-name { font-size: 28px; font-weight: 800; letter-spacing: -.01em; margin-top: 8px; }
+    .type-sub { font-size: 14px; color: #8BB5A0; font-weight: 700; margin-top: 2px; letter-spacing: .04em; }
+    .type-quote { font-style: italic; font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+
+    .section { margin-top: 28px; }
+    .section-title { font-size: 13px; font-weight: 800; letter-spacing: .06em; color: var(--amber); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-title svg { width: 14px; height: 14px; }
+
+    .trait-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--dark3); }
+    .trait-item:last-child { border-bottom: none; }
+    .trait-dot { width: 8px; height: 8px; border-radius: 50%; background: #8BB5A0; flex-shrink: 0; margin-top: 6px; }
+    .trait-text { font-size: 14px; line-height: 1.6; color: #C8C0B4; }
+
+    .worldview { background: var(--dark2); border-radius: 16px; padding: 18px; margin-top: 12px; border-left: 3px solid #8BB5A0; }
+    .worldview-text { font-style: italic; font-size: 15px; line-height: 1.6; color: var(--cream); }
+
+    .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .sw-card { border-radius: 14px; padding: 14px; }
+    .sw-card--strength { background: var(--green-bg); }
+    .sw-card--warning { background: var(--orange-bg); }
+    .sw-label { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+    .sw-label--strength { color: #6DBF8E; }
+    .sw-label--warning { color: #E8956D; }
+    .sw-item { font-size: 13px; color: #C8C0B4; line-height: 1.5; padding: 3px 0; }
+
+    .stress-card { background: var(--dark2); border-radius: 14px; padding: 16px; margin-top: 12px; border: 1px solid #3A352D; }
+    .stress-text { font-size: 14px; color: #C8C0B4; line-height: 1.6; }
+
+    .owner-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .owner-chip { background: var(--dark2); color: var(--cream); font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 100px; border: 1px solid var(--dark3); }
+
+    .learn-card { background: var(--dark2); border-radius: 16px; padding: 18px; margin-top: 12px; }
+    .learn-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--dark3); font-size: 14px; color: #C8C0B4; line-height: 1.5; }
+    .learn-item:last-child { border-bottom: none; }
+    .learn-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(240,183,76,.2); color: var(--gold); font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    .program-card { background: linear-gradient(135deg, var(--dark2), #1C1A15); border-radius: 16px; padding: 18px; margin-top: 12px; border: 1px solid #3A352D; }
+    .program-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(240,183,76,.15); color: var(--gold); font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 8px; letter-spacing: .06em; margin-bottom: 10px; }
+    .program-name { font-size: 18px; font-weight: 800; }
+    .program-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 6px; }
+
+    .growth-item { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--dark3); }
+    .growth-item:last-child { border-bottom: none; }
+    .growth-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(139,181,160,.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .growth-icon svg { width: 18px; height: 18px; color: #8BB5A0; }
+    .growth-title { font-size: 14px; font-weight: 800; }
+    .growth-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-top: 3px; }
+
+    .potential-card { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 16px; padding: 20px; margin-top: 12px; color: var(--dark); }
+    .potential-title { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; opacity: .7; }
+    .potential-text { font-size: 17px; font-weight: 800; line-height: 1.5; margin-top: 8px; }
+
+    .class-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--dark3); }
+    .class-item:last-child { border-bottom: none; }
+    .rank-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .rank-1 { background: var(--gold); color: var(--dark); }
+    .rank-2 { background: #C0C0C0; color: var(--dark); }
+    .rank-3 { background: #CD7F32; color: #fff; }
+    .rank-4 { background: var(--dark3); color: var(--cream); }
+    .class-name { font-size: 14px; font-weight: 700; flex: 1; }
+    .class-pct { font-size: 13px; font-weight: 800; color: var(--gold); }
+
+    .school-cta { background: var(--dark2); border-radius: 20px; padding: 20px; margin-top: 28px; }
+    .btn-gold { width: 100%; background: var(--gold); color: var(--dark); border: none; border-radius: 14px; font-family: inherit; font-size: 16px; font-weight: 800; padding: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; }
+    .btn-gold:hover { background: var(--gold-dark); }
+    .btn-outline { width: 100%; background: transparent; color: var(--cream); border: 1.5px solid var(--dark3); border-radius: 14px; font-family: inherit; font-size: 15px; font-weight: 700; padding: 14px; cursor: pointer; margin-top: 10px; }
+    .btn-outline:hover { background: var(--dark2); }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-stripe"></div>
+    <div class="statusbar">
+      <span>9:41</span>
+      <div style="display:flex;gap:7px;font-size:15px">
+        <i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i>
+      </div>
+    </div>
+    <button class="hero-back" onclick="history.back()"><i data-lucide="arrow-left"></i></button>
+    <div class="group-badge">Sensitive Soul</div>
+    <div class="dog-placeholder">🐾</div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+    <span class="type-code">ESCM</span>
+    <div class="type-name">THE HOPEFUL HEART</div>
+    <div class="type-sub">หัวใจที่อยากรู้จักโลก</div>
+    <div class="type-quote">"ฉันอยากเข้าไปหา... แต่บางครั้งความกลัวก็เดินไปถึงก่อน"</div>
+
+    <!-- Overview -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="user"></i> ภาพรวมบุคลิกภาพ</div>
+      <div class="trait-item"><div class="trait-dot"></div><div class="trait-text">อยากเข้าไปหา — แต่พอเข้าใกล้กลับเห่า</div></div>
+      <div class="trait-item"><div class="trait-dot"></div><div class="trait-text">ตื่นเต้นมาก แต่เหมือนกลัวไปพร้อมกัน</div></div>
+      <div class="trait-item"><div class="trait-dot"></div><div class="trait-text">มั่นใจในบางวินาที ไม่มั่นใจในอีกวินาที</div></div>
+    </div>
+
+    <!-- Worldview -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="eye"></i> วิธีมองโลก</div>
+      <div class="worldview">
+        <div class="worldview-text">"โลกน่าสนใจ... แต่ฉันยังไม่แน่ใจว่าปลอดภัยหรือเปล่า"</div>
+      </div>
+    </div>
+
+    <!-- Strengths & Watchouts -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="zap"></i> จุดแข็ง & ต้องระวัง</div>
+      <div class="sw-grid">
+        <div class="sw-card sw-card--strength">
+          <div class="sw-label sw-label--strength">จุดแข็ง</div>
+          <div class="sw-item">เป็นมิตรโดยธรรมชาติ</div>
+          <div class="sw-item">อยากรู้อยากเห็น</div>
+          <div class="sw-item">อ่อนโยน</div>
+          <div class="sw-item">เข้าใจอารมณ์คนดี</div>
+          <div class="sw-item">มีศักยภาพพัฒนาสูง</div>
+        </div>
+        <div class="sw-card sw-card--warning">
+          <div class="sw-label sw-label--warning">ต้องระวัง</div>
+          <div class="sw-item">Reactive ได้ง่าย</div>
+          <div class="sw-item">เห่าง่ายเมื่อเครียด</div>
+          <div class="sw-item">อารมณ์ขึ้นลงตามสิ่งแวดล้อม</div>
+          <div class="sw-item">ไม่มั่นใจในสถานการณ์ใหม่</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stress -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="alert-triangle"></i> เมื่อเกิดความเครียด</div>
+      <div class="stress-card">
+        <div class="stress-text">เห่า ซ่อนตัว หรือแสดงพฤติกรรม reactive — ต้องการพื้นที่ปลอดภัยและเวลาในการปรับตัว ไม่ควรบังคับให้เผชิญกับสิ่งที่กลัวโดยตรง</div>
+      </div>
+    </div>
+
+    <!-- Ideal owner -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="heart"></i> เจ้าของในอุดมคติ</div>
+      <div class="owner-chips">
+        <span class="owner-chip">ใจเย็น</span>
+        <span class="owner-chip">เข้าใจพฤติกรรมสุนัข</span>
+        <span class="owner-chip">ไม่เร่งรีบ</span>
+        <span class="owner-chip">สม่ำเสมอ</span>
+        <span class="owner-chip">ให้ความมั่นคง</span>
+      </div>
+    </div>
+
+    <!-- Learn -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="book-open"></i> สิ่งที่ต้องเรียนรู้</div>
+      <div class="learn-card">
+        <div class="learn-item"><span class="learn-num">1</span><span>สร้างความมั่นใจทีละขั้น ไม่กระโดด</span></div>
+        <div class="learn-item"><span class="learn-num">2</span><span>ฝึก desensitization และ counter-conditioning</span></div>
+        <div class="learn-item"><span class="learn-num">3</span><span>จัดการความเครียดด้วย enrichment</span></div>
+        <div class="learn-item"><span class="learn-num">4</span><span>สอนให้ "เลือก" แทนการบังคับ</span></div>
+      </div>
+    </div>
+
+    <!-- Core Program -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="award"></i> Core Program ที่แนะนำ</div>
+      <div class="program-card">
+        <div class="program-badge"><i data-lucide="shield-check"></i> แนะนำสำหรับ Sensitive Soul</div>
+        <div class="program-name">FBI — Foundation-Based Integration</div>
+        <div class="program-desc">สร้างความมั่นใจจากพื้นฐาน ด้วยวิธี Force-Free และ choice-based ที่ออกแบบมาสำหรับสุนัขกลุ่ม Sensitive โดยเฉพาะ</div>
+      </div>
+    </div>
+
+    <!-- Growth Path -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="trending-up"></i> Growth Path</div>
+      <div class="growth-item">
+        <div class="growth-icon"><i data-lucide="shield"></i></div>
+        <div><div class="growth-title">สร้างความปลอดภัย</div><div class="growth-desc">ให้สุนัขรู้สึกว่าโลกนี้ปลอดภัย ผ่านกิจวัตรที่สม่ำเสมอ</div></div>
+      </div>
+      <div class="growth-item">
+        <div class="growth-icon"><i data-lucide="star"></i></div>
+        <div><div class="growth-title">สร้างความมั่นใจ</div><div class="growth-desc">ค่อยๆ เพิ่มความท้าทายในระดับที่สุนัขรับได้</div></div>
+      </div>
+      <div class="growth-item">
+        <div class="growth-icon"><i data-lucide="users"></i></div>
+        <div><div class="growth-title">เปิดโลกทางสังคม</div><div class="growth-desc">Socialization แบบค่อยเป็นค่อยไปในสภาพแวดล้อมที่ปลอดภัย</div></div>
+      </div>
+    </div>
+
+    <!-- Potential -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="sparkles"></i> ศักยภาพสูงสุด</div>
+      <div class="potential-card">
+        <div class="potential-title">เมื่อพัฒนาเต็มที่</div>
+        <div class="potential-text">สุนัขที่เป็นมิตรกับทุกคน มั่นใจในตัวเอง และเป็นเพื่อนที่อ่อนโยนที่สุด</div>
+      </div>
+    </div>
+
+    <!-- Class ranking -->
+    <div class="section">
+      <div class="section-title"><i data-lucide="list-ordered"></i> คลาสที่เหมาะที่สุด</div>
+      <div class="class-item"><div class="rank-circle rank-1">🥇</div><div class="class-name">FBI Foundation</div><div class="class-pct">98%</div></div>
+      <div class="class-item"><div class="rank-circle rank-2">🥈</div><div class="class-name">Confidence Building</div><div class="class-pct">92%</div></div>
+      <div class="class-item"><div class="rank-circle rank-3">🥉</div><div class="class-name">Reactive Dog</div><div class="class-pct">85%</div></div>
+      <div class="class-item"><div class="rank-circle rank-4">🏅</div><div class="class-name">Social Skills</div><div class="class-pct">78%</div></div>
+    </div>
+
+    <!-- School CTA -->
+    <div class="school-cta">
+      <div style="font-size:16px;font-weight:800;">พร้อมเริ่มฝึกแล้ว?</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5;">เลือกคลาสที่เหมาะกับสุนัขของคุณ พร้อมครูผู้สอน Force-Free</div>
+      <button class="btn-gold" onclick="location.href='school.html'">
+        <i data-lucide="graduation-cap"></i> ดูข้อมูลสถาบัน
+      </button>
+      <button class="btn-outline">สอบถามการฝึกเพิ่มเติม</button>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const init = () => { if (window.lucide) { lucide.createIcons(); } else { setTimeout(init, 100); } };
+    init();
+  });
+</script>
+</body>
+</html>
