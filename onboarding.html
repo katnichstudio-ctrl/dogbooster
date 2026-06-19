@@ -130,39 +130,101 @@
     .choice-btn.selected .check-icon { display: block; }
     .choice-btn .check-icon svg { width: 18px; height: 18px; color: var(--gold); }
 
-    /* STEP 5 · RESULT */
-    .result-page { background: var(--dark); flex: 1; overflow-y: auto; padding-bottom: 32px; }
-    .result-card {
-      margin: 0 16px 20px; background: var(--dark2);
-      border: 1px solid var(--dark3); border-radius: 24px; overflow: hidden;
-    }
-    .result-banner {
-      height: 160px;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
-      position: relative; overflow: hidden;
-    }
-    .result-banner::after {
-      content: ''; position: absolute; inset: 0;
-      background: repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(255,255,255,.07) 18px, rgba(255,255,255,.07) 36px);
-    }
-    .result-dog {
-      position: absolute; bottom: -44px; left: 50%; transform: translateX(-50%);
-      width: 88px; height: 88px; border-radius: 18px;
-      background: #E4DECF; border: 4px solid var(--dark2);
-      display: flex; align-items: center; justify-content: center; font-size: 36px; z-index: 2;
-    }
-    .result-body { padding: 56px 20px 20px; text-align: center; }
-    .result-code { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; background: rgba(240,183,76,.15); color: var(--gold); padding: 4px 10px; border-radius: 8px; letter-spacing: .08em; }
-    .result-name { font-size: 24px; font-weight: 800; color: var(--cream); margin-top: 8px; }
-    .result-nameth { font-size: 14px; color: #9B8DC0; font-weight: 700; margin-top: 2px; }
+    /* STEP 6 · RESULT */
+    .result-page { background: var(--dark); flex: 1; overflow-y: auto; padding-bottom: 48px; }
 
-    .trait-bars { padding: 16px 20px; border-top: 1px solid var(--dark3); }
-    .trait-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .trait-row:last-child { margin-bottom: 0; }
-    .trait-lo { font-size: 10px; font-weight: 700; color: var(--muted); width: 56px; text-align: right; }
-    .trait-hi { font-size: 10px; font-weight: 700; color: var(--muted); width: 56px; }
-    .trait-bar-wrap { flex: 1; height: 7px; background: var(--dark3); border-radius: 100px; overflow: hidden; }
-    .trait-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-light), var(--gold)); border-radius: 100px; }
+    /* Hero card */
+    .result-hero-card {
+      margin: 52px 16px 0; background: var(--dark2);
+      border: 1px solid var(--dark3); border-radius: 24px; padding: 28px 20px 24px;
+      text-align: center;
+    }
+    .result-label { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .04em; }
+    .result-name { font-size: 28px; font-weight: 800; color: var(--gold); margin-top: 6px; line-height: 1.2; }
+    .result-code-pill {
+      display: inline-block; margin-top: 10px;
+      background: rgba(240,183,76,.18); color: var(--gold);
+      font-family: ui-monospace, monospace; font-size: 13px; font-weight: 800;
+      padding: 5px 16px; border-radius: 100px; letter-spacing: .1em;
+    }
+    .result-quote {
+      font-size: 14px; color: #A39B8C; font-style: italic;
+      line-height: 1.6; margin-top: 14px;
+    }
+
+    /* Trait bars — 4 axes */
+    .trait-bars { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+    .trait-row { display: flex; flex-direction: column; gap: 6px; }
+    .trait-row-top { display: flex; justify-content: space-between; align-items: center; }
+    .trait-left { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 800; color: var(--cream); }
+    .trait-left svg { width: 16px; height: 16px; color: var(--gold); }
+    .trait-right { font-size: 13px; font-weight: 600; color: var(--muted); }
+    .trait-bar-wrap { height: 8px; background: var(--dark3); border-radius: 100px; overflow: hidden; }
+    .trait-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-light), var(--gold)); border-radius: 100px; transition: width .6s ease; }
+
+    /* DogBooster banner strip */
+    .result-db-banner {
+      margin: 16px 16px 0; background: var(--dark2);
+      border: 1px solid var(--dark3); border-radius: 16px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .result-db-logo {
+      width: 44px; height: 44px; border-radius: 12px; background: #fff;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .result-db-logo img { width: 36px; height: 36px; object-fit: contain; }
+
+    /* Download / share buttons */
+    .result-actions { margin: 16px 16px 0; display: flex; flex-direction: column; gap: 10px; }
+    .btn-download {
+      width: 100%; background: var(--gold); color: var(--dark);
+      border: none; border-radius: 15px;
+      font-family: inherit; font-size: 16px; font-weight: 800; padding: 16px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
+      box-shadow: 0 12px 24px -12px rgba(240,183,76,.6);
+    }
+    .btn-download svg { width: 18px; height: 18px; }
+    .btn-share-link {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      font-size: 14px; font-weight: 700; color: var(--muted);
+      background: none; border: none; cursor: pointer; font-family: inherit; padding: 4px;
+    }
+    .btn-share-link svg { width: 16px; height: 16px; }
+
+    /* Info sections */
+    .result-info-card {
+      margin: 16px 16px 0; background: var(--dark2);
+      border: 1px solid var(--dark3); border-radius: 20px; padding: 20px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .info-section {}
+    .info-title {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 800; color: var(--cream); margin-bottom: 8px;
+    }
+    .info-title svg { width: 18px; height: 18px; }
+    .info-body { font-size: 14px; color: #A39B8C; line-height: 1.6; }
+    .class-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .class-chip {
+      font-size: 13px; font-weight: 700; color: var(--gold);
+      background: rgba(240,183,76,.1); border: 1.5px solid rgba(240,183,76,.35);
+      padding: 6px 14px; border-radius: 100px;
+    }
+
+    /* CTA card */
+    .result-cta-card {
+      margin: 16px 16px 0; background: var(--dark2);
+      border: 1px solid var(--dark3); border-radius: 20px; padding: 20px;
+    }
+    .result-cta-title { font-size: 16px; font-weight: 800; color: var(--cream); display: flex; align-items: center; gap: 8px; }
+    .result-cta-title svg { width: 18px; height: 18px; color: var(--gold); }
+    .result-cta-body { font-size: 13px; color: #A39B8C; line-height: 1.6; margin-top: 8px; }
+    .btn-cta {
+      width: 100%; margin-top: 14px; background: var(--gold); color: var(--dark);
+      border: none; border-radius: 13px; font-family: inherit; font-size: 15px; font-weight: 800;
+      padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-cta svg { width: 18px; height: 18px; }
 
     .chip-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
     .chip { display: inline-flex; font-size: 12px; font-weight: 600; background: var(--dark2); color: #C8C0B4; padding: 5px 11px; border-radius: 100px; border: 1px solid var(--dark3); }
@@ -567,53 +629,70 @@
   <!-- ══ STEP 6 · RESULT ══ -->
   <div id="s6" class="step">
     <div class="result-page">
-      <div style="padding:52px 16px 16px;">
-        <div style="font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;">ผลแบบประเมิน</div>
-        <div style="font-size:22px;font-weight:800;color:var(--cream);margin-top:4px;">บุคลิกของ <span id="resultDogName">น้อง</span> คือ</div>
-      </div>
 
-      <div class="result-card">
-        <div class="result-banner"><div class="result-dog">🐾</div></div>
-        <div class="result-body">
-          <span class="result-code" id="resultCode">FSCA</span>
-          <div class="result-name" id="resultName">The Team Captain</div>
-          <div class="result-nameth" id="resultNameTh">กัปตันทีม</div>
-          <div style="font-size:32px;margin-top:10px;" id="resultEmoji">🏅</div>
-        </div>
+      <!-- Hero card: name + code + quote + trait bars -->
+      <div class="result-hero-card">
+        <div class="result-label">บุคลิกของ <span id="resultDogName">น้อง</span> คือ</div>
+        <div class="result-name" id="resultName">The Team Captain</div>
+        <div class="result-code-pill" id="resultCode">FSCA</div>
+        <div class="result-quote" id="resultQuote">"กัปตันทีม"</div>
         <div class="trait-bars" id="traitBars"></div>
-        <div style="padding:16px 20px;">
-          <div class="sec-label" style="color:var(--amber);">ลักษณะเด่น</div>
-          <div class="chip-wrap" id="resultTraits"></div>
-        </div>
-        <div style="padding:0 20px 16px;">
-          <div class="sec-label" style="color:#6DBF8E;">จุดแข็ง</div>
-          <div class="chip-wrap" id="resultStrengths"></div>
-        </div>
-        <div style="padding:0 20px 16px;" id="watchoutSection">
-          <div class="sec-label" style="color:#E8956D;">ต้องระวัง</div>
-          <div class="chip-wrap" id="resultWatchouts"></div>
-        </div>
-        <div style="padding:0 20px 20px;">
-          <div class="sec-label" style="color:var(--gold);">คลาสที่แนะนำ</div>
-          <div class="chip-wrap" id="resultClasses"></div>
+      </div>
+
+      <!-- DogBooster brand strip -->
+      <div class="result-db-banner">
+        <div class="result-db-logo"><img src="assets/logo.png" alt="DogBooster"></div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--cream);">ฝึกสุนัขนิสัยดี มีความสุข</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">ไม่บังคับ · ไม่ลงโทษ</div>
         </div>
       </div>
 
-      <!-- LINE Login CTA -->
-      <div style="margin:0 16px 16px;background:var(--dark2);border:1px solid var(--dark3);border-radius:20px;padding:22px;">
-        <div style="font-size:16px;font-weight:800;color:var(--cream);">บันทึกผลและเริ่มฝึก</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5;">เข้าสู่ระบบด้วย LINE เพื่อบันทึกผลและรับบทเรียนฟรี 1 บท</div>
-        <div style="margin-top:16px;">
-          <button class="btn-line" onclick="location.href='index.html'">
-            <span class="line-mark">L</span> เข้าสู่ระบบด้วย LINE
-          </button>
+      <!-- Download + Share -->
+      <div class="result-actions">
+        <button class="btn-download" onclick="downloadCard()">
+          <i data-lucide="download"></i> ดาวน์โหลดรูปบุคลิกสุนัข
+        </button>
+        <button class="btn-share-link" onclick="shareResult()">
+          <i data-lucide="share-2"></i> อวดบุคลิกให้เพื่อน ๆ เห็น
+        </button>
+      </div>
+
+      <!-- ลักษณะเด่น / จุดระวัง / คลาส -->
+      <div class="result-info-card">
+        <div class="info-section">
+          <div class="info-title" style="color:var(--gold);">
+            <i data-lucide="trophy" style="color:var(--gold)"></i> ลักษณะเด่น
+          </div>
+          <div class="info-body" id="resultStrengthsText"></div>
         </div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;">
-          <span style="font-size:12px;color:var(--muted);font-weight:600;">🔒 ปลอดภัย</span>
-          <span style="width:4px;height:4px;border-radius:50%;background:var(--dark3);display:inline-block;"></span>
-          <span style="font-size:12px;color:var(--muted);font-weight:600;">❤️ ไม่มีลงโทษ</span>
+        <div style="height:1px;background:var(--dark3);"></div>
+        <div class="info-section">
+          <div class="info-title" style="color:#E8956D;">
+            <i data-lucide="alert-triangle" style="color:#E8956D"></i> จุดที่ต้องระวัง
+          </div>
+          <div class="info-body" id="resultWatchoutsText"></div>
+        </div>
+        <div style="height:1px;background:var(--dark3);"></div>
+        <div class="info-section">
+          <div class="info-title">
+            <i data-lucide="graduation-cap" style="color:var(--gold)"></i> คลาสที่แนะนำของ DogBooster
+          </div>
+          <div class="class-chips" id="resultClasses"></div>
         </div>
       </div>
+
+      <!-- CTA -->
+      <div class="result-cta-card">
+        <div class="result-cta-title">
+          <i data-lucide="graduation-cap"></i> สนใจฝึกสุนัขกับ DogBooster
+        </div>
+        <div class="result-cta-body">หลักการ Force-Free ระดับโลก "สร้างสายสัมพันธ์" ผ่านกิจกรรมที่สนุกและเห็นผลจริง</div>
+        <button class="btn-cta" onclick="location.href='index.html'">
+          ดูข้อมูลสถาบันฝึกสุนัข <i data-lucide="arrow-right"></i>
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -644,22 +723,22 @@ const QUESTIONS = [
 ];
 
 const PERSONALITIES = {
-  ESCA: { emoji:"🌟", nameEn:"The Superstar",           nameTh:"นักผจญภัยดาวเด่น",   traits:["ชอบคน","ชอบหมา","พลังงานสูง","มั่นใจมาก"],       strengths:["เข้ากลุ่มง่าย","เรียนรู้ไว","ชอบกิจกรรม"],           watchouts:["ตื่นเต้นง่าย","ดึงสายจูง","กระโดดใส่คน"],    classes:["FBI","Agility","เดินดีไปด้วยกัน"] },
-  ESCM: { emoji:"🌈", nameEn:"The Social Butterfly",    nameTh:"ผีเสื้อสังคม",        traits:["ชอบทุกคน","พลังงานพอดี","เข้ากันได้ดี"],             strengths:["ปรับตัวเก่ง","เพื่อนแท้"],                           watchouts:["สมาธิสั้น"],                                   classes:["FBI","Socialization","Fun Class"] },
-  ESNA: { emoji:"💫", nameEn:"The Excitable Dreamer",   nameTh:"นักฝันพลังงานสูง",    traits:["อยากเข้าสังคม","แต่กังวลลึก ๆ"],                      strengths:["น่ารัก","เข้าหาคน"],                                  watchouts:["ตื่นเต้นจนเห่า","Reactive"],                   classes:["FBI","Reactive Dog","Confidence"] },
-  ESNM: { emoji:"🌱", nameEn:"The Gentle Explorer",     nameTh:"นักสำรวจใจอ่อน",      traits:["อยากรู้โลก","แต่ไม่มั่นใจ"],                          strengths:["อ่อนโยน","เรียนรู้ดี"],                              watchouts:["กลัวสิ่งแวดล้อมใหม่"],                        classes:["FBI","Confidence","Desensitization"] },
-  ERCA: { emoji:"🛡️", nameEn:"The Brave Guardian",      nameTh:"ผู้พิทักษ์ผู้กล้า",   traits:["มั่นใจ","ไม่ชอบคนแปลกหน้า","เฝ้าระวัง"],             strengths:["คุมสถานการณ์ได้ดี","ซื่อสัตย์"],                     watchouts:["เห่าคนแปลกหน้า"],                             classes:["FBI","Controlled Socialization"] },
-  ERCM: { emoji:"🔭", nameEn:"The Independent Scout",   nameTh:"นักลาดตระเวนอิสระ",   traits:["ชอบสำรวจ","ชอบตัดสินใจเอง"],                          strengths:["มั่นใจ","เอาตัวรอดเก่ง"],                            watchouts:["เรียกยาก"],                                    classes:["FBI","Recall","Nose Work"] },
-  ERNA: { emoji:"🚨", nameEn:"The Protective Worrier",  nameTh:"ผู้พิทักษ์ขี้กังวล",  traits:["ปกป้องบ้าน","ระวังตัวมาก"],                           strengths:["ใส่ใจครอบครัว"],                                     watchouts:["เห่า","พุ่งใส่สิ่งเร้า"],                     classes:["FBI","Reactive Dog","Desensitization"] },
-  ERNM: { emoji:"👀", nameEn:"The Quiet Observer",      nameTh:"ผู้สังเกตการณ์เงียบ", traits:["ชอบดูมากกว่าลุย","ระมัดระวัง"],                        strengths:["สุภาพ","ไม่วุ่นวาย"],                                 watchouts:["ขาดความมั่นใจ"],                               classes:["FBI","Confidence","Gentle Class"] },
-  FSCA: { emoji:"🏅", nameEn:"The Team Captain",        nameTh:"กัปตันทีม",            traits:["โฟกัสเจ้าของ","เข้าสังคมได้ดี","มั่นใจ"],             strengths:["ฝึกง่ายมาก","ชอบทำงานร่วมกับคน"],                   watchouts:[],                                              classes:["FBI","Advanced Training","Agility"] },
-  FSCM: { emoji:"💛", nameEn:"The Best Friend",         nameTh:"เพื่อนซี้",            traits:["ติดเจ้าของ","เป็นมิตร"],                               strengths:["อยู่บ้านง่าย","เรียนรู้ไว"],                          watchouts:["แยกจากเจ้าของยาก"],                           classes:["FBI","Separation Anxiety","Fun Class"] },
-  FSNA: { emoji:"💗", nameEn:"The Sensitive Helper",    nameTh:"ผู้ช่วยแสนอ่อนโยน",   traits:["รักคน","อ่อนไหว"],                                     strengths:["อ่านอารมณ์คนเก่ง"],                                  watchouts:["เครียดง่าย"],                                  classes:["FBI","Confidence","Gentle Handling"] },
-  FSNM: { emoji:"🤍", nameEn:"The Gentle Companion",    nameTh:"คู่หูแสนอบอุ่น",       traits:["สุภาพ","อ่อนโยน"],                                     strengths:["เหมาะกับครอบครัว"],                                  watchouts:["ขาดความมั่นใจ"],                               classes:["FBI","Confidence","Family Training"] },
-  FRCA: { emoji:"🦮", nameEn:"The Loyal Protector",     nameTh:"ผู้พิทักษ์ผู้ภักดี",  traits:["โฟกัสเจ้าของมาก","ไม่สนคนแปลกหน้า"],                  strengths:["ภักดีสูง","ฝึกง่าย"],                                watchouts:["หวงเจ้าของ"],                                  classes:["FBI","Controlled Socialization","Advanced"] },
-  FRCM: { emoji:"⚖️", nameEn:"The Reliable Partner",   nameTh:"คู่หูผู้ไว้ใจได้",     traits:["สุขุม","มั่นคง"],                                      strengths:["สมดุลที่สุด"],                                        watchouts:["เบื่อง่ายถ้ากิจกรรมซ้ำ"],                    classes:["FBI","Enrichment","Advanced"] },
-  FRNA: { emoji:"🧷", nameEn:"The Cautious Guardian",   nameTh:"ผู้พิทักษ์รอบคอบ",    traits:["ระวังตัว","ผูกพันกับครอบครัว"],                         strengths:["รับผิดชอบ","มีวินัย"],                               watchouts:["กลัวคนแปลกหน้า"],                             classes:["FBI","Desensitization","Confidence"] },
-  FRNM: { emoji:"🕊️", nameEn:"The Loyal Soul",          nameTh:"วิญญาณผู้ซื่อสัตย์",  traits:["สงบ","อ่อนโยน","รักครอบครัว"],                         strengths:["เป็นหมาครอบครัวในอุดมคติ"],                          watchouts:["ไม่ชอบความเปลี่ยนแปลง"],                      classes:["FBI","Gentle Class","Family Training"] },
+  ESCA: { nameEn:"The Superstar",          nameTh:"นักผจญภัยดาวเด่น",   quote:'"พลังงานเต็มร้อย เข้าสังคมเก่ง กล้าลองทุกอย่าง"',       strengths:["เข้ากลุ่มง่าย","เรียนรู้ไว","ชอบกิจกรรม"],           traits:["ชอบคน","ชอบหมา","พลังงานสูง","มั่นใจมาก"],        watchouts:["ตื่นเต้นง่าย","ดึงสายจูง","กระโดดใส่คน"],    classes:["FBI","Agility","เดินดีไปด้วยกัน"] },
+  ESCM: { nameEn:"The Social Butterfly",   nameTh:"ผีเสื้อสังคม",        quote:'"ชอบทุกคน เข้ากับทุกสถานการณ์ได้อย่างลื่นไหล"',        strengths:["ปรับตัวเก่ง","เพื่อนแท้"],                           traits:["ชอบทุกคน","พลังงานพอดี","เข้ากันได้ดี"],          watchouts:["สมาธิสั้น"],                                   classes:["FBI","Socialization","Fun Class"] },
+  ESNA: { nameEn:"The Excitable Dreamer",  nameTh:"นักฝันพลังงานสูง",    quote:'"อยากรู้อยากเห็น แต่ใจยังมีความกังวลซ่อนอยู่"',          strengths:["น่ารัก","เข้าหาคน"],                                 traits:["อยากเข้าสังคม","แต่กังวลลึก ๆ"],                  watchouts:["ตื่นเต้นจนเห่า","Reactive"],                   classes:["FBI","Reactive Dog","Confidence"] },
+  ESNM: { nameEn:"The Gentle Explorer",    nameTh:"นักสำรวจใจอ่อน",      quote:'"อยากรู้จักโลก แต่ต้องการเวลาปรับตัวก่อน"',              strengths:["อ่อนโยน","เรียนรู้ดี"],                              traits:["อยากรู้โลก","แต่ไม่มั่นใจ"],                      watchouts:["กลัวสิ่งแวดล้อมใหม่"],                        classes:["FBI","Confidence","Desensitization"] },
+  ERCA: { nameEn:"The Brave Guardian",     nameTh:"ผู้พิทักษ์ผู้กล้า",   quote:'"มั่นใจและเฝ้าระวัง พร้อมปกป้องคนที่รักทุกเมื่อ"',     strengths:["คุมสถานการณ์ได้ดี","ซื่อสัตย์"],                     traits:["มั่นใจ","ไม่ชอบคนแปลกหน้า","เฝ้าระวัง"],         watchouts:["เห่าคนแปลกหน้า"],                             classes:["FBI","Controlled Socialization"] },
+  ERCM: { nameEn:"The Independent Scout",  nameTh:"นักลาดตระเวนอิสระ",   quote:'"ชอบสำรวจและตัดสินใจเอง ไม่ค่อยง้อใคร"',               strengths:["มั่นใจ","เอาตัวรอดเก่ง"],                            traits:["ชอบสำรวจ","ชอบตัดสินใจเอง"],                     watchouts:["เรียกกลับยาก"],                                classes:["FBI","Recall","Nose Work"] },
+  ERNA: { nameEn:"The Protective Worrier", nameTh:"ผู้พิทักษ์ขี้กังวล",  quote:'"รักครอบครัวมาก แต่ก็กังวลกับสิ่งแปลกใหม่เสมอ"',       strengths:["ใส่ใจครอบครัว"],                                     traits:["ปกป้องบ้าน","ระวังตัวมาก"],                       watchouts:["เห่า","พุ่งใส่สิ่งเร้า"],                     classes:["FBI","Reactive Dog","Desensitization"] },
+  ERNM: { nameEn:"The Quiet Observer",     nameTh:"ผู้สังเกตการณ์เงียบ", quote:'"ชอบดูมากกว่าลุย สงวนท่าทีแต่ใจดีเมื่อไว้วางใจ"',      strengths:["สุภาพ","ไม่วุ่นวาย"],                                traits:["ชอบดูมากกว่าลุย","ระมัดระวัง"],                   watchouts:["ขาดความมั่นใจ"],                               classes:["FBI","Confidence","Gentle Class"] },
+  FSCA: { nameEn:"The Team Captain",       nameTh:"กัปตันทีม",            quote:'"ผู้นำที่มั่นใจและเข้ากับทุกคน พร้อมพาคุณไปถึงเป้าหมายด้วยความสนุกและรอยยิ้ม"', strengths:["ฝึกง่ายมาก","ชอบทำงานร่วมกับคน"],                   traits:["โฟกัสเจ้าของ","เข้าสังคมได้ดี","มั่นใจ"],        watchouts:[],                                              classes:["FBI","Advanced Training","Agility"] },
+  FSCM: { nameEn:"The Best Friend",        nameTh:"เพื่อนซี้",            quote:'"ติดเจ้าของ รักทุกคน เป็นเพื่อนที่ดีที่สุดของคุณ"',    strengths:["อยู่บ้านง่าย","เรียนรู้ไว"],                          traits:["ติดเจ้าของ","เป็นมิตร"],                          watchouts:["แยกจากเจ้าของยาก"],                           classes:["FBI","Separation Anxiety","Fun Class"] },
+  FSNA: { nameEn:"The Sensitive Helper",   nameTh:"ผู้ช่วยแสนอ่อนโยน",   quote:'"รักคนและอ่านอารมณ์เก่ง แต่ใจอ่อนไหวง่าย"',             strengths:["อ่านอารมณ์คนเก่ง"],                                  traits:["รักคน","อ่อนไหว"],                                watchouts:["เครียดง่าย"],                                  classes:["FBI","Confidence","Gentle Handling"] },
+  FSNM: { nameEn:"The Gentle Companion",   nameTh:"คู่หูแสนอบอุ่น",       quote:'"สุภาพ อ่อนโยน เหมาะเป็นเพื่อนครอบครัวที่อบอุ่น"',    strengths:["เหมาะกับครอบครัว"],                                  traits:["สุภาพ","อ่อนโยน"],                                watchouts:["ขาดความมั่นใจ"],                               classes:["FBI","Confidence","Family Training"] },
+  FRCA: { nameEn:"The Loyal Protector",    nameTh:"ผู้พิทักษ์ผู้ภักดี",  quote:'"โฟกัสเจ้าของเป็นหลัก ภักดีสูง และพร้อมปกป้องทุกเมื่อ"', strengths:["ภักดีสูง","ฝึกง่าย"],                                traits:["โฟกัสเจ้าของมาก","ไม่สนคนแปลกหน้า"],             watchouts:["หวงเจ้าของ"],                                  classes:["FBI","Controlled Socialization","Advanced"] },
+  FRCM: { nameEn:"The Reliable Partner",   nameTh:"คู่หูผู้ไว้ใจได้",     quote:'"สุขุม มั่นคง สมดุลที่สุด — คู่หูที่ไว้วางใจได้ตลอดไป"', strengths:["สมดุลที่สุด"],                                        traits:["สุขุม","มั่นคง"],                                 watchouts:["เบื่อง่ายถ้ากิจกรรมซ้ำ"],                    classes:["FBI","Enrichment","Advanced"] },
+  FRNA: { nameEn:"The Cautious Guardian",  nameTh:"ผู้พิทักษ์รอบคอบ",    quote:'"ระมัดระวัง ผูกพันครอบครัว และไม่ไว้วางใจคนแปลกหน้า"', strengths:["รับผิดชอบ","มีวินัย"],                               traits:["ระวังตัว","ผูกพันกับครอบครัว"],                   watchouts:["กลัวคนแปลกหน้า"],                             classes:["FBI","Desensitization","Confidence"] },
+  FRNM: { nameEn:"The Loyal Soul",         nameTh:"วิญญาณผู้ซื่อสัตย์",  quote:'"สงบ อ่อนโยน รักครอบครัว — หมาครอบครัวในอุดมคติ"',     strengths:["เป็นหมาครอบครัวในอุดมคติ"],                          traits:["สงบ","อ่อนโยน","รักครอบครัว"],                    watchouts:["ไม่ชอบความเปลี่ยนแปลง"],                      classes:["FBI","Gentle Class","Family Training"] },
 };
 
 let currentQ = 0;
@@ -766,23 +845,51 @@ function showResult() {
   document.getElementById('resultDogName').textContent = dogName;
   document.getElementById('resultCode').textContent = code;
   document.getElementById('resultName').textContent = p.nameEn;
+  document.getElementById('resultQuote').textContent = p.quote;
   document.getElementById('resultNameTh').textContent = p.nameTh;
   document.getElementById('resultEmoji').textContent = p.emoji;
 
-  document.getElementById('traitBars').innerHTML = [
-    { lo:'Focused', hi:'Explorer', val:axes.ef },
-    { lo:'Reserved', hi:'Social',  val:axes.sr },
-    { lo:'Nervous',  hi:'Confident',val:axes.cn },
-    { lo:'Moderate', hi:'Active',  val:axes.am },
-  ].map(b => `<div class="trait-row"><div class="trait-lo">${b.lo}</div><div class="trait-bar-wrap"><div class="trait-bar-fill" style="width:${Math.round(b.val*100)}%"></div></div><div class="trait-hi">${b.hi}</div></div>`).join('');
+  const AXIS_META = [
+    { icon:'zap',        label:'Active',     opposite:'Moderate',  val:axes.am },
+    { icon:'users',      label:'Social',     opposite:'Reserved',  val:axes.sr },
+    { icon:'shield',     label:'Confident',  opposite:'Nervous',   val:axes.cn },
+    { icon:'compass',    label:'Focused',    opposite:'Explorer',  val:1-axes.ef },
+  ];
+  document.getElementById('traitBars').innerHTML = AXIS_META.map(a => `
+    <div class="trait-row">
+      <div class="trait-row-top">
+        <div class="trait-left"><i data-lucide="${a.icon}"></i> ${a.label}</div>
+        <div class="trait-right">${a.opposite}</div>
+      </div>
+      <div class="trait-bar-wrap"><div class="trait-bar-fill" style="width:${Math.round(a.val*100)}%"></div></div>
+    </div>`).join('');
 
-  const chip = (t, cls='') => `<span class="chip ${cls}">${t}</span>`;
-  document.getElementById('resultTraits').innerHTML = p.traits.map(t => chip(t)).join('');
-  document.getElementById('resultStrengths').innerHTML = p.strengths.map(t => chip(t,'chip-good')).join('');
-  document.getElementById('resultWatchouts').innerHTML = (p.watchouts.length ? p.watchouts : ['ไม่มีข้อระวังพิเศษ']).map(t => chip(t,'chip-warn')).join('');
-  document.getElementById('resultClasses').innerHTML = p.classes.map(t => chip(t,'chip-class')).join('');
+  document.getElementById('resultStrengthsText').textContent =
+    p.strengths.join(' — ') + (p.traits.length ? ' — ' + p.traits.join(', ') : '');
+  document.getElementById('resultWatchoutsText').textContent =
+    p.watchouts.length ? p.watchouts.join(' — ') : 'ไม่มีข้อระวังพิเศษ';
+  document.getElementById('resultClasses').innerHTML =
+    p.classes.map(t => `<span class="class-chip">${t}</span>`).join('');
 
   goStep(6);
+}
+
+function downloadCard() {
+  const code = document.getElementById('resultCode').textContent;
+  const name = document.getElementById('resultName').textContent;
+  const dogName = document.getElementById('resultDogName').textContent;
+  alert('ฟีเจอร์ดาวน์โหลดการ์ดจะพร้อมเร็ว ๆ นี้!\n' + dogName + ' · ' + code + ' · ' + name);
+}
+
+function shareResult() {
+  const code = document.getElementById('resultCode').textContent;
+  const name = document.getElementById('resultName').textContent;
+  const dogName = document.getElementById('resultDogName').textContent;
+  if (navigator.share) {
+    navigator.share({ title: dogName + ' คือ ' + name, text: 'บุคลิกสุนัขของ ' + dogName + ' คือ ' + name + ' (' + code + ') — DogBooster' });
+  } else {
+    alert('คัดลอกข้อความ: บุคลิกของ ' + dogName + ' คือ ' + name + ' (' + code + ')');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
