@@ -49,10 +49,11 @@
     }
     .tbi {
       display: flex; flex-direction: column; align-items: center; gap: 4px;
-      font-size: 10.5px; font-weight: 700; color: #7E7668;
+      font-size: 11px; font-weight: 700; color: #7E7668;
       background: none; border: none; font-family: inherit; cursor: pointer;
+      flex: 1;
     }
-    .tbi svg { width: 20px; height: 20px; stroke-width: 1.75; }
+    .tbi svg { width: 22px; height: 22px; stroke-width: 1.75; }
     .tbi.active { color: var(--gold); }
 
     .not-found { text-align: center; padding: 80px 24px; color: #6B6459; }
@@ -64,21 +65,13 @@
     <div id="type-root"></div>
 
     <nav class="tab-bar">
-      <button class="tbi" onclick="location.href='index.html'">
-        <i data-lucide="home"></i>
-        หน้าหลัก
+      <button class="tbi" onclick="downloadPersonalityCard()">
+        <i data-lucide="download"></i>
+        ดาวน์โหลดรูป
       </button>
-      <button class="tbi" onclick="location.href='learning-options.html'">
-        <i data-lucide="book-open"></i>
-        เรียน
-      </button>
-      <button class="tbi active">
-        <i data-lucide="clipboard-list"></i>
-        แบบทดสอบ
-      </button>
-      <button class="tbi">
-        <i data-lucide="user"></i>
-        โปรไฟล์
+      <button class="tbi active" onclick="location.href='school.html'">
+        <i data-lucide="school"></i>
+        ฝึกสุนัขกับ DogBooster
       </button>
     </nav>
   </div>
@@ -130,14 +123,7 @@
         }
       }
 
-      // Inject download card button after last section
-      var root = document.getElementById('type-root');
-      if (root) {
-        var btnWrap = document.createElement('div');
-        btnWrap.style.cssText = 'padding:20px 20px 32px;';
-        btnWrap.innerHTML = '<button onclick="downloadPersonalityCard()" style="width:100%;background:#F0B74C;color:#15130F;border:none;border-radius:15px;font-family:inherit;font-size:16px;font-weight:800;padding:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 12px 24px -12px rgba(240,183,76,.6);">⬇ ดาวน์โหลดรูปบุคลิกสุนัข</button>';
-        root.appendChild(btnWrap);
-      }
+
     }, 80);
   })();
 
@@ -297,8 +283,10 @@
       // Download
       var link = document.createElement('a');
       link.download = 'dogbooster-' + code + '.png';
-      link.href = canvas.toDataURL('image/png');
+      try { link.href = canvas.toDataURL('image/png'); } catch(e) { alert('ไม่สามารถสร้างรูปได้: ' + e.message); return; }
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     }
 
     if (photo) {
