@@ -65,9 +65,13 @@
     <div id="type-root"></div>
 
     <div class="cta-bar">
-      <button class="cta-btn" onclick="location.href='school.html'">
+      <button class="cta-btn" onclick="location.href='school.html'" style="margin-bottom:10px;">
         <i data-lucide="paw-print"></i>
         ฝึกสุนัขกับ DogBooster
+      </button>
+      <button class="cta-btn" onclick="openDogHealth()" style="background:var(--sand);color:var(--dark);box-shadow:none;">
+        <i data-lucide="heart-pulse"></i>
+        ข้อมูลสุขภาพสุนัข
       </button>
     </div>
   </div>
@@ -326,6 +330,13 @@
     ctx.lineTo(x, y+r);
     ctx.arcTo(x, y, x+r, y, r);
     ctx.closePath();
+  }
+  </script>
+  <script>
+  function openDogHealth() {
+    const id = localStorage.getItem('db_activeDogId');
+    if (id) location.href = 'dog-detail.html?id=' + id;
+    else location.href = 'dog-detail.html';
   }
   </script>
 </body>
