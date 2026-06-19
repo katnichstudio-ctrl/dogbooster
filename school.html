@@ -641,7 +641,9 @@
         <div style="font-size:11px;font-weight:800;color:var(--gold-dark);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;">เปิดรับสมัคร</div>
 
         <!-- FBI -->
-        <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:13px 14px;">
+        <div onclick="showView('view-fbi')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-fbi')"
+             style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:13px 14px;cursor:pointer;">
           <div style="width:38px;height:38px;border-radius:10px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <span class="ic" style="font-size:18px;color:var(--dark)"><i data-lucide="star"></i></span>
           </div>
@@ -761,6 +763,108 @@
 
     </div>
   </div><!-- /view-class-detail -->
+
+  <!-- ===== VIEW: FBI · Four Basic Instinct ===== -->
+  <div id="view-fbi" class="view">
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <button onclick="showView('view-class-detail')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:14px;position:relative">
+        <div style="width:40px;height:40px;border-radius:12px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span class="ic" style="font-size:20px;color:var(--dark)"><i data-lucide="star"></i></span>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--muted);">คลาสเรียนออนไลน์</div>
+          <h2 style="font-size:22px;font-weight:800;letter-spacing:-.01em;color:var(--cream);line-height:1.2;">FBI · Four Basic Instinct</h2>
+        </div>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:12px;position:relative">
+        4 พื้นฐานสร้างสัญชาตญาณสุนัข
+      </p>
+    </div>
+    <div class="view2-content">
+
+      <!-- Benefits -->
+      <div style="font-weight:800;font-size:14px;color:var(--dark);margin-bottom:12px;">คำอธิบาย</div>
+      <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:24px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <span class="ic" style="font-size:16px;color:var(--gold);margin-top:1px;flex-shrink:0"><i data-lucide="check-circle-2"></i></span>
+          <span style="font-size:13.5px;color:var(--text-body);">สุนัขมีสติขึ้น นิ่ง สงบขึ้น นั่ง หมอบ คอยได้</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <span class="ic" style="font-size:16px;color:var(--gold);margin-top:1px;flex-shrink:0"><i data-lucide="check-circle-2"></i></span>
+          <span style="font-size:13.5px;color:var(--text-body);">เป็นสุนัขที่ไม่แย่งอาหาร</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <span class="ic" style="font-size:16px;color:var(--gold);margin-top:1px;flex-shrink:0"><i data-lucide="check-circle-2"></i></span>
+          <span style="font-size:13.5px;color:var(--text-body);">เรียกแล้วมา</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <span class="ic" style="font-size:16px;color:var(--gold);margin-top:1px;flex-shrink:0"><i data-lucide="check-circle-2"></i></span>
+          <span style="font-size:13.5px;color:var(--text-body);">สนใจสิ่งเร้าน้อยลง สนใจเจ้าของมากขึ้น</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <span class="ic" style="font-size:16px;color:var(--gold);margin-top:1px;flex-shrink:0"><i data-lucide="check-circle-2"></i></span>
+          <span style="font-size:13.5px;color:var(--text-body);">มีความมั่นใจ ทำเรื่องที่ถูกต้อง</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <span class="ic" style="font-size:16px;color:var(--gold);margin-top:1px;flex-shrink:0"><i data-lucide="check-circle-2"></i></span>
+          <span style="font-size:13.5px;color:var(--text-body);">ได้เครื่องมือพื้นฐานสำหรับคลาสอื่นๆ เช่น Dog Show · Agility · ดมกลิ่น</span>
+        </div>
+      </div>
+
+      <!-- What you get -->
+      <div style="font-weight:800;font-size:14px;color:var(--dark);margin-bottom:12px;">สิ่งที่จะได้ในคลาสนี้</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+
+        <div style="display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:12px;padding:12px 14px;">
+          <span class="ic" style="font-size:20px;color:var(--gold);flex-shrink:0;margin-top:1px"><i data-lucide="badge-check"></i></span>
+          <span style="font-size:13px;color:var(--dark);">มีรหัสนักเรียนเฉพาะ สำหรับสิทธิประโยชน์ต่างๆ</span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:12px;padding:12px 14px;">
+          <span class="ic" style="font-size:20px;color:var(--gold);flex-shrink:0;margin-top:1px"><i data-lucide="puzzle"></i></span>
+          <span style="font-size:13px;color:var(--dark);">เรียนรูปแบบเกมส์ <strong>10 เกมส์</strong> ทั้งหมด 4 Part</span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:12px;padding:12px 14px;">
+          <span class="ic" style="font-size:20px;color:var(--gold);flex-shrink:0;margin-top:1px"><i data-lucide="globe"></i></span>
+          <span style="font-size:13px;color:var(--dark);">รวบรวมหลักสูตรจาก <strong>Susan Garrett</strong> 🇨🇦</span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:12px;padding:12px 14px;">
+          <span class="ic" style="font-size:20px;color:var(--gold);flex-shrink:0;margin-top:1px"><i data-lucide="users"></i></span>
+          <span style="font-size:13px;color:var(--dark);">เรียนผ่าน <strong>FB Group</strong> มี Community ช่วยกัน</span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:12px;padding:12px 14px;">
+          <span class="ic" style="font-size:20px;color:var(--gold);flex-shrink:0;margin-top:1px"><i data-lucide="message-circle-question"></i></span>
+          <span style="font-size:13px;color:var(--dark);">ส่งการบ้าน ขอคำแนะนำเพิ่มเติมได้ผ่านกลุ่มไลน์ + แจ้งข่าวทริคที่เป็นประโยชน์</span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:12px;padding:12px 14px;">
+          <span class="ic" style="font-size:20px;color:var(--gold);flex-shrink:0;margin-top:1px"><i data-lucide="calendar-days"></i></span>
+          <span style="font-size:13px;color:var(--dark);">เรียนออนไลน์ซ้ำได้ตลอดระยะเวลา <strong>4 เดือน</strong></span>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:12px;padding:12px 14px;">
+          <span class="ic" style="font-size:20px;color:var(--gold);flex-shrink:0;margin-top:1px"><i data-lucide="tag"></i></span>
+          <span style="font-size:13px;color:var(--dark);">สิทธิ์ส่วนลดคลาสเรียนอื่นๆ <strong>15%</strong></span>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <a href="https://lin.ee/PGDi0DS" target="_blank" rel="noopener" class="pbtn" style="text-decoration:none;margin-bottom:32px;">
+        สมัครเรียน FBI
+        <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
+      </a>
+
+    </div>
+  </div><!-- /view-fbi -->
 
   <!-- ===== VIEW: ฝึกส่วนตัวกับครู ===== -->
   <div id="view-private" class="view">
