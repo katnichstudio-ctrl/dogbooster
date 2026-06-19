@@ -523,6 +523,10 @@
     </div>
     <div class="form-body">
       <div>
+        <div class="form-label">ชื่อ-นามสกุล</div>
+        <input class="form-input" type="text" id="ownerName" placeholder="เช่น สมชาย ใจดี">
+      </div>
+      <div>
         <div class="form-label">Email</div>
         <input class="form-input" type="email" id="ownerEmail" placeholder="example@email.com">
       </div>
@@ -866,18 +870,19 @@ function updateDistrict() {
 }
 
 function validateOwner() {
+  const name     = document.getElementById('ownerName').value.trim();
   const email    = document.getElementById('ownerEmail').value.trim();
   const gender   = document.getElementById('ownerGender').value;
   const age      = document.getElementById('ownerAge').value;
   const province = document.getElementById('ownerProvince').value;
   const district = document.getElementById('ownerDistrict').value;
   const err = document.getElementById('ownerError');
-  if (!email || !gender || !age || !province || !district) {
+  if (!name || !email || !gender || !age || !province || !district) {
     err.style.display = 'block';
     return;
   }
   err.style.display = 'none';
-  localStorage.setItem('db_owner', JSON.stringify({ email, gender, age, province, district }));
+  localStorage.setItem('db_owner', JSON.stringify({ name, email, gender, age, province, district }));
   goStep(4);
 }
 

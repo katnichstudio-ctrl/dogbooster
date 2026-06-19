@@ -139,7 +139,7 @@
       <div class="owner-avatar">👤</div>
       <div>
         <div class="owner-label">เจ้าของ</div>
-        <div id="ownerEmailDisplay" style="font-size:15px;font-weight:800;color:var(--cream);">—</div>
+        <div id="ownerNameDisplay" style="font-size:15px;font-weight:800;color:var(--cream);">—</div>
         <div id="ownerMetaDisplay" class="owner-email">—</div>
       </div>
     </div>
@@ -179,15 +179,16 @@ function loadProfile() {
 
   // Owner header
   if (owner) {
-    document.getElementById('ownerEmailDisplay').textContent = owner.email || '—';
+    document.getElementById('ownerNameDisplay').textContent = owner.name || owner.email || '—';
     document.getElementById('ownerMetaDisplay').textContent =
-      [owner.gender, owner.age, owner.province].filter(Boolean).join(' · ');
+      [owner.email, owner.province].filter(Boolean).join(' · ');
   }
 
   // Owner info card
   const infoCard = document.getElementById('ownerInfoCard');
   if (owner) {
     infoCard.innerHTML = [
+      ['ชื่อ-นามสกุล', owner.name],
       ['Email', owner.email],
       ['เพศ', owner.gender],
       ['ช่วงอายุ', owner.age],
