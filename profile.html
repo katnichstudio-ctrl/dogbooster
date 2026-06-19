@@ -136,11 +136,9 @@
       <i data-lucide="arrow-left"></i> กลับ
     </button>
     <div class="owner-row">
-      <div class="owner-avatar">👤</div>
       <div>
         <div class="owner-label">เจ้าของ</div>
         <div id="ownerNameDisplay" style="font-size:15px;font-weight:800;color:var(--cream);">—</div>
-        <div id="ownerMetaDisplay" class="owner-email">—</div>
       </div>
     </div>
   </div>
@@ -158,12 +156,6 @@
       <i data-lucide="plus-circle"></i> เพิ่มสุนัขตัวใหม่
     </a>
 
-    <!-- Owner info -->
-    <div>
-      <div class="sec-title"><i data-lucide="user"></i> ข้อมูลเจ้าของ</div>
-      <div class="info-card" id="ownerInfoCard"></div>
-    </div>
-
     <!-- Reset -->
     <button class="btn-outline" onclick="confirmReset()">
       <i data-lucide="trash-2"></i> ล้างข้อมูลทั้งหมด
@@ -179,28 +171,7 @@ function loadProfile() {
 
   // Owner header
   if (owner) {
-    document.getElementById('ownerNameDisplay').textContent = owner.name || owner.email || '—';
-    document.getElementById('ownerMetaDisplay').textContent =
-      [owner.email, owner.province].filter(Boolean).join(' · ');
-  }
-
-  // Owner info card
-  const infoCard = document.getElementById('ownerInfoCard');
-  if (owner) {
-    infoCard.innerHTML = [
-      ['ชื่อ-นามสกุล', owner.name],
-      ['Email', owner.email],
-      ['เพศ', owner.gender],
-      ['ช่วงอายุ', owner.age],
-      ['จังหวัด', owner.province],
-      ['อำเภอ', owner.district],
-    ].map(([label, val]) => val ? `
-      <div class="info-row">
-        <span class="info-label">${label}</span>
-        <span class="info-val">${val}</span>
-      </div>` : '').join('');
-  } else {
-    infoCard.innerHTML = '<div style="font-size:13px;color:var(--muted);">ยังไม่มีข้อมูลเจ้าของ</div>';
+    document.getElementById('ownerNameDisplay').textContent = owner.name || '—';
   }
 
   // Dog list
