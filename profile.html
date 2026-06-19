@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>โปรไฟล์ — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-light: #F7CE7E; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15; --dark3: #3A352D;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: var(--sand);
+    min-height: 100dvh;
+  }
+  .page {
+    max-width: 430px; margin: 0 auto;
+    min-height: 100dvh; background: var(--cream);
+    display: flex; flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    background: var(--dark);
+    padding: 52px 22px 28px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -60px; right: -40px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,183,76,.18), transparent 70%);
+    pointer-events: none;
+  }
+  .back-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--cream); display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    padding: 0; margin-bottom: 20px; position: relative;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .owner-row {
+    display: flex; align-items: center; gap: 14px; position: relative;
+  }
+  .owner-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--dark3); border: 2px solid rgba(240,183,76,.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .owner-email { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .owner-label { font-size: 11px; font-weight: 800; color: var(--gold); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
+
+  /* Body */
+  .body { padding: 24px 20px; flex: 1; display: flex; flex-direction: column; gap: 24px; }
+
+  .sec-title {
+    font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .sec-title svg { width: 14px; height: 14px; }
+
+  /* Dog card */
+  .dog-card {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--sand); border-radius: 16px; padding: 14px;
+    cursor: pointer; border: 1.5px solid transparent; transition: border-color .15s;
+    text-decoration: none;
+  }
+  .dog-card:hover { border-color: var(--gold); }
+  .dog-avatar {
+    width: 60px; height: 60px; border-radius: 14px;
+    background: #D8D2C8; overflow: hidden; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
+  }
+  .dog-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .dog-name { font-size: 16px; font-weight: 800; color: var(--dark); }
+  .dog-meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .dog-type-pill {
+    display: inline-flex; align-items: center;
+    background: rgba(240,183,76,.15); color: var(--gold-dark);
+    font-size: 11px; font-weight: 800; letter-spacing: .06em;
+    padding: 3px 10px; border-radius: 100px; margin-top: 6px;
+    font-family: ui-monospace, monospace;
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center; padding: 32px 16px;
+    background: var(--sand); border-radius: 16px;
+    color: var(--muted); font-size: 14px; line-height: 1.6;
+  }
+  .empty-icon { font-size: 36px; margin-bottom: 10px; }
+
+  /* Buttons */
+  .btn-gold {
+    width: 100%; background: var(--gold); color: var(--dark);
+    border: none; border-radius: 14px;
+    font-family: inherit; font-size: 15px; font-weight: 800; padding: 15px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .btn-gold svg { width: 18px; height: 18px; }
+  .btn-outline {
+    width: 100%; background: none; color: var(--muted);
+    border: 1.5px solid #D8D2C8; border-radius: 14px;
+    font-family: inherit; font-size: 14px; font-weight: 700; padding: 13px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-outline svg { width: 16px; height: 16px; }
+
+  /* Owner info card */
+  .info-card {
+    background: var(--sand); border-radius: 16px; padding: 16px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .info-row { display: flex; justify-content: space-between; align-items: center; }
+  .info-label { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .info-val { font-size: 13px; font-weight: 800; color: var(--dark); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <button class="back-btn" onclick="history.back()">
+      <i data-lucide="arrow-left"></i> กลับ
+    </button>
+    <div class="owner-row">
+      <div class="owner-avatar">👤</div>
+      <div>
+        <div class="owner-label">เจ้าของ</div>
+        <div id="ownerEmailDisplay" style="font-size:15px;font-weight:800;color:var(--cream);">—</div>
+        <div id="ownerMetaDisplay" class="owner-email">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- Dogs section -->
+    <div>
+      <div class="sec-title"><i data-lucide="dog"></i> สุนัขของฉัน</div>
+      <div id="dogListEl" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+
+    <!-- Add new dog -->
+    <a href="onboarding.html" class="btn-gold">
+      <i data-lucide="plus-circle"></i> เพิ่มสุนัขตัวใหม่
+    </a>
+
+    <!-- Owner info -->
+    <div>
+      <div class="sec-title"><i data-lucide="user"></i> ข้อมูลเจ้าของ</div>
+      <div class="info-card" id="ownerInfoCard"></div>
+    </div>
+
+    <!-- Reset -->
+    <button class="btn-outline" onclick="confirmReset()">
+      <i data-lucide="trash-2"></i> ล้างข้อมูลทั้งหมด
+    </button>
+
+  </div>
+</div>
+
+<script>
+function loadProfile() {
+  const owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
+  const dogs  = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+
+  // Owner header
+  if (owner) {
+    document.getElementById('ownerEmailDisplay').textContent = owner.email || '—';
+    document.getElementById('ownerMetaDisplay').textContent =
+      [owner.gender, owner.age, owner.province].filter(Boolean).join(' · ');
+  }
+
+  // Owner info card
+  const infoCard = document.getElementById('ownerInfoCard');
+  if (owner) {
+    infoCard.innerHTML = [
+      ['Email', owner.email],
+      ['เพศ', owner.gender],
+      ['ช่วงอายุ', owner.age],
+      ['จังหวัด', owner.province],
+      ['อำเภอ', owner.district],
+    ].map(([label, val]) => val ? `
+      <div class="info-row">
+        <span class="info-label">${label}</span>
+        <span class="info-val">${val}</span>
+      </div>` : '').join('');
+  } else {
+    infoCard.innerHTML = '<div style="font-size:13px;color:var(--muted);">ยังไม่มีข้อมูลเจ้าของ</div>';
+  }
+
+  // Dog list
+  const listEl = document.getElementById('dogListEl');
+  if (dogs.length === 0) {
+    listEl.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🐾</div>
+        ยังไม่มีสุนัข<br>กด "เพิ่มสุนัขตัวใหม่" เพื่อเริ่มทำแบบประเมิน
+      </div>`;
+    return;
+  }
+
+  dogs.forEach(dog => {
+    const card = document.createElement('div');
+    card.className = 'dog-card';
+    card.innerHTML = `
+      <div class="dog-avatar">${dog.photo ? `<img src="${dog.photo}" alt="${dog.name}">` : '🐾'}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="dog-name">${dog.name}</div>
+        <div class="dog-meta">${[dog.breed, dog.age, dog.gender].filter(Boolean).join(' · ')}</div>
+        ${dog.type ? `<div class="dog-type-pill">${dog.type}</div>` : ''}
+      </div>
+      <span style="font-size:18px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    `;
+    card.onclick = () => openDog(dog);
+    listEl.appendChild(card);
+  });
+}
+
+function openDog(dog) {
+  localStorage.setItem('db_activeDogId', dog.id);
+  sessionStorage.setItem('dogName', dog.name);
+  sessionStorage.setItem('dogAxes', JSON.stringify(dog.axes || {}));
+  if (dog.photo) sessionStorage.setItem('dogPhoto', dog.photo);
+  else sessionStorage.removeItem('dogPhoto');
+  location.href = 'type-detail.html?type=' + (dog.type || 'ESCA');
+}
+
+function confirmReset() {
+  if (confirm('ล้างข้อมูลทั้งหมดใช่ไหม? ไม่สามารถกู้คืนได้')) {
+    localStorage.removeItem('db_owner');
+    localStorage.removeItem('db_dogs');
+    localStorage.removeItem('db_activeDogId');
+    location.href = 'onboarding.html';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const init = () => { if (window.lucide) { lucide.createIcons(); loadProfile(); } else { setTimeout(init, 80); } };
+  init();
+});
+</script>
+</body>
+</html>
