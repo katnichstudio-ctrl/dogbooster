@@ -872,6 +872,11 @@ function showResult() {
     p.classes.map(t => `<span class="class-chip">${t}</span>`).join('');
 
   goStep(6);
+  // redirect to type-detail page after brief delay so step renders first
+  setTimeout(() => {
+    sessionStorage.setItem('dogName', dogName);
+    location.href = 'type-detail.html?type=' + code;
+  }, 400);
 }
 
 function downloadCard() {
