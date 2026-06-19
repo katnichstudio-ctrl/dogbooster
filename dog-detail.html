@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>โปรไฟล์สุนัข — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-light: #F7CE7E; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15; --dark3: #3A352D;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: var(--sand);
+    min-height: 100dvh;
+  }
+  .page {
+    max-width: 430px; margin: 0 auto;
+    min-height: 100dvh; background: var(--cream);
+    display: flex; flex-direction: column;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--dark);
+    padding: 52px 22px 28px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -60px; right: -40px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,183,76,.18), transparent 70%);
+    pointer-events: none;
+  }
+  .back-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--cream); display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    padding: 0; margin-bottom: 20px; position: relative;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+
+  .dog-hero {
+    display: flex; align-items: center; gap: 16px; position: relative;
+  }
+  .dog-hero-avatar {
+    width: 72px; height: 72px; border-radius: 18px;
+    background: var(--dark3); border: 2.5px solid rgba(240,183,76,.4);
+    overflow: hidden; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 32px;
+  }
+  .dog-hero-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .dog-hero-info { flex: 1; min-width: 0; }
+  .dog-hero-name { font-size: 20px; font-weight: 800; color: var(--cream); }
+  .dog-hero-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .dog-hero-type-pill {
+    display: inline-flex; align-items: center;
+    background: rgba(240,183,76,.15); color: var(--gold);
+    font-size: 11px; font-weight: 800; letter-spacing: .06em;
+    padding: 3px 10px; border-radius: 100px; margin-top: 8px;
+    font-family: ui-monospace, monospace; cursor: pointer;
+    border: none; text-decoration: none;
+    transition: background .15s;
+  }
+  .dog-hero-type-pill:hover { background: rgba(240,183,76,.28); }
+
+  /* ── Body ── */
+  .body { padding: 24px 20px; flex: 1; display: flex; flex-direction: column; gap: 24px; }
+
+  .sec-title {
+    font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .sec-title svg { width: 14px; height: 14px; }
+
+  .info-card {
+    background: var(--sand); border-radius: 16px; padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  /* Inputs */
+  .field-label {
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    margin-bottom: 6px; display: block;
+  }
+  input[type="date"], input[type="text"], textarea {
+    width: 100%; background: var(--cream);
+    border: 1.5px solid #D8D2C8; border-radius: 10px;
+    padding: 10px 12px; font-family: inherit; font-size: 14px;
+    color: var(--dark); outline: none;
+    transition: border-color .15s;
+  }
+  input[type="date"]:focus, input[type="text"]:focus, textarea:focus {
+    border-color: var(--gold);
+  }
+  textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+
+  /* Vaccine / Treatment entries */
+  .entry-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+  .entry-item {
+    background: var(--cream); border: 1.5px solid #D8D2C8;
+    border-radius: 12px; padding: 12px 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .entry-thumb {
+    width: 46px; height: 46px; border-radius: 8px;
+    background: var(--sand); overflow: hidden; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .entry-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .entry-body { flex: 1; min-width: 0; }
+  .entry-date { font-size: 11px; color: var(--muted); font-weight: 700; margin-bottom: 3px; }
+  .entry-note { font-size: 13px; color: var(--dark); font-weight: 600; }
+
+  /* Inline add form */
+  .add-form {
+    background: var(--cream); border: 1.5px solid var(--gold);
+    border-radius: 14px; padding: 14px; display: none;
+    flex-direction: column; gap: 12px; margin-bottom: 12px;
+  }
+  .add-form.visible { display: flex; }
+  .add-form-actions { display: flex; gap: 8px; }
+
+  /* Photo upload */
+  .photo-upload-btn {
+    display: flex; align-items: center; gap: 7px;
+    background: none; border: 1.5px dashed #C4BFB4;
+    border-radius: 10px; padding: 9px 14px;
+    font-family: inherit; font-size: 13px; font-weight: 700;
+    color: var(--muted); cursor: pointer; flex: 1;
+    justify-content: center; transition: border-color .15s, color .15s;
+  }
+  .photo-upload-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+  .photo-upload-btn svg { width: 16px; height: 16px; }
+  .photo-preview {
+    width: 54px; height: 54px; border-radius: 8px;
+    background: var(--sand); overflow: hidden; flex-shrink: 0;
+    display: none; align-items: center; justify-content: center;
+  }
+  .photo-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-preview.visible { display: flex; }
+  .photo-row { display: flex; align-items: center; gap: 10px; }
+
+  /* Buttons */
+  .btn-gold {
+    width: 100%; background: var(--gold); color: var(--dark);
+    border: none; border-radius: 14px;
+    font-family: inherit; font-size: 15px; font-weight: 800; padding: 15px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .btn-gold svg { width: 18px; height: 18px; }
+  .btn-outline {
+    width: 100%; background: none; color: var(--muted);
+    border: 1.5px solid #D8D2C8; border-radius: 14px;
+    font-family: inherit; font-size: 14px; font-weight: 700; padding: 13px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-outline svg { width: 16px; height: 16px; }
+  .btn-sm {
+    background: var(--gold); color: var(--dark);
+    border: none; border-radius: 10px;
+    font-family: inherit; font-size: 13px; font-weight: 800; padding: 9px 16px;
+    cursor: pointer; flex: 1;
+  }
+  .btn-sm-outline {
+    background: none; color: var(--muted);
+    border: 1.5px solid #D8D2C8; border-radius: 10px;
+    font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 16px;
+    cursor: pointer; flex: 1;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--dark); color: var(--cream);
+    padding: 12px 22px; border-radius: 100px;
+    font-size: 14px; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1), opacity .25s;
+    opacity: 0; pointer-events: none; white-space: nowrap; z-index: 99;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Header ── -->
+  <div class="header">
+    <button class="back-btn" onclick="history.back()">
+      <i data-lucide="arrow-left"></i> กลับ
+    </button>
+    <div class="dog-hero">
+      <div class="dog-hero-avatar" id="heroAvatar">🐾</div>
+      <div class="dog-hero-info">
+        <div class="dog-hero-name" id="heroName">—</div>
+        <div class="dog-hero-meta" id="heroMeta"></div>
+        <a id="heroTypePill" class="dog-hero-type-pill" href="#">—</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Body ── -->
+  <div class="body">
+
+    <!-- ข้อมูลพื้นฐาน -->
+    <div>
+      <div class="sec-title"><i data-lucide="paw-print"></i> ข้อมูลพื้นฐาน</div>
+      <div class="info-card">
+        <div>
+          <label class="field-label" for="dobInput">วัน/เดือน/ปีเกิด</label>
+          <input type="date" id="dobInput">
+        </div>
+      </div>
+    </div>
+
+    <!-- ประวัติวัคซีน -->
+    <div>
+      <div class="sec-title"><i data-lucide="syringe"></i> ประวัติวัคซีน</div>
+      <div id="vaccineList" class="entry-list"></div>
+
+      <div class="add-form" id="vaccineForm">
+        <div>
+          <label class="field-label" for="vDate">วันที่</label>
+          <input type="date" id="vDate">
+        </div>
+        <div>
+          <label class="field-label" for="vNote">ชนิดวัคซีน / หมายเหตุ</label>
+          <input type="text" id="vNote" placeholder="เช่น Rabies, DHPP">
+        </div>
+        <div>
+          <label class="field-label">รูปภาพ (ถ้ามี)</label>
+          <div class="photo-row">
+            <div class="photo-preview" id="vPhotoPreview"><img id="vPhotoImg" alt=""></div>
+            <button class="photo-upload-btn" type="button" onclick="document.getElementById('vPhotoFile').click()">
+              <i data-lucide="camera"></i> แนบรูปภาพ
+            </button>
+            <input type="file" id="vPhotoFile" accept="image/*" style="display:none" onchange="handleVaccinePhoto(this)">
+          </div>
+        </div>
+        <div class="add-form-actions">
+          <button class="btn-sm-outline" type="button" onclick="hideVaccineForm()">ยกเลิก</button>
+          <button class="btn-sm" type="button" onclick="saveVaccineEntry()">บันทึก</button>
+        </div>
+      </div>
+
+      <button class="btn-outline" id="vaccineAddBtn" onclick="showVaccineForm()">
+        <i data-lucide="plus"></i> เพิ่มบันทึกวัคซีน
+      </button>
+    </div>
+
+    <!-- ประวัติรักษา -->
+    <div>
+      <div class="sec-title"><i data-lucide="stethoscope"></i> ประวัติรักษา</div>
+      <div id="treatmentList" class="entry-list"></div>
+
+      <div class="add-form" id="treatmentForm">
+        <div>
+          <label class="field-label" for="tDate">วันที่</label>
+          <input type="date" id="tDate">
+        </div>
+        <div>
+          <label class="field-label" for="tNote">รายละเอียด</label>
+          <textarea id="tNote" placeholder="เช่น ผ่าตัดกระดูก ตรวจเลือด ฉีดยาปฏิชีวนะ"></textarea>
+        </div>
+        <div class="add-form-actions">
+          <button class="btn-sm-outline" type="button" onclick="hideTreatmentForm()">ยกเลิก</button>
+          <button class="btn-sm" type="button" onclick="saveTreatmentEntry()">บันทึก</button>
+        </div>
+      </div>
+
+      <button class="btn-outline" id="treatmentAddBtn" onclick="showTreatmentForm()">
+        <i data-lucide="plus"></i> เพิ่มบันทึกการรักษา
+      </button>
+    </div>
+
+    <!-- ข้อมูลการแพ้ -->
+    <div>
+      <div class="sec-title"><i data-lucide="alert-triangle"></i> ข้อมูลการแพ้</div>
+      <div class="info-card">
+        <div>
+          <label class="field-label" for="allergyFood">อาหาร</label>
+          <textarea id="allergyFood" placeholder="เช่น ไก่ ข้าวสาลี นม"></textarea>
+        </div>
+        <div>
+          <label class="field-label" for="allergyEnv">สิ่งแวดล้อม</label>
+          <textarea id="allergyEnv" placeholder="เช่น ละอองเกสร ฝุ่น ไรฝุ่น"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save button -->
+    <button class="btn-gold" onclick="saveAll()">
+      <i data-lucide="save"></i> บันทึกข้อมูล
+    </button>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── State ──
+let dog = null;
+let dogs = [];
+let vaccinePhotoBase64 = null;
+
+// ── Helpers ──
+function getParam(key) {
+  return new URLSearchParams(location.search).get(key);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function formatDate(str) {
+  if (!str) return '—';
+  const parts = str.split('-');
+  if (parts.length !== 3) return str;
+  return parts[2] + '/' + parts[1] + '/' + parts[0];
+}
+
+// ── Render header ──
+function renderHeader() {
+  const avatarEl = document.getElementById('heroAvatar');
+  if (dog.photo) {
+    avatarEl.innerHTML = '<img src="' + dog.photo + '" alt="' + dog.name + '">';
+  } else {
+    avatarEl.textContent = '🐾';
+  }
+  document.getElementById('heroName').textContent = dog.name || '—';
+  const meta = [dog.breed, dog.age, dog.gender].filter(Boolean).join(' · ');
+  document.getElementById('heroMeta').textContent = meta || '';
+  const pill = document.getElementById('heroTypePill');
+  pill.textContent = dog.type || '—';
+  pill.href = dog.type ? ('type-detail.html?type=' + dog.type) : '#';
+}
+
+// ── Render vaccine list ──
+function renderVaccines() {
+  const list = document.getElementById('vaccineList');
+  const vaccines = dog.vaccines || [];
+  if (vaccines.length === 0) { list.innerHTML = ''; return; }
+  list.innerHTML = vaccines.map(function(v, i) {
+    const thumbHTML = v.photo
+      ? '<img src="' + v.photo + '" alt="">'
+      : '<i data-lucide="syringe" style="width:20px;height:20px;color:var(--muted)"></i>';
+    return '<div class="entry-item">' +
+      '<div class="entry-thumb">' + thumbHTML + '</div>' +
+      '<div class="entry-body">' +
+        '<div class="entry-date">' + formatDate(v.date) + '</div>' +
+        '<div class="entry-note">' + (v.note || '—') + '</div>' +
+      '</div>' +
+      '<button onclick="deleteVaccine(' + i + ')" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:2px;flex-shrink:0;display:flex;align-items:center;">' +
+        '<i data-lucide="x" style="width:16px;height:16px;"></i>' +
+      '</button>' +
+    '</div>';
+  }).join('');
+  lucide.createIcons();
+}
+
+// ── Render treatment list ──
+function renderTreatments() {
+  const list = document.getElementById('treatmentList');
+  const treatments = dog.treatments || [];
+  if (treatments.length === 0) { list.innerHTML = ''; return; }
+  list.innerHTML = treatments.map(function(t, i) {
+    return '<div class="entry-item">' +
+      '<div class="entry-thumb"><i data-lucide="stethoscope" style="width:20px;height:20px;color:var(--muted)"></i></div>' +
+      '<div class="entry-body">' +
+        '<div class="entry-date">' + formatDate(t.date) + '</div>' +
+        '<div class="entry-note">' + (t.note || '—') + '</div>' +
+      '</div>' +
+      '<button onclick="deleteTreatment(' + i + ')" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:2px;flex-shrink:0;display:flex;align-items:center;">' +
+        '<i data-lucide="x" style="width:16px;height:16px;"></i>' +
+      '</button>' +
+    '</div>';
+  }).join('');
+  lucide.createIcons();
+}
+
+// ── Load fields ──
+function loadFields() {
+  document.getElementById('dobInput').value = dog.dob || '';
+  var allergies = dog.allergies || {};
+  document.getElementById('allergyFood').value = allergies.food || '';
+  document.getElementById('allergyEnv').value = allergies.environment || '';
+  renderVaccines();
+  renderTreatments();
+}
+
+// ── Vaccine form ──
+function showVaccineForm() {
+  document.getElementById('vaccineForm').classList.add('visible');
+  document.getElementById('vaccineAddBtn').style.display = 'none';
+  document.getElementById('vDate').value = '';
+  document.getElementById('vNote').value = '';
+  vaccinePhotoBase64 = null;
+  document.getElementById('vPhotoPreview').classList.remove('visible');
+  document.getElementById('vPhotoImg').src = '';
+  lucide.createIcons();
+}
+function hideVaccineForm() {
+  document.getElementById('vaccineForm').classList.remove('visible');
+  document.getElementById('vaccineAddBtn').style.display = '';
+  vaccinePhotoBase64 = null;
+  document.getElementById('vPhotoFile').value = '';
+}
+function handleVaccinePhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    vaccinePhotoBase64 = e.target.result;
+    document.getElementById('vPhotoImg').src = vaccinePhotoBase64;
+    document.getElementById('vPhotoPreview').classList.add('visible');
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+function saveVaccineEntry() {
+  var date = document.getElementById('vDate').value;
+  var note = document.getElementById('vNote').value.trim();
+  if (!date && !note) { showToast('กรุณากรอกวันที่หรือหมายเหตุ'); return; }
+  if (!dog.vaccines) dog.vaccines = [];
+  dog.vaccines.push({ date: date, note: note, photo: vaccinePhotoBase64 || null });
+  hideVaccineForm();
+  renderVaccines();
+}
+function deleteVaccine(i) {
+  if (!confirm('ลบรายการนี้?')) return;
+  dog.vaccines.splice(i, 1);
+  renderVaccines();
+}
+
+// ── Treatment form ──
+function showTreatmentForm() {
+  document.getElementById('treatmentForm').classList.add('visible');
+  document.getElementById('treatmentAddBtn').style.display = 'none';
+  document.getElementById('tDate').value = '';
+  document.getElementById('tNote').value = '';
+  lucide.createIcons();
+}
+function hideTreatmentForm() {
+  document.getElementById('treatmentForm').classList.remove('visible');
+  document.getElementById('treatmentAddBtn').style.display = '';
+}
+function saveTreatmentEntry() {
+  var date = document.getElementById('tDate').value;
+  var note = document.getElementById('tNote').value.trim();
+  if (!date && !note) { showToast('กรุณากรอกวันที่หรือรายละเอียด'); return; }
+  if (!dog.treatments) dog.treatments = [];
+  dog.treatments.push({ date: date, note: note });
+  hideTreatmentForm();
+  renderTreatments();
+}
+function deleteTreatment(i) {
+  if (!confirm('ลบรายการนี้?')) return;
+  dog.treatments.splice(i, 1);
+  renderTreatments();
+}
+
+// ── Save all ──
+function saveAll() {
+  dog.dob = document.getElementById('dobInput').value;
+  dog.allergies = {
+    food: document.getElementById('allergyFood').value.trim(),
+    environment: document.getElementById('allergyEnv').value.trim()
+  };
+  dog.updatedAt = Date.now();
+
+  var idx = dogs.findIndex(function(d) { return d.id === dog.id; });
+  if (idx !== -1) dogs[idx] = dog;
+  localStorage.setItem('db_dogs', JSON.stringify(dogs));
+  showToast('บันทึกข้อมูลแล้ว ✓');
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', function() {
+  function init() {
+    if (!window.lucide) { setTimeout(init, 80); return; }
+
+    var id = getParam('id');
+    dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+    dog = null;
+    for (var i = 0; i < dogs.length; i++) {
+      if (dogs[i].id === id) { dog = dogs[i]; break; }
+    }
+
+    if (!dog) {
+      document.querySelector('.body').innerHTML =
+        '<div style="text-align:center;padding:40px 16px;color:var(--muted);">' +
+        '<div style="font-size:40px;margin-bottom:12px;">🐾</div>' +
+        'ไม่พบข้อมูลสุนัข</div>';
+      lucide.createIcons();
+      return;
+    }
+
+    renderHeader();
+    loadFields();
+    lucide.createIcons();
+  }
+  init();
+});
+</script>
+</body>
+</html>

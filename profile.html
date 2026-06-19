@@ -203,12 +203,7 @@ function loadProfile() {
 }
 
 function openDog(dog) {
-  localStorage.setItem('db_activeDogId', dog.id);
-  sessionStorage.setItem('dogName', dog.name);
-  sessionStorage.setItem('dogAxes', JSON.stringify(dog.axes || {}));
-  if (dog.photo) sessionStorage.setItem('dogPhoto', dog.photo);
-  else sessionStorage.removeItem('dogPhoto');
-  location.href = 'type-detail.html?type=' + (dog.type || 'ESCA');
+  location.href = 'dog-detail.html?id=' + dog.id;
 }
 
 function confirmReset() {
