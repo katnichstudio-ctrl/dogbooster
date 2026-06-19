@@ -536,8 +536,8 @@
           </div>
 
           <!-- Private training -->
-          <div class="format-card" onclick="showView('view-class-detail')" role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter')showView('view-class-detail')">
+          <div class="format-card" onclick="showView('view-private')" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')showView('view-private')">
             <div class="format-card-glow"></div>
             <div class="format-card-inner">
               <div class="format-card-icon">
@@ -552,8 +552,8 @@
           </div>
 
           <!-- Board & Train 30 days -->
-          <div class="format-card" onclick="showView('view-class-detail')" role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter')showView('view-class-detail')">
+          <div class="format-card" onclick="showView('view-board')" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')showView('view-board')">
             <div class="format-card-glow"></div>
             <div class="format-card-inner">
               <div class="format-card-icon">
@@ -561,15 +561,15 @@
               </div>
               <div style="flex:1;min-width:0">
                 <div class="format-card-title">ฝากครูฝึก 30 วัน</div>
-                <div class="format-card-sub">Board &amp; Train · ผลลัพธ์เต็มรูปแบบ</div>
+                <div class="format-card-sub">ฝึกให้ใช้ชีวิตกับคนได้จริง</div>
               </div>
               <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
             </div>
           </div>
 
           <!-- Aggression — featured -->
-          <div class="format-card format-card-featured" onclick="showView('view-class-detail')" role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter')showView('view-class-detail')">
+          <div class="format-card format-card-featured" onclick="showView('view-aggression')" role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')showView('view-aggression')">
             <div class="format-card-glow"></div>
             <div class="format-card-inner">
               <div class="format-card-icon">
@@ -577,7 +577,7 @@
               </div>
               <div style="flex:1;min-width:0">
                 <div class="format-card-title" style="font-size:16px">แก้ปัญหาดุ-กัด-ก้าวร้าว</div>
-                <div class="format-card-sub" style="font-size:12.5px">ครูเข้าบ้าน · Behavior Management</div>
+                <div class="format-card-sub" style="font-size:12.5px">Behavior Management</div>
               </div>
               <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
             </div>
@@ -707,6 +707,78 @@
 
     </div>
   </div><!-- /view-class-detail -->
+
+  <!-- ===== VIEW: ฝึกส่วนตัวกับครู ===== -->
+  <div id="view-private" class="view">
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <button onclick="showView('view-school')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <div style="font-size:12px;font-weight:700;color:var(--muted);margin-top:18px;position:relative">เลือกรูปแบบการเรียน</div>
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--cream);margin-top:8px;line-height:1.2;position:relative">
+        ฝึกส่วนตัวกับครู<br>ที่บ้าน
+      </h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;position:relative">
+        ครูฝึกเดินทางไปหาคุณถึงบ้าน · เรียน 1:1 ตามนัดหมาย · ปรับหลักสูตรตามบุคลิกสุนัขของคุณ
+      </p>
+    </div>
+    <div class="view2-content">
+      <a href="https://lin.ee/PGDi0DS" target="_blank" rel="noopener" class="pbtn" style="text-decoration:none;margin-top:8px;">
+        สอบถาม / จองคิว
+        <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== VIEW: ฝากครูฝึก 30 วัน ===== -->
+  <div id="view-board" class="view">
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <button onclick="showView('view-school')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <div style="font-size:12px;font-weight:700;color:var(--muted);margin-top:18px;position:relative">เลือกรูปแบบการเรียน</div>
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--cream);margin-top:8px;line-height:1.2;position:relative">
+        ฝากฝึก 30 วัน<br>Board &amp; Train
+      </h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;position:relative">
+        ฝากสุนัขกับครูฝึก 30 วัน · ฝึกให้ใช้ชีวิตกับคนได้จริง · ผลลัพธ์เต็มรูปแบบ
+      </p>
+    </div>
+    <div class="view2-content">
+      <a href="https://lin.ee/PGDi0DS" target="_blank" rel="noopener" class="pbtn" style="text-decoration:none;margin-top:8px;">
+        สอบถาม / จองคิว
+        <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== VIEW: แก้ปัญหาดุ-กัด-ก้าวร้าว ===== -->
+  <div id="view-aggression" class="view">
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <button onclick="showView('view-school')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <div style="font-size:12px;font-weight:700;color:var(--muted);margin-top:18px;position:relative">เลือกรูปแบบการเรียน</div>
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--cream);margin-top:8px;line-height:1.2;position:relative">
+        แก้ปัญหาดุ-กัด-<br>ก้าวร้าว
+      </h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;position:relative">
+        Behavior Management · ครูเข้าบ้าน · วิเคราะห์พฤติกรรมและวางแผนแก้ไขเฉพาะราย
+      </p>
+    </div>
+    <div class="view2-content">
+      <a href="https://lin.ee/PGDi0DS" target="_blank" rel="noopener" class="pbtn" style="text-decoration:none;margin-top:8px;">
+        สอบถาม / จองคิว
+        <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
+      </a>
+    </div>
+  </div>
 
 </div><!-- /app-shell -->
 
