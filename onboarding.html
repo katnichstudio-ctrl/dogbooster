@@ -687,8 +687,15 @@ function validateProfile() {
   const breed = document.getElementById('dogBreed').value;
   const age   = document.getElementById('dogAge').value;
   const gender= document.getElementById('dogGender').value;
+  const photo = sessionStorage.getItem('dogPhoto');
   const err   = document.getElementById('profileError');
+  if (!photo) {
+    err.textContent = 'กรุณาเพิ่มรูปภาพสุนัขก่อน';
+    err.style.display = 'block';
+    return;
+  }
   if (!name || !breed || !age || !gender) {
+    err.textContent = 'กรุณากรอกข้อมูลให้ครบทุกช่อง';
     err.style.display = 'block';
     return;
   }
