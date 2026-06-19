@@ -491,16 +491,8 @@
     </div>
     <div class="form-body">
       <div>
-        <div class="form-label">ชื่อ-นามสกุล</div>
-        <input class="form-input" type="text" id="ownerName" placeholder="เช่น สมชาย ใจดี">
-      </div>
-      <div>
         <div class="form-label">Email</div>
         <input class="form-input" type="email" id="ownerEmail" placeholder="example@email.com">
-      </div>
-      <div>
-        <div class="form-label">เบอร์ติดต่อ</div>
-        <input class="form-input" type="tel" id="ownerPhone" placeholder="08X-XXX-XXXX">
       </div>
       <div class="form-row">
         <div>
@@ -833,15 +825,13 @@ function updateDistrict() {
 }
 
 function validateOwner() {
-  const name     = document.getElementById('ownerName').value.trim();
   const email    = document.getElementById('ownerEmail').value.trim();
-  const phone    = document.getElementById('ownerPhone').value.trim();
   const gender   = document.getElementById('ownerGender').value;
   const age      = document.getElementById('ownerAge').value;
   const province = document.getElementById('ownerProvince').value;
   const district = document.getElementById('ownerDistrict').value;
   const err = document.getElementById('ownerError');
-  if (!name || !email || !phone || !gender || !age || !province || !district) {
+  if (!email || !gender || !age || !province || !district) {
     err.style.display = 'block';
     return;
   }
