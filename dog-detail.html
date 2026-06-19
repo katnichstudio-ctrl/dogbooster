@@ -221,67 +221,71 @@
           <label class="field-label" for="dobInput">วัน/เดือน/ปีเกิด</label>
           <input type="date" id="dobInput">
         </div>
+        <div>
+          <label class="field-label" for="chronicInput">โรคประจำตัว</label>
+          <textarea id="chronicInput" placeholder="เช่น โรคหัวใจ ภูมิแพ้ โรคไต (ถ้ามี)"></textarea>
+        </div>
       </div>
     </div>
 
     <!-- ประวัติวัคซีน -->
     <div>
       <div class="sec-title"><i data-lucide="syringe"></i> ประวัติวัคซีน</div>
-      <div id="vaccineList" class="entry-list"></div>
-
-      <div class="add-form" id="vaccineForm">
-        <div>
-          <label class="field-label" for="vDate">วันที่</label>
-          <input type="date" id="vDate">
-        </div>
-        <div>
-          <label class="field-label" for="vNote">ชนิดวัคซีน / หมายเหตุ</label>
-          <input type="text" id="vNote" placeholder="เช่น Rabies, DHPP">
-        </div>
-        <div>
-          <label class="field-label">รูปภาพ (ถ้ามี)</label>
-          <div class="photo-row">
-            <div class="photo-preview" id="vPhotoPreview"><img id="vPhotoImg" alt=""></div>
-            <button class="photo-upload-btn" type="button" onclick="document.getElementById('vPhotoFile').click()">
-              <i data-lucide="camera"></i> แนบรูปภาพ
-            </button>
-            <input type="file" id="vPhotoFile" accept="image/*" style="display:none" onchange="handleVaccinePhoto(this)">
+      <div class="info-card">
+        <div id="vaccineList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
+        <div class="add-form" id="vaccineForm" style="margin-bottom:0;border:none;padding:0;background:none;">
+          <div>
+            <label class="field-label" for="vDate">วันที่</label>
+            <input type="date" id="vDate">
+          </div>
+          <div>
+            <label class="field-label" for="vNote">ชนิดวัคซีน / หมายเหตุ</label>
+            <input type="text" id="vNote" placeholder="เช่น Rabies, DHPP">
+          </div>
+          <div>
+            <label class="field-label">รูปภาพ (ถ้ามี)</label>
+            <div class="photo-row">
+              <div class="photo-preview" id="vPhotoPreview"><img id="vPhotoImg" alt=""></div>
+              <button class="photo-upload-btn" type="button" onclick="document.getElementById('vPhotoFile').click()">
+                <i data-lucide="camera"></i> แนบรูปภาพ
+              </button>
+              <input type="file" id="vPhotoFile" accept="image/*" style="display:none" onchange="handleVaccinePhoto(this)">
+            </div>
+          </div>
+          <div class="add-form-actions">
+            <button class="btn-sm-outline" type="button" onclick="hideVaccineForm()">ยกเลิก</button>
+            <button class="btn-sm" type="button" onclick="saveVaccineEntry()">บันทึก</button>
           </div>
         </div>
-        <div class="add-form-actions">
-          <button class="btn-sm-outline" type="button" onclick="hideVaccineForm()">ยกเลิก</button>
-          <button class="btn-sm" type="button" onclick="saveVaccineEntry()">บันทึก</button>
-        </div>
+        <button class="btn-outline" id="vaccineAddBtn" onclick="showVaccineForm()">
+          <i data-lucide="plus"></i> เพิ่มบันทึกวัคซีน
+        </button>
       </div>
-
-      <button class="btn-outline" id="vaccineAddBtn" onclick="showVaccineForm()">
-        <i data-lucide="plus"></i> เพิ่มบันทึกวัคซีน
-      </button>
     </div>
 
     <!-- ประวัติรักษา -->
     <div>
       <div class="sec-title"><i data-lucide="stethoscope"></i> ประวัติรักษา</div>
-      <div id="treatmentList" class="entry-list"></div>
-
-      <div class="add-form" id="treatmentForm">
-        <div>
-          <label class="field-label" for="tDate">วันที่</label>
-          <input type="date" id="tDate">
+      <div class="info-card">
+        <div id="treatmentList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
+        <div class="add-form" id="treatmentForm" style="margin-bottom:0;border:none;padding:0;background:none;">
+          <div>
+            <label class="field-label" for="tDate">วันที่</label>
+            <input type="date" id="tDate">
+          </div>
+          <div>
+            <label class="field-label" for="tNote">รายละเอียด</label>
+            <textarea id="tNote" placeholder="เช่น ผ่าตัดกระดูก ตรวจเลือด ฉีดยาปฏิชีวนะ"></textarea>
+          </div>
+          <div class="add-form-actions">
+            <button class="btn-sm-outline" type="button" onclick="hideTreatmentForm()">ยกเลิก</button>
+            <button class="btn-sm" type="button" onclick="saveTreatmentEntry()">บันทึก</button>
+          </div>
         </div>
-        <div>
-          <label class="field-label" for="tNote">รายละเอียด</label>
-          <textarea id="tNote" placeholder="เช่น ผ่าตัดกระดูก ตรวจเลือด ฉีดยาปฏิชีวนะ"></textarea>
-        </div>
-        <div class="add-form-actions">
-          <button class="btn-sm-outline" type="button" onclick="hideTreatmentForm()">ยกเลิก</button>
-          <button class="btn-sm" type="button" onclick="saveTreatmentEntry()">บันทึก</button>
-        </div>
+        <button class="btn-outline" id="treatmentAddBtn" onclick="showTreatmentForm()">
+          <i data-lucide="plus"></i> เพิ่มบันทึกการรักษา
+        </button>
       </div>
-
-      <button class="btn-outline" id="treatmentAddBtn" onclick="showTreatmentForm()">
-        <i data-lucide="plus"></i> เพิ่มบันทึกการรักษา
-      </button>
     </div>
 
     <!-- ข้อมูลการแพ้ -->
@@ -396,6 +400,7 @@ function renderTreatments() {
 // ── Load fields ──
 function loadFields() {
   document.getElementById('dobInput').value = dog.dob || '';
+  document.getElementById('chronicInput').value = dog.chronic || '';
   var allergies = dog.allergies || {};
   document.getElementById('allergyFood').value = allergies.food || '';
   document.getElementById('allergyEnv').value = allergies.environment || '';
@@ -475,6 +480,7 @@ function deleteTreatment(i) {
 // ── Save all ──
 function saveAll() {
   dog.dob = document.getElementById('dobInput').value;
+  dog.chronic = document.getElementById('chronicInput').value.trim();
   dog.allergies = {
     food: document.getElementById('allergyFood').value.trim(),
     environment: document.getElementById('allergyEnv').value.trim()
