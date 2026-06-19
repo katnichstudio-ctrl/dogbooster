@@ -77,10 +77,12 @@
     .photo-circle img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
     #photoInput { display: none; }
     .photo-add {
-      position: absolute; bottom: 0; right: 0;
-      width: 26px; height: 26px; border-radius: 50%;
+      position: absolute; bottom: -2px; right: -2px;
+      width: 30px; height: 30px; border-radius: 50%;
       background: var(--gold); color: var(--dark);
       display: flex; align-items: center; justify-content: center;
+      border: 3px solid var(--dark);
+      z-index: 2;
     }
     .photo-add svg { width: 14px; height: 14px; stroke-width: 2.5; }
     .form-body { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
@@ -252,119 +254,124 @@
       </div>
       <div>
         <div class="form-label">พันธุ์</div>
-        <input class="form-input" type="text" id="dogBreed" list="breedList" placeholder="พิมพ์หรือเลือกสายพันธุ์">
-        <datalist id="breedList">
-          <option value="มิกซ์ / ไทยแท้">
-          <option value="ไทยแท้ (หมาไทย)">
-          <option value="โกลเด้น รีทรีฟเวอร์">
-          <option value="ลาบราดอร์ รีทรีฟเวอร์">
-          <option value="พุดเดิ้ล (Toy)">
-          <option value="พุดเดิ้ล (Miniature)">
-          <option value="พุดเดิ้ล (Standard)">
-          <option value="ชิวาวา">
-          <option value="ปอมเมอเรเนียน">
-          <option value="ชิห์สุ">
-          <option value="มอลทีส">
-          <option value="บีเกิ้ล">
-          <option value="ไซบีเรียน ฮัสกี้">
-          <option value="ไมล์มาลามิวท์">
-          <option value="ชามอยด์">
-          <option value="คอร์กี้ (Pembroke)">
-          <option value="คอร์กี้ (Cardigan)">
-          <option value="ชิบะ อินุ">
-          <option value="อากิตะ">
-          <option value="ชาร์เป">
-          <option value="บอร์เดอร์ คอลลี่">
-          <option value="ออสเตรเลียน เชพเพิร์ด">
-          <option value="เยอรมัน เชพเพิร์ด">
-          <option value="ร็อตไวเลอร์">
-          <option value="ด็อบเบอร์แมน">
-          <option value="บ็อกเซอร์">
-          <option value="เกรทเดน">
-          <option value="เซนต์เบอร์นาร์ด">
-          <option value="เบิร์นนีส เมาน์เทนด็อก">
-          <option value="นิวฟันด์แลนด์">
-          <option value="ดัลเมเชี่ยน">
-          <option value="บูลด็อก (อังกฤษ)">
-          <option value="บูลด็อก (ฝรั่งเศส)">
-          <option value="ปั๊ก">
-          <option value="บอสตัน เทอร์เรีย">
-          <option value="บูลเทอร์เรีย">
-          <option value="แจ็ค รัสเซลล์ เทอร์เรีย">
-          <option value="สก็อตทิช เทอร์เรีย">
-          <option value="เวสต์ ไฮแลนด์ ไวท์ เทอร์เรีย">
-          <option value="ยอร์คเชียร์ เทอร์เรีย">
-          <option value="มินิเอเจอร์ ชเนาเซอร์">
-          <option value="สแตนดาร์ด ชเนาเซอร์">
-          <option value="ไวมาราเนอร์">
-          <option value="วิซล่า">
-          <option value="ไอริช เซตเตอร์">
-          <option value="อิงลิช เซตเตอร์">
-          <option value="อิงลิช สแปเนียล">
-          <option value="คอกเกอร์ สแปเนียล">
-          <option value="สปริงเกอร์ สแปเนียล">
-          <option value="บาสเซ็ต ฮาวด์">
-          <option value="บลัดฮาวด์">
-          <option value="เกรย์ฮาวด์">
-          <option value="ซาลูกิ">
-          <option value="อาฟกัน ฮาวด์">
-          <option value="รูดีเซียน ริดจ์แบ็ค">
-          <option value="ดัคชุนด์">
-          <option value="บาเซนจิ">
-          <option value="ซามอยด์">
-          <option value="อลาสกัน มาลามิวท์">
-          <option value="กรีนแลนด์ด็อก">
-          <option value="อเมริกัน บูลลี่">
-          <option value="อเมริกัน พิทบูล เทอร์เรีย">
-          <option value="อเมริกัน สแตฟฟอร์ดเชียร์ เทอร์เรีย">
-          <option value="โรดีเซียน ริดจ์แบ็ค">
-          <option value="เคน คอร์โซ">
-          <option value="เนเปิลตัน มาสทิฟ">
-          <option value="บูลมาสทิฟ">
-          <option value="ทิเบตัน มาสทิฟ">
-          <option value="คอมอนดอร์">
-          <option value="คูวาซ">
-          <option value="อนาโตเลียน เชพเพิร์ด">
-          <option value="เบลเจียน มาลินัวส์">
-          <option value="เบลเจียน เชพเพิร์ด">
-          <option value="เชสพีก เบย์ รีทรีฟเวอร์">
-          <option value="แฟลต-โคเตด รีทรีฟเวอร์">
-          <option value="โนวา สโคเทีย ดัค โทลลิง รีทรีฟเวอร์">
-          <option value="ไอริช วอเตอร์ สแปเนียล">
-          <option value="เวลช์ สปริงเกอร์ สแปเนียล">
-          <option value="ซัสเซ็กซ์ สแปเนียล">
-          <option value="ฟิลด์ สแปเนียล">
-          <option value="คลัมเบอร์ สแปเนียล">
-          <option value="ไอริช เร็ด แอนด์ ไวท์ เซตเตอร์">
-          <option value="กอร์ดอน เซตเตอร์">
-          <option value="ปาปิยอง">
-          <option value="ปาปิยอง (ดรอปอีร์)">
-          <option value="เปกิเนส">
-          <option value="ลาซา แอปโซ">
-          <option value="ทิเบตัน สแปเนียล">
-          <option value="ทิเบตัน เทอร์เรีย">
-          <option value="ฮาวานีส">
-          <option value="บิชอง ฟริเซ่">
-          <option value="โบโลเนซ">
-          <option value="โคตอง เดอ ตูเลอาร์">
-          <option value="โลเชน">
-          <option value="ชาวน์">
-          <option value="ไชนีส ครีสเตด">
-          <option value="สกิปเปอร์กี">
-          <option value="ชาว ชาว">
-          <option value="อะกิตะ อินุ">
-          <option value="คิชู">
-          <option value="ชิโกกุ">
-          <option value="ฮอกไกโด">
-          <option value="คาอิ เคน">
-          <option value="ริวกิว อินุ">
-          <option value="โทสะ อินุ">
-          <option value="เบสนจิ">
-          <option value="โปรตุเกส วอเตอร์ด็อก">
-          <option value="ลากอตโต โรมาโญโล">
-          <option value="สแปนิช วอเตอร์ด็อก">
-          <option value="บาร์เบต์">
-        </datalist>
+        <select class="form-input" id="dogBreed">
+          <option value="">— เลือกสายพันธุ์ —</option>
+          <optgroup label="ยอดนิยมในไทย">
+            <option>มิกซ์ / ไทยแท้</option>
+            <option>ไทยแท้ (หมาไทย)</option>
+            <option>โกลเด้น รีทรีฟเวอร์</option>
+            <option>ลาบราดอร์ รีทรีฟเวอร์</option>
+            <option>ชิห์สุ</option>
+            <option>ปอมเมอเรเนียน</option>
+            <option>มอลทีส</option>
+            <option>ชิวาวา</option>
+            <option>บีเกิ้ล</option>
+            <option>ปั๊ก</option>
+          </optgroup>
+          <optgroup label="พุดเดิ้ล">
+            <option>พุดเดิ้ล (Toy)</option>
+            <option>พุดเดิ้ล (Miniature)</option>
+            <option>พุดเดิ้ล (Standard)</option>
+          </optgroup>
+          <optgroup label="สายพันธุ์สแกนดิเนเวีย / อาร์กติก">
+            <option>ไซบีเรียน ฮัสกี้</option>
+            <option>อลาสกัน มาลามิวท์</option>
+            <option>ซามอยด์</option>
+          </optgroup>
+          <optgroup label="สายพันธุ์เอเชีย">
+            <option>ชิบะ อินุ</option>
+            <option>อะกิตะ อินุ</option>
+            <option>ชาร์เป</option>
+            <option>ชาว ชาว</option>
+            <option>เปกิเนส</option>
+            <option>ลาซา แอปโซ</option>
+            <option>ทิเบตัน มาสทิฟ</option>
+            <option>ทิเบตัน สแปเนียล</option>
+            <option>ทิเบตัน เทอร์เรีย</option>
+            <option>ไชนีส ครีสเตด</option>
+            <option>คิชู</option>
+            <option>ชิโกกุ</option>
+            <option>ฮอกไกโด</option>
+            <option>คาอิ เคน</option>
+            <option>โทสะ อินุ</option>
+          </optgroup>
+          <optgroup label="เฮิร์ดดิ้ง (ต้อนฝูง)">
+            <option>บอร์เดอร์ คอลลี่</option>
+            <option>ออสเตรเลียน เชพเพิร์ด</option>
+            <option>เยอรมัน เชพเพิร์ด</option>
+            <option>เบลเจียน มาลินัวส์</option>
+            <option>เบลเจียน เชพเพิร์ด</option>
+            <option>คอร์กี้ (Pembroke)</option>
+            <option>คอร์กี้ (Cardigan)</option>
+          </optgroup>
+          <optgroup label="เวิร์คกิ้ง / การ์ด">
+            <option>ร็อตไวเลอร์</option>
+            <option>ด็อบเบอร์แมน</option>
+            <option>บ็อกเซอร์</option>
+            <option>เกรทเดน</option>
+            <option>เซนต์เบอร์นาร์ด</option>
+            <option>เบิร์นนีส เมาน์เทนด็อก</option>
+            <option>นิวฟันด์แลนด์</option>
+            <option>เคน คอร์โซ</option>
+            <option>บูลมาสทิฟ</option>
+            <option>เนเปิลตัน มาสทิฟ</option>
+            <option>คอมอนดอร์</option>
+            <option>คูวาซ</option>
+            <option>อนาโตเลียน เชพเพิร์ด</option>
+          </optgroup>
+          <optgroup label="เทอร์เรีย">
+            <option>แจ็ค รัสเซลล์ เทอร์เรีย</option>
+            <option>บอสตัน เทอร์เรีย</option>
+            <option>บูลเทอร์เรีย</option>
+            <option>สก็อตทิช เทอร์เรีย</option>
+            <option>เวสต์ ไฮแลนด์ ไวท์ เทอร์เรีย</option>
+            <option>ยอร์คเชียร์ เทอร์เรีย</option>
+            <option>มินิเอเจอร์ ชเนาเซอร์</option>
+            <option>สแตนดาร์ด ชเนาเซอร์</option>
+            <option>อเมริกัน พิทบูล เทอร์เรีย</option>
+            <option>อเมริกัน สแตฟฟอร์ดเชียร์ เทอร์เรีย</option>
+          </optgroup>
+          <optgroup label="บูลด็อก / ปั๊ก">
+            <option>บูลด็อก (อังกฤษ)</option>
+            <option>บูลด็อก (ฝรั่งเศส)</option>
+            <option>อเมริกัน บูลลี่</option>
+            <option>ดัลเมเชี่ยน</option>
+          </optgroup>
+          <optgroup label="สแปเนียล / เซตเตอร์ / รีทรีฟเวอร์">
+            <option>คอกเกอร์ สแปเนียล</option>
+            <option>สปริงเกอร์ สแปเนียล</option>
+            <option>อิงลิช สแปเนียล</option>
+            <option>ไอริช วอเตอร์ สแปเนียล</option>
+            <option>ไอริช เซตเตอร์</option>
+            <option>อิงลิช เซตเตอร์</option>
+            <option>กอร์ดอน เซตเตอร์</option>
+            <option>เชสพีก เบย์ รีทรีฟเวอร์</option>
+            <option>แฟลต-โคเตด รีทรีฟเวอร์</option>
+            <option>โนวา สโคเทีย ดัค โทลลิง รีทรีฟเวอร์</option>
+          </optgroup>
+          <optgroup label="ฮาวด์">
+            <option>บาสเซ็ต ฮาวด์</option>
+            <option>บลัดฮาวด์</option>
+            <option>เกรย์ฮาวด์</option>
+            <option>ซาลูกิ</option>
+            <option>อาฟกัน ฮาวด์</option>
+            <option>โรดีเซียน ริดจ์แบ็ค</option>
+            <option>ดัคชุนด์</option>
+            <option>บาเซนจิ</option>
+          </optgroup>
+          <optgroup label="กีฬา / ล่าสัตว์">
+            <option>ไวมาราเนอร์</option>
+            <option>วิซล่า</option>
+            <option>โปรตุเกส วอเตอร์ด็อก</option>
+            <option>ลากอตโต โรมาโญโล</option>
+          </optgroup>
+          <optgroup label="ทอย / ลอย">
+            <option>ปาปิยอง</option>
+            <option>ฮาวานีส</option>
+            <option>บิชอง ฟริเซ่</option>
+            <option>สกิปเปอร์กี</option>
+          </optgroup>
+        </select>
       </div>
       <div class="form-row">
         <div>
@@ -388,8 +395,9 @@
           </select>
         </div>
       </div>
+      <div id="profileError" style="display:none;color:#E05252;font-size:13px;font-weight:700;text-align:center;padding:8px 0;">กรุณากรอกข้อมูลให้ครบทุกช่อง</div>
       <div style="margin-top:auto;">
-        <button class="btn-primary" onclick="goStep(3)">ถัดไป <i data-lucide="arrow-right"></i></button>
+        <button class="btn-primary" onclick="validateProfile()">ถัดไป <i data-lucide="arrow-right"></i></button>
       </div>
     </div>
   </div>
@@ -542,6 +550,20 @@ const PERSONALITIES = {
 
 let currentQ = 0;
 const answers = {};
+
+function validateProfile() {
+  const name  = document.getElementById('dogName').value.trim();
+  const breed = document.getElementById('dogBreed').value;
+  const age   = document.getElementById('dogAge').value;
+  const gender= document.getElementById('dogGender').value;
+  const err   = document.getElementById('profileError');
+  if (!name || !breed || !age || !gender) {
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+  goStep(3);
+}
 
 function previewPhoto(input) {
   if (input.files && input.files[0]) {
