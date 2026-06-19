@@ -782,6 +782,7 @@ function previewPhoto(input) {
       const img = document.getElementById('photoPreview');
       img.src = e.target.result;
       img.style.display = 'block';
+      sessionStorage.setItem('dogPhoto', e.target.result);
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -873,6 +874,7 @@ function showResult() {
   // redirect to type-detail page after brief delay so step renders first
   setTimeout(() => {
     sessionStorage.setItem('dogName', dogName);
+    sessionStorage.setItem('dogAxes', JSON.stringify(axes));
     location.href = 'type-detail.html?type=' + code;
   }, 400);
 }

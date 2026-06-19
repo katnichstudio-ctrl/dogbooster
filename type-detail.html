@@ -104,5 +104,225 @@
       lucide.createIcons();
     })();
   </script>
+
+  <script>
+  // === Inject dog photo + dog name from sessionStorage ===
+  (function() {
+    var photo = sessionStorage.getItem('dogPhoto');
+    var dogName = sessionStorage.getItem('dogName') || '';
+
+    // Replace paw-print placeholder with real photo after DOM settles
+    setTimeout(function() {
+      var pawEl = document.querySelector('[data-lucide="paw-print"]');
+      if (pawEl && photo) {
+        var box = pawEl.closest('div[style*="172px"]') || pawEl.parentElement;
+        box.innerHTML = '<img src="' + photo + '" style="width:100%;height:100%;object-fit:cover;border-radius:26px;" alt="dog">';
+      }
+
+      // Inject dog name above type name if available
+      if (dogName) {
+        var h2 = document.querySelector('#type-root h2');
+        if (h2) {
+          var label = document.createElement('div');
+          label.style.cssText = 'font-size:13px;font-weight:700;color:rgba(21,19,15,.55);letter-spacing:.04em;margin-bottom:6px;';
+          label.textContent = 'บุคลิกของ ' + dogName + ' คือ';
+          h2.parentNode.insertBefore(label, h2);
+        }
+      }
+
+      // Inject download card button after last section
+      var root = document.getElementById('type-root');
+      if (root) {
+        var btnWrap = document.createElement('div');
+        btnWrap.style.cssText = 'padding:20px 20px 32px;';
+        btnWrap.innerHTML = '<button onclick="downloadPersonalityCard()" style="width:100%;background:#F0B74C;color:#15130F;border:none;border-radius:15px;font-family:inherit;font-size:16px;font-weight:800;padding:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 12px 24px -12px rgba(240,183,76,.6);">⬇ ดาวน์โหลดรูปบุคลิกสุนัข</button>';
+        root.appendChild(btnWrap);
+      }
+    }, 80);
+  })();
+
+  // === Download personality card ===
+  function downloadPersonalityCard() {
+    var photo = sessionStorage.getItem('dogPhoto');
+    var dogName = sessionStorage.getItem('dogName') || 'น้อง';
+    var params = new URLSearchParams(location.search);
+    var code = (params.get('type') || 'ESCA').toUpperCase();
+
+    // Get type name + nameTh from rendered DOM
+    var h2 = document.querySelector('#type-root h2');
+    var nameEn = h2 ? h2.textContent.trim() : code;
+    var divs = h2 ? h2.parentNode.querySelectorAll('div') : [];
+    var nameTh = '';
+    for (var i=0; i<divs.length; i++) {
+      var t = divs[i].textContent.trim();
+      if (t && t.length < 60 && /[ก-ฮ]/.test(t)) { nameTh = t; break; }
+    }
+
+    // Trait scores from sessionStorage (saved by onboarding)
+    var axes = JSON.parse(sessionStorage.getItem('dogAxes') || 'null') ||
+               {am:0.7, sr:0.75, cn:0.8, ef:0.35};
+    var TRAITS = [
+      {label:'Active',    opp:'Moderate', val:axes.am},
+      {label:'Social',    opp:'Reserved', val:axes.sr},
+      {label:'Confident', opp:'Nervous',  val:axes.cn},
+      {label:'Focused',   opp:'Explorer', val:1-axes.ef},
+    ];
+
+    var W = 390, H = 700;
+    var canvas = document.createElement('canvas');
+    canvas.width = W * 2; canvas.height = H * 2;
+    var ctx = canvas.getContext('2d');
+    ctx.scale(2, 2);
+    ctx.font = '14px sans-serif'; // ensure font is set
+
+    function draw(img) {
+      // ── TOP HALF: gold gradient ──
+      var grad = ctx.createLinearGradient(0,0,W,H*0.48);
+      grad.addColorStop(0,'#F7CE7E');
+      grad.addColorStop(0.55,'#F0B74C');
+      grad.addColorStop(1,'#E0A02F');
+      ctx.fillStyle = grad;
+      roundRect(ctx, 0, 0, W, H, 28);
+      ctx.fill();
+
+      // diagonal pattern
+      ctx.save();
+      ctx.clip();
+      ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+      ctx.lineWidth = 1;
+      for (var d=-H; d<W+H; d+=28) {
+        ctx.beginPath(); ctx.moveTo(d,0); ctx.lineTo(d+H,H); ctx.stroke();
+      }
+      ctx.restore();
+
+      // logo pill top-left
+      ctx.fillStyle = 'rgba(21,19,15,0.85)';
+      roundRect(ctx, 20, 20, 130, 30, 15);
+      ctx.fill();
+      ctx.fillStyle = '#F0B74C';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('⭐  DogBooster', 34, 40);
+
+      // dog photo box
+      var boxSize = 160, boxX = (W-boxSize)/2, boxY = 60;
+      ctx.save();
+      roundRect(ctx, boxX, boxY, boxSize, boxSize, 22);
+      ctx.clip();
+      if (img) {
+        ctx.drawImage(img, boxX, boxY, boxSize, boxSize);
+      } else {
+        ctx.fillStyle = '#E4DECF';
+        ctx.fillRect(boxX, boxY, boxSize, boxSize);
+        ctx.fillStyle = '#B8A88A';
+        ctx.font = '56px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('🐾', W/2, boxY+boxSize*0.65);
+      }
+      ctx.restore();
+
+      // code pill
+      ctx.fillStyle = 'rgba(21,19,15,0.85)';
+      var pillW = 70, pillH = 26, pillX = (W-pillW)/2, pillY = boxY+boxSize+12;
+      roundRect(ctx, pillX, pillY, pillW, pillH, 13);
+      ctx.fill();
+      ctx.fillStyle = '#F0B74C';
+      ctx.font = 'bold 13px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(code, W/2, pillY+17);
+
+      // type name
+      ctx.fillStyle = '#15130F';
+      ctx.font = 'bold 22px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(nameEn, W/2, pillY+52);
+
+      // nameTh small
+      if (nameTh) {
+        ctx.fillStyle = 'rgba(21,19,15,0.55)';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(nameTh.substring(0,38), W/2, pillY+70);
+      }
+
+      // ── BOTTOM HALF: dark ──
+      var darkY = H * 0.5;
+      ctx.fillStyle = '#15130F';
+      roundRect(ctx, 0, darkY-20, W, H-darkY+20, 0);
+      ctx.fill();
+
+      // "บุคลิกของ X คือ" label
+      ctx.fillStyle = '#6B6459';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('บุคลิกของ ' + dogName + ' คือ', W/2, darkY+16);
+
+      // Trait bars
+      var barStartY = darkY + 32;
+      TRAITS.forEach(function(t, i) {
+        var rowY = barStartY + i * 50;
+        ctx.fillStyle = '#FAF7F1';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(t.label, 24, rowY+14);
+        ctx.fillStyle = '#6B6459';
+        ctx.font = '11px sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(t.opp, W-24, rowY+14);
+        // bar track
+        ctx.fillStyle = '#3A352D';
+        roundRect(ctx, 24, rowY+20, W-48, 8, 4);
+        ctx.fill();
+        // bar fill
+        var barGrad = ctx.createLinearGradient(24, 0, W-48, 0);
+        barGrad.addColorStop(0,'#F7CE7E');
+        barGrad.addColorStop(1,'#F0B74C');
+        ctx.fillStyle = barGrad;
+        roundRect(ctx, 24, rowY+20, (W-48)*t.val, 8, 4);
+        ctx.fill();
+      });
+
+      // DogBooster footer
+      var footY = barStartY + TRAITS.length * 50 + 14;
+      ctx.fillStyle = '#3A352D';
+      roundRect(ctx, 16, footY, W-32, 46, 12);
+      ctx.fill();
+      ctx.fillStyle = '#FAF7F1';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ฝึกสุนัขนิสัยดี มีความสุข', W/2, footY+20);
+      ctx.fillStyle = '#6B6459';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('ไม่บังคับ · ไม่ลงโทษ · DogBooster', W/2, footY+36);
+
+      // Download
+      var link = document.createElement('a');
+      link.download = 'dogbooster-' + code + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    if (photo) {
+      var img = new Image();
+      img.onload = function() { draw(img); };
+      img.src = photo;
+    } else {
+      draw(null);
+    }
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.lineTo(x+w-r, y);
+    ctx.arcTo(x+w, y, x+w, y+r, r);
+    ctx.lineTo(x+w, y+h-r);
+    ctx.arcTo(x+w, y+h, x+w-r, y+h, r);
+    ctx.lineTo(x+r, y+h);
+    ctx.arcTo(x, y+h, x, y+h-r, r);
+    ctx.lineTo(x, y+r);
+    ctx.arcTo(x, y, x+r, y, r);
+    ctx.closePath();
+  }
+  </script>
 </body>
 </html>
