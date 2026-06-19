@@ -772,35 +772,7 @@ function showResult() {
   for (const k of ['ef','sr','cn','am']) axes[k] = count[k] ? (sum[k] - count[k]) / (4 * count[k]) : 0.5;
 
   const code = (axes.ef>=.5?'E':'F')+(axes.sr>=.5?'S':'R')+(axes.cn>=.5?'C':'N')+(axes.am>=.5?'A':'M');
-  const p = PERSONALITIES[code] || PERSONALITIES['FSCA'];
   const dogName = document.getElementById('dogName').value || 'น้อง';
-
-  document.getElementById('resultDogName').textContent = dogName;
-  document.getElementById('resultCode').textContent = code;
-  document.getElementById('resultName').textContent = p.nameEn;
-  document.getElementById('resultQuote').textContent = p.quote;
-
-  const AXIS_META = [
-    { icon:'zap',        label:'Active',     opposite:'Moderate',  val:axes.am },
-    { icon:'users',      label:'Social',     opposite:'Reserved',  val:axes.sr },
-    { icon:'shield',     label:'Confident',  opposite:'Nervous',   val:axes.cn },
-    { icon:'compass',    label:'Focused',    opposite:'Explorer',  val:1-axes.ef },
-  ];
-  document.getElementById('traitBars').innerHTML = AXIS_META.map(a => `
-    <div class="trait-row">
-      <div class="trait-row-top">
-        <div class="trait-left"><i data-lucide="${a.icon}"></i> ${a.label}</div>
-        <div class="trait-right">${a.opposite}</div>
-      </div>
-      <div class="trait-bar-wrap"><div class="trait-bar-fill" style="width:${Math.round(a.val*100)}%"></div></div>
-    </div>`).join('');
-
-  document.getElementById('resultStrengthsText').textContent =
-    p.strengths.join(' — ') + (p.traits.length ? ' — ' + p.traits.join(', ') : '');
-  document.getElementById('resultWatchoutsText').textContent =
-    p.watchouts.length ? p.watchouts.join(' — ') : 'ไม่มีข้อระวังพิเศษ';
-  document.getElementById('resultClasses').innerHTML =
-    p.classes.map(t => `<span class="class-chip">${t}</span>`).join('');
 
   sessionStorage.setItem('dogName', dogName);
   sessionStorage.setItem('dogAxes', JSON.stringify(axes));
