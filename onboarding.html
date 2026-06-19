@@ -72,7 +72,10 @@
       width: 96px; height: 96px; border-radius: 50%; background: #E4DECF;
       display: flex; align-items: center; justify-content: center; font-size: 36px;
       border: 3px dashed #C8C0B4; cursor: pointer; position: relative; margin: 20px auto 0;
+      overflow: hidden;
     }
+    .photo-circle img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    #photoInput { display: none; }
     .photo-add {
       position: absolute; bottom: 0; right: 0;
       width: 26px; height: 26px; border-radius: 50%;
@@ -235,7 +238,12 @@
       <button class="step-back" onclick="goStep(1)"><i data-lucide="arrow-left"></i> กลับ</button>
       <div style="color:var(--cream);font-size:22px;font-weight:800;">โปรไฟล์สุนัขของคุณ</div>
       <div style="color:#A39B8C;font-size:13px;margin-top:6px;">บอกเราหน่อยว่าน้องเป็นใคร</div>
-      <div class="photo-circle">🐾<div class="photo-add"><i data-lucide="plus"></i></div></div>
+      <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(this)">
+      <div class="photo-circle" onclick="document.getElementById('photoInput').click()">
+        <span id="photoEmoji">🐾</span>
+        <img id="photoPreview" src="" alt="" style="display:none;">
+        <div class="photo-add"><i data-lucide="plus"></i></div>
+      </div>
     </div>
     <div class="form-body">
       <div>
@@ -244,7 +252,119 @@
       </div>
       <div>
         <div class="form-label">พันธุ์</div>
-        <input class="form-input" type="text" id="dogBreed" placeholder="เช่น โกลเด้น, พุดเดิ้ล, มิกซ์">
+        <input class="form-input" type="text" id="dogBreed" list="breedList" placeholder="พิมพ์หรือเลือกสายพันธุ์">
+        <datalist id="breedList">
+          <option value="มิกซ์ / ไทยแท้">
+          <option value="ไทยแท้ (หมาไทย)">
+          <option value="โกลเด้น รีทรีฟเวอร์">
+          <option value="ลาบราดอร์ รีทรีฟเวอร์">
+          <option value="พุดเดิ้ล (Toy)">
+          <option value="พุดเดิ้ล (Miniature)">
+          <option value="พุดเดิ้ล (Standard)">
+          <option value="ชิวาวา">
+          <option value="ปอมเมอเรเนียน">
+          <option value="ชิห์สุ">
+          <option value="มอลทีส">
+          <option value="บีเกิ้ล">
+          <option value="ไซบีเรียน ฮัสกี้">
+          <option value="ไมล์มาลามิวท์">
+          <option value="ชามอยด์">
+          <option value="คอร์กี้ (Pembroke)">
+          <option value="คอร์กี้ (Cardigan)">
+          <option value="ชิบะ อินุ">
+          <option value="อากิตะ">
+          <option value="ชาร์เป">
+          <option value="บอร์เดอร์ คอลลี่">
+          <option value="ออสเตรเลียน เชพเพิร์ด">
+          <option value="เยอรมัน เชพเพิร์ด">
+          <option value="ร็อตไวเลอร์">
+          <option value="ด็อบเบอร์แมน">
+          <option value="บ็อกเซอร์">
+          <option value="เกรทเดน">
+          <option value="เซนต์เบอร์นาร์ด">
+          <option value="เบิร์นนีส เมาน์เทนด็อก">
+          <option value="นิวฟันด์แลนด์">
+          <option value="ดัลเมเชี่ยน">
+          <option value="บูลด็อก (อังกฤษ)">
+          <option value="บูลด็อก (ฝรั่งเศส)">
+          <option value="ปั๊ก">
+          <option value="บอสตัน เทอร์เรีย">
+          <option value="บูลเทอร์เรีย">
+          <option value="แจ็ค รัสเซลล์ เทอร์เรีย">
+          <option value="สก็อตทิช เทอร์เรีย">
+          <option value="เวสต์ ไฮแลนด์ ไวท์ เทอร์เรีย">
+          <option value="ยอร์คเชียร์ เทอร์เรีย">
+          <option value="มินิเอเจอร์ ชเนาเซอร์">
+          <option value="สแตนดาร์ด ชเนาเซอร์">
+          <option value="ไวมาราเนอร์">
+          <option value="วิซล่า">
+          <option value="ไอริช เซตเตอร์">
+          <option value="อิงลิช เซตเตอร์">
+          <option value="อิงลิช สแปเนียล">
+          <option value="คอกเกอร์ สแปเนียล">
+          <option value="สปริงเกอร์ สแปเนียล">
+          <option value="บาสเซ็ต ฮาวด์">
+          <option value="บลัดฮาวด์">
+          <option value="เกรย์ฮาวด์">
+          <option value="ซาลูกิ">
+          <option value="อาฟกัน ฮาวด์">
+          <option value="รูดีเซียน ริดจ์แบ็ค">
+          <option value="ดัคชุนด์">
+          <option value="บาเซนจิ">
+          <option value="ซามอยด์">
+          <option value="อลาสกัน มาลามิวท์">
+          <option value="กรีนแลนด์ด็อก">
+          <option value="อเมริกัน บูลลี่">
+          <option value="อเมริกัน พิทบูล เทอร์เรีย">
+          <option value="อเมริกัน สแตฟฟอร์ดเชียร์ เทอร์เรีย">
+          <option value="โรดีเซียน ริดจ์แบ็ค">
+          <option value="เคน คอร์โซ">
+          <option value="เนเปิลตัน มาสทิฟ">
+          <option value="บูลมาสทิฟ">
+          <option value="ทิเบตัน มาสทิฟ">
+          <option value="คอมอนดอร์">
+          <option value="คูวาซ">
+          <option value="อนาโตเลียน เชพเพิร์ด">
+          <option value="เบลเจียน มาลินัวส์">
+          <option value="เบลเจียน เชพเพิร์ด">
+          <option value="เชสพีก เบย์ รีทรีฟเวอร์">
+          <option value="แฟลต-โคเตด รีทรีฟเวอร์">
+          <option value="โนวา สโคเทีย ดัค โทลลิง รีทรีฟเวอร์">
+          <option value="ไอริช วอเตอร์ สแปเนียล">
+          <option value="เวลช์ สปริงเกอร์ สแปเนียล">
+          <option value="ซัสเซ็กซ์ สแปเนียล">
+          <option value="ฟิลด์ สแปเนียล">
+          <option value="คลัมเบอร์ สแปเนียล">
+          <option value="ไอริช เร็ด แอนด์ ไวท์ เซตเตอร์">
+          <option value="กอร์ดอน เซตเตอร์">
+          <option value="ปาปิยอง">
+          <option value="ปาปิยอง (ดรอปอีร์)">
+          <option value="เปกิเนส">
+          <option value="ลาซา แอปโซ">
+          <option value="ทิเบตัน สแปเนียล">
+          <option value="ทิเบตัน เทอร์เรีย">
+          <option value="ฮาวานีส">
+          <option value="บิชอง ฟริเซ่">
+          <option value="โบโลเนซ">
+          <option value="โคตอง เดอ ตูเลอาร์">
+          <option value="โลเชน">
+          <option value="ชาวน์">
+          <option value="ไชนีส ครีสเตด">
+          <option value="สกิปเปอร์กี">
+          <option value="ชาว ชาว">
+          <option value="อะกิตะ อินุ">
+          <option value="คิชู">
+          <option value="ชิโกกุ">
+          <option value="ฮอกไกโด">
+          <option value="คาอิ เคน">
+          <option value="ริวกิว อินุ">
+          <option value="โทสะ อินุ">
+          <option value="เบสนจิ">
+          <option value="โปรตุเกส วอเตอร์ด็อก">
+          <option value="ลากอตโต โรมาโญโล">
+          <option value="สแปนิช วอเตอร์ด็อก">
+          <option value="บาร์เบต์">
+        </datalist>
       </div>
       <div class="form-row">
         <div>
@@ -252,10 +372,11 @@
           <select class="form-input" id="dogAge">
             <option value="">เลือก</option>
             <option>น้อยกว่า 6 เดือน</option>
-            <option>6–12 เดือน</option>
-            <option>1–2 ปี</option>
-            <option>2–5 ปี</option>
-            <option>5 ปีขึ้นไป</option>
+            <option>6-12 เดือน</option>
+            <option>1-3 ปี</option>
+            <option>3-5 ปี</option>
+            <option>5-8 ปี</option>
+            <option>8 ปีขึ้นไป</option>
           </select>
         </div>
         <div>
@@ -421,6 +542,19 @@ const PERSONALITIES = {
 
 let currentQ = 0;
 const answers = {};
+
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('photoEmoji').style.display = 'none';
+      const img = document.getElementById('photoPreview');
+      img.src = e.target.result;
+      img.style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
 function goStep(n) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
