@@ -47,23 +47,14 @@
       flex-shrink: 0;
       background: var(--cream);
     }
-    .cta-bar-row { display: flex; gap: 10px; }
     .cta-btn {
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      flex: 1; padding: 16px 20px;
+      width: 100%; padding: 16px 24px;
       background: var(--gold); border-radius: 18px; border: none;
       font-family: inherit; font-size: 15px; font-weight: 800; color: var(--dark);
       cursor: pointer; letter-spacing: .02em;
     }
     .cta-btn svg { width: 20px; height: 20px; stroke-width: 2; flex-shrink: 0; }
-    .cta-btn-save {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      flex-shrink: 0; padding: 16px 18px;
-      background: #1C1A15; border-radius: 18px; border: none;
-      font-family: inherit; font-size: 14px; font-weight: 800; color: var(--gold);
-      cursor: pointer;
-    }
-    .cta-btn-save svg { width: 20px; height: 20px; stroke-width: 2; flex-shrink: 0; }
 
     .not-found { text-align: center; padding: 80px 24px; color: #6B6459; }
     .not-found a { color: #B8860B; font-weight: 800; }
@@ -74,16 +65,10 @@
     <div id="type-root"></div>
 
     <div class="cta-bar">
-      <div class="cta-bar-row">
-        <button class="cta-btn-save" onclick="downloadPersonalityCard()" title="เซฟรูปการ์ด">
-          <i data-lucide="image-down"></i>
-          เซฟรูป
-        </button>
-        <button class="cta-btn" onclick="location.href='school.html'">
-          <i data-lucide="paw-print"></i>
-          ฝึกสุนัขกับ DogBooster
-        </button>
-      </div>
+      <button class="cta-btn" onclick="location.href='school.html'">
+        <i data-lucide="paw-print"></i>
+        ฝึกสุนัขกับ DogBooster
+      </button>
     </div>
   </div>
 
