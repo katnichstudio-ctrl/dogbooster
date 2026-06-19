@@ -1,865 +1,508 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DogBooster – Onboarding</title>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>แบบประเมินบุคลิกสุนัข — DogBooster</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #F0B74C; --gold-light: #F7CE7E; --gold-dark: #E0A02F;
+      --dark: #15130F; --dark2: #1C1A15; --dark3: #3A352D;
+      --cream: #FAF7F1; --sand: #E7E2D7; --muted: #6B6459; --amber: #B8860B;
+      --green-line: #06C755;
+    }
+    html, body {
+      font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--sand);
+      min-height: 100dvh;
+    }
+    .page {
+      max-width: 430px; margin: 0 auto;
+      min-height: 100dvh; background: var(--cream);
+      display: flex; flex-direction: column;
+    }
+    .step { display: none; flex-direction: column; flex: 1; }
+    .step.active { display: flex; }
 
-  :root {
-    --gold: #F0B74C;
-    --gold-dark: #E0A02F;
-    --dark: #15130F;
-    --cream: #FAF7F1;
-    --bg: #E7E2D7;
-    --border: #E4DECF;
-    --muted: #6B6459;
-    --muted2: #A39B8C;
-    --field-bg: #fff;
-    --dark-card: #221F19;
-    --dark-border: #2E2A23;
-  }
+    /* STEP 1 · WELCOME */
+    .welcome-hero {
+      background: var(--dark); padding: 56px 28px 40px;
+      position: relative; overflow: hidden;
+    }
+    .welcome-hero::before {
+      content: ''; position: absolute; top: -80px; right: -60px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,183,76,.2), transparent 70%);
+    }
+    .logo-wrap {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px; animation: pulse 4s ease-in-out infinite;
+    }
+    .logo-wrap img { width: 72px; height: 72px; object-fit: contain; }
+    .feature-cards { padding: 24px 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .feature-card {
+      background: var(--sand); border-radius: 16px; padding: 16px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--dark); color: var(--gold);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .feature-icon svg { width: 20px; height: 20px; stroke-width: 1.75; }
+    .feature-title { font-size: 14px; font-weight: 800; }
+    .feature-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-  html, body {
-    height: 100%;
-    font-family: 'LINE Seed Sans TH', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--dark);
-    -webkit-font-smoothing: antialiased;
-  }
+    /* STEP 2 · PROFILE */
+    .dark-header { background: var(--dark); padding: 52px 24px 28px; }
+    .step-back {
+      background: none; border: none; color: var(--cream); cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      font-family: inherit; font-size: 14px; font-weight: 700; margin-bottom: 20px;
+    }
+    .step-back svg { width: 18px; height: 18px; }
+    .photo-circle {
+      width: 96px; height: 96px; border-radius: 50%; background: #E4DECF;
+      display: flex; align-items: center; justify-content: center; font-size: 36px;
+      border: 3px dashed #C8C0B4; cursor: pointer; position: relative; margin: 20px auto 0;
+    }
+    .photo-add {
+      position: absolute; bottom: 0; right: 0;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--gold); color: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-add svg { width: 14px; height: 14px; stroke-width: 2.5; }
+    .form-body { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .form-label { font-size: 12px; font-weight: 800; color: var(--amber); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .form-input {
+      width: 100%; background: var(--sand); border: 1.5px solid #D8D2C8;
+      border-radius: 14px; padding: 13px 15px;
+      font-family: inherit; font-size: 15px; font-weight: 600; color: var(--dark); outline: none;
+    }
+    .form-input:focus { border-color: var(--gold); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  .phone-wrap {
-    min-height: 100dvh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
+    /* STEP 3 · QUIZ INTRO */
+    .axis-cards { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
+    .axis-card { background: var(--sand); border-radius: 16px; padding: 14px; }
+    .axis-icon { font-size: 24px; margin-bottom: 6px; }
+    .axis-title { font-size: 13px; font-weight: 800; }
+    .axis-sub { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
 
-  .phone {
-    width: 100%;
-    max-width: 430px;
-    min-height: 100dvh;
-    position: relative;
-    overflow: hidden;
-  }
+    /* STEP 4 · QUESTION */
+    .q-header { padding: 52px 24px 20px; background: var(--cream); }
+    .q-nav { display: flex; align-items: center; gap: 14px; }
+    .q-nav button { background: none; border: none; cursor: pointer; color: var(--dark); display: flex; }
+    .q-nav button svg { width: 22px; height: 22px; }
+    .progress-bar-wrap { flex: 1; height: 8px; background: #E4DECF; border-radius: 100px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--gold); border-radius: 100px; transition: width .3s; }
+    .q-count { font-size: 13px; font-weight: 700; color: var(--muted); white-space: nowrap; font-family: ui-monospace, monospace; }
+    .q-group-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #FBEFD6; color: var(--amber);
+      font-size: 12px; font-weight: 800;
+      padding: 6px 12px; border-radius: 100px; margin-top: 20px;
+    }
+    .q-group-badge svg { width: 14px; height: 14px; }
+    .q-text { font-size: 24px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; margin-top: 16px; }
+    .q-hint { font-size: 13px; color: var(--muted); margin-top: 8px; }
+    .q-choices { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .choice-btn {
+      width: 100%; background: #fff; border: 1.5px solid #E4DECF;
+      border-radius: 14px; padding: 14px 16px;
+      font-family: inherit; font-size: 15px; font-weight: 700; color: var(--muted);
+      text-align: left; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; transition: all .15s;
+    }
+    .choice-btn.selected { background: var(--dark); border-color: var(--dark); color: var(--gold); font-weight: 800; }
+    .choice-btn .check-icon { display: none; }
+    .choice-btn.selected .check-icon { display: block; }
+    .choice-btn .check-icon svg { width: 18px; height: 18px; color: var(--gold); }
 
-  .step {
-    display: none;
-    flex-direction: column;
-    min-height: 100dvh;
-    width: 100%;
-  }
-  .step.active { display: flex; }
+    /* STEP 5 · RESULT */
+    .result-page { background: var(--dark); flex: 1; overflow-y: auto; padding-bottom: 32px; }
+    .result-card {
+      margin: 0 16px 20px; background: var(--dark2);
+      border: 1px solid var(--dark3); border-radius: 24px; overflow: hidden;
+    }
+    .result-banner {
+      height: 160px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      position: relative; overflow: hidden;
+    }
+    .result-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(255,255,255,.07) 18px, rgba(255,255,255,.07) 36px);
+    }
+    .result-dog {
+      position: absolute; bottom: -44px; left: 50%; transform: translateX(-50%);
+      width: 88px; height: 88px; border-radius: 18px;
+      background: #E4DECF; border: 4px solid var(--dark2);
+      display: flex; align-items: center; justify-content: center; font-size: 36px; z-index: 2;
+    }
+    .result-body { padding: 56px 20px 20px; text-align: center; }
+    .result-code { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; background: rgba(240,183,76,.15); color: var(--gold); padding: 4px 10px; border-radius: 8px; letter-spacing: .08em; }
+    .result-name { font-size: 24px; font-weight: 800; color: var(--cream); margin-top: 8px; }
+    .result-nameth { font-size: 14px; color: #9B8DC0; font-weight: 700; margin-top: 2px; }
 
-  /* Buttons */
-  .pbtn {
-    font-family: inherit;
-    border: none;
-    cursor: pointer;
-    background: var(--gold);
-    color: var(--dark);
-    font-weight: 800;
-    font-size: 16px;
-    padding: 16px;
-    border-radius: 15px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-    box-shadow: 0 12px 24px -12px rgba(240,183,76,.9);
-    transition: background .15s;
-  }
-  .pbtn:hover { background: var(--gold-dark); }
-  .pbtn svg { width: 18px; height: 18px; stroke-width: 2; display: block; }
-  .pbtn-outline {
-    background: transparent;
-    border: 1.5px solid #3A352D;
-    color: var(--cream);
-    box-shadow: none;
-  }
-  .pbtn-outline:hover { background: rgba(255,255,255,.06); }
+    .trait-bars { padding: 16px 20px; border-top: 1px solid var(--dark3); }
+    .trait-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .trait-row:last-child { margin-bottom: 0; }
+    .trait-lo { font-size: 10px; font-weight: 700; color: var(--muted); width: 56px; text-align: right; }
+    .trait-hi { font-size: 10px; font-weight: 700; color: var(--muted); width: 56px; }
+    .trait-bar-wrap { flex: 1; height: 7px; background: var(--dark3); border-radius: 100px; overflow: hidden; }
+    .trait-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-light), var(--gold)); border-radius: 100px; }
 
-  /* dot progress */
-  .dotrow { display: flex; gap: 6px; flex: 1; }
-  .dot { height: 5px; border-radius: 100px; flex: 1; background: var(--border); }
-  .dot.on { background: var(--gold); }
+    .chip-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { display: inline-flex; font-size: 12px; font-weight: 600; background: var(--dark2); color: #C8C0B4; padding: 5px 11px; border-radius: 100px; border: 1px solid var(--dark3); }
+    .chip-warn { border-color: rgba(232,149,109,.3); color: #E8956D; background: rgba(46,30,15,.6); }
+    .chip-good { border-color: rgba(109,191,142,.3); color: #6DBF8E; background: rgba(26,46,36,.6); }
+    .chip-class { border-color: rgba(240,183,76,.3); color: var(--gold); background: rgba(240,183,76,.08); }
 
-  /* form fields */
-  .flabel { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 7px; display: block; }
-  .field {
-    background: var(--field-bg);
-    border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 13px 15px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--dark);
-    width: 100%;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-  }
-  .field:focus { border-color: var(--gold); }
-  select.field {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23B8B1A4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 13px center;
-    padding-right: 38px;
-    cursor: pointer;
-  }
+    /* SHARED */
+    .btn-primary {
+      width: 100%; background: var(--gold); color: var(--dark);
+      border: none; border-radius: 15px;
+      font-family: inherit; font-size: 16px; font-weight: 800; padding: 16px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
+      box-shadow: 0 12px 24px -12px rgba(240,183,76,.6);
+    }
+    .btn-primary:hover { background: var(--gold-dark); }
+    .btn-primary svg { width: 18px; height: 18px; }
+    .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-line {
+      width: 100%; background: var(--green-line); color: #fff;
+      border: none; border-radius: 15px;
+      font-family: inherit; font-size: 16px; font-weight: 800; padding: 16px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
+    }
+    .btn-line:hover { background: #05b34d; }
+    .line-mark {
+      width: 24px; height: 24px; border-radius: 6px;
+      background: #fff; color: var(--green-line);
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px;
+    }
+    .bottom-bar { padding: 16px 20px; border-top: 1px solid #EDE8DF; background: var(--cream); }
 
-  /* Breed autocomplete */
-  .ac-wrap { position: relative; }
-  .ac-list {
-    position: absolute; left: 0; right: 0; top: calc(100% + 6px);
-    background: #fff; border: 1.5px solid var(--border); border-radius: 14px;
-    box-shadow: 0 18px 40px -16px rgba(21,19,15,.28);
-    max-height: 236px; overflow-y: auto; z-index: 40; padding: 6px;
-    display: none;
-  }
-  .ac-list.open { display: block; }
-  .ac-item {
-    padding: 11px 12px; border-radius: 10px; font-size: 14.5px; font-weight: 700;
-    color: var(--dark); cursor: pointer; display: flex; align-items: baseline; gap: 8px;
-  }
-  .ac-item small { color: var(--muted2); font-weight: 600; font-size: 12.5px; }
-  .ac-item.active, .ac-item:hover { background: rgba(240,183,76,.16); }
-  .ac-empty { padding: 13px 12px; font-size: 13.5px; color: var(--muted); text-align: center; }
+    .sec-label { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
 
-  .seclabel {
-    display: flex; align-items: center; gap: 9px;
-    font-size: 11px; font-weight: 800; letter-spacing: .06em;
-    color: #B8860B; text-transform: uppercase; margin-bottom: 10px;
-  }
-  .seclabel svg { width: 14px; height: 14px; stroke-width: 2; display: block; }
-  .tbody { font-size: 14px; line-height: 1.7; color: #48433A; }
-
-  /* trait bar */
-  .trait-bar { position: relative; height: 10px; background: #2A2620; border-radius: 100px; overflow: hidden; }
-  .trait-bar-fill { position: absolute; inset: 0 var(--gap) 0 0; background: linear-gradient(90deg,#B07A1C,var(--gold)); border-radius: 100px; }
-
-  /* ====== STEP 1 ====== */
-  #step1 { background: var(--dark); position: relative; }
-  #step1 .glow {
-    position: absolute; top: -80px; right: -60px;
-    width: 320px; height: 320px; border-radius: 50%;
-    background: radial-gradient(circle,rgba(240,183,76,.22),transparent 68%);
-    pointer-events: none;
-  }
-  #step1 .content { position: relative; display: flex; flex-direction: column; flex: 1; padding: 32px 30px 36px; }
-  #step1 .logo-wrap {
-    width: 104px; height: 104px; border-radius: 50%; background: var(--cream);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 16px 34px -16px rgba(0,0,0,.6);
-  }
-  #step1 .logo-wrap img { width: 92px; height: 92px; object-fit: contain; }
-  #step1 h2 { font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; color: var(--cream); margin-top: 18px; }
-  #step1 .desc { font-size: 15px; color: var(--muted2); line-height: 1.6; margin-top: 14px; max-width: 300px; }
-  #step1 .feat-list { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; }
-  #step1 .feat-item {
-    display: flex; align-items: center; gap: 14px;
-    background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 16px; padding: 15px;
-  }
-  #step1 .feat-icon {
-    width: 42px; height: 42px; border-radius: 12px; background: #FBEFD6; color: #B8860B;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  #step1 .feat-icon svg { width: 20px; height: 20px; stroke-width: 1.75; }
-  #step1 .feat-title { font-weight: 800; font-size: 15px; color: var(--cream); }
-  #step1 .feat-sub { font-size: 12.5px; color: #7E7668; }
-  #step1 .cta { margin-top: auto; padding-top: 24px; }
-
-  /* ====== STEP 2 ====== */
-  #step2 { background: var(--cream); }
-  #step2 .content { display: flex; flex-direction: column; flex: 1; padding: 14px 26px 28px; }
-  #step2 .topbar { display: flex; align-items: center; gap: 14px; }
-  #step2 .back-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; }
-  #step2 .back-btn svg { width: 22px; height: 22px; stroke-width: 2; color: var(--dark); }
-  #step2 h2 { font-size: 24px; font-weight: 800; letter-spacing: -.01em; margin-top: 20px; }
-  #step2 .subtitle { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
-  #step2 .photo-wrap { display: flex; justify-content: center; margin-top: 20px; }
-  #step2 .photo-ph {
-    width: 104px; height: 104px; border-radius: 50%;
-    background: #E4DECF; border: 2px dashed #D9D3C6;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 4px; color: #9A9282; cursor: pointer; font-size: 28px;
-  }
-  #step2 .photo-ph .plabel { font-size: 10px; font-weight: 700; font-family: inherit; }
-  #step2 .fields { flex: 1; margin-top: 22px; display: flex; flex-direction: column; gap: 15px; }
-  #step2 .row { display: flex; gap: 13px; }
-  #step2 .row > div { flex: 1; min-width: 0; }
-  #step2 .cta { padding-top: 18px; margin-top: auto; }
-
-  /* ====== STEP 3 ====== */
-  #step3 { background: var(--dark); position: relative; }
-  #step3 .glow {
-    position: absolute; bottom: -70px; left: 50%; transform: translateX(-50%);
-    width: 340px; height: 300px; border-radius: 50%;
-    background: radial-gradient(circle,rgba(240,183,76,.16),transparent 68%);
-    pointer-events: none;
-  }
-  #step3 .content { position: relative; display: flex; flex-direction: column; flex: 1; padding: 24px 30px 30px; }
-  #step3 .badge {
-    display: inline-flex; align-self: flex-start; align-items: center; gap: 7px;
-    background: rgba(240,183,76,.14); border: 1px solid rgba(240,183,76,.3);
-    color: var(--gold); font-size: 12px; font-weight: 800; padding: 6px 12px; border-radius: 100px;
-  }
-  #step3 .badge svg { width: 13px; height: 13px; stroke-width: 2; }
-  #step3 h2 { font-size: 27px; font-weight: 800; letter-spacing: -.01em; line-height: 1.18; color: var(--cream); margin-top: 16px; }
-  #step3 .intro-p { font-size: 14.5px; color: var(--muted2); line-height: 1.6; margin-top: 12px; }
-  #step3 .dim-list { display: flex; flex-direction: column; gap: 9px; margin-top: 20px; }
-  #step3 .dim-item {
-    background: var(--dark-card); border: 1px solid var(--dark-border);
-    border-radius: 13px; padding: 13px 15px; display: flex; align-items: center; gap: 12px;
-  }
-  #step3 .dim-item svg { width: 20px; height: 20px; stroke-width: 1.75; color: var(--gold); flex-shrink: 0; }
-  #step3 .dim-title { font-size: 13px; font-weight: 800; color: var(--cream); }
-  #step3 .dim-sub { font-size: 11.5px; color: #7E7668; line-height: 1.4; }
-  #step3 .timer { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 18px; font-size: 12.5px; color: #7E7668; font-weight: 600; }
-  #step3 .timer svg { width: 14px; height: 14px; stroke-width: 2; }
-  #step3 .cta { margin-top: auto; padding-top: 20px; }
-
-  /* ====== STEP 4 ====== */
-  #step4 { background: var(--cream); }
-  #step4 .content { display: flex; flex-direction: column; flex: 1; padding: 14px 26px 28px; }
-  #step4 .topbar { display: flex; align-items: center; gap: 14px; }
-  #step4 .back-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; }
-  #step4 .back-btn svg { width: 22px; height: 22px; stroke-width: 2; color: var(--dark); }
-  #step4 .prog-wrap { flex: 1; height: 8px; background: var(--border); border-radius: 100px; overflow: hidden; }
-  #step4 .prog-fill { width: 3.125%; height: 100%; background: var(--gold); border-radius: 100px; transition: width .3s; }
-  #step4 .prog-label { font-family: ui-monospace,'JetBrains Mono',Menlo,monospace; font-size: 13px; font-weight: 700; color: var(--muted); white-space: nowrap; }
-  #step4 .dim-badge {
-    display: inline-flex; align-self: flex-start; align-items: center; gap: 7px;
-    background: #FBEFD6; color: #B8860B; font-size: 12px; font-weight: 800;
-    padding: 6px 12px; border-radius: 100px; margin-top: 24px;
-  }
-  #step4 .dim-badge svg { width: 14px; height: 14px; stroke-width: 2; }
-  #step4 h2 { font-size: 25px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; margin-top: 18px; }
-  #step4 .q-hint { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
-  #step4 .choices { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
-  #step4 .choice {
-    background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 14px;
-    padding: 14px 16px; font-size: 15px; font-weight: 700; color: var(--muted);
-    cursor: pointer; transition: border-color .15s, background .15s;
-    display: flex; align-items: center; justify-content: space-between;
-    font-family: inherit; text-align: left; width: 100%;
-  }
-  #step4 .choice:hover { border-color: var(--gold); }
-  #step4 .choice.selected { background: var(--dark); border-color: var(--dark); color: var(--gold); font-weight: 800; }
-  #step4 .choice .chk { display: none; width: 19px; height: 19px; }
-  #step4 .choice.selected .chk { display: block; }
-  #step4 .cta { margin-top: auto; padding-top: 18px; }
-
-  /* ====== STEP 5 ====== */
-  #step5 { background: var(--dark); }
-  #step5 .scroll { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 18px 28px 36px; text-align: center; }
-  #step5 .scroll::-webkit-scrollbar { width: 4px; }
-  #step5 .scroll::-webkit-scrollbar-thumb { background: #3A352D; border-radius: 4px; }
-
-  /* share card */
-  .share-card { width: 100%; background: #1C1A15; border: 1px solid #3A352D; border-radius: 24px; overflow: hidden; }
-  .card-hero {
-    position: relative; width: 100%; height: 208px;
-    background: linear-gradient(165deg,#F7CE7E,#F0B74C 55%,#E0A02F);
-    display: flex; align-items: center; justify-content: center; overflow: hidden;
-  }
-  .card-hero-pat { position: absolute; inset: 0; background: repeating-linear-gradient(135deg,transparent,transparent 13px,rgba(255,255,255,.07) 13px,rgba(255,255,255,.07) 26px); }
-  .card-hero-badge {
-    position: absolute; top: 12px; left: 12px;
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(21,19,15,.85); color: var(--gold);
-    font-size: 11px; font-weight: 800; padding: 5px 11px;
-    border-radius: 100px; backdrop-filter: blur(4px);
-  }
-  .card-dog-ph {
-    width: 148px; height: 148px; border-radius: 22px; background: #E4DECF;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 56px; position: relative; z-index: 1;
-  }
-  .card-body { padding: 18px 18px 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .card-sub { font-size: 12px; font-weight: 800; color: var(--muted2); letter-spacing: .04em; }
-  .card-title { font-size: 27px; font-weight: 800; letter-spacing: -.01em; color: var(--gold); margin-top: 5px; line-height: 1.1; }
-  .card-code {
-    display: inline-flex; align-items: center;
-    background: rgba(240,183,76,.14); border: 1px solid rgba(240,183,76,.35); color: var(--gold);
-    font-family: ui-monospace,'JetBrains Mono',Menlo,monospace;
-    font-size: 13px; font-weight: 800; letter-spacing: .14em; padding: 4px 13px; border-radius: 100px; margin-top: 9px;
-  }
-  .card-tagline { font-size: 13.5px; font-style: italic; color: #C9C1B2; line-height: 1.55; margin-top: 12px; max-width: 280px; }
-  .card-traits { width: 100%; padding: 16px 18px 0; margin-top: 14px; border-top: 1px solid var(--dark-border); display: flex; flex-direction: column; gap: 15px; }
-  .trait-row { width: 100%; }
-  .trait-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
-  .trait-left { display: flex; align-items: center; gap: 7px; }
-  .trait-left svg { width: 15px; height: 15px; stroke-width: 2; color: var(--gold); }
-  .trait-name { font-size: 12.5px; font-weight: 800; color: var(--cream); }
-  .trait-opp { font-size: 11px; font-weight: 700; color: #7E7668; }
-  .card-brand { margin: 14px 18px 18px; padding-top: 15px; border-top: 1px solid var(--dark-border); width: calc(100% - 36px); display: flex; align-items: center; justify-content: center; gap: 12px; }
-  .brand-logo { width: 42px; height: 42px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-  .brand-logo img { width: 38px; height: 38px; object-fit: contain; }
-  .brand-title { font-size: 13.5px; font-weight: 800; color: var(--cream); line-height: 1.35; white-space: nowrap; text-align: left; }
-  .brand-sub { font-size: 12.5px; font-weight: 800; color: var(--gold); margin-top: 2px; white-space: nowrap; text-align: left; }
-
-  /* result detail */
-  .result-detail { background: var(--cream); border: 1px solid var(--border); border-radius: 22px; padding: 24px 20px; margin-top: 18px; width: 100%; text-align: left; }
-  .insight-list { display: flex; flex-direction: column; gap: 9px; margin-top: 14px; }
-  .insight-item { display: flex; gap: 10px; align-items: center; background: var(--field-bg); border: 1px solid var(--border); border-radius: 13px; padding: 12px 14px; }
-  .insight-item svg { width: 17px; height: 17px; stroke-width: 2; color: #B8860B; flex-shrink: 0; }
-  .insight-item span { font-size: 13px; color: #2E2A23; line-height: 1.5; }
-  .mindset-box { background: var(--dark); border-radius: 18px; padding: 20px; margin-top: 24px; text-align: center; }
-  .mindset-lbl { font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--muted2); text-transform: uppercase; margin-bottom: 8px; }
-  .mindset-q { font-size: 18px; font-weight: 800; color: var(--gold); line-height: 1.3; }
-  .mindset-p { font-size: 13px; color: var(--muted2); line-height: 1.6; margin-top: 10px; }
-  .str-grid { display: flex; gap: 12px; margin-top: 24px; }
-  .str-box { flex: 1; border-radius: 16px; padding: 16px; }
-  .str-box.pos { background: #E7F0EA; border: 1px solid #CBE0D2; }
-  .str-box.neg { background: #FBEEE6; border: 1px solid #EAD3C2; }
-  .str-hdr { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 800; margin-bottom: 11px; }
-  .str-hdr svg { width: 16px; height: 16px; stroke-width: 2; }
-  .str-box.pos .str-hdr { color: #4A7359; }
-  .str-box.neg .str-hdr { color: #A65A38; }
-  .str-list { display: flex; flex-direction: column; gap: 7px; font-size: 12.5px; line-height: 1.4; }
-  .str-box.pos .str-list { color: #3C5E49; }
-  .str-box.neg .str-list { color: #8A4B30; }
-  .stress-box { border: 1.5px solid var(--border); border-radius: 16px; padding: 16px; margin-top: 16px; }
-  .stress-hdr { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
-  .stress-hdr svg { width: 16px; height: 16px; stroke-width: 2; color: #C77B53; }
-  .owner-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .owner-tag { background: #FBEFD6; color: #B8860B; font-size: 12.5px; font-weight: 700; padding: 8px 13px; border-radius: 100px; }
-  .need-box { background: #1C1A15; border: 1px solid #3A352D; border-radius: 16px; padding: 16px; margin-top: 18px; }
-  .need-hdr { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 800; color: var(--gold); margin-bottom: 7px; }
-  .need-hdr svg { width: 16px; height: 16px; stroke-width: 2; }
-  .core-prog { background: var(--dark); border-radius: 18px; padding: 18px; display: flex; gap: 13px; }
-  .core-badge { width: 46px; height: 46px; border-radius: 13px; background: rgba(240,183,76,.16); color: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 800; font-size: 15px; }
-  .core-title { font-weight: 800; font-size: 15px; color: var(--cream); margin-bottom: 3px; }
-  .core-body { font-size: 12.5px; color: var(--muted2); line-height: 1.55; }
-  .growth-item { display: flex; gap: 12px; align-items: flex-start; background: var(--field-bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
-  .growth-item svg { width: 19px; height: 19px; stroke-width: 2; color: #B8860B; flex-shrink: 0; margin-top: 1px; }
-  .growth-title { font-weight: 800; font-size: 14px; }
-  .growth-body { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 2px; }
-  .potential-box { background: linear-gradient(160deg,#FBEFD6,#F7E4B8); border: 1px solid #F0D89A; border-radius: 18px; padding: 20px; margin-top: 24px; }
-  .potential-hdr { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: #8A6A1E; margin-bottom: 10px; }
-  .potential-hdr svg { width: 17px; height: 17px; stroke-width: 2; }
-  .class-rank { display: flex; flex-direction: column; gap: 9px; }
-  .rank-item { display: flex; align-items: center; gap: 12px; border-radius: 13px; padding: 13px 15px; }
-  .rank-item.dark { background: var(--dark); }
-  .rank-item.light { background: var(--field-bg); border: 1px solid var(--border); }
-  .rank-item .medal { font-size: 18px; }
-  .rank-item .cname { font-weight: 800; font-size: 14px; flex: 1; }
-  .rank-item.dark .cname { color: var(--gold); }
-  .rank-item .cnote { font-size: 11px; color: #7E7668; font-weight: 700; }
-  .fsca-sum { text-align: center; margin-top: 26px; padding: 0 6px; font-size: 14.5px; font-weight: 700; color: var(--dark); line-height: 1.6; }
-  .fsca-sum .hi { color: #B8860B; }
-  .school-cta { background: linear-gradient(150deg,#2A2620,var(--dark)); border: 1px solid #3A352D; border-radius: 16px; padding: 18px; margin-top: 14px; text-align: left; width: 100%; }
-  .school-hdr { display: flex; align-items: center; gap: 10px; }
-  .school-hdr svg { width: 21px; height: 21px; stroke-width: 1.75; color: var(--gold); flex-shrink: 0; }
-  .school-title { font-weight: 800; font-size: 15px; color: var(--cream); }
-  .school-body { font-size: 12.5px; color: var(--muted2); line-height: 1.55; margin-top: 8px; }
-  .school-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--gold); color: var(--dark); font-weight: 800; font-size: 14px; padding: 13px; border-radius: 13px; margin-top: 13px; cursor: pointer; font-family: inherit; border: none; width: 100%; transition: background .15s; }
-  .school-btn svg { width: 16px; height: 16px; stroke-width: 2; }
-  .school-btn:hover { background: var(--gold-dark); }
-</style>
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+  </style>
 </head>
 <body>
-<div class="phone-wrap">
-<div class="phone">
+<div class="page">
 
-  <!-- ===== STEP 1: WELCOME ===== -->
-  <div id="step1" class="step active">
-    <div class="glow"></div>
-    <div class="content">
-      <div class="logo-wrap">
-        <img src="assets/logo.png" alt="DogBooster logo">
+  <!-- ══ STEP 1 · WELCOME ══ -->
+  <div id="s1" class="step active">
+    <div class="welcome-hero">
+      <div class="logo-wrap"><img src="assets/logo.png" alt="DogBooster"></div>
+      <div style="color:var(--cream);font-size:28px;font-weight:800;line-height:1.2;">รู้จักสุนัขของคุณ<br>ก่อนเริ่มฝึก</div>
+      <div style="color:#A39B8C;font-size:14px;margin-top:10px;line-height:1.6;">แบบประเมินบุคลิก 20 ข้อ ใช้เวลา ~5 นาที เพื่อให้เราออกแบบเส้นทางการฝึกที่เหมาะกับนิสัยสุนัขของคุณ</div>
+    </div>
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="dog"></i></div>
+        <div><div class="feature-title">โปรไฟล์สุนัข</div><div class="feature-sub">บอกชื่อ พันธุ์ และข้อมูลพื้นฐาน</div></div>
       </div>
-      <h2>มาทำความรู้จัก<br>สุนัขของคุณกันก่อน</h2>
-      <p class="desc">ใช้เวลาประมาณ 5 นาที เพื่อให้เราออกแบบเส้นทางการฝึกที่เหมาะกับนิสัยของสุนัขคุณที่สุด</p>
-      <div class="feat-list">
-        <div class="feat-item">
-          <div class="feat-icon"><i data-lucide="dog"></i></div>
-          <div>
-            <div class="feat-title">โปรไฟล์สุนัข</div>
-            <div class="feat-sub">ชื่อ พันธุ์ อายุ เพศ + รูป</div>
-          </div>
-        </div>
-        <div class="feat-item">
-          <div class="feat-icon"><i data-lucide="sparkles"></i></div>
-          <div>
-            <div class="feat-title">แบบทดสอบบุคลิกสุนัขฟรี</div>
-            <div class="feat-sub">32 ข้อ · 7 ด้าน → 8 บุคลิก</div>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="clipboard-list"></i></div>
+        <div><div class="feature-title">แบบทดสอบบุคลิก</div><div class="feature-sub">20 ข้อ · 4 มิติ → 1 ใน 16 บุคลิก</div></div>
       </div>
-      <div class="cta">
-        <button class="pbtn" onclick="goStep(2)">เริ่มต้น <i data-lucide="arrow-right"></i></button>
+      <div class="feature-card">
+        <div class="feature-icon"><i data-lucide="sparkles"></i></div>
+        <div><div class="feature-title">รับผลบุคลิก + เส้นทางการฝึก</div><div class="feature-sub">ปรับให้เหมาะกับสุนัขของคุณโดยเฉพาะ</div></div>
+      </div>
+      <div style="margin-top:auto;">
+        <button class="btn-primary" onclick="goStep(2)">
+          เริ่มต้น <i data-lucide="arrow-right"></i>
+        </button>
+        <div style="text-align:center;margin-top:12px;font-size:12px;color:var(--muted);">ไม่บังคับ · ไม่ลงโทษ · Force-Free</div>
       </div>
     </div>
   </div>
 
-  <!-- ===== STEP 2: DOG PROFILE ===== -->
-  <div id="step2" class="step">
-    <div class="content">
-      <div class="topbar">
-        <button class="back-btn" onclick="goStep(1)" aria-label="ย้อนกลับ"><i data-lucide="arrow-left"></i></button>
-        <div class="dotrow">
-          <div class="dot on"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
+  <!-- ══ STEP 2 · PROFILE ══ -->
+  <div id="s2" class="step">
+    <div class="dark-header">
+      <button class="step-back" onclick="goStep(1)"><i data-lucide="arrow-left"></i> กลับ</button>
+      <div style="color:var(--cream);font-size:22px;font-weight:800;">โปรไฟล์สุนัขของคุณ</div>
+      <div style="color:#A39B8C;font-size:13px;margin-top:6px;">บอกเราหน่อยว่าน้องเป็นใคร</div>
+      <div class="photo-circle">🐾<div class="photo-add"><i data-lucide="plus"></i></div></div>
+    </div>
+    <div class="form-body">
+      <div>
+        <div class="form-label">ชื่อน้องหมา</div>
+        <input class="form-input" type="text" id="dogName" placeholder="เช่น โคโค่, มิโล, บัตเตอร์">
       </div>
-      <h2>โปรไฟล์สุนัขของคุณ</h2>
-      <p class="subtitle">บอกเราหน่อยว่าน้องเป็นใคร</p>
-      <div class="photo-wrap">
-        <div class="photo-ph" title="เพิ่มรูปสุนัข">
-          🐾
-          <span class="plabel">เพิ่มรูป</span>
-        </div>
+      <div>
+        <div class="form-label">พันธุ์</div>
+        <input class="form-input" type="text" id="dogBreed" placeholder="เช่น โกลเด้น, พุดเดิ้ล, มิกซ์">
       </div>
-      <div class="fields">
+      <div class="form-row">
         <div>
-          <label class="flabel" for="dog-name">ชื่อเล่น</label>
-          <input id="dog-name" class="field" type="text" placeholder="เช่น โคโค่" value="โคโค่">
+          <div class="form-label">อายุ</div>
+          <select class="form-input" id="dogAge">
+            <option value="">เลือก</option>
+            <option>น้อยกว่า 6 เดือน</option>
+            <option>6–12 เดือน</option>
+            <option>1–2 ปี</option>
+            <option>2–5 ปี</option>
+            <option>5 ปีขึ้นไป</option>
+          </select>
         </div>
         <div>
-          <label class="flabel" for="dog-breed">สายพันธุ์</label>
-          <div class="ac-wrap">
-            <input id="dog-breed" class="field" type="text" autocomplete="off"
-                   placeholder="พิมพ์ชื่อสายพันธุ์ เช่น โกลเด้น, Shiba" value="Border Collie"
-                   role="combobox" aria-autocomplete="list" aria-controls="breed-ac" aria-expanded="false">
-            <ul class="ac-list" id="breed-ac" role="listbox" aria-label="รายชื่อสายพันธุ์"></ul>
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label class="flabel" for="dog-age">อายุ</label>
-            <select id="dog-age" class="field">
-              <option>น้อยกว่า 6 เดือน</option>
-              <option selected>1 ปี 2 เดือน</option>
-              <option>2 ปี</option>
-              <option>3 ปี</option>
-              <option>4 ปี</option>
-              <option>5 ปี+</option>
-            </select>
-          </div>
-          <div>
-            <label class="flabel" for="dog-gender">เพศ</label>
-            <select id="dog-gender" class="field">
-              <option>เมีย</option>
-              <option>ผู้</option>
-            </select>
-          </div>
+          <div class="form-label">เพศ</div>
+          <select class="form-input" id="dogGender">
+            <option value="">เลือก</option>
+            <option>ผู้</option>
+            <option>เมีย</option>
+          </select>
         </div>
       </div>
-      <div class="cta">
-        <button class="pbtn" onclick="goStep(3)">ถัดไป <i data-lucide="arrow-right"></i></button>
+      <div style="margin-top:auto;">
+        <button class="btn-primary" onclick="goStep(3)">ถัดไป <i data-lucide="arrow-right"></i></button>
       </div>
     </div>
   </div>
 
-  <!-- ===== STEP 3: QUIZ INTRO ===== -->
-  <div id="step3" class="step">
-    <div class="glow"></div>
-    <div class="content">
-      <div class="badge"><i data-lucide="sparkles"></i> แบบประเมินบุคลิก</div>
-      <h2>หมาของคุณ<br>Type ไหน?</h2>
-      <p class="intro-p">เพียง 5 นาที ในการรู้ถึงคำอธิบายเกี่ยวกับตัวตนของสุนัขของคุณ — ตอบ 32 ข้อตามที่สังเกตเห็น เราจะจัดเป็นรหัส 4 ตัวอักษร → 1 ใน 8 บุคลิก</p>
-      <div class="dim-list">
-        <div class="dim-item">
-          <i data-lucide="compass"></i>
-          <div>
-            <div class="dim-title">Explorer ↔ Focused</div>
-            <div class="dim-sub">ชอบสำรวจเอง หรือโฟกัสเจ้าของ</div>
-          </div>
-        </div>
-        <div class="dim-item">
-          <i data-lucide="users"></i>
-          <div>
-            <div class="dim-title">Social ↔ Reserved</div>
-            <div class="dim-sub">เข้าหาคน/หมา หรือระวังตัว</div>
-          </div>
-        </div>
-        <div class="dim-item">
-          <i data-lucide="shield"></i>
-          <div>
-            <div class="dim-title">Confident ↔ Nervous</div>
-            <div class="dim-sub">มั่นใจกล้าลอง หรือกังวลง่าย</div>
-          </div>
-        </div>
-        <div class="dim-item">
-          <i data-lucide="zap"></i>
-          <div>
-            <div class="dim-title">Active ↔ Moderate</div>
-            <div class="dim-sub">พลังงานสูง หรือปานกลาง</div>
-          </div>
-        </div>
+  <!-- ══ STEP 3 · QUIZ INTRO ══ -->
+  <div id="s3" class="step">
+    <div class="dark-header">
+      <button class="step-back" onclick="goStep(2)"><i data-lucide="arrow-left"></i> กลับ</button>
+      <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(240,183,76,.15);color:var(--gold);font-size:12px;font-weight:800;padding:6px 13px;border-radius:100px;margin-bottom:14px;">
+        <i data-lucide="clipboard-list" style="width:14px;height:14px;stroke-width:1.75;"></i> แบบประเมินบุคลิก
       </div>
-      <div class="timer">
-        <i data-lucide="clock"></i> ใช้เวลาประมาณ 5 นาที
-      </div>
-      <div class="cta">
-        <button class="pbtn" onclick="goStep(4)">เริ่มแบบประเมิน <i data-lucide="arrow-right"></i></button>
-      </div>
+      <div style="color:var(--cream);font-size:22px;font-weight:800;line-height:1.3;">20 ข้อ · 4 มิติ<br>→ 1 ใน 16 บุคลิกสุนัข</div>
+      <div style="color:#A39B8C;font-size:13px;margin-top:8px;line-height:1.6;">ตอบตามที่สังเกตเห็นพฤติกรรมจริงของน้อง ไม่มีผิดหรือถูก</div>
+    </div>
+    <div class="axis-cards">
+      <div class="axis-card"><div class="axis-icon">🧭</div><div class="axis-title">Explorer ↔ Focused</div><div class="axis-sub">ชอบสำรวจเอง หรือโฟกัสเจ้าของ</div></div>
+      <div class="axis-card"><div class="axis-icon">🤝</div><div class="axis-title">Social ↔ Reserved</div><div class="axis-sub">เข้าหาคน/หมา หรือระวังตัว</div></div>
+      <div class="axis-card"><div class="axis-icon">💪</div><div class="axis-title">Confident ↔ Nervous</div><div class="axis-sub">มั่นใจกล้าลอง หรือกังวลง่าย</div></div>
+      <div class="axis-card"><div class="axis-icon">⚡</div><div class="axis-title">Active ↔ Moderate</div><div class="axis-sub">พลังงานสูง หรือปานกลาง</div></div>
+    </div>
+    <div class="bottom-bar">
+      <button class="btn-primary" onclick="startQuiz()">เริ่มแบบประเมิน <i data-lucide="arrow-right"></i></button>
+      <div style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted);">ใช้เวลาประมาณ 5 นาที</div>
     </div>
   </div>
 
-  <!-- ===== STEP 4: QUIZ QUESTION ===== -->
-  <div id="step4" class="step">
-    <div class="content">
-      <div class="topbar">
-        <button class="back-btn" onclick="goStep(3)" aria-label="ย้อนกลับ"><i data-lucide="arrow-left"></i></button>
-        <div class="prog-wrap">
-          <div class="prog-fill" id="quiz-prog"></div>
-        </div>
-        <span class="prog-label">1/32</span>
+  <!-- ══ STEP 4 · QUESTION ══ -->
+  <div id="s4" class="step" style="background:var(--cream);">
+    <div class="q-header">
+      <div class="q-nav">
+        <button onclick="prevQ()"><i data-lucide="arrow-left"></i></button>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="qProgress" style="width:5%"></div></div>
+        <span class="q-count" id="qCount">1/20</span>
       </div>
-      <div class="dim-badge"><i data-lucide="users"></i> ด้านสังคม · Social</div>
-      <h2>โคโค่ดีใจเมื่อได้เจอคนใหม่</h2>
-      <p class="q-hint">เลือกระดับที่ตรงกับน้องที่สุด</p>
-      <div class="choices">
-        <button class="choice" onclick="selectChoice(this)">ไม่ตรงเลย<i data-lucide="check" class="chk"></i></button>
-        <button class="choice" onclick="selectChoice(this)">ไม่ค่อยตรง<i data-lucide="check" class="chk"></i></button>
-        <button class="choice" onclick="selectChoice(this)">กลาง ๆ<i data-lucide="check" class="chk"></i></button>
-        <button class="choice selected" onclick="selectChoice(this)">ค่อนข้างตรง<i data-lucide="check" class="chk"></i></button>
-        <button class="choice" onclick="selectChoice(this)">ตรงมาก<i data-lucide="check" class="chk"></i></button>
-      </div>
-      <div class="cta">
-        <button class="pbtn" onclick="goStep(5)">ข้อถัดไป <i data-lucide="arrow-right"></i></button>
-      </div>
+      <div class="q-group-badge" id="qBadge"><i data-lucide="zap"></i> <span id="qGroupText">ด้านพลังงาน</span></div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-hint">เลือกระดับที่ตรงกับน้องที่สุด</div>
     </div>
-  </div>
-
-  <!-- ===== STEP 5: RESULT ===== -->
-  <div id="step5" class="step">
-    <div class="scroll">
-
-      <!-- SHAREABLE CARD -->
-      <div class="share-card" id="share-card">
-        <div class="card-hero">
-          <div class="card-hero-pat"></div>
-          <div class="card-hero-badge">🏅 The Team Captain</div>
-          <div class="card-dog-ph">🐾</div>
-        </div>
-        <div class="card-body">
-          <div class="card-sub">บุคลิกของโคโค่คือ</div>
-          <div class="card-title">The Team Captain</div>
-          <div class="card-code">FSCA</div>
-          <p class="card-tagline">"ผู้นำที่มั่นใจและเข้ากับทุกคน พร้อมพาคุณไปถึงเป้าหมายด้วยความสนุกและรอยยิ้ม"</p>
-        </div>
-        <div class="card-traits">
-          <div class="trait-row">
-            <div class="trait-hdr">
-              <div class="trait-left"><i data-lucide="zap"></i><span class="trait-name">Active</span></div>
-              <span class="trait-opp">Moderate</span>
-            </div>
-            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:20%"></div></div>
-          </div>
-          <div class="trait-row">
-            <div class="trait-hdr">
-              <div class="trait-left"><i data-lucide="users"></i><span class="trait-name">Social</span></div>
-              <span class="trait-opp">Reserved</span>
-            </div>
-            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:24%"></div></div>
-          </div>
-          <div class="trait-row">
-            <div class="trait-hdr">
-              <div class="trait-left"><i data-lucide="shield"></i><span class="trait-name">Confident</span></div>
-              <span class="trait-opp">Nervous</span>
-            </div>
-            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:26%"></div></div>
-          </div>
-          <div class="trait-row">
-            <div class="trait-hdr">
-              <div class="trait-left"><i data-lucide="compass"></i><span class="trait-name">Focused</span></div>
-              <span class="trait-opp">Explorer</span>
-            </div>
-            <div class="trait-bar"><div class="trait-bar-fill" style="--gap:26%"></div></div>
-          </div>
-        </div>
-        <div class="card-brand">
-          <div class="brand-logo"><img src="assets/logo.png" alt="DogBooster"></div>
-          <div>
-            <div class="brand-title">ฝึกสุนัขนิสัยดี มีความสุข</div>
-            <div class="brand-sub">ไม่บังคับ · ไม่ลงโทษ</div>
-          </div>
-        </div>
-      </div>
-      <!-- /SHAREABLE CARD -->
-
-      <button class="pbtn" style="margin-top:16px" onclick="downloadCard()">
-        <i data-lucide="download"></i> ดาวน์โหลดรูปบุคลิกสุนัข
+    <div class="q-choices">
+      <button class="choice-btn" data-val="1" onclick="selectChoice(this)">ไม่ตรงเลย <span class="check-icon"><i data-lucide="check"></i></span></button>
+      <button class="choice-btn" data-val="2" onclick="selectChoice(this)">ไม่ค่อยตรง <span class="check-icon"><i data-lucide="check"></i></span></button>
+      <button class="choice-btn" data-val="3" onclick="selectChoice(this)">กลาง ๆ <span class="check-icon"><i data-lucide="check"></i></span></button>
+      <button class="choice-btn" data-val="4" onclick="selectChoice(this)">ค่อนข้างตรง <span class="check-icon"><i data-lucide="check"></i></span></button>
+      <button class="choice-btn" data-val="5" onclick="selectChoice(this)">ตรงมาก <span class="check-icon"><i data-lucide="check"></i></span></button>
+    </div>
+    <div class="bottom-bar">
+      <button class="btn-primary" id="btnNext" onclick="nextQ()" disabled>
+        ข้อถัดไป <i data-lucide="arrow-right"></i>
       </button>
-      <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:10px;font-size:12px;color:#7E7668;font-weight:600">
-        <i data-lucide="share-2" style="width:14px;height:14px;color:var(--gold)"></i>
-        อวดบุคลิกน้องให้เพื่อน ๆ เห็น
-      </div>
-
-      <!-- FULL DETAIL -->
-      <div class="result-detail">
-        <div class="seclabel"><i data-lucide="sparkles"></i>ภาพรวมบุคลิกภาพ</div>
-        <p class="tbody">FSCA คือสุนัขที่เกิดมาพร้อมพรสวรรค์ในการทำงานร่วมกับมนุษย์ — ไม่ได้หลงใหลการสำรวจเหมือน ESCM ไม่ได้ใช้ชีวิตตามแรงกระตุ้นเหมือน ESCA สิ่งที่ FSCA ต้องการคือ "การได้ร่วมมือกันทำบางสิ่งให้สำเร็จ"</p>
-        <div class="insight-list">
-          <div class="insight-item"><i data-lucide="eye"></i><span>มองหน้าเจ้าของบ่อย — คอยสังเกตสัญญาณเล็ก ๆ</span></div>
-          <div class="insight-item"><i data-lucide="zap"></i><span>การฝึกไม่ใช่หน้าที่ — แต่เป็นกิจกรรมที่สนุก</span></div>
-          <div class="insight-item"><i data-lucide="target"></i><span>การเรียนรู้คือความท้าทายที่น่าตื่นเต้น</span></div>
-        </div>
-
-        <div class="mindset-box">
-          <div class="mindset-lbl">วิธีมองโลก</div>
-          <div class="mindset-q">"ความสำเร็จเกิดจากการทำงานร่วมกัน"</div>
-          <p class="mindset-p">เมื่อเจอสถานการณ์ใหม่ สิ่งแรกที่มองหาไม่ใช่สิ่งแวดล้อม แต่คือเจ้าของ — โลกของ FSCA หมุนรอบความร่วมมือมากกว่าการสำรวจ</p>
-        </div>
-
-        <div class="str-grid">
-          <div class="str-box pos">
-            <div class="str-hdr"><i data-lucide="circle-check"></i>จุดแข็ง</div>
-            <div class="str-list">
-              <div>โฟกัสเจ้าของสูง</div>
-              <div>ชอบเรียนรู้</div>
-              <div>ทำงานเป็นทีมเก่ง</div>
-              <div>มีแรงจูงใจสูง</div>
-              <div>พัฒนาได้ไกล</div>
-            </div>
-          </div>
-          <div class="str-box neg">
-            <div class="str-hdr"><i data-lucide="triangle-alert"></i>ต้องระวัง</div>
-            <div class="str-list">
-              <div>ตื่นเต้นกับงานเกินไป</div>
-              <div>พึ่งสัญญาณเจ้าของมาก</div>
-              <div>รับอารมณ์เจ้าของง่าย</div>
-              <div>คาดหวังความชัดเจน</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="stress-box">
-          <div class="stress-hdr"><i data-lucide="activity"></i>เมื่อเกิดความเครียด</div>
-          <p class="tbody">FSCA ไม่หลีกหนีปัญหา แต่จะพยายามแก้ไขมากขึ้น — เสนอพฤติกรรมหลายอย่างติดกัน รีบตอบสนอง ขาดความนิ่ง ดูกังวลเมื่อทำผิด พวกเขาไม่กลัวความล้มเหลว แต่กลัวการไม่เข้าใจสิ่งที่เจ้าของต้องการ</p>
-        </div>
-
-        <div class="seclabel" style="margin-top:26px"><i data-lucide="heart-handshake"></i>เจ้าของในอุดมคติ</div>
-        <div class="owner-tags">
-          <span class="owner-tag">ชอบฝึกสุนัข</span>
-          <span class="owner-tag">ทำกิจกรรมร่วมกัน</span>
-          <span class="owner-tag">สื่อสารชัดเจน</span>
-          <span class="owner-tag">พัฒนาไปพร้อมกัน</span>
-        </div>
-
-        <div class="need-box">
-          <div class="need-hdr"><i data-lucide="lightbulb"></i>สิ่งที่ FSCA ต้องเรียนรู้</div>
-          <p style="font-size:12.5px;color:var(--muted2);line-height:1.6">"การควบคุมความตื่นเต้นและความคาดหวัง" — FSCA อยากทำได้ดีจนบางครั้งรีบเกินไป บทเรียนสำคัญคือ "ไม่ใช่ทุกอย่างต้องรีบทำให้สำเร็จ" การหยุดคิดและทำงานอย่างนิ่งมั่นคงคือสิ่งที่ปลดล็อกศักยภาพที่แท้จริง</p>
-        </div>
-
-        <div class="seclabel" style="margin-top:26px"><i data-lucide="route"></i>เส้นทางหลัก · Core Program</div>
-        <div class="core-prog">
-          <div class="core-badge">FBI</div>
-          <div>
-            <div class="core-title">Four Basic Instinct</div>
-            <p class="core-body">FBI คือรากฐานสำคัญของ FSCA — พัฒนาสมาธิ การควบคุมอารมณ์ การสื่อสาร และความเข้าใจระหว่างสุนัขกับเจ้าของ เมื่อผ่าน FBI พวกเขามักแสดงศักยภาพออกมาได้อย่างชัดเจน</p>
-          </div>
-        </div>
-
-        <div class="seclabel" style="margin-top:24px"><i data-lucide="trending-up"></i>เส้นทางต่อยอด · Growth Path</div>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <div class="growth-item"><i data-lucide="activity"></i><div><div class="growth-title">Dog Fitness</div><div class="growth-body">คลาสที่เหมาะที่สุด — พัฒนาความนิ่ง ความแม่นยำ การควบคุมร่างกาย และสมาธิในการทำงาน</div></div></div>
-          <div class="growth-item"><i data-lucide="sparkles"></i><div><div class="growth-title">Dog Show Tricks</div><div class="growth-body">ได้ใช้ความสามารถในการเรียนรู้และการสื่อสารเต็มที่ เรียนรู้ท่าใหม่ได้รวดเร็ว</div></div></div>
-          <div class="growth-item"><i data-lucide="zap"></i><div><div class="growth-title">Agility Dog</div><div class="growth-body">ใช้ทั้งสมองและร่างกายไปพร้อมกัน ปลดปล่อยพลังงานในรูปแบบที่มีเป้าหมาย</div></div></div>
-        </div>
-
-        <div class="potential-box">
-          <div class="potential-hdr"><i data-lucide="award"></i>ศักยภาพสูงสุดของ FSCA</div>
-          <p style="font-size:13px;color:#5A4A28;line-height:1.65">เมื่อได้รับการพัฒนาอย่างเหมาะสม FSCA จะกลายเป็นสุนัขที่มีสมาธิสูง ควบคุมตัวเองได้ดี ทำงานเป็นทีมยอดเยี่ยม เรียนรู้รวดเร็ว และพร้อมรับความท้าทายใหม่ — สร้างความประทับใจให้ทั้งเจ้าของและผู้ฝึก เพราะพวกเขารักการเรียนรู้ร่วมกับคน</p>
-        </div>
-
-        <div class="seclabel" style="margin-top:26px"><i data-lucide="graduation-cap"></i>คลาสที่เหมาะที่สุด</div>
-        <div class="class-rank">
-          <div class="rank-item dark"><span class="medal">🥇</span><span class="cname">FBI</span><span class="cnote">รากฐาน</span></div>
-          <div class="rank-item light"><span class="medal">🥈</span><span class="cname">Dog Fitness</span></div>
-          <div class="rank-item light"><span class="medal">🥉</span><span class="cname">Dog Show Tricks</span></div>
-          <div class="rank-item light"><span class="medal">🏅</span><span class="cname">Agility Dog</span></div>
-        </div>
-
-        <div class="fsca-sum">
-          FSCA = Focused + Social + Confident + Active<br>
-          <span class="hi">"สุนัขที่เกิดมาเพื่อเรียนรู้ ทำงาน และสร้างความสำเร็จร่วมกับมนุษย์" 🐾🏆</span>
-        </div>
-      </div>
-
-      <!-- SCHOOL CTA -->
-      <div class="school-cta">
-        <div class="school-hdr"><i data-lucide="graduation-cap"></i><span class="school-title">สนใจฝึกสุนัขกับ DogBooster</span></div>
-        <p class="school-body">หลักการ Force-Free ระดับโลก "สร้างสายสัมพันธ์" ผ่านกิจกรรมที่สนุกและเห็นผลจริง</p>
-        <button class="school-btn">ดูข้อมูลสถาบันฝึกสุนัข <i data-lucide="arrow-right"></i></button>
-      </div>
-      <div style="margin-top:14px;width:100%">
-        <button class="pbtn pbtn-outline">สอบถามการฝึกเพิ่มเติม <i data-lucide="message-circle"></i></button>
-      </div>
-
     </div>
   </div>
 
-</div>
+  <!-- ══ STEP 5 · RESULT ══ -->
+  <div id="s5" class="step">
+    <div class="result-page">
+      <div style="padding:52px 16px 16px;">
+        <div style="font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;">ผลแบบประเมิน</div>
+        <div style="font-size:22px;font-weight:800;color:var(--cream);margin-top:4px;">บุคลิกของ <span id="resultDogName">น้อง</span> คือ</div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-banner"><div class="result-dog">🐾</div></div>
+        <div class="result-body">
+          <span class="result-code" id="resultCode">FSCA</span>
+          <div class="result-name" id="resultName">The Team Captain</div>
+          <div class="result-nameth" id="resultNameTh">กัปตันทีม</div>
+          <div style="font-size:32px;margin-top:10px;" id="resultEmoji">🏅</div>
+        </div>
+        <div class="trait-bars" id="traitBars"></div>
+        <div style="padding:16px 20px;">
+          <div class="sec-label" style="color:var(--amber);">ลักษณะเด่น</div>
+          <div class="chip-wrap" id="resultTraits"></div>
+        </div>
+        <div style="padding:0 20px 16px;">
+          <div class="sec-label" style="color:#6DBF8E;">จุดแข็ง</div>
+          <div class="chip-wrap" id="resultStrengths"></div>
+        </div>
+        <div style="padding:0 20px 16px;" id="watchoutSection">
+          <div class="sec-label" style="color:#E8956D;">ต้องระวัง</div>
+          <div class="chip-wrap" id="resultWatchouts"></div>
+        </div>
+        <div style="padding:0 20px 20px;">
+          <div class="sec-label" style="color:var(--gold);">คลาสที่แนะนำ</div>
+          <div class="chip-wrap" id="resultClasses"></div>
+        </div>
+      </div>
+
+      <!-- LINE Login CTA -->
+      <div style="margin:0 16px 16px;background:var(--dark2);border:1px solid var(--dark3);border-radius:20px;padding:22px;">
+        <div style="font-size:16px;font-weight:800;color:var(--cream);">บันทึกผลและเริ่มฝึก</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5;">เข้าสู่ระบบด้วย LINE เพื่อบันทึกผลและรับบทเรียนฟรี 1 บท</div>
+        <div style="margin-top:16px;">
+          <button class="btn-line" onclick="location.href='index.html'">
+            <span class="line-mark">L</span> เข้าสู่ระบบด้วย LINE
+          </button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;">
+          <span style="font-size:12px;color:var(--muted);font-weight:600;">🔒 ปลอดภัย</span>
+          <span style="width:4px;height:4px;border-radius:50%;background:var(--dark3);display:inline-block;"></span>
+          <span style="font-size:12px;color:var(--muted);font-weight:600;">❤️ ไม่มีลงโทษ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-  function goStep(n) {
-    document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
-    var el = document.getElementById('step' + n);
-    el.classList.add('active');
-    /* ถึงหน้าผลลัพธ์ = ทำ onboarding เสร็จแล้ว (ครั้งหน้าจะเข้า learning-path) */
-    if (n >= 5) { try { localStorage.setItem('db_onboarded', 'true'); } catch (e) {} }
-    window.scrollTo(0, 0);
-    var sc = el.querySelector('.scroll');
-    if (sc) sc.scrollTop = 0;
-    if (window.lucide) lucide.createIcons();
-  }
+const QUESTIONS = [
+  { id:1,  axis:"am", dir:1,  group:"ด้านพลังงาน",       icon:"zap",          th:"น้องหมาชอบออกไปสำรวจสถานที่ใหม่" },
+  { id:2,  axis:"am", dir:1,  group:"ด้านพลังงาน",       icon:"zap",          th:"อยู่เฉยเกิน 30 นาทีได้ยาก" },
+  { id:3,  axis:"am", dir:1,  group:"ด้านพลังงาน",       icon:"zap",          th:"พร้อมเล่นเสมอ" },
+  { id:4,  axis:"am", dir:1,  group:"ด้านพลังงาน",       icon:"zap",          th:"ชอบกิจกรรมที่ต้องใช้แรง" },
+  { id:5,  axis:"sr", dir:1,  group:"ด้านสังคม",         icon:"users",        th:"ดีใจเมื่อเจอคนใหม่" },
+  { id:6,  axis:"sr", dir:1,  group:"ด้านสังคม",         icon:"users",        th:"ชอบเข้าหาหมาตัวอื่น" },
+  { id:7,  axis:"sr", dir:1,  group:"ด้านสังคม",         icon:"users",        th:"ชอบเป็นจุดสนใจ" },
+  { id:8,  axis:"sr", dir:1,  group:"ด้านสังคม",         icon:"users",        th:"อยู่ร่วมกับกลุ่มได้ง่าย" },
+  { id:9,  axis:"cn", dir:1,  group:"ด้านความมั่นใจ",    icon:"shield-check", th:"เดินเข้าสถานที่ใหม่ได้ทันที" },
+  { id:10, axis:"cn", dir:1,  group:"ด้านความมั่นใจ",    icon:"shield-check", th:"ฟื้นตัวจากความตกใจได้เร็ว" },
+  { id:11, axis:"cn", dir:1,  group:"ด้านความมั่นใจ",    icon:"shield-check", th:"ไม่กลัวเสียงดัง" },
+  { id:12, axis:"cn", dir:1,  group:"ด้านความมั่นใจ",    icon:"shield-check", th:"พร้อมทดลองสิ่งใหม่" },
+  { id:13, axis:"cn", dir:-1, group:"ด้านความอ่อนไหว",  icon:"heart",        th:"สังเกตการเปลี่ยนแปลงเล็ก ๆ รอบตัว" },
+  { id:14, axis:"cn", dir:-1, group:"ด้านความอ่อนไหว",  icon:"heart",        th:"ตกใจง่าย" },
+  { id:15, axis:"cn", dir:-1, group:"ด้านความอ่อนไหว",  icon:"heart",        th:"เครียดง่ายเมื่อเปลี่ยนกิจวัตร" },
+  { id:16, axis:"cn", dir:-1, group:"ด้านความอ่อนไหว",  icon:"heart",        th:"ต้องใช้เวลาปรับตัว" },
+  { id:17, axis:"ef", dir:1,  group:"ด้านความเป็นอิสระ", icon:"compass",      th:"ชอบทำสิ่งต่าง ๆ เอง" },
+  { id:18, axis:"ef", dir:1,  group:"ด้านความเป็นอิสระ", icon:"compass",      th:"เรียกกลับมาได้ยากเมื่อมีสิ่งเร้า" },
+  { id:19, axis:"ef", dir:1,  group:"ด้านความเป็นอิสระ", icon:"compass",      th:"สนใจสิ่งแวดล้อมมากกว่าเจ้าของ" },
+  { id:20, axis:"ef", dir:1,  group:"ด้านความเป็นอิสระ", icon:"compass",      th:"ตัดสินใจเองบ่อย" },
+];
 
-  function selectChoice(el) {
-    el.closest('.choices').querySelectorAll('.choice').forEach(function(c) { c.classList.remove('selected'); });
-    el.classList.add('selected');
-    if (window.lucide) lucide.createIcons();
-  }
+const PERSONALITIES = {
+  ESCA: { emoji:"🌟", nameEn:"The Superstar",           nameTh:"นักผจญภัยดาวเด่น",   traits:["ชอบคน","ชอบหมา","พลังงานสูง","มั่นใจมาก"],       strengths:["เข้ากลุ่มง่าย","เรียนรู้ไว","ชอบกิจกรรม"],           watchouts:["ตื่นเต้นง่าย","ดึงสายจูง","กระโดดใส่คน"],    classes:["FBI","Agility","เดินดีไปด้วยกัน"] },
+  ESCM: { emoji:"🌈", nameEn:"The Social Butterfly",    nameTh:"ผีเสื้อสังคม",        traits:["ชอบทุกคน","พลังงานพอดี","เข้ากันได้ดี"],             strengths:["ปรับตัวเก่ง","เพื่อนแท้"],                           watchouts:["สมาธิสั้น"],                                   classes:["FBI","Socialization","Fun Class"] },
+  ESNA: { emoji:"💫", nameEn:"The Excitable Dreamer",   nameTh:"นักฝันพลังงานสูง",    traits:["อยากเข้าสังคม","แต่กังวลลึก ๆ"],                      strengths:["น่ารัก","เข้าหาคน"],                                  watchouts:["ตื่นเต้นจนเห่า","Reactive"],                   classes:["FBI","Reactive Dog","Confidence"] },
+  ESNM: { emoji:"🌱", nameEn:"The Gentle Explorer",     nameTh:"นักสำรวจใจอ่อน",      traits:["อยากรู้โลก","แต่ไม่มั่นใจ"],                          strengths:["อ่อนโยน","เรียนรู้ดี"],                              watchouts:["กลัวสิ่งแวดล้อมใหม่"],                        classes:["FBI","Confidence","Desensitization"] },
+  ERCA: { emoji:"🛡️", nameEn:"The Brave Guardian",      nameTh:"ผู้พิทักษ์ผู้กล้า",   traits:["มั่นใจ","ไม่ชอบคนแปลกหน้า","เฝ้าระวัง"],             strengths:["คุมสถานการณ์ได้ดี","ซื่อสัตย์"],                     watchouts:["เห่าคนแปลกหน้า"],                             classes:["FBI","Controlled Socialization"] },
+  ERCM: { emoji:"🔭", nameEn:"The Independent Scout",   nameTh:"นักลาดตระเวนอิสระ",   traits:["ชอบสำรวจ","ชอบตัดสินใจเอง"],                          strengths:["มั่นใจ","เอาตัวรอดเก่ง"],                            watchouts:["เรียกยาก"],                                    classes:["FBI","Recall","Nose Work"] },
+  ERNA: { emoji:"🚨", nameEn:"The Protective Worrier",  nameTh:"ผู้พิทักษ์ขี้กังวล",  traits:["ปกป้องบ้าน","ระวังตัวมาก"],                           strengths:["ใส่ใจครอบครัว"],                                     watchouts:["เห่า","พุ่งใส่สิ่งเร้า"],                     classes:["FBI","Reactive Dog","Desensitization"] },
+  ERNM: { emoji:"👀", nameEn:"The Quiet Observer",      nameTh:"ผู้สังเกตการณ์เงียบ", traits:["ชอบดูมากกว่าลุย","ระมัดระวัง"],                        strengths:["สุภาพ","ไม่วุ่นวาย"],                                 watchouts:["ขาดความมั่นใจ"],                               classes:["FBI","Confidence","Gentle Class"] },
+  FSCA: { emoji:"🏅", nameEn:"The Team Captain",        nameTh:"กัปตันทีม",            traits:["โฟกัสเจ้าของ","เข้าสังคมได้ดี","มั่นใจ"],             strengths:["ฝึกง่ายมาก","ชอบทำงานร่วมกับคน"],                   watchouts:[],                                              classes:["FBI","Advanced Training","Agility"] },
+  FSCM: { emoji:"💛", nameEn:"The Best Friend",         nameTh:"เพื่อนซี้",            traits:["ติดเจ้าของ","เป็นมิตร"],                               strengths:["อยู่บ้านง่าย","เรียนรู้ไว"],                          watchouts:["แยกจากเจ้าของยาก"],                           classes:["FBI","Separation Anxiety","Fun Class"] },
+  FSNA: { emoji:"💗", nameEn:"The Sensitive Helper",    nameTh:"ผู้ช่วยแสนอ่อนโยน",   traits:["รักคน","อ่อนไหว"],                                     strengths:["อ่านอารมณ์คนเก่ง"],                                  watchouts:["เครียดง่าย"],                                  classes:["FBI","Confidence","Gentle Handling"] },
+  FSNM: { emoji:"🤍", nameEn:"The Gentle Companion",    nameTh:"คู่หูแสนอบอุ่น",       traits:["สุภาพ","อ่อนโยน"],                                     strengths:["เหมาะกับครอบครัว"],                                  watchouts:["ขาดความมั่นใจ"],                               classes:["FBI","Confidence","Family Training"] },
+  FRCA: { emoji:"🦮", nameEn:"The Loyal Protector",     nameTh:"ผู้พิทักษ์ผู้ภักดี",  traits:["โฟกัสเจ้าของมาก","ไม่สนคนแปลกหน้า"],                  strengths:["ภักดีสูง","ฝึกง่าย"],                                watchouts:["หวงเจ้าของ"],                                  classes:["FBI","Controlled Socialization","Advanced"] },
+  FRCM: { emoji:"⚖️", nameEn:"The Reliable Partner",   nameTh:"คู่หูผู้ไว้ใจได้",     traits:["สุขุม","มั่นคง"],                                      strengths:["สมดุลที่สุด"],                                        watchouts:["เบื่อง่ายถ้ากิจกรรมซ้ำ"],                    classes:["FBI","Enrichment","Advanced"] },
+  FRNA: { emoji:"🧷", nameEn:"The Cautious Guardian",   nameTh:"ผู้พิทักษ์รอบคอบ",    traits:["ระวังตัว","ผูกพันกับครอบครัว"],                         strengths:["รับผิดชอบ","มีวินัย"],                               watchouts:["กลัวคนแปลกหน้า"],                             classes:["FBI","Desensitization","Confidence"] },
+  FRNM: { emoji:"🕊️", nameEn:"The Loyal Soul",          nameTh:"วิญญาณผู้ซื่อสัตย์",  traits:["สงบ","อ่อนโยน","รักครอบครัว"],                         strengths:["เป็นหมาครอบครัวในอุดมคติ"],                          watchouts:["ไม่ชอบความเปลี่ยนแปลง"],                      classes:["FBI","Gentle Class","Family Training"] },
+};
 
-  function downloadCard() {
-    var card = document.getElementById('share-card');
-    if (!card || !window.html2canvas) {
-      alert('ฟีเจอร์ดาวน์โหลดยังไม่พร้อม');
-      return;
-    }
-    window.html2canvas(card, { backgroundColor: '#1C1A15', scale: 2, useCORS: true }).then(function(canvas) {
-      var a = document.createElement('a');
-      a.download = 'dogbooster-koko-fsca.png';
-      a.href = canvas.toDataURL('image/png');
-      a.click();
-    });
-  }
+let currentQ = 0;
+const answers = {};
 
-  /* ===== Breed autocomplete (ค้นได้ทั้งไทยและอังกฤษ พิมพ์เองได้ถ้าไม่มีในรายการ) ===== */
-  var BREEDS = [
-    {en:'Mixed / ลูกผสม', th:'พันธุ์ผสม'},
-    {en:'Thai Ridgeback', th:'ไทยหลังอาน'},
-    {en:'Thai Bangkaew', th:'ไทยบางแก้ว'},
-    {en:'Golden Retriever', th:'โกลเด้น รีทรีฟเวอร์'},
-    {en:'Labrador Retriever', th:'ลาบราดอร์ รีทรีฟเวอร์'},
-    {en:'Border Collie', th:'บอร์เดอร์ คอลลี่'},
-    {en:'Shiba Inu', th:'ชิบะ อินุ'},
-    {en:'Siberian Husky', th:'ไซบีเรียน ฮัสกี้'},
-    {en:'Pomeranian', th:'ปอมเมอเรเนียน'},
-    {en:'Poodle', th:'พุดเดิ้ล'},
-    {en:'Toy Poodle', th:'ทอย พุดเดิ้ล'},
-    {en:'French Bulldog', th:'เฟรนช์ บูลด็อก'},
-    {en:'English Bulldog', th:'อิงลิช บูลด็อก'},
-    {en:'Pug', th:'ปั๊ก'},
-    {en:'Beagle', th:'บีเกิ้ล'},
-    {en:'Corgi (Pembroke)', th:'คอร์กี้'},
-    {en:'Chihuahua', th:'ชิวาวา'},
-    {en:'Dachshund', th:'ดัชชุนด์'},
-    {en:'Shih Tzu', th:'ชิห์สุ'},
-    {en:'Maltese', th:'มอลทีส'},
-    {en:'Yorkshire Terrier', th:'ยอร์กเชียร์ เทอร์เรียร์'},
-    {en:'Jack Russell Terrier', th:'แจ็ค รัสเซลล์ เทอร์เรียร์'},
-    {en:'Miniature Schnauzer', th:'มิเนเจอร์ ชเนาเซอร์'},
-    {en:'Cavalier King Charles Spaniel', th:'คาวาเลียร์ คิง ชาร์ลส สแปเนียล'},
-    {en:'Cocker Spaniel', th:'ค็อกเกอร์ สแปเนียล'},
-    {en:'German Shepherd', th:'เยอรมัน เชพเพิร์ด'},
-    {en:'Belgian Malinois', th:'เบลเยียม มาลินอยส์'},
-    {en:'Rottweiler', th:'ร็อตไวเลอร์'},
-    {en:'Doberman Pinscher', th:'โดเบอร์แมน'},
-    {en:'Boxer', th:'บ็อกเซอร์'},
-    {en:'Great Dane', th:'เกรท เดน'},
-    {en:'Saint Bernard', th:'เซนต์ เบอร์นาร์ด'},
-    {en:'Bernese Mountain Dog', th:'เบอร์นีส เมาน์เทน ด็อก'},
-    {en:'Alaskan Malamute', th:'อลาสกัน มาลามิวท์'},
-    {en:'Samoyed', th:'ซามอยด์'},
-    {en:'Akita Inu', th:'อากิตะ อินุ'},
-    {en:'Australian Shepherd', th:'ออสเตรเลียน เชพเพิร์ด'},
-    {en:'Shetland Sheepdog', th:'เช็ตแลนด์ ชีพด็อก'},
-    {en:'Bull Terrier', th:'บูล เทอร์เรียร์'},
-    {en:'American Pit Bull Terrier', th:'พิทบูล'},
-    {en:'American Bully', th:'อเมริกัน บูลลี่'},
-    {en:'Staffordshire Bull Terrier', th:'สตาฟฟอร์ดเชียร์ บูล เทอร์เรียร์'},
-    {en:'Bichon Frise', th:'บิชอง ฟริเซ่'},
-    {en:'Havanese', th:'ฮาวานีส'},
-    {en:'Papillon', th:'พาพิยอง'},
-    {en:'Pekingese', th:'ปักกิ่ง'},
-    {en:'Basset Hound', th:'บาสเซ็ต ฮาวด์'},
-    {en:'Bloodhound', th:'บลัดฮาวด์'},
-    {en:'Weimaraner', th:'ไวมาราเนอร์'},
-    {en:'Vizsla', th:'วิซลา'},
-    {en:'Pointer', th:'พอยน์เตอร์'},
-    {en:'Brittany', th:'บริทานี'},
-    {en:'Whippet', th:'วิปเพ็ต'},
-    {en:'Greyhound', th:'เกรย์ฮาวด์'},
-    {en:'Border Terrier', th:'บอร์เดอร์ เทอร์เรียร์'},
-    {en:'West Highland White Terrier', th:'เวสต์ ไฮแลนด์ ไวต์ เทอร์เรียร์'},
-    {en:'Chow Chow', th:'เชาเชา'},
-    {en:'Shar Pei', th:'ชาร์เป่ย'},
-    {en:'Dalmatian', th:'ดัลเมเชียน'},
-    {en:'Newfoundland', th:'นิวฟันด์แลนด์'},
-    {en:'Mastiff', th:'มาสทิฟฟ์'},
-    {en:'Cane Corso', th:'เคน คอร์โซ'},
-    {en:'อื่น ๆ', th:'ระบุเอง'}
-  ];
+function goStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('s' + n).classList.add('active');
+  window.scrollTo(0, 0);
+  setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 60);
+}
 
-  (function initBreedAutocomplete() {
-    var input = document.getElementById('dog-breed');
-    var list = document.getElementById('breed-ac');
-    if (!input || !list) return;
-    var items = [], active = -1;
+function startQuiz() { currentQ = 0; renderQuestion(); goStep(4); }
 
-    function norm(s) { return (s || '').toLowerCase().trim(); }
-
-    function render(q) {
-      var nq = norm(q);
-      items = !nq ? BREEDS.slice(0, 8) : BREEDS.filter(function (b) {
-        return norm(b.en).indexOf(nq) > -1 || norm(b.th).indexOf(nq) > -1;
-      });
-      active = -1;
-      if (!items.length) {
-        list.innerHTML = '<li class="ac-empty">ไม่พบในรายการ — พิมพ์เพื่อระบุเองได้เลย</li>';
-      } else {
-        list.innerHTML = items.map(function (b, i) {
-          return '<li class="ac-item" role="option" data-i="' + i + '">' +
-                 b.en + ' <small>' + b.th + '</small></li>';
-        }).join('');
-      }
-      open();
-    }
-    function open() { list.classList.add('open'); input.setAttribute('aria-expanded', 'true'); }
-    function close() { list.classList.remove('open'); input.setAttribute('aria-expanded', 'false'); active = -1; }
-    function choose(i) { if (items[i]) { input.value = items[i].en; close(); } }
-    function paint() {
-      Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle('active', i === active); });
-      if (active > -1 && list.children[active]) list.children[active].scrollIntoView({ block: 'nearest' });
-    }
-
-    input.addEventListener('focus', function () { render(input.value); });
-    input.addEventListener('input', function () { render(input.value); });
-    input.addEventListener('keydown', function (e) {
-      if (!list.classList.contains('open')) return;
-      if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(active + 1, items.length - 1); paint(); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(active - 1, 0); paint(); }
-      else if (e.key === 'Enter' && active > -1) { e.preventDefault(); choose(active); }
-      else if (e.key === 'Escape') { close(); }
-    });
-    /* mousedown/touchstart: เลือกก่อน input จะ blur */
-    list.addEventListener('mousedown', function (e) {
-      var li = e.target.closest('.ac-item');
-      if (!li) return;
-      e.preventDefault();
-      choose(parseInt(li.getAttribute('data-i'), 10));
-    });
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.ac-wrap')) close();
-    });
-  })();
-
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.lucide) lucide.createIcons();
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  document.getElementById('qText').textContent = q.th;
+  document.getElementById('qGroupText').textContent = q.group;
+  document.getElementById('qCount').textContent = (currentQ + 1) + '/20';
+  document.getElementById('qProgress').style.width = ((currentQ + 1) / 20 * 100) + '%';
+  document.getElementById('qBadge').innerHTML = `<i data-lucide="${q.icon}"></i> <span id="qGroupText">${q.group}</span>`;
+  const prev = answers[q.id];
+  document.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.val) === prev);
   });
+  document.getElementById('btnNext').disabled = !prev;
+  setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 60);
+}
+
+function selectChoice(btn) {
+  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[QUESTIONS[currentQ].id] = parseInt(btn.dataset.val);
+  document.getElementById('btnNext').disabled = false;
+  setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 60);
+}
+
+function nextQ() {
+  if (currentQ < QUESTIONS.length - 1) { currentQ++; renderQuestion(); }
+  else showResult();
+}
+
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQuestion(); } else goStep(3);
+}
+
+function showResult() {
+  const sum = { ef:0, sr:0, cn:0, am:0 }, count = { ef:0, sr:0, cn:0, am:0 };
+  for (const q of QUESTIONS) {
+    const raw = answers[q.id]; if (raw == null) continue;
+    const v = Math.min(5, Math.max(1, raw));
+    sum[q.axis] += q.dir === 1 ? v : 6 - v; count[q.axis]++;
+  }
+  const axes = {};
+  for (const k of ['ef','sr','cn','am']) axes[k] = count[k] ? (sum[k] - count[k]) / (4 * count[k]) : 0.5;
+
+  const code = (axes.ef>=.5?'E':'F')+(axes.sr>=.5?'S':'R')+(axes.cn>=.5?'C':'N')+(axes.am>=.5?'A':'M');
+  const p = PERSONALITIES[code] || PERSONALITIES['FSCA'];
+  const dogName = document.getElementById('dogName').value || 'น้อง';
+
+  document.getElementById('resultDogName').textContent = dogName;
+  document.getElementById('resultCode').textContent = code;
+  document.getElementById('resultName').textContent = p.nameEn;
+  document.getElementById('resultNameTh').textContent = p.nameTh;
+  document.getElementById('resultEmoji').textContent = p.emoji;
+
+  document.getElementById('traitBars').innerHTML = [
+    { lo:'Focused', hi:'Explorer', val:axes.ef },
+    { lo:'Reserved', hi:'Social',  val:axes.sr },
+    { lo:'Nervous',  hi:'Confident',val:axes.cn },
+    { lo:'Moderate', hi:'Active',  val:axes.am },
+  ].map(b => `<div class="trait-row"><div class="trait-lo">${b.lo}</div><div class="trait-bar-wrap"><div class="trait-bar-fill" style="width:${Math.round(b.val*100)}%"></div></div><div class="trait-hi">${b.hi}</div></div>`).join('');
+
+  const chip = (t, cls='') => `<span class="chip ${cls}">${t}</span>`;
+  document.getElementById('resultTraits').innerHTML = p.traits.map(t => chip(t)).join('');
+  document.getElementById('resultStrengths').innerHTML = p.strengths.map(t => chip(t,'chip-good')).join('');
+  document.getElementById('resultWatchouts').innerHTML = (p.watchouts.length ? p.watchouts : ['ไม่มีข้อระวังพิเศษ']).map(t => chip(t,'chip-warn')).join('');
+  document.getElementById('resultClasses').innerHTML = p.classes.map(t => chip(t,'chip-class')).join('');
+
+  goStep(5);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const init = () => { if (window.lucide) { lucide.createIcons(); } else { setTimeout(init, 100); } };
+  init();
+});
 </script>
 </body>
 </html>
