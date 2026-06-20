@@ -180,7 +180,11 @@ async function initPage() {
     const next = new URLSearchParams(location.search).get('next');
     if (next) sessionStorage.setItem('liffNext', next);
 
-    await liff.init({ liffId: LIFF_ID });
+    // timeout 6 วินาที ถ้า LIFF ค้างให้แสดง UI ปกติ
+    await Promise.race([
+      liff.init({ liffId: LIFF_ID }),
+      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 6000))
+    ]);
 
     // Already have LINE userId saved → skip to result
     const existing = localStorage.getItem('db_lineUserId');

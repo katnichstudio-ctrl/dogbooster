@@ -989,16 +989,10 @@ function showResult() {
 
   const lineUserId = localStorage.getItem('db_lineUserId');
 
-  if (isFirstDog && !lineUserId) {
-    // First dog, not logged in — go to login page
-    location.href = 'login.html';
-  } else {
-    if (lineUserId) {
-      // Already logged in — silently sync in background then navigate
-      silentSyncDogs(dogs);
-    }
-    location.href = 'type-detail.html?type=' + code;
+  if (lineUserId) {
+    silentSyncDogs(dogs);
   }
+  location.href = 'type-detail.html?type=' + code;
 }
 
 async function silentSyncDogs(dogs) {
