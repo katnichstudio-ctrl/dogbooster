@@ -292,6 +292,31 @@
       </div>
     </div>
 
+    <!-- ประวัติยาเห็บหมัด -->
+    <div>
+      <div class="sec-title"><i data-lucide="shield-check"></i> ประวัติยาป้องกันเห็บหมัด</div>
+      <div class="info-card">
+        <div id="fleaList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
+        <div class="add-form" id="fleaForm" style="margin-bottom:0;border:none;padding:0;background:none;">
+          <div>
+            <label class="field-label" for="fDate">วันที่</label>
+            <input type="date" id="fDate">
+          </div>
+          <div>
+            <label class="field-label" for="fNote">ชื่อยา / หมายเหตุ</label>
+            <input type="text" id="fNote" placeholder="เช่น NexGard, Bravecto, Frontline">
+          </div>
+          <div class="add-form-actions">
+            <button class="btn-sm-outline" type="button" onclick="hideFleaForm()">ยกเลิก</button>
+            <button class="btn-sm" type="button" onclick="saveFleaEntry()">บันทึก</button>
+          </div>
+        </div>
+        <button class="btn-outline" id="fleaAddBtn" onclick="showFleaForm()">
+          <i data-lucide="plus"></i> เพิ่มบันทึกยาเห็บหมัด
+        </button>
+      </div>
+    </div>
+
     <!-- ข้อมูลการแพ้ -->
     <div>
       <div class="sec-title"><i data-lucide="alert-triangle"></i> ข้อมูลการแพ้</div>
@@ -410,6 +435,7 @@ function loadFields() {
   document.getElementById('allergyEnv').value = allergies.environment || '';
   renderVaccines();
   renderTreatments();
+  renderFleas();
 }
 
 // ── Vaccine form ──
@@ -479,6 +505,51 @@ function deleteTreatment(i) {
   if (!confirm('ลบรายการนี้?')) return;
   dog.treatments.splice(i, 1);
   renderTreatments();
+}
+
+// ── Flea form ──
+function showFleaForm() {
+  document.getElementById('fleaForm').classList.add('visible');
+  document.getElementById('fleaAddBtn').style.display = 'none';
+  document.getElementById('fDate').value = '';
+  document.getElementById('fNote').value = '';
+  lucide.createIcons();
+}
+function hideFleaForm() {
+  document.getElementById('fleaForm').classList.remove('visible');
+  document.getElementById('fleaAddBtn').style.display = '';
+}
+function saveFleaEntry() {
+  var date = document.getElementById('fDate').value;
+  var note = document.getElementById('fNote').value.trim();
+  if (!date && !note) { showToast('กรุณากรอกวันที่หรือชื่อยา'); return; }
+  if (!dog.fleas) dog.fleas = [];
+  dog.fleas.push({ date: date, note: note });
+  hideFleaForm();
+  renderFleas();
+}
+function deleteFlea(i) {
+  if (!confirm('ลบรายการนี้?')) return;
+  dog.fleas.splice(i, 1);
+  renderFleas();
+}
+function renderFleas() {
+  var list = document.getElementById('fleaList');
+  var fleas = dog.fleas || [];
+  if (fleas.length === 0) { list.innerHTML = ''; return; }
+  list.innerHTML = fleas.map(function(f, i) {
+    return '<div class="entry-item">' +
+      '<div class="entry-thumb"><i data-lucide="shield-check" style="width:20px;height:20px;color:var(--muted)"></i></div>' +
+      '<div class="entry-body">' +
+        '<div class="entry-date">' + formatDate(f.date) + '</div>' +
+        '<div class="entry-note">' + (f.note || '—') + '</div>' +
+      '</div>' +
+      '<button onclick="deleteFlea(' + i + ')" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:2px;flex-shrink:0;display:flex;align-items:center;">' +
+        '<i data-lucide="x" style="width:16px;height:16px;"></i>' +
+      '</button>' +
+    '</div>';
+  }).join('');
+  lucide.createIcons();
 }
 
 // ── Save all ──
