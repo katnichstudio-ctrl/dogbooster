@@ -86,15 +86,14 @@
       if (DATA[code]) {
         document.title = 'DogBooster — ' + code;
         root.innerHTML = DATA[code];
-        // Inject circular logo top-left, replacing the back-button row's left slot
+        // ใส่ลูกศรกลับ + โลโก้แถวเดียวกัน
         var nav = root.querySelector('div[style*="justify-content:space-between"]');
         if (nav) {
-          var logoBtn = nav.querySelector('div[onclick="history.back()"]') || nav.firstElementChild;
-          if (logoBtn) {
-            logoBtn.style.cssText = 'width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);overflow:hidden;';
-            logoBtn.removeAttribute('onclick');
-            logoBtn.onclick = function(){ history.back(); };
-            logoBtn.innerHTML = '<img src="assets/logo.png" style="width:36px;height:36px;object-fit:contain;" alt="DogBooster">';
+          var leftSlot = nav.querySelector('div[onclick="history.back()"]') || nav.firstElementChild;
+          if (leftSlot) {
+            leftSlot.style.cssText = 'display:flex;align-items:center;gap:8px;';
+            leftSlot.removeAttribute('onclick');
+            leftSlot.innerHTML = '<div onclick="history.back()" style="width:38px;height:38px;border-radius:50%;background:rgba(21,19,15,.18);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:#15130F;cursor:pointer;flex-shrink:0;"><span class="db" style="font-size:19px;"><i data-lucide="arrow-left"></i></span></div><div style="width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2);overflow:hidden;flex-shrink:0;"><img src="assets/logo.png" style="width:30px;height:30px;object-fit:contain;" alt="DogBooster"></div>';
           }
         }
       } else {
