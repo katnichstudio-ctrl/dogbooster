@@ -176,6 +176,10 @@ function showError(msg) {
 
 async function initPage() {
   try {
+    // บันทึก ?next param ไว้ก่อน LIFF init (เพราะ LIFF อาจลบ query params)
+    const next = new URLSearchParams(location.search).get('next');
+    if (next) sessionStorage.setItem('liffNext', next);
+
     await liff.init({ liffId: LIFF_ID });
 
     // Already have LINE userId saved → skip to result
@@ -238,6 +242,9 @@ async function handleLogin() {
 }
 
 function goToResult() {
+  const next = sessionStorage.getItem('liffNext') || new URLSearchParams(location.search).get('next');
+  sessionStorage.removeItem('liffNext');
+  if (next === 'onboarding') { location.href = 'onboarding.html'; return; }
   const type = sessionStorage.getItem('lastDogType') || localStorage.getItem('db_lastDogType') || 'ESCA';
   location.href = 'type-detail.html?type=' + type;
 }
