@@ -971,32 +971,41 @@ function showResult() {
   sessionStorage.setItem('dogName', dogName);
   sessionStorage.setItem('dogAxes', JSON.stringify(axes));
 
-  // Save dog to localStorage
+  // Save dog to localStorage (best-effort — quota may be full)
   const dogId   = sessionStorage.getItem('tempDogId') || 'dog_' + Date.now();
   const breed   = sessionStorage.getItem('tempBreed') || '';
   const age     = sessionStorage.getItem('tempAge') || '';
   const gender  = sessionStorage.getItem('tempGender') || '';
   const photo   = sessionStorage.getItem('dogPhoto') || '';
-  const dogs    = JSON.parse(localStorage.getItem('db_dogs') || '[]');
-  const isFirstDog = dogs.length === 0;
-  const idx     = dogs.findIndex(d => d.id === dogId);
-  const dogData = { id: dogId, name: dogName, breed, age, gender, photo, axes, type: code, updatedAt: Date.now() };
-  if (idx >= 0) { dogs[idx] = dogData; } else { dogs.push(dogData); }
-  localStorage.setItem('db_dogs', JSON.stringify(dogs));
-  localStorage.setItem('db_activeDogId', dogId);
+  let dogs = [];
+  try {
+    dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+    const idx = dogs.findIndex(d => d.id === dogId);
+    const dogData = { id: dogId, name: dogName, breed, age, gender, photo, axes, type: code, updatedAt: Date.now() };
+    if (idx >= 0) { dogs[idx] = dogData; } else { dogs.push(dogData); }
+    // If quota full, try removing old photo data to free space then retry
+    try {
+      localStorage.setItem('db_dogs', JSON.stringify(dogs));
+    } catch(qe) {
+      dogs = dogs.map(d => ({ ...d, photo: '' }));
+      localStorage.setItem('db_dogs', JSON.stringify(dogs));
+    }
+    localStorage.setItem('db_activeDogId', dogId);
+    localStorage.setItem('db_lastDogType', code);
+  } catch(e) { /* localStorage unavailable — continue anyway */ }
 
-  // Save last dog type for login.html redirect
   sessionStorage.setItem('lastDogType', code);
-  localStorage.setItem('db_lastDogType', code);
 
-  const lineUserId = localStorage.getItem('db_lineUserId');
+  try {
+    const lineUserId = localStorage.getItem('db_lineUserId');
+    if (lineUserId && dogs.length) silentSyncDogs(dogs);
+  } catch(e) {}
 
-  if (lineUserId) {
-    silentSyncDogs(dogs);
-  }
   location.href = 'type-detail.html?type=' + code;
   } catch(e) {
-    alert('เกิดข้อผิดพลาด: ' + e.message);
+    // Fallback: still navigate even if something failed
+    const code2 = 'ESCA';
+    location.href = 'type-detail.html?type=' + (typeof code !== 'undefined' ? code : code2);
   }
 }
 
