@@ -704,7 +704,7 @@
     </div>
     <div class="bottom-bar">
       <button class="btn-primary" id="btnNext" onclick="nextQ()" disabled>
-        ข้อถัดไป <i data-lucide="arrow-right"></i>
+        <span id="btnNextLabel">ข้อถัดไป</span> <i data-lucide="arrow-right"></i>
       </button>
     </div>
   </div>
@@ -933,6 +933,7 @@ function renderQuestion() {
     btn.classList.toggle('selected', parseInt(btn.dataset.val) === prev);
   });
   document.getElementById('btnNext').disabled = !prev;
+  document.getElementById('btnNextLabel').textContent = currentQ === QUESTIONS.length - 1 ? 'ดูผลลัพธ์' : 'ข้อถัดไป';
   setTimeout(() => { if (window.lucide) lucide.createIcons(); }, 60);
 }
 
@@ -954,6 +955,7 @@ function prevQ() {
 }
 
 function showResult() {
+  try {
   const sum = { ef:0, sr:0, cn:0, am:0 }, count = { ef:0, sr:0, cn:0, am:0 };
   for (const q of QUESTIONS) {
     const raw = answers[q.id]; if (raw == null) continue;
@@ -993,6 +995,9 @@ function showResult() {
     silentSyncDogs(dogs);
   }
   location.href = 'type-detail.html?type=' + code;
+  } catch(e) {
+    alert('เกิดข้อผิดพลาด: ' + e.message);
+  }
 }
 
 async function silentSyncDogs(dogs) {
