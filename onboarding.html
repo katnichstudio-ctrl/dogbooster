@@ -996,11 +996,15 @@ function showResult() {
     if (lineUserId && dogs.length) silentSyncDogs(dogs);
   } catch(e) {}
 
-  location.href = 'type-detail.html?type=' + code;
+  // Already logged in → go to result directly
+  const lineUserId = localStorage.getItem('db_lineUserId');
+  if (lineUserId) {
+    location.href = 'type-detail.html?type=' + code;
+  } else {
+    location.href = 'login.html';
+  }
   } catch(e) {
-    // Fallback: still navigate even if something failed
-    const code2 = 'ESCA';
-    location.href = 'type-detail.html?type=' + (typeof code !== 'undefined' ? code : code2);
+    location.href = 'login.html';
   }
 }
 
