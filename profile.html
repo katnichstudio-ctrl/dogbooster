@@ -139,6 +139,7 @@
       <div>
         <div class="owner-label">เจ้าของ</div>
         <div id="ownerNameDisplay" style="font-size:15px;font-weight:800;color:var(--cream);">—</div>
+        <div id="syncStatus" style="margin-top:6px;"></div>
       </div>
     </div>
   </div>
@@ -172,6 +173,15 @@ function loadProfile() {
   // Owner header
   if (owner) {
     document.getElementById('ownerNameDisplay').textContent = owner.name || '—';
+  }
+
+  // LINE sync status
+  const lineUserId = localStorage.getItem('db_lineUserId');
+  const syncEl = document.getElementById('syncStatus');
+  if (lineUserId) {
+    syncEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#06C755;font-weight:700;"><span style="width:7px;height:7px;border-radius:50%;background:#06C755;display:inline-block;"></span>ซิงค์กับ LINE แล้ว</span>';
+  } else {
+    syncEl.innerHTML = '<a href="login.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--gold);text-decoration:none;background:rgba(240,183,76,.12);padding:4px 10px;border-radius:100px;">ล็อกอิน LINE เพื่อซิงค์ข้อมูล</a>';
   }
 
   // Dog list

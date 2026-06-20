@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ล็อกอิน — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --dark: #15130F; --cream: #FAF7F1;
+    --sand: #E7E2D7; --muted: #A39B8C; --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: var(--sand);
+    min-height: 100dvh;
+  }
+  .page {
+    max-width: 430px; margin: 0 auto;
+    min-height: 100dvh; background: var(--cream);
+    display: flex; flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    background: var(--dark);
+    padding: 52px 22px 28px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -60px; right: -40px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,183,76,.18), transparent 70%);
+    pointer-events: none;
+  }
+  .logo-text {
+    font-size: 22px; font-weight: 800; color: var(--gold);
+    letter-spacing: -.01em; position: relative;
+  }
+  .tagline {
+    font-size: 13px; color: rgba(250,247,241,.55); margin-top: 4px; position: relative;
+  }
+
+  /* Body */
+  .body {
+    padding: 48px 24px 32px;
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center;
+  }
+
+  .paw-icon { font-size: 64px; text-align: center; margin-bottom: 20px; }
+
+  .heading {
+    font-size: 22px; font-weight: 800; color: var(--dark);
+    text-align: center; margin-bottom: 12px;
+  }
+
+  .desc {
+    font-size: 14px; color: var(--muted); text-align: center;
+    line-height: 1.65; margin-bottom: 36px; max-width: 300px;
+  }
+
+  .btn-line {
+    width: 100%;
+    background: #06C755; color: #fff;
+    border: none; border-radius: 14px;
+    font-family: inherit; font-size: 16px; font-weight: 800;
+    padding: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 8px 24px -8px rgba(6,199,85,.45);
+    transition: opacity .15s;
+  }
+  .btn-line:hover { opacity: .92; }
+  .btn-line svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+  .skip-link {
+    display: block; margin-top: 20px;
+    color: var(--muted); font-size: 13px;
+    background: none; border: none;
+    font-family: inherit; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  /* Error */
+  #errorMsg {
+    display: none;
+    background: #FFF0F0; border: 1px solid #FFBDBD; color: #C0392B;
+    border-radius: 12px; padding: 12px 16px;
+    font-size: 13px; margin-bottom: 16px; width: 100%;
+    text-align: center;
+  }
+
+  /* Loading overlay */
+  .loading-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(21,19,15,.75);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+  }
+  .loading-overlay.active { display: flex; }
+  .spinner {
+    width: 44px; height: 44px;
+    border: 3px solid rgba(255,255,255,.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: #fff; font-size: 14px; font-weight: 700; }
+
+  /* Hidden UI until ready */
+  .ui-hidden { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="logo-text">🐾 DogBooster</div>
+    <div class="tagline">ซิงค์ข้อมูลสุนัขของคุณ</div>
+  </div>
+
+  <div class="body" id="mainUI">
+    <div id="errorMsg"></div>
+    <div class="paw-icon">🐾</div>
+    <div class="heading">บันทึกข้อมูลด้วย LINE</div>
+    <div class="desc">ล็อกอินครั้งเดียว เข้าถึงข้อมูลสุนัขของคุณได้จากทุกเครื่อง</div>
+
+    <button class="btn-line ui-hidden" id="loginBtn" onclick="doLineLogin()">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.070 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+      </svg>
+      ล็อกอินด้วย LINE
+    </button>
+
+    <button class="skip-link ui-hidden" id="skipBtn" onclick="skipLogin()">ข้ามไปก่อน</button>
+  </div>
+
+</div>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">กำลังล็อกอิน...</div>
+</div>
+
+<script>
+const LIFF_ID = '2010372666-SryiLU85';
+
+function showLoading() {
+  document.getElementById('loadingOverlay').classList.add('active');
+}
+
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('active');
+}
+
+function showUI() {
+  document.getElementById('loginBtn').classList.remove('ui-hidden');
+  document.getElementById('skipBtn').classList.remove('ui-hidden');
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.style.display = 'block';
+  showUI();
+}
+
+async function initPage() {
+  try {
+    await liff.init({ liffId: LIFF_ID });
+
+    // Already have LINE userId saved → skip to result
+    const existing = localStorage.getItem('db_lineUserId');
+    if (existing) {
+      goToResult();
+      return;
+    }
+
+    // Came back from LINE auth redirect
+    if (liff.isLoggedIn()) {
+      await handleLogin();
+      return;
+    }
+
+    // Show login UI
+    showUI();
+  } catch (e) {
+    showError('ไม่สามารถโหลด LIFF ได้: ' + e.message);
+  }
+}
+
+async function doLineLogin() {
+  liff.login({ redirectUri: location.href });
+}
+
+async function handleLogin() {
+  showLoading();
+  try {
+    const idToken = liff.getIDToken();
+
+    // 1. Register/update user
+    const meRes = await fetch('/api/me', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken })
+    });
+    const me = await meRes.json();
+    if (!meRes.ok) throw new Error(me.error);
+
+    // Save LINE userId to localStorage
+    localStorage.setItem('db_lineUserId', me.profile.userId);
+    localStorage.setItem('db_lineDisplayName', me.profile.displayName || '');
+
+    // 2. Sync local dogs to Supabase
+    const dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+    if (dogs.length > 0) {
+      await fetch('/api/dogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken, dogs })
+      });
+    }
+
+    goToResult();
+  } catch (e) {
+    hideLoading();
+    showError('เกิดข้อผิดพลาด: ' + e.message);
+  }
+}
+
+function goToResult() {
+  const type = sessionStorage.getItem('lastDogType') || localStorage.getItem('db_lastDogType') || 'ESCA';
+  location.href = 'type-detail.html?type=' + type;
+}
+
+function skipLogin() {
+  goToResult();
+}
+
+document.addEventListener('DOMContentLoaded', initPage);
+</script>
+</body>
+</html>

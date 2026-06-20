@@ -964,13 +964,41 @@ function showResult() {
   const gender  = sessionStorage.getItem('tempGender') || '';
   const photo   = sessionStorage.getItem('dogPhoto') || '';
   const dogs    = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+  const isFirstDog = dogs.length === 0;
   const idx     = dogs.findIndex(d => d.id === dogId);
   const dogData = { id: dogId, name: dogName, breed, age, gender, photo, axes, type: code, updatedAt: Date.now() };
   if (idx >= 0) { dogs[idx] = dogData; } else { dogs.push(dogData); }
   localStorage.setItem('db_dogs', JSON.stringify(dogs));
   localStorage.setItem('db_activeDogId', dogId);
 
-  location.href = 'type-detail.html?type=' + code;
+  // Save last dog type for login.html redirect
+  sessionStorage.setItem('lastDogType', code);
+  localStorage.setItem('db_lastDogType', code);
+
+  const lineUserId = localStorage.getItem('db_lineUserId');
+
+  if (isFirstDog && !lineUserId) {
+    // First dog, not logged in — go to login page
+    location.href = 'login.html';
+  } else {
+    if (lineUserId) {
+      // Already logged in — silently sync in background then navigate
+      silentSyncDogs(dogs);
+    }
+    location.href = 'type-detail.html?type=' + code;
+  }
+}
+
+async function silentSyncDogs(dogs) {
+  try {
+    const idToken = (typeof liff !== 'undefined' && liff.isLoggedIn && liff.isLoggedIn()) ? liff.getIDToken() : null;
+    if (!idToken) return;
+    await fetch('/api/dogs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken, dogs })
+    });
+  } catch(e) { /* silent fail */ }
 }
 
 function downloadCard() {
