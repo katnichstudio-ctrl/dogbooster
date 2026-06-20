@@ -971,25 +971,20 @@ function showResult() {
   sessionStorage.setItem('dogName', dogName);
   sessionStorage.setItem('dogAxes', JSON.stringify(axes));
 
-  // Save dog to localStorage (best-effort — quota may be full)
-  const dogId   = sessionStorage.getItem('tempDogId') || 'dog_' + Date.now();
-  const breed   = sessionStorage.getItem('tempBreed') || '';
-  const age     = sessionStorage.getItem('tempAge') || '';
-  const gender  = sessionStorage.getItem('tempGender') || '';
-  const photo   = sessionStorage.getItem('dogPhoto') || '';
+  // Save dog to localStorage — photo excluded to avoid quota issues
+  const dogId  = sessionStorage.getItem('tempDogId') || 'dog_' + Date.now();
+  const breed  = sessionStorage.getItem('tempBreed') || '';
+  const age    = sessionStorage.getItem('tempAge') || '';
+  const gender = sessionStorage.getItem('tempGender') || '';
   let dogs = [];
   try {
     dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+    // Strip any existing photos to free space
+    dogs = dogs.map(d => ({ ...d, photo: '' }));
     const idx = dogs.findIndex(d => d.id === dogId);
-    const dogData = { id: dogId, name: dogName, breed, age, gender, photo, axes, type: code, updatedAt: Date.now() };
+    const dogData = { id: dogId, name: dogName, breed, age, gender, photo: '', axes, type: code, updatedAt: Date.now() };
     if (idx >= 0) { dogs[idx] = dogData; } else { dogs.push(dogData); }
-    // If quota full, try removing old photo data to free space then retry
-    try {
-      localStorage.setItem('db_dogs', JSON.stringify(dogs));
-    } catch(qe) {
-      dogs = dogs.map(d => ({ ...d, photo: '' }));
-      localStorage.setItem('db_dogs', JSON.stringify(dogs));
-    }
+    localStorage.setItem('db_dogs', JSON.stringify(dogs));
     localStorage.setItem('db_activeDogId', dogId);
     localStorage.setItem('db_lastDogType', code);
   } catch(e) { /* localStorage unavailable — continue anyway */ }
