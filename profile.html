@@ -190,6 +190,70 @@
 
   <div class="body">
 
+    <!-- Owner section -->
+    <div>
+      <div class="sec-title"><i data-lucide="user"></i> ข้อมูลเจ้าของ</div>
+      <div class="info-card" style="margin-bottom:12px;">
+        <div class="info-row">
+          <span class="info-label">ชื่อ</span>
+          <span class="info-val" id="ownerNameCard">—</span>
+        </div>
+      </div>
+
+      <!-- นักเรียน DogBooster -->
+      <div id="studentSection">
+        <div class="sec-title" style="margin-top:16px;"><i data-lucide="graduation-cap"></i> นักเรียน DogBooster</div>
+        <div id="noStudentPanel">
+          <button class="btn-enroll" onclick="showEnrollForm()">
+            <i data-lucide="plus-circle"></i> เพิ่มการเป็นนักเรียนของ DogBooster
+          </button>
+        </div>
+        <div class="enroll-form" id="enrollForm">
+          <div>
+            <label class="field-label">ชื่อสุนัข</label>
+            <input type="text" id="stDogName" placeholder="ชื่อสุนัข">
+          </div>
+          <div>
+            <label class="field-label">สายพันธุ์</label>
+            <input type="text" id="stBreed" placeholder="เช่น Golden Retriever">
+          </div>
+          <div>
+            <label class="field-label">ชื่อเจ้าของ</label>
+            <input type="text" id="stOwner" placeholder="ชื่อ-นามสกุล">
+          </div>
+          <div>
+            <label class="field-label">เบอร์โทรศัพท์</label>
+            <input type="text" id="stPhone" placeholder="0XX-XXX-XXXX" inputmode="tel">
+          </div>
+          <div>
+            <label class="field-label">คลาสที่เรียน</label>
+            <select id="stClass">
+              <option value="">— เลือกคลาส —</option>
+              <option>FBI · Four Basic Instinct</option>
+              <option>หยุดเห่าอย่างเข้าใจ ใน 21 วัน</option>
+              <option>ครูไปฝึกที่บ้าน</option>
+              <option>ฝากฝึก 30 วัน</option>
+              <option>แก้ปัญหาดุ กัด ก้าวร้าว</option>
+            </select>
+          </div>
+          <div class="enroll-actions">
+            <button class="btn-sm" onclick="saveEnroll()">บันทึก</button>
+            <button class="btn-sm-outline" onclick="hideEnrollForm()">ยกเลิก</button>
+          </div>
+        </div>
+        <div class="student-card" id="studentCard" style="display:none;">
+          <div class="student-id-row">
+            <span class="student-id-label">รหัสนักเรียน</span>
+            <span class="student-id-val" id="stIdDisplay"></span>
+          </div>
+          <div class="student-rows" id="studentRows"></div>
+          <button class="btn-sm-outline" style="margin-top:14px;width:100%;" onclick="editEnroll()">
+            <i data-lucide="pencil"></i> แก้ไขข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Dogs section -->
     <div>
       <div class="sec-title"><i data-lucide="dog"></i> สุนัขของฉัน</div>
@@ -200,52 +264,6 @@
     <a href="onboarding.html" class="btn-gold">
       <i data-lucide="plus-circle"></i> เพิ่มสุนัขตัวใหม่
     </a>
-
-    <!-- นักเรียน DogBooster -->
-    <div id="studentSection">
-      <div class="sec-title"><i data-lucide="graduation-cap"></i> นักเรียน DogBooster</div>
-      <div id="noDogNotice" class="no-dog-notice" style="display:none;">เลือกสุนัขจากรายชื่อด้านบนก่อน เพื่อสมัครเป็นนักเรียน</div>
-      <div id="noStudentPanel" style="display:none;">
-        <button class="btn-enroll" onclick="showEnrollForm()">
-          <i data-lucide="plus-circle"></i> เพิ่มการเป็นนักเรียนของ DogBooster
-        </button>
-      </div>
-      <div class="enroll-form" id="enrollForm">
-        <div>
-          <label class="field-label">ชื่อเจ้าของ</label>
-          <input type="text" id="stOwner" placeholder="ชื่อ-นามสกุล">
-        </div>
-        <div>
-          <label class="field-label">เบอร์โทรศัพท์</label>
-          <input type="text" id="stPhone" placeholder="0XX-XXX-XXXX" inputmode="tel">
-        </div>
-        <div>
-          <label class="field-label">คลาสที่เรียน</label>
-          <select id="stClass">
-            <option value="">— เลือกคลาส —</option>
-            <option>FBI · Four Basic Instinct</option>
-            <option>หยุดเห่าอย่างเข้าใจ ใน 21 วัน</option>
-            <option>ครูไปฝึกที่บ้าน</option>
-            <option>ฝากฝึก 30 วัน</option>
-            <option>แก้ปัญหาดุ กัด ก้าวร้าว</option>
-          </select>
-        </div>
-        <div class="enroll-actions">
-          <button class="btn-sm" onclick="saveEnroll()">บันทึก</button>
-          <button class="btn-sm-outline" onclick="hideEnrollForm()">ยกเลิก</button>
-        </div>
-      </div>
-      <div class="student-card" id="studentCard" style="display:none;">
-        <div class="student-id-row">
-          <span class="student-id-label">รหัสนักเรียน</span>
-          <span class="student-id-val" id="stIdDisplay"></span>
-        </div>
-        <div class="student-rows" id="studentRows"></div>
-        <button class="btn-sm-outline" style="margin-top:14px;width:100%;" onclick="editEnroll()">
-          <i data-lucide="pencil"></i> แก้ไขข้อมูล
-        </button>
-      </div>
-    </div>
 
     <!-- Reset -->
     <button class="btn-outline" onclick="confirmReset()">
@@ -260,10 +278,10 @@ function loadProfile() {
   const owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
   const dogs  = JSON.parse(localStorage.getItem('db_dogs') || '[]');
 
-  // Owner header
-  if (owner) {
-    document.getElementById('ownerNameDisplay').textContent = owner.name || '—';
-  }
+  // Owner header + card
+  const name = (owner && owner.name) || '—';
+  document.getElementById('ownerNameDisplay').textContent = name;
+  document.getElementById('ownerNameCard').textContent = name;
 
   // LINE sync status
   const lineUserId = localStorage.getItem('db_lineUserId');
@@ -272,6 +290,16 @@ function loadProfile() {
     syncEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#06C755;font-weight:700;"><span style="width:7px;height:7px;border-radius:50%;background:#06C755;display:inline-block;"></span>ซิงค์กับ LINE แล้ว</span>';
   } else {
     syncEl.innerHTML = '<a href="login.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--gold);text-decoration:none;background:rgba(240,183,76,.12);padding:4px 10px;border-radius:100px;">ล็อกอิน LINE เพื่อซิงค์ข้อมูล</a>';
+  }
+
+  // Student section (owner-level)
+  const st = owner && owner.student;
+  if (st && st.id) {
+    document.getElementById('noStudentPanel').style.display = 'none';
+    showStudentCard(st);
+  } else {
+    document.getElementById('noStudentPanel').style.display = '';
+    document.getElementById('studentCard').style.display = 'none';
   }
 
   // Dog list
@@ -286,8 +314,9 @@ function loadProfile() {
   }
 
   dogs.forEach(dog => {
-    const card = document.createElement('div');
+    const card = document.createElement('a');
     card.className = 'dog-card';
+    card.href = 'dog-detail.html?id=' + dog.id;
     card.innerHTML = `
       <div class="dog-avatar">${dog.photo ? `<img src="${dog.photo}" alt="${dog.name}">` : '🐾'}</div>
       <div style="flex:1;min-width:0;">
@@ -296,33 +325,14 @@ function loadProfile() {
         ${dog.type ? `<div class="dog-type-pill">${dog.type}</div>` : ''}
       </div>
       <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
-        <button onclick="event.stopPropagation();viewDogDetail('${dog.id}',event)" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;display:flex;align-items:center;border-radius:8px;" title="ดูรายละเอียด">
-          <i data-lucide="file-text" style="width:18px;height:18px;"></i>
-        </button>
-        <button onclick="event.stopPropagation();deleteDog('${dog.id}')" style="background:none;border:none;cursor:pointer;color:#D9534F;padding:6px;display:flex;align-items:center;border-radius:8px;">
+        <button onclick="event.preventDefault();event.stopPropagation();deleteDog('${dog.id}')" style="background:none;border:none;cursor:pointer;color:#D9534F;padding:6px;display:flex;align-items:center;border-radius:8px;">
           <i data-lucide="trash-2" style="width:18px;height:18px;"></i>
         </button>
+        <span style="font-size:18px;color:var(--muted);"><i data-lucide="chevron-right"></i></span>
       </div>
     `;
-    card.onclick = (e) => { e.currentTarget = card; openDog(dog); };
     listEl.appendChild(card);
   });
-}
-
-let activeDog = null;
-
-function openDog(dog) {
-  localStorage.setItem('db_activeDogId', dog.id);
-  activeDog = dog;
-  // Highlight selected card
-  document.querySelectorAll('.dog-card').forEach(c => c.style.borderColor = '');
-  event.currentTarget && (event.currentTarget.style.borderColor = 'var(--gold)');
-  loadStudentSection();
-}
-
-function viewDogDetail(dogId, e) {
-  e.stopPropagation();
-  location.href = 'dog-detail.html?id=' + dogId;
 }
 
 function deleteDog(id) {
@@ -343,7 +353,7 @@ function confirmReset() {
   }
 }
 
-// ── Student enrollment ──
+// ── Student enrollment (owner-level) ──
 function generateStudentId() {
   var now = new Date();
   var yy = String(now.getFullYear()).slice(-2);
@@ -352,34 +362,12 @@ function generateStudentId() {
   return 'DB' + yy + mm + rand;
 }
 
-function loadStudentSection() {
-  const noDog = document.getElementById('noDogNotice');
-  const noSt  = document.getElementById('noStudentPanel');
-  const form  = document.getElementById('enrollForm');
-  const card  = document.getElementById('studentCard');
-  if (!activeDog) {
-    noDog.style.display = ''; noSt.style.display = 'none';
-    form.classList.remove('visible'); card.style.display = 'none';
-    return;
-  }
-  noDog.style.display = 'none';
-  var st = activeDog.student;
-  if (st && st.id) {
-    noSt.style.display = 'none';
-    form.classList.remove('visible');
-    showStudentCard(st);
-  } else {
-    noSt.style.display = '';
-    card.style.display = 'none';
-  }
-}
-
 function showStudentCard(st) {
   document.getElementById('studentCard').style.display = 'block';
   document.getElementById('stIdDisplay').textContent = st.id;
   document.getElementById('studentRows').innerHTML = [
-    ['ชื่อสุนัข', activeDog.name || '—'],
-    ['สายพันธุ์', activeDog.breed || '—'],
+    ['ชื่อสุนัข', st.dogName || '—'],
+    ['สายพันธุ์', st.breed || '—'],
     ['ชื่อเจ้าของ', st.owner || '—'],
     ['เบอร์โทร', st.phone || '—'],
     ['คลาสที่เรียน', st.class || '—'],
@@ -390,10 +378,12 @@ function showStudentCard(st) {
 
 function showEnrollForm() {
   document.getElementById('noStudentPanel').style.display = 'none';
-  const f = document.getElementById('enrollForm');
-  f.classList.add('visible');
-  const st = (activeDog && activeDog.student) || {};
-  document.getElementById('stOwner').value = st.owner || '';
+  document.getElementById('enrollForm').classList.add('visible');
+  const owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
+  const st = (owner && owner.student) || {};
+  document.getElementById('stDogName').value = st.dogName || '';
+  document.getElementById('stBreed').value = st.breed || '';
+  document.getElementById('stOwner').value = st.owner || (owner && owner.name) || '';
   document.getElementById('stPhone').value = st.phone || '';
   document.getElementById('stClass').value = st.class || '';
   lucide.createIcons();
@@ -401,8 +391,10 @@ function showEnrollForm() {
 
 function hideEnrollForm() {
   document.getElementById('enrollForm').classList.remove('visible');
-  if (activeDog && activeDog.student && activeDog.student.id) {
-    showStudentCard(activeDog.student);
+  const owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
+  const st = owner && owner.student;
+  if (st && st.id) {
+    showStudentCard(st);
   } else {
     document.getElementById('noStudentPanel').style.display = '';
   }
@@ -414,25 +406,27 @@ function editEnroll() {
 }
 
 function saveEnroll() {
-  const owner = document.getElementById('stOwner').value.trim();
-  const phone = document.getElementById('stPhone').value.trim();
-  const cls   = document.getElementById('stClass').value;
-  if (!activeDog) { alert('กรุณาเลือกสุนัขก่อน'); return; }
+  const dogName = document.getElementById('stDogName').value.trim();
+  const breed   = document.getElementById('stBreed').value.trim();
+  const owner   = document.getElementById('stOwner').value.trim();
+  const phone   = document.getElementById('stPhone').value.trim();
+  const cls     = document.getElementById('stClass').value;
   if (!owner || !phone || !cls) { alert('กรุณากรอกข้อมูลให้ครบ'); return; }
-  const existing = activeDog.student || {};
-  activeDog.student = {
+
+  const ownerData = JSON.parse(localStorage.getItem('db_owner') || '{}');
+  const existing = ownerData.student || {};
+  ownerData.student = {
     id: existing.id || generateStudentId(),
-    owner, phone, class: cls,
+    dogName, breed, owner, phone, class: cls,
     enrollDate: existing.enrollDate || new Date().toISOString().slice(0, 10)
   };
-  const dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
-  const idx = dogs.findIndex(d => d.id === activeDog.id);
-  if (idx !== -1) dogs[idx] = activeDog;
-  try { localStorage.setItem('db_dogs', JSON.stringify(dogs.map(d => Object.assign({}, d, { photo: '' })))); } catch(e) {}
+  localStorage.setItem('db_owner', JSON.stringify(ownerData));
+
   document.getElementById('enrollForm').classList.remove('visible');
-  showStudentCard(activeDog.student);
+  showStudentCard(ownerData.student);
+
   const lineUserId = localStorage.getItem('db_lineUserId');
-  if (lineUserId) syncStudent(activeDog.student, lineUserId);
+  if (lineUserId) syncStudent(ownerData.student, lineUserId);
 }
 
 async function syncStudent(st, lineUserId) {
@@ -440,27 +434,13 @@ async function syncStudent(st, lineUserId) {
     await fetch('/api/students', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lineUserId, studentId: st.id, dogName: activeDog.name || '', breed: activeDog.breed || '', owner: st.owner, phone: st.phone, class: st.class, enrollDate: st.enrollDate })
+      body: JSON.stringify({ lineUserId, studentId: st.id, dogName: st.dogName, breed: st.breed, owner: st.owner, phone: st.phone, class: st.class, enrollDate: st.enrollDate })
     });
   } catch(e) {}
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const init = () => {
-    if (!window.lucide) { setTimeout(init, 80); return; }
-    lucide.createIcons();
-    loadProfile();
-    // Pre-select active dog
-    const activeId = localStorage.getItem('db_activeDogId');
-    if (activeId) {
-      const dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
-      const found = dogs.find(d => d.id === activeId);
-      if (found) { activeDog = found; loadStudentSection(); }
-      else loadStudentSection();
-    } else {
-      loadStudentSection();
-    }
-  };
+  const init = () => { if (window.lucide) { lucide.createIcons(); loadProfile(); } else { setTimeout(init, 80); } };
   init();
 });
 </script>
