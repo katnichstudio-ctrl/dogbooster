@@ -306,14 +306,6 @@
     border-radius: 10px; padding: 10px 12px; font-family: inherit;
     font-size: 14px; color: var(--dark); outline: none; resize: none; min-height: 80px;
   }
-  .review-photo-row { display: flex; align-items: center; gap: 10px; }
-  .review-photo-preview { width: 56px; height: 56px; border-radius: 10px; background: #D8D2C8; overflow: hidden; flex-shrink: 0; display: none; }
-  .review-photo-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .review-photo-btn {
-    flex: 1; background: none; border: 1.5px dashed #C8C0B4; border-radius: 10px;
-    padding: 10px; font-family: inherit; font-size: 13px; font-weight: 700;
-    color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px;
-  }
   .review-actions { display: flex; gap: 10px; }
   .btn-review-submit {
     flex: 1; background: var(--gold); color: var(--dark); border: none; border-radius: 10px;
@@ -679,13 +671,6 @@
           <div class="review-form">
             <div style="font-size:12px;font-weight:700;color:var(--muted);">รีวิวในนาม <span id="reviewNameTag" style="color:var(--gold-dark);font-family:ui-monospace,monospace;"></span></div>
             <textarea id="reviewText" placeholder="เขียนรีวิวของคุณ..." rows="3"></textarea>
-            <div class="review-photo-row">
-              <div class="review-photo-preview" id="reviewPhotoPreview"><img id="reviewPhotoImg" alt=""></div>
-              <button class="review-photo-btn" type="button" onclick="document.getElementById('reviewPhotoFile').click()">
-                <span class="ic" style="font-size:16px"><i data-lucide="camera"></i></span> แนบรูปภาพ
-              </button>
-              <input type="file" id="reviewPhotoFile" accept="image/*" style="display:none" onchange="handleReviewPhoto(this)">
-            </div>
             <div class="review-actions">
               <button class="btn-review-submit" onclick="submitReview()">โพสต์รีวิว</button>
               <button class="btn-review-cancel" onclick="hideReviewForm()">ยกเลิก</button>
@@ -1480,8 +1465,6 @@
   }
 
   // ── Reviews ──
-  var reviewPhotoBase64 = null;
-
   function loadReviews() {
     var owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
     var studentId = owner && owner.student && owner.student.id;
@@ -1507,13 +1490,15 @@
     reviews.slice().reverse().forEach(function(r) {
       var card = document.createElement('div');
       card.className = 'review-card';
+      var avatarHtml = r.ownerPhoto
+        ? '<img src="' + r.ownerPhoto + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">'
+        : r.studentId.slice(0, 6);
       card.innerHTML =
         '<div class="review-header">' +
-          '<div class="review-avatar">' + r.studentId.slice(0, 6) + '</div>' +
+          '<div class="review-avatar">' + avatarHtml + '</div>' +
           '<div><div class="review-name">' + r.studentId + '</div><div class="review-date">' + r.date + '</div></div>' +
         '</div>' +
-        (r.text ? '<div class="review-text">' + r.text.replace(/</g,'&lt;') + '</div>' : '') +
-        (r.photo ? '<img class="review-img" src="' + r.photo + '" alt="รีวิว">' : '');
+        (r.text ? '<div class="review-text">' + r.text.replace(/</g,'&lt;') + '</div>' : '');
       listEl.appendChild(card);
     });
   }
@@ -1523,9 +1508,6 @@
     var studentId = owner && owner.student && owner.student.id;
     document.getElementById('reviewNameTag').textContent = studentId || '—';
     document.getElementById('reviewText').value = '';
-    reviewPhotoBase64 = null;
-    document.getElementById('reviewPhotoPreview').style.display = 'none';
-    document.getElementById('reviewPhotoImg').src = '';
     document.getElementById('reviewFormWrap').style.display = '';
     document.getElementById('reviewAddBtn').style.display = 'none';
     lucide.createIcons();
@@ -1536,31 +1518,6 @@
     document.getElementById('reviewAddBtn').style.display = '';
   }
 
-  function handleReviewPhoto(input) {
-    var file = input.files[0];
-    if (!file) return;
-    var canvas = document.createElement('canvas');
-    var img = new Image();
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      img.onload = function() {
-        var maxPx = 800, q = 0.7;
-        var w = img.width, h = img.height;
-        if (w > maxPx || h > maxPx) {
-          if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
-          else { w = Math.round(w * maxPx / h); h = maxPx; }
-        }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        reviewPhotoBase64 = canvas.toDataURL('image/jpeg', q);
-        document.getElementById('reviewPhotoImg').src = reviewPhotoBase64;
-        document.getElementById('reviewPhotoPreview').style.display = 'block';
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
   function submitReview() {
     var text = document.getElementById('reviewText').value.trim();
     if (!text && !reviewPhotoBase64) { alert('กรุณาเขียนรีวิวหรือแนบรูปภาพ'); return; }
@@ -1568,11 +1525,12 @@
     var studentId = owner && owner.student && owner.student.id;
     if (!studentId) { alert('ไม่พบรหัสนักเรียน'); return; }
     var reviews = JSON.parse(localStorage.getItem('db_reviews') || '[]');
+    var ownerPhoto = localStorage.getItem('db_ownerPhoto') || null;
     var review = {
       id: Date.now().toString(),
       studentId: studentId,
+      ownerPhoto: ownerPhoto,
       text: text,
-      photo: reviewPhotoBase64 || null,
       date: new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' })
     };
     reviews.push(review);

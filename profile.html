@@ -180,6 +180,13 @@
       <i data-lucide="arrow-left"></i> กลับ
     </button>
     <div class="owner-row">
+      <div style="position:relative;flex-shrink:0;margin-right:14px;">
+        <div id="ownerAvatarEl" style="width:56px;height:56px;border-radius:50%;background:var(--dark3);border:2px solid rgba(240,183,76,.4);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:24px;">🧑</div>
+        <label for="ownerPhotoInput" style="position:absolute;bottom:-4px;right:-4px;width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--dark);">
+          <i data-lucide="camera" style="width:11px;height:11px;color:var(--dark);"></i>
+        </label>
+        <input type="file" id="ownerPhotoInput" accept="image/*" style="display:none;" onchange="changeOwnerPhoto(this)">
+      </div>
       <div>
         <div class="owner-label">เจ้าของ</div>
         <div id="ownerNameDisplay" style="font-size:15px;font-weight:800;color:var(--cream);">—</div>
@@ -279,6 +286,12 @@ function loadProfile() {
   document.getElementById('ownerNameDisplay').textContent = name;
   document.getElementById('ownerNameCard').textContent = name;
 
+  // Owner avatar
+  const ownerPhoto = localStorage.getItem('db_ownerPhoto');
+  const avatarEl = document.getElementById('ownerAvatarEl');
+  if (ownerPhoto) avatarEl.innerHTML = `<img src="${ownerPhoto}" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+  else avatarEl.textContent = '🧑';
+
   // LINE sync status
   const lineUserId = localStorage.getItem('db_lineUserId');
   const syncEl = document.getElementById('syncStatus');
@@ -329,6 +342,30 @@ function loadProfile() {
     `;
     listEl.appendChild(card);
   });
+}
+
+function changeOwnerPhoto(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var img = new Image();
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var maxPx = 300, q = 0.7;
+      var w = img.width, h = img.height;
+      if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+      else { w = Math.round(w * maxPx / h); h = maxPx; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      var compressed = canvas.toDataURL('image/jpeg', q);
+      try { localStorage.setItem('db_ownerPhoto', compressed); } catch(e) {}
+      var avatarEl = document.getElementById('ownerAvatarEl');
+      avatarEl.innerHTML = '<img src="' + compressed + '" style="width:100%;height:100%;object-fit:cover;display:block;">';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 function deleteDog(id) {
