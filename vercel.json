@@ -1,5 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/", "destination": "/onboarding.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
