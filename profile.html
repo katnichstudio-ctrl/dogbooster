@@ -126,6 +126,50 @@
   .info-row { display: flex; justify-content: space-between; align-items: center; }
   .info-label { font-size: 12px; color: var(--muted); font-weight: 600; }
   .info-val { font-size: 13px; font-weight: 800; color: var(--dark); }
+
+  /* Student enroll */
+  .btn-enroll {
+    width: 100%; background: var(--dark); color: var(--gold);
+    border: 2px dashed rgba(240,183,76,.4); border-radius: 14px;
+    font-family: inherit; font-size: 15px; font-weight: 800; padding: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
+    transition: border-color .15s, background .15s;
+  }
+  .btn-enroll:hover { border-color: var(--gold); background: #1C1A15; }
+  .btn-enroll svg { width: 18px; height: 18px; }
+  .enroll-form {
+    background: var(--sand); border-radius: 16px; padding: 16px;
+    display: none; flex-direction: column; gap: 12px;
+    border: 1.5px solid var(--gold);
+  }
+  .enroll-form.visible { display: flex; }
+  .field-label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  .enroll-form input, .enroll-form select, .enroll-form textarea {
+    width: 100%; background: var(--cream); border: 1.5px solid #D8D2C8; border-radius: 10px;
+    padding: 10px 12px; font-family: inherit; font-size: 14px; color: var(--dark); outline: none;
+    -webkit-appearance: none; appearance: none;
+  }
+  .enroll-actions { display: flex; gap: 10px; }
+  .btn-sm {
+    flex: 1; background: var(--gold); color: var(--dark); border: none; border-radius: 10px;
+    font-family: inherit; font-size: 14px; font-weight: 800; padding: 11px; cursor: pointer;
+  }
+  .btn-sm-outline {
+    flex: 1; background: none; color: var(--muted); border: 1.5px solid #D8D2C8; border-radius: 10px;
+    font-family: inherit; font-size: 13px; font-weight: 700; padding: 10px; cursor: pointer;
+  }
+  .student-card { background: var(--dark); border-radius: 16px; padding: 16px; }
+  .student-id-row {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,.08); padding-bottom: 12px; margin-bottom: 12px;
+  }
+  .student-id-label { font-size: 11px; font-weight: 800; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .student-id-val { font-size: 16px; font-weight: 800; color: var(--gold); font-family: ui-monospace, monospace; letter-spacing: .04em; }
+  .student-rows { display: flex; flex-direction: column; gap: 8px; }
+  .student-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .student-row-label { font-size: 12px; color: var(--muted); font-weight: 600; flex-shrink: 0; }
+  .student-row-val { font-size: 13px; font-weight: 700; color: var(--cream); text-align: right; }
+  .no-dog-notice { background: var(--sand); border-radius: 12px; padding: 14px 16px; color: var(--muted); font-size: 13px; text-align: center; }
 </style>
 </head>
 <body>
@@ -156,6 +200,52 @@
     <a href="onboarding.html" class="btn-gold">
       <i data-lucide="plus-circle"></i> เพิ่มสุนัขตัวใหม่
     </a>
+
+    <!-- นักเรียน DogBooster -->
+    <div id="studentSection">
+      <div class="sec-title"><i data-lucide="graduation-cap"></i> นักเรียน DogBooster</div>
+      <div id="noDogNotice" class="no-dog-notice" style="display:none;">เลือกสุนัขจากรายชื่อด้านบนก่อน เพื่อสมัครเป็นนักเรียน</div>
+      <div id="noStudentPanel" style="display:none;">
+        <button class="btn-enroll" onclick="showEnrollForm()">
+          <i data-lucide="plus-circle"></i> เพิ่มการเป็นนักเรียนของ DogBooster
+        </button>
+      </div>
+      <div class="enroll-form" id="enrollForm">
+        <div>
+          <label class="field-label">ชื่อเจ้าของ</label>
+          <input type="text" id="stOwner" placeholder="ชื่อ-นามสกุล">
+        </div>
+        <div>
+          <label class="field-label">เบอร์โทรศัพท์</label>
+          <input type="text" id="stPhone" placeholder="0XX-XXX-XXXX" inputmode="tel">
+        </div>
+        <div>
+          <label class="field-label">คลาสที่เรียน</label>
+          <select id="stClass">
+            <option value="">— เลือกคลาส —</option>
+            <option>FBI · Four Basic Instinct</option>
+            <option>หยุดเห่าอย่างเข้าใจ ใน 21 วัน</option>
+            <option>ครูไปฝึกที่บ้าน</option>
+            <option>ฝากฝึก 30 วัน</option>
+            <option>แก้ปัญหาดุ กัด ก้าวร้าว</option>
+          </select>
+        </div>
+        <div class="enroll-actions">
+          <button class="btn-sm" onclick="saveEnroll()">บันทึก</button>
+          <button class="btn-sm-outline" onclick="hideEnrollForm()">ยกเลิก</button>
+        </div>
+      </div>
+      <div class="student-card" id="studentCard" style="display:none;">
+        <div class="student-id-row">
+          <span class="student-id-label">รหัสนักเรียน</span>
+          <span class="student-id-val" id="stIdDisplay"></span>
+        </div>
+        <div class="student-rows" id="studentRows"></div>
+        <button class="btn-sm-outline" style="margin-top:14px;width:100%;" onclick="editEnroll()">
+          <i data-lucide="pencil"></i> แก้ไขข้อมูล
+        </button>
+      </div>
+    </div>
 
     <!-- Reset -->
     <button class="btn-outline" onclick="confirmReset()">
@@ -205,25 +295,34 @@ function loadProfile() {
         <div class="dog-meta">${[dog.breed, dog.age, dog.gender].filter(Boolean).join(' · ')}</div>
         ${dog.type ? `<div class="dog-type-pill">${dog.type}</div>` : ''}
       </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+        <button onclick="event.stopPropagation();viewDogDetail('${dog.id}',event)" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;display:flex;align-items:center;border-radius:8px;" title="ดูรายละเอียด">
+          <i data-lucide="file-text" style="width:18px;height:18px;"></i>
+        </button>
         <button onclick="event.stopPropagation();deleteDog('${dog.id}')" style="background:none;border:none;cursor:pointer;color:#D9534F;padding:6px;display:flex;align-items:center;border-radius:8px;">
           <i data-lucide="trash-2" style="width:18px;height:18px;"></i>
         </button>
-        <span style="font-size:18px;color:var(--muted);"><i data-lucide="chevron-right"></i></span>
       </div>
     `;
-    card.onclick = () => openDog(dog);
+    card.onclick = (e) => { e.currentTarget = card; openDog(dog); };
     listEl.appendChild(card);
   });
 }
 
+let activeDog = null;
+
 function openDog(dog) {
   localStorage.setItem('db_activeDogId', dog.id);
-  sessionStorage.setItem('dogName', dog.name);
-  sessionStorage.setItem('dogAxes', JSON.stringify(dog.axes || {}));
-  if (dog.photo) sessionStorage.setItem('dogPhoto', dog.photo);
-  else sessionStorage.removeItem('dogPhoto');
-  location.href = 'type-detail.html?type=' + (dog.type || 'ESCA');
+  activeDog = dog;
+  // Highlight selected card
+  document.querySelectorAll('.dog-card').forEach(c => c.style.borderColor = '');
+  event.currentTarget && (event.currentTarget.style.borderColor = 'var(--gold)');
+  loadStudentSection();
+}
+
+function viewDogDetail(dogId, e) {
+  e.stopPropagation();
+  location.href = 'dog-detail.html?id=' + dogId;
 }
 
 function deleteDog(id) {
@@ -244,8 +343,124 @@ function confirmReset() {
   }
 }
 
+// ── Student enrollment ──
+function generateStudentId() {
+  var now = new Date();
+  var yy = String(now.getFullYear()).slice(-2);
+  var mm = String(now.getMonth() + 1).padStart(2, '0');
+  var rand = String(Math.floor(Math.random() * 9000) + 1000);
+  return 'DB' + yy + mm + rand;
+}
+
+function loadStudentSection() {
+  const noDog = document.getElementById('noDogNotice');
+  const noSt  = document.getElementById('noStudentPanel');
+  const form  = document.getElementById('enrollForm');
+  const card  = document.getElementById('studentCard');
+  if (!activeDog) {
+    noDog.style.display = ''; noSt.style.display = 'none';
+    form.classList.remove('visible'); card.style.display = 'none';
+    return;
+  }
+  noDog.style.display = 'none';
+  var st = activeDog.student;
+  if (st && st.id) {
+    noSt.style.display = 'none';
+    form.classList.remove('visible');
+    showStudentCard(st);
+  } else {
+    noSt.style.display = '';
+    card.style.display = 'none';
+  }
+}
+
+function showStudentCard(st) {
+  document.getElementById('studentCard').style.display = 'block';
+  document.getElementById('stIdDisplay').textContent = st.id;
+  document.getElementById('studentRows').innerHTML = [
+    ['ชื่อสุนัข', activeDog.name || '—'],
+    ['สายพันธุ์', activeDog.breed || '—'],
+    ['ชื่อเจ้าของ', st.owner || '—'],
+    ['เบอร์โทร', st.phone || '—'],
+    ['คลาสที่เรียน', st.class || '—'],
+    ['วันที่สมัคร', st.enrollDate || '—']
+  ].map(r => '<div class="student-row"><span class="student-row-label">' + r[0] + '</span><span class="student-row-val">' + r[1] + '</span></div>').join('');
+  lucide.createIcons();
+}
+
+function showEnrollForm() {
+  document.getElementById('noStudentPanel').style.display = 'none';
+  const f = document.getElementById('enrollForm');
+  f.classList.add('visible');
+  const st = (activeDog && activeDog.student) || {};
+  document.getElementById('stOwner').value = st.owner || '';
+  document.getElementById('stPhone').value = st.phone || '';
+  document.getElementById('stClass').value = st.class || '';
+  lucide.createIcons();
+}
+
+function hideEnrollForm() {
+  document.getElementById('enrollForm').classList.remove('visible');
+  if (activeDog && activeDog.student && activeDog.student.id) {
+    showStudentCard(activeDog.student);
+  } else {
+    document.getElementById('noStudentPanel').style.display = '';
+  }
+}
+
+function editEnroll() {
+  document.getElementById('studentCard').style.display = 'none';
+  showEnrollForm();
+}
+
+function saveEnroll() {
+  const owner = document.getElementById('stOwner').value.trim();
+  const phone = document.getElementById('stPhone').value.trim();
+  const cls   = document.getElementById('stClass').value;
+  if (!activeDog) { alert('กรุณาเลือกสุนัขก่อน'); return; }
+  if (!owner || !phone || !cls) { alert('กรุณากรอกข้อมูลให้ครบ'); return; }
+  const existing = activeDog.student || {};
+  activeDog.student = {
+    id: existing.id || generateStudentId(),
+    owner, phone, class: cls,
+    enrollDate: existing.enrollDate || new Date().toISOString().slice(0, 10)
+  };
+  const dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+  const idx = dogs.findIndex(d => d.id === activeDog.id);
+  if (idx !== -1) dogs[idx] = activeDog;
+  try { localStorage.setItem('db_dogs', JSON.stringify(dogs.map(d => Object.assign({}, d, { photo: '' })))); } catch(e) {}
+  document.getElementById('enrollForm').classList.remove('visible');
+  showStudentCard(activeDog.student);
+  const lineUserId = localStorage.getItem('db_lineUserId');
+  if (lineUserId) syncStudent(activeDog.student, lineUserId);
+}
+
+async function syncStudent(st, lineUserId) {
+  try {
+    await fetch('/api/students', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lineUserId, studentId: st.id, dogName: activeDog.name || '', breed: activeDog.breed || '', owner: st.owner, phone: st.phone, class: st.class, enrollDate: st.enrollDate })
+    });
+  } catch(e) {}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const init = () => { if (window.lucide) { lucide.createIcons(); loadProfile(); } else { setTimeout(init, 80); } };
+  const init = () => {
+    if (!window.lucide) { setTimeout(init, 80); return; }
+    lucide.createIcons();
+    loadProfile();
+    // Pre-select active dog
+    const activeId = localStorage.getItem('db_activeDogId');
+    if (activeId) {
+      const dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+      const found = dogs.find(d => d.id === activeId);
+      if (found) { activeDog = found; loadStudentSection(); }
+      else loadStudentSection();
+    } else {
+      loadStudentSection();
+    }
+  };
   init();
 });
 </script>
