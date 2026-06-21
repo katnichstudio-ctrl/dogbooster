@@ -121,15 +121,64 @@
         var s = d.getAttribute('style') || '';
         if (s.indexOf('172px') !== -1) box = d;
       });
-      if (box && photo) {
+      if (box) {
+        // Wrap in relative container for camera button overlay
+        box.style.position = 'relative';
         box.style.overflow = 'hidden';
         box.style.borderRadius = '26px';
-        box.innerHTML = '<img src="' + photo + '" style="width:100%;height:100%;object-fit:cover;border-radius:26px;display:block;" alt="dog">';
+        if (photo) {
+          box.innerHTML = '<img src="' + photo + '" style="width:100%;height:100%;object-fit:cover;border-radius:26px;display:block;" alt="dog">';
+        }
+        // Add camera button (always shown)
+        var camLabel = document.createElement('label');
+        camLabel.setAttribute('for', 'typePhotoInput');
+        camLabel.style.cssText = 'position:absolute;bottom:8px;right:8px;width:32px;height:32px;border-radius:50%;background:rgba(21,19,15,.7);display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid rgba(255,255,255,.3);z-index:10;';
+        camLabel.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>';
+        box.appendChild(camLabel);
+
+        var input = document.createElement('input');
+        input.type = 'file'; input.id = 'typePhotoInput'; input.accept = 'image/*';
+        input.style.display = 'none';
+        input.onchange = function() {
+          if (!this.files || !this.files[0]) return;
+          compressImageType(this.files[0], 300, 0.75, function(compressed) {
+            photo = compressed;
+            sessionStorage.setItem('dogPhoto', compressed);
+            box.innerHTML = '<img src="' + compressed + '" style="width:100%;height:100%;object-fit:cover;border-radius:26px;display:block;" alt="dog">';
+            box.style.position = 'relative';
+            box.appendChild(camLabel);
+            // Save to active dog in localStorage
+            try {
+              var dogId = localStorage.getItem('db_activeDogId');
+              var dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+              var idx = dogs.findIndex(function(d) { return d.id === dogId; });
+              if (idx !== -1) { dogs[idx].photo = compressed; localStorage.setItem('db_dogs', JSON.stringify(dogs)); }
+            } catch(e) {}
+          });
+        };
+        box.appendChild(input);
       } else if (attempts > 0) {
         setTimeout(function() { injectPhoto(attempts - 1); }, 50);
       }
     }
     injectPhoto(20);  // retry up to 20×50ms = 1 second
+
+    function compressImageType(file, maxPx, quality, callback) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var image = new Image();
+        image.onload = function() {
+          var scale = Math.min(1, maxPx / Math.max(image.width, image.height));
+          var canvas = document.createElement('canvas');
+          canvas.width = Math.round(image.width * scale);
+          canvas.height = Math.round(image.height * scale);
+          canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+          callback(canvas.toDataURL('image/jpeg', quality));
+        };
+        image.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
 
       // Inject dog name above type name if available
     function injectName(attempts) {
