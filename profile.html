@@ -205,7 +205,12 @@ function loadProfile() {
         <div class="dog-meta">${[dog.breed, dog.age, dog.gender].filter(Boolean).join(' · ')}</div>
         ${dog.type ? `<div class="dog-type-pill">${dog.type}</div>` : ''}
       </div>
-      <span style="font-size:18px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <button onclick="event.stopPropagation();deleteDog('${dog.id}')" style="background:none;border:none;cursor:pointer;color:#D9534F;padding:6px;display:flex;align-items:center;border-radius:8px;">
+          <i data-lucide="trash-2" style="width:18px;height:18px;"></i>
+        </button>
+        <span style="font-size:18px;color:var(--muted);"><i data-lucide="chevron-right"></i></span>
+      </div>
     `;
     card.onclick = () => openDog(dog);
     listEl.appendChild(card);
@@ -219,6 +224,15 @@ function openDog(dog) {
   if (dog.photo) sessionStorage.setItem('dogPhoto', dog.photo);
   else sessionStorage.removeItem('dogPhoto');
   location.href = 'type-detail.html?type=' + (dog.type || 'ESCA');
+}
+
+function deleteDog(id) {
+  if (!confirm('ลบโปรไฟล์สุนัขตัวนี้ใช่ไหม?')) return;
+  let dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
+  dogs = dogs.filter(d => d.id !== id);
+  localStorage.setItem('db_dogs', JSON.stringify(dogs));
+  if (localStorage.getItem('db_activeDogId') === id) localStorage.removeItem('db_activeDogId');
+  loadProfile();
 }
 
 function confirmReset() {

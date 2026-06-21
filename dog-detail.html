@@ -237,7 +237,13 @@
       <i data-lucide="arrow-left"></i> กลับ
     </button>
     <div class="dog-hero">
-      <div class="dog-hero-avatar" id="heroAvatar">🐾</div>
+      <div style="position:relative;flex-shrink:0;">
+        <div class="dog-hero-avatar" id="heroAvatar">🐾</div>
+        <label for="heroPhotoInput" style="position:absolute;bottom:-4px;right:-4px;width:26px;height:26px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--dark);">
+          <i data-lucide="camera" style="width:13px;height:13px;color:var(--dark);"></i>
+        </label>
+        <input type="file" id="heroPhotoInput" accept="image/*" style="display:none;" onchange="changeProfilePhoto(this)">
+      </div>
       <div class="dog-hero-info">
         <div class="dog-hero-name" id="heroName">—</div>
         <div class="dog-hero-meta" id="heroMeta"></div>
@@ -650,6 +656,23 @@ function renderFleas() {
     '</div>';
   }).join('');
   lucide.createIcons();
+}
+
+// ── Change profile photo ──
+function changeProfilePhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  compressImage(input.files[0], 300, 0.75, function(compressed) {
+    dog.photo = compressed;
+    var avatarEl = document.getElementById('heroAvatar');
+    avatarEl.innerHTML = '<img src="' + compressed + '" alt="' + (dog.name || '') + '">';
+    var idx = dogs.findIndex(function(d) { return d.id === dog.id; });
+    if (idx !== -1) dogs[idx] = dog;
+    try {
+      localStorage.setItem('db_dogs', JSON.stringify(dogs.map(function(d) { return Object.assign({}, d, { photo: '' }); })));
+    } catch(e) {}
+    sessionStorage.setItem('dogPhoto', compressed);
+    showToast('เปลี่ยนรูปแล้ว ✓');
+  });
 }
 
 // ── Student enrollment ──
