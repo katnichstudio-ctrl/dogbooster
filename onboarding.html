@@ -895,7 +895,7 @@ function updateDistrict() {
 }
 
 function validateOwner() {
-  const name     = document.getElementById('ownerName').value.trim();
+  const name     = document.getElementById('ownerName').value.trim().split(/\s+/)[0];
   const email    = document.getElementById('ownerEmail').value.trim();
   const gender   = document.getElementById('ownerGender').value;
   const age      = document.getElementById('ownerAge').value;
