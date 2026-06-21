@@ -279,6 +279,60 @@
   .pbtn:hover { background: #E0A02F; }
   .pbtn:active { background: #C8821A; }
 
+  /* ---- Reviews ---- */
+  .review-card {
+    background: #1C1A15; border-radius: 16px; padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .review-header { display: flex; align-items: center; gap: 10px; }
+  .review-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--dark); border: 1.5px solid rgba(240,183,76,.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0; color: var(--gold); font-weight: 800;
+    font-family: ui-monospace, monospace; font-size: 11px;
+  }
+  .review-name { font-size: 13px; font-weight: 800; color: var(--gold); font-family: ui-monospace, monospace; }
+  .review-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .review-text { font-size: 14px; color: var(--cream); line-height: 1.6; }
+  .review-img { width: 100%; border-radius: 10px; object-fit: cover; max-height: 220px; display: block; }
+  .review-form {
+    background: #F0F0EB; border-radius: 16px; padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    border: 1.5px solid var(--gold);
+  }
+  .review-form textarea {
+    width: 100%; background: var(--cream); border: 1.5px solid #D8D2C8;
+    border-radius: 10px; padding: 10px 12px; font-family: inherit;
+    font-size: 14px; color: var(--dark); outline: none; resize: none; min-height: 80px;
+  }
+  .review-photo-row { display: flex; align-items: center; gap: 10px; }
+  .review-photo-preview { width: 56px; height: 56px; border-radius: 10px; background: #D8D2C8; overflow: hidden; flex-shrink: 0; display: none; }
+  .review-photo-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .review-photo-btn {
+    flex: 1; background: none; border: 1.5px dashed #C8C0B4; border-radius: 10px;
+    padding: 10px; font-family: inherit; font-size: 13px; font-weight: 700;
+    color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .review-actions { display: flex; gap: 10px; }
+  .btn-review-submit {
+    flex: 1; background: var(--gold); color: var(--dark); border: none; border-radius: 10px;
+    font-family: inherit; font-size: 14px; font-weight: 800; padding: 11px; cursor: pointer;
+  }
+  .btn-review-cancel {
+    background: none; color: var(--muted); border: 1.5px solid #D8D2C8; border-radius: 10px;
+    font-family: inherit; font-size: 13px; font-weight: 700; padding: 10px 16px; cursor: pointer;
+  }
+  .btn-add-review {
+    width: 100%; background: none; color: var(--gold);
+    border: 2px dashed rgba(240,183,76,.4); border-radius: 14px;
+    font-family: inherit; font-size: 14px; font-weight: 800; padding: 13px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: border-color .15s;
+  }
+  .btn-add-review:hover { border-color: var(--gold); }
+  .no-review-msg { text-align: center; color: var(--muted); font-size: 13px; padding: 16px 0; }
+
   /* ---- Contact ---- */
   .contact-links {
     display: flex;
@@ -613,6 +667,42 @@
         สอบถาม / สมัครเรียน
         <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
       </a>
+
+      <!-- Reviews -->
+      <div style="margin-top:28px" id="reviewSection">
+        <div class="section-head">
+          <div class="sec-icon"><span class="ic" style="font-size:16px"><i data-lucide="star"></i></span></div>
+          รีวิวจากนักเรียน
+        </div>
+        <div id="reviewList" style="display:flex;flex-direction:column;gap:10px;margin-top:12px;"></div>
+        <div id="reviewFormWrap" style="margin-top:10px;display:none;">
+          <div class="review-form">
+            <div style="font-size:12px;font-weight:700;color:var(--muted);">รีวิวในนาม <span id="reviewNameTag" style="color:var(--gold-dark);font-family:ui-monospace,monospace;"></span></div>
+            <textarea id="reviewText" placeholder="เขียนรีวิวของคุณ..." rows="3"></textarea>
+            <div class="review-photo-row">
+              <div class="review-photo-preview" id="reviewPhotoPreview"><img id="reviewPhotoImg" alt=""></div>
+              <button class="review-photo-btn" type="button" onclick="document.getElementById('reviewPhotoFile').click()">
+                <span class="ic" style="font-size:16px"><i data-lucide="camera"></i></span> แนบรูปภาพ
+              </button>
+              <input type="file" id="reviewPhotoFile" accept="image/*" style="display:none" onchange="handleReviewPhoto(this)">
+            </div>
+            <div class="review-actions">
+              <button class="btn-review-submit" onclick="submitReview()">โพสต์รีวิว</button>
+              <button class="btn-review-cancel" onclick="hideReviewForm()">ยกเลิก</button>
+            </div>
+          </div>
+        </div>
+        <div id="reviewAddBtn" style="margin-top:10px;display:none;">
+          <button class="btn-add-review" onclick="showReviewForm()">
+            <span class="ic" style="font-size:16px"><i data-lucide="plus-circle"></i></span> เพิ่มรีวิว
+          </button>
+        </div>
+        <div id="reviewLoginNotice" style="margin-top:10px;display:none;">
+          <a href="login.html" style="display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:800;color:var(--gold);text-decoration:none;background:rgba(240,183,76,.1);padding:12px;border-radius:12px;">
+            <span class="ic" style="font-size:16px"><i data-lucide="log-in"></i></span> ล็อกอิน LINE เพื่อเพิ่มรีวิว
+          </a>
+        </div>
+      </div>
 
       <!-- Contact -->
       <div style="margin-top:28px">
@@ -1389,20 +1479,132 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.lucide && window.lucide.createIcons) {
-      window.lucide.createIcons();
+  // ── Reviews ──
+  var reviewPhotoBase64 = null;
+
+  function loadReviews() {
+    var owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
+    var studentId = owner && owner.student && owner.student.id;
+    var lineUserId = localStorage.getItem('db_lineUserId');
+
+    // Show add button or login notice
+    if (lineUserId && studentId) {
+      document.getElementById('reviewAddBtn').style.display = '';
+      document.getElementById('reviewLoginNotice').style.display = 'none';
     } else {
-      var t = 0;
-      var retry = setInterval(function() {
-        if (window.lucide && window.lucide.createIcons) {
-          window.lucide.createIcons();
-          clearInterval(retry);
-        } else if (++t > 60) {
-          clearInterval(retry);
-        }
-      }, 100);
+      document.getElementById('reviewAddBtn').style.display = 'none';
+      document.getElementById('reviewLoginNotice').style.display = '';
     }
+
+    // Render reviews
+    var reviews = JSON.parse(localStorage.getItem('db_reviews') || '[]');
+    var listEl = document.getElementById('reviewList');
+    listEl.innerHTML = '';
+    if (reviews.length === 0) {
+      listEl.innerHTML = '<div class="no-review-msg">ยังไม่มีรีวิว เป็นคนแรกที่รีวิว!</div>';
+      return;
+    }
+    reviews.slice().reverse().forEach(function(r) {
+      var card = document.createElement('div');
+      card.className = 'review-card';
+      card.innerHTML =
+        '<div class="review-header">' +
+          '<div class="review-avatar">' + r.studentId.slice(0, 6) + '</div>' +
+          '<div><div class="review-name">' + r.studentId + '</div><div class="review-date">' + r.date + '</div></div>' +
+        '</div>' +
+        (r.text ? '<div class="review-text">' + r.text.replace(/</g,'&lt;') + '</div>' : '') +
+        (r.photo ? '<img class="review-img" src="' + r.photo + '" alt="รีวิว">' : '');
+      listEl.appendChild(card);
+    });
+  }
+
+  function showReviewForm() {
+    var owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
+    var studentId = owner && owner.student && owner.student.id;
+    document.getElementById('reviewNameTag').textContent = studentId || '—';
+    document.getElementById('reviewText').value = '';
+    reviewPhotoBase64 = null;
+    document.getElementById('reviewPhotoPreview').style.display = 'none';
+    document.getElementById('reviewPhotoImg').src = '';
+    document.getElementById('reviewFormWrap').style.display = '';
+    document.getElementById('reviewAddBtn').style.display = 'none';
+    lucide.createIcons();
+  }
+
+  function hideReviewForm() {
+    document.getElementById('reviewFormWrap').style.display = 'none';
+    document.getElementById('reviewAddBtn').style.display = '';
+  }
+
+  function handleReviewPhoto(input) {
+    var file = input.files[0];
+    if (!file) return;
+    var canvas = document.createElement('canvas');
+    var img = new Image();
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      img.onload = function() {
+        var maxPx = 800, q = 0.7;
+        var w = img.width, h = img.height;
+        if (w > maxPx || h > maxPx) {
+          if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
+          else { w = Math.round(w * maxPx / h); h = maxPx; }
+        }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        reviewPhotoBase64 = canvas.toDataURL('image/jpeg', q);
+        document.getElementById('reviewPhotoImg').src = reviewPhotoBase64;
+        document.getElementById('reviewPhotoPreview').style.display = 'block';
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function submitReview() {
+    var text = document.getElementById('reviewText').value.trim();
+    if (!text && !reviewPhotoBase64) { alert('กรุณาเขียนรีวิวหรือแนบรูปภาพ'); return; }
+    var owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
+    var studentId = owner && owner.student && owner.student.id;
+    if (!studentId) { alert('ไม่พบรหัสนักเรียน'); return; }
+    var reviews = JSON.parse(localStorage.getItem('db_reviews') || '[]');
+    var review = {
+      id: Date.now().toString(),
+      studentId: studentId,
+      text: text,
+      photo: reviewPhotoBase64 || null,
+      date: new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' })
+    };
+    reviews.push(review);
+    try { localStorage.setItem('db_reviews', JSON.stringify(reviews)); } catch(e) {
+      // if quota, store without photos
+      try { localStorage.setItem('db_reviews', JSON.stringify(reviews.map(function(r) { return Object.assign({}, r, { photo: null }); }))); } catch(e2) {}
+    }
+    document.getElementById('reviewFormWrap').style.display = 'none';
+    document.getElementById('reviewAddBtn').style.display = '';
+    loadReviews();
+    lucide.createIcons();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) {
+        window.lucide.createIcons();
+        loadReviews();
+      } else {
+        var t = 0;
+        var retry = setInterval(function() {
+          if (window.lucide && window.lucide.createIcons) {
+            window.lucide.createIcons();
+            loadReviews();
+            clearInterval(retry);
+          } else if (++t > 60) {
+            clearInterval(retry);
+          }
+        }, 100);
+      }
+    }
+    init();
   });
 </script>
 </body>
