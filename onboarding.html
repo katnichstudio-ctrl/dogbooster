@@ -911,17 +911,33 @@ function validateOwner() {
   goStep(4);
 }
 
+function compressImage(file, maxPx, quality, callback) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const image = new Image();
+    image.onload = () => {
+      const scale = Math.min(1, maxPx / Math.max(image.width, image.height));
+      const w = Math.round(image.width * scale);
+      const h = Math.round(image.height * scale);
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(image, 0, 0, w, h);
+      callback(canvas.toDataURL('image/jpeg', quality));
+    };
+    image.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
 function previewPhoto(input) {
   if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => {
+    compressImage(input.files[0], 300, 0.7, compressed => {
       document.getElementById('photoEmoji').style.display = 'none';
       const img = document.getElementById('photoPreview');
-      img.src = e.target.result;
+      img.src = compressed;
       img.style.display = 'block';
-      sessionStorage.setItem('dogPhoto', e.target.result);
-    };
-    reader.readAsDataURL(input.files[0]);
+      sessionStorage.setItem('dogPhoto', compressed);
+    });
   }
 }
 

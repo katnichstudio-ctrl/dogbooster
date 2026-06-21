@@ -539,15 +539,31 @@ function hideVaccineForm() {
   vaccinePhotoBase64 = null;
   document.getElementById('vPhotoFile').value = '';
 }
-function handleVaccinePhoto(input) {
-  if (!input.files || !input.files[0]) return;
+function compressImage(file, maxPx, quality, callback) {
   var reader = new FileReader();
   reader.onload = function(e) {
-    vaccinePhotoBase64 = e.target.result;
-    document.getElementById('vPhotoImg').src = vaccinePhotoBase64;
-    document.getElementById('vPhotoPreview').classList.add('visible');
+    var image = new Image();
+    image.onload = function() {
+      var scale = Math.min(1, maxPx / Math.max(image.width, image.height));
+      var w = Math.round(image.width * scale);
+      var h = Math.round(image.height * scale);
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(image, 0, 0, w, h);
+      callback(canvas.toDataURL('image/jpeg', quality));
+    };
+    image.src = e.target.result;
   };
-  reader.readAsDataURL(input.files[0]);
+  reader.readAsDataURL(file);
+}
+
+function handleVaccinePhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  compressImage(input.files[0], 800, 0.7, function(compressed) {
+    vaccinePhotoBase64 = compressed;
+    document.getElementById('vPhotoImg').src = compressed;
+    document.getElementById('vPhotoPreview').classList.add('visible');
+  });
 }
 function saveVaccineEntry() {
   var date = document.getElementById('vDate').value;
