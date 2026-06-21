@@ -1488,6 +1488,8 @@
       return;
     }
     var ownerPhoto = localStorage.getItem('db_ownerPhoto');
+    var ownerData = JSON.parse(localStorage.getItem('db_owner') || 'null');
+    var ownerName = ownerData && ownerData.name ? ownerData.name : '';
     reviews.slice().reverse().forEach(function(r) {
       var card = document.createElement('div');
       card.className = 'review-card';
@@ -1497,7 +1499,7 @@
       card.innerHTML =
         '<div class="review-header">' +
           '<div class="review-avatar">' + avatarHtml + '</div>' +
-          '<div><div class="review-name">' + r.studentId + '</div><div style="font-size:12px;color:var(--muted);margin-top:1px;">' + (r.ownerName || '') + '</div><div class="review-date">' + r.date + '</div></div>' +
+          '<div><div class="review-name">' + r.studentId + '</div><div style="font-size:12px;color:var(--muted);margin-top:1px;">' + ownerName + '</div><div class="review-date">' + r.date + '</div></div>' +
         '</div>' +
         (r.text ? '<div class="review-text">' + r.text.replace(/</g,'&lt;') + '</div>' : '');
       listEl.appendChild(card);
