@@ -210,12 +210,8 @@
         </div>
         <div class="enroll-form" id="enrollForm">
           <div>
-            <label class="field-label">ชื่อสุนัข</label>
-            <input type="text" id="stDogName" placeholder="ชื่อสุนัข">
-          </div>
-          <div>
-            <label class="field-label">สายพันธุ์</label>
-            <input type="text" id="stBreed" placeholder="เช่น Golden Retriever">
+            <label class="field-label">รหัสนักเรียน</label>
+            <input type="text" id="stId" placeholder="เช่น DB2506XXXX" style="font-family:ui-monospace,monospace;letter-spacing:.04em;">
           </div>
           <div>
             <label class="field-label">ชื่อเจ้าของ</label>
@@ -366,8 +362,6 @@ function showStudentCard(st) {
   document.getElementById('studentCard').style.display = 'block';
   document.getElementById('stIdDisplay').textContent = st.id;
   document.getElementById('studentRows').innerHTML = [
-    ['ชื่อสุนัข', st.dogName || '—'],
-    ['สายพันธุ์', st.breed || '—'],
     ['ชื่อเจ้าของ', st.owner || '—'],
     ['เบอร์โทร', st.phone || '—'],
     ['คลาสที่เรียน', st.class || '—'],
@@ -381,8 +375,7 @@ function showEnrollForm() {
   document.getElementById('enrollForm').classList.add('visible');
   const owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
   const st = (owner && owner.student) || {};
-  document.getElementById('stDogName').value = st.dogName || '';
-  document.getElementById('stBreed').value = st.breed || '';
+  document.getElementById('stId').value = st.id || '';
   document.getElementById('stOwner').value = st.owner || (owner && owner.name) || '';
   document.getElementById('stPhone').value = st.phone || '';
   document.getElementById('stClass').value = st.class || '';
@@ -406,18 +399,17 @@ function editEnroll() {
 }
 
 function saveEnroll() {
-  const dogName = document.getElementById('stDogName').value.trim();
-  const breed   = document.getElementById('stBreed').value.trim();
-  const owner   = document.getElementById('stOwner').value.trim();
-  const phone   = document.getElementById('stPhone').value.trim();
-  const cls     = document.getElementById('stClass').value;
-  if (!owner || !phone || !cls) { alert('กรุณากรอกข้อมูลให้ครบ'); return; }
+  const stId  = document.getElementById('stId').value.trim();
+  const owner = document.getElementById('stOwner').value.trim();
+  const phone = document.getElementById('stPhone').value.trim();
+  const cls   = document.getElementById('stClass').value;
+  if (!stId || !owner || !phone || !cls) { alert('กรุณากรอกข้อมูลให้ครบ'); return; }
 
   const ownerData = JSON.parse(localStorage.getItem('db_owner') || '{}');
   const existing = ownerData.student || {};
   ownerData.student = {
-    id: existing.id || generateStudentId(),
-    dogName, breed, owner, phone, class: cls,
+    id: stId,
+    owner, phone, class: cls,
     enrollDate: existing.enrollDate || new Date().toISOString().slice(0, 10)
   };
   localStorage.setItem('db_owner', JSON.stringify(ownerData));
@@ -434,7 +426,7 @@ async function syncStudent(st, lineUserId) {
     await fetch('/api/students', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lineUserId, studentId: st.id, dogName: st.dogName, breed: st.breed, owner: st.owner, phone: st.phone, class: st.class, enrollDate: st.enrollDate })
+      body: JSON.stringify({ lineUserId, studentId: st.id, owner: st.owner, phone: st.phone, class: st.class, enrollDate: st.enrollDate })
     });
   } catch(e) {}
 }
