@@ -1,8 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": ".",
-  "buildCommand": "",
-  "installCommand": "npm install",
   "rewrites": [
     { "source": "/", "destination": "/onboarding.html" }
   ],
