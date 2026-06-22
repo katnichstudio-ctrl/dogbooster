@@ -1501,7 +1501,6 @@
     var studentId = owner && owner.student && owner.student.id;
     var lineUserId = localStorage.getItem('db_lineUserId');
 
-    // Show add button or login notice
     if (lineUserId && studentId) {
       document.getElementById('reviewAddBtn').style.display = '';
       document.getElementById('reviewLoginNotice').style.display = 'none';
@@ -1510,30 +1509,35 @@
       document.getElementById('reviewLoginNotice').style.display = '';
     }
 
-    // Render reviews
-    var reviews = JSON.parse(localStorage.getItem('db_reviews') || '[]');
     var listEl = document.getElementById('reviewList');
-    listEl.innerHTML = '';
-    if (reviews.length === 0) {
-      listEl.innerHTML = '<div class="no-review-msg">ยังไม่มีรีวิว เป็นคนแรกที่รีวิว!</div>';
-      return;
-    }
-    var ownerPhoto = localStorage.getItem('db_ownerPhoto');
-    var ownerData = JSON.parse(localStorage.getItem('db_owner') || 'null');
-    var ownerName = ownerData && ownerData.name ? ownerData.name : '';
-    reviews.slice().reverse().forEach(function(r) {
-      var card = document.createElement('div');
-      card.className = 'review-card';
-      var avatarHtml = ownerPhoto
-        ? '<img src="' + ownerPhoto + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">'
-        : r.studentId.slice(0, 6);
-      card.innerHTML =
-        '<div class="review-header">' +
-          '<div class="review-avatar">' + avatarHtml + '</div>' +
-          '<div><div class="review-name">' + r.studentId + '</div><div style="font-size:12px;color:var(--muted);margin-top:1px;">' + ownerName + '</div><div class="review-date">' + r.date + '</div></div>' +
-        '</div>' +
-        (r.text ? '<div class="review-text">' + r.text.replace(/</g,'&lt;') + '</div>' : '');
-      listEl.appendChild(card);
+    listEl.innerHTML = '<div class="no-review-msg" style="opacity:.5;">กำลังโหลด...</div>';
+
+    fetch('/api/reviews').then(function(r){ return r.json(); }).then(function(data) {
+      listEl.innerHTML = '';
+      var reviews = data.reviews || [];
+      if (reviews.length === 0) {
+        listEl.innerHTML = '<div class="no-review-msg">ยังไม่มีรีวิว เป็นคนแรกที่รีวิว!</div>';
+        return;
+      }
+      reviews.forEach(function(r) {
+        var card = document.createElement('div');
+        card.className = 'review-card';
+        var avatarHtml = r.owner_photo
+          ? '<img src="' + r.owner_photo + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">'
+          : (r.student_id || '').slice(0, 6);
+        var dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+        card.innerHTML =
+          '<div class="review-header">' +
+            '<div class="review-avatar">' + avatarHtml + '</div>' +
+            '<div><div class="review-name">' + (r.student_id || '') + '</div>' +
+            '<div style="font-size:12px;color:var(--muted);margin-top:1px;">' + (r.owner_name || '') + '</div>' +
+            '<div class="review-date">' + dateStr + '</div></div>' +
+          '</div>' +
+          (r.text ? '<div class="review-text">' + r.text.replace(/</g,'&lt;') + '</div>' : '');
+        listEl.appendChild(card);
+      });
+    }).catch(function() {
+      listEl.innerHTML = '<div class="no-review-msg">ไม่สามารถโหลดรีวิวได้</div>';
     });
   }
 
@@ -1554,28 +1558,30 @@
 
   function submitReview() {
     var text = document.getElementById('reviewText').value.trim();
-    if (!text && !reviewPhotoBase64) { alert('กรุณาเขียนรีวิวหรือแนบรูปภาพ'); return; }
+    if (!text) { alert('กรุณาเขียนรีวิว'); return; }
     var owner = JSON.parse(localStorage.getItem('db_owner') || 'null');
     var studentId = owner && owner.student && owner.student.id;
     if (!studentId) { alert('ไม่พบรหัสนักเรียน'); return; }
-    var reviews = JSON.parse(localStorage.getItem('db_reviews') || '[]');
     var ownerName = owner && owner.name ? owner.name : '';
-    var review = {
-      id: Date.now().toString(),
-      studentId: studentId,
-      ownerName: ownerName,
-      text: text,
-      date: new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' })
-    };
-    reviews.push(review);
-    try { localStorage.setItem('db_reviews', JSON.stringify(reviews)); } catch(e) {
-      // if quota, store without photos
-      try { localStorage.setItem('db_reviews', JSON.stringify(reviews.map(function(r) { return Object.assign({}, r, { photo: null }); }))); } catch(e2) {}
-    }
-    document.getElementById('reviewFormWrap').style.display = 'none';
-    document.getElementById('reviewAddBtn').style.display = '';
-    loadReviews();
-    lucide.createIcons();
+    var ownerPhoto = localStorage.getItem('db_ownerPhoto') || null;
+
+    var btn = document.querySelector('.btn-review-submit');
+    btn.disabled = true; btn.textContent = 'กำลังส่ง...';
+
+    fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentId: studentId, ownerName: ownerName, text: text, ownerPhoto: ownerPhoto })
+    }).then(function(r){ return r.json(); }).then(function() {
+      document.getElementById('reviewFormWrap').style.display = 'none';
+      document.getElementById('reviewAddBtn').style.display = '';
+      loadReviews();
+      lucide.createIcons();
+    }).catch(function() {
+      alert('เกิดข้อผิดพลาด ลองใหม่อีกครั้ง');
+    }).finally(function() {
+      btn.disabled = false; btn.textContent = 'โพสต์รีวิว';
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function() {
