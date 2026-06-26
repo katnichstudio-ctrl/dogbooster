@@ -71,8 +71,30 @@
   }
   .dog-hero-type-pill:hover { background: rgba(240,183,76,.28); }
 
+  /* ── Tab bar ── */
+  .tab-bar {
+    display: flex; overflow-x: auto; background: var(--dark2);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0; background: none; border: none;
+    color: var(--muted); font-family: inherit; font-size: 13px; font-weight: 700;
+    padding: 12px 16px; cursor: pointer; position: relative;
+    white-space: nowrap; transition: color .15s;
+  }
+  .tab-btn.active { color: var(--gold); }
+  .tab-btn.active::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); border-radius: 2px 2px 0 0;
+  }
+
   /* ── Body ── */
-  .body { padding: 24px 20px; flex: 1; display: flex; flex-direction: column; gap: 24px; }
+  .body { flex: 1; display: flex; flex-direction: column; }
+  .tab-panel { display: none; flex-direction: column; gap: 24px; padding: 24px 20px; }
+  .tab-panel.active { display: flex; }
 
   .sec-title {
     font-size: 11px; font-weight: 800; color: var(--amber);
@@ -92,7 +114,7 @@
     font-size: 12px; font-weight: 700; color: var(--muted);
     margin-bottom: 6px; display: block;
   }
-  input[type="date"], input[type="text"], textarea {
+  input[type="date"], input[type="text"], input[type="url"], textarea {
     width: 100%; max-width: 100%; min-width: 0;
     -webkit-appearance: none; appearance: none;
     background: var(--cream);
@@ -102,7 +124,7 @@
     transition: border-color .15s;
     display: block;
   }
-  input[type="date"]:focus, input[type="text"]:focus, textarea:focus {
+  input[type="date"]:focus, input[type="text"]:focus, input[type="url"]:focus, textarea:focus {
     border-color: var(--gold);
   }
   textarea { resize: none; min-height: 72px; line-height: 1.5; }
@@ -183,6 +205,104 @@
     cursor: pointer; flex: 1;
   }
 
+  /* Status badges */
+  .status-badge {
+    display: inline-block; font-size: 11px; font-weight: 800;
+    padding: 2px 10px; border-radius: 100px;
+  }
+  .status-pending { background: rgba(240,183,76,.18); color: var(--amber); }
+  .status-pass    { background: rgba(34,197,94,.15); color: #16a34a; }
+  .status-redo    { background: rgba(239,68,68,.12); color: #dc2626; }
+
+  /* Homework card */
+  .hw-card {
+    background: var(--cream); border: 1.5px solid #D8D2C8;
+    border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .hw-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .hw-link {
+    font-size: 13px; font-weight: 700; color: var(--amber);
+    word-break: break-all; text-decoration: none;
+  }
+  .hw-link:hover { text-decoration: underline; }
+  .hw-note { font-size: 13px; color: var(--text-body); }
+  .hw-date { font-size: 11px; color: var(--muted); font-weight: 700; }
+  .hw-feedback-thread { border-top: 1px solid #E0DAD0; padding-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .hw-feedback-item {
+    background: rgba(240,183,76,.08); border-radius: 10px; padding: 10px 12px;
+  }
+  .hw-feedback-teacher { font-size: 11px; font-weight: 800; color: var(--amber); margin-bottom: 4px; }
+  .hw-feedback-text { font-size: 13px; color: var(--dark); }
+
+  /* Teacher reply form */
+  .teacher-reply-form { border-top: 1px solid #E0DAD0; padding-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .status-selector { display: flex; gap: 6px; flex-wrap: wrap; }
+  .status-chip {
+    font-size: 12px; font-weight: 700; padding: 5px 12px;
+    border-radius: 100px; cursor: pointer; border: 1.5px solid transparent;
+    transition: all .15s;
+  }
+  .status-chip[data-val="รอตรวจ"]  { background: rgba(240,183,76,.12); color: var(--amber); }
+  .status-chip[data-val="ผ่าน"]    { background: rgba(34,197,94,.1); color: #16a34a; }
+  .status-chip[data-val="ให้ทำซ้ำ"]{ background: rgba(239,68,68,.1); color: #dc2626; }
+  .status-chip.selected { border-color: currentColor; }
+
+  /* Radar chart */
+  .radar-wrap {
+    display: flex; justify-content: center; align-items: center;
+    padding: 8px 0;
+  }
+  .radar-label { font-size: 10px; fill: var(--muted); font-family: 'LINE Seed Sans TH', sans-serif; font-weight: 700; }
+  .radar-label-dim { fill: #C4BFB4; }
+  .radar-polygon { fill: rgba(240,183,76,.22); stroke: var(--gold); stroke-width: 2; }
+  .radar-bg-polygon { fill: none; stroke: #D8D2C8; stroke-width: 1; }
+  .radar-axis-line { stroke: #E0DAD0; stroke-width: 1; }
+  .radar-dot { fill: var(--gold); }
+
+  /* Archetype card */
+  .archetype-card {
+    background: linear-gradient(135deg, var(--dark2) 0%, var(--dark3) 100%);
+    border-radius: 16px; padding: 18px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .archetype-label { font-size: 11px; font-weight: 800; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .archetype-code {
+    font-size: 28px; font-weight: 900; letter-spacing: .1em;
+    color: var(--gold); font-family: ui-monospace, monospace;
+  }
+  .archetype-date { font-size: 12px; color: var(--muted); }
+
+  /* Course progress */
+  .course-row {
+    background: var(--cream); border: 1.5px solid #D8D2C8;
+    border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .course-name { font-size: 14px; font-weight: 800; color: var(--dark); }
+  .progress-bar-bg {
+    width: 100%; height: 7px; background: #E0DAD0; border-radius: 100px; overflow: hidden;
+  }
+  .progress-bar-fill { height: 100%; background: var(--gold); border-radius: 100px; transition: width .4s; }
+  .progress-text { font-size: 12px; color: var(--muted); font-weight: 700; }
+
+  /* Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 18px; top: 0; bottom: 0; width: 2px;
+    background: #E0DAD0;
+  }
+  .tl-item { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 20px; position: relative; }
+  .tl-dot {
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+    background: var(--sand); border: 2px solid #D8D2C8;
+    display: flex; align-items: center; justify-content: center; z-index: 1;
+  }
+  .tl-dot.gold { background: var(--gold); border-color: var(--gold-dark); }
+  .tl-dot svg { width: 9px; height: 9px; }
+  .tl-content { flex: 1; min-width: 0; padding-top: 0; }
+  .tl-title { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .tl-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .tl-date { font-size: 11px; color: var(--muted); font-weight: 700; margin-top: 2px; }
+
   /* Toast */
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
@@ -194,6 +314,9 @@
     opacity: 0; pointer-events: none; white-space: nowrap; z-index: 99;
   }
   .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .empty-state { text-align: center; padding: 28px 16px; color: var(--muted); }
+  .empty-state .icon { font-size: 32px; margin-bottom: 8px; }
+  .empty-state p { font-size: 14px; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -220,182 +343,704 @@
     </div>
   </div>
 
+  <!-- ── Tab bar ── -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('info')">ข้อมูล</button>
+    <button class="tab-btn" onclick="switchTab('assess')">ประเมิน</button>
+    <button class="tab-btn" onclick="switchTab('courses')">คอร์ส</button>
+    <button class="tab-btn" onclick="switchTab('homework')">การบ้าน</button>
+    <button class="tab-btn" onclick="switchTab('timeline')">ไทม์ไลน์</button>
+  </div>
+
   <!-- ── Body ── -->
   <div class="body">
 
-    <!-- ข้อมูลพื้นฐาน -->
-    <div>
-      <div class="sec-title"><i data-lucide="paw-print"></i> ข้อมูลพื้นฐาน</div>
-      <div class="info-card">
-        <div>
-          <label class="field-label" for="dobInput">วัน/เดือน/ปีเกิด</label>
-          <input type="date" id="dobInput">
-        </div>
-        <div>
-          <label class="field-label" for="chronicInput">โรคประจำตัว</label>
-          <textarea id="chronicInput" placeholder="เช่น โรคหัวใจ ภูมิแพ้ โรคไต (ถ้ามี)"></textarea>
+    <!-- ── Tab: ข้อมูล ── -->
+    <div id="tab-info" class="tab-panel active">
+
+      <!-- ข้อมูลพื้นฐาน -->
+      <div>
+        <div class="sec-title"><i data-lucide="paw-print"></i> ข้อมูลพื้นฐาน</div>
+        <div class="info-card">
+          <div>
+            <label class="field-label" for="dobInput">วัน/เดือน/ปีเกิด</label>
+            <input type="date" id="dobInput">
+          </div>
+          <div>
+            <label class="field-label" for="chronicInput">โรคประจำตัว</label>
+            <textarea id="chronicInput" placeholder="เช่น โรคหัวใจ ภูมิแพ้ โรคไต (ถ้ามี)"></textarea>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- ประวัติวัคซีน -->
-    <div>
-      <div class="sec-title"><i data-lucide="syringe"></i> ประวัติวัคซีน</div>
-      <div class="info-card">
-        <div id="vaccineList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
-        <div class="add-form" id="vaccineForm" style="margin-bottom:0;border:none;padding:0;background:none;">
-          <div>
-            <label class="field-label" for="vDate">วันที่</label>
-            <input type="date" id="vDate">
-          </div>
-          <div>
-            <label class="field-label" for="vNote">ชนิดวัคซีน / หมายเหตุ</label>
-            <input type="text" id="vNote" placeholder="เช่น Rabies, DHPP">
-          </div>
-          <div>
-            <label class="field-label">รูปภาพ (ถ้ามี)</label>
-            <div class="photo-row">
-              <div class="photo-preview" id="vPhotoPreview"><img id="vPhotoImg" alt=""></div>
-              <button class="photo-upload-btn" type="button" onclick="document.getElementById('vPhotoFile').click()">
-                <i data-lucide="camera"></i> แนบรูปภาพ
-              </button>
-              <input type="file" id="vPhotoFile" accept="image/*" style="display:none" onchange="handleVaccinePhoto(this)">
+      <!-- ประวัติวัคซีน -->
+      <div>
+        <div class="sec-title"><i data-lucide="syringe"></i> ประวัติวัคซีน</div>
+        <div class="info-card">
+          <div id="vaccineList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
+          <div class="add-form" id="vaccineForm" style="margin-bottom:0;border:none;padding:0;background:none;">
+            <div>
+              <label class="field-label" for="vDate">วันที่</label>
+              <input type="date" id="vDate">
+            </div>
+            <div>
+              <label class="field-label" for="vNote">ชนิดวัคซีน / หมายเหตุ</label>
+              <input type="text" id="vNote" placeholder="เช่น Rabies, DHPP">
+            </div>
+            <div>
+              <label class="field-label">รูปภาพ (ถ้ามี)</label>
+              <div class="photo-row">
+                <div class="photo-preview" id="vPhotoPreview"><img id="vPhotoImg" alt=""></div>
+                <button class="photo-upload-btn" type="button" onclick="document.getElementById('vPhotoFile').click()">
+                  <i data-lucide="camera"></i> แนบรูปภาพ
+                </button>
+                <input type="file" id="vPhotoFile" accept="image/*" style="display:none" onchange="handleVaccinePhoto(this)">
+              </div>
+            </div>
+            <div class="add-form-actions">
+              <button class="btn-sm-outline" type="button" onclick="hideVaccineForm()">ยกเลิก</button>
+              <button class="btn-sm" type="button" onclick="saveVaccineEntry()">บันทึก</button>
             </div>
           </div>
-          <div class="add-form-actions">
-            <button class="btn-sm-outline" type="button" onclick="hideVaccineForm()">ยกเลิก</button>
-            <button class="btn-sm" type="button" onclick="saveVaccineEntry()">บันทึก</button>
+          <button class="btn-outline" id="vaccineAddBtn" onclick="showVaccineForm()">
+            <i data-lucide="plus"></i> เพิ่มบันทึกวัคซีน
+          </button>
+        </div>
+      </div>
+
+      <!-- ประวัติรักษา -->
+      <div>
+        <div class="sec-title"><i data-lucide="stethoscope"></i> ประวัติรักษา</div>
+        <div class="info-card">
+          <div id="treatmentList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
+          <div class="add-form" id="treatmentForm" style="margin-bottom:0;border:none;padding:0;background:none;">
+            <div>
+              <label class="field-label" for="tDate">วันที่</label>
+              <input type="date" id="tDate">
+            </div>
+            <div>
+              <label class="field-label" for="tNote">รายละเอียด</label>
+              <textarea id="tNote" placeholder="เช่น ผ่าตัดกระดูก ตรวจเลือด ฉีดยาปฏิชีวนะ"></textarea>
+            </div>
+            <div class="add-form-actions">
+              <button class="btn-sm-outline" type="button" onclick="hideTreatmentForm()">ยกเลิก</button>
+              <button class="btn-sm" type="button" onclick="saveTreatmentEntry()">บันทึก</button>
+            </div>
+          </div>
+          <button class="btn-outline" id="treatmentAddBtn" onclick="showTreatmentForm()">
+            <i data-lucide="plus"></i> เพิ่มบันทึกการรักษา
+          </button>
+        </div>
+      </div>
+
+      <!-- ประวัติยาเห็บหมัด -->
+      <div>
+        <div class="sec-title"><i data-lucide="shield-check"></i> ประวัติยาป้องกันเห็บหมัด</div>
+        <div class="info-card">
+          <div id="fleaList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
+          <div class="add-form" id="fleaForm" style="margin-bottom:0;border:none;padding:0;background:none;">
+            <div>
+              <label class="field-label" for="fDate">วันที่</label>
+              <input type="date" id="fDate">
+            </div>
+            <div>
+              <label class="field-label" for="fNote">ชื่อยา / หมายเหตุ</label>
+              <input type="text" id="fNote" placeholder="เช่น NexGard, Bravecto, Frontline">
+            </div>
+            <div class="add-form-actions">
+              <button class="btn-sm-outline" type="button" onclick="hideFleaForm()">ยกเลิก</button>
+              <button class="btn-sm" type="button" onclick="saveFleaEntry()">บันทึก</button>
+            </div>
+          </div>
+          <button class="btn-outline" id="fleaAddBtn" onclick="showFleaForm()">
+            <i data-lucide="plus"></i> เพิ่มบันทึกยาเห็บหมัด
+          </button>
+        </div>
+      </div>
+
+      <!-- ข้อมูลการแพ้ -->
+      <div>
+        <div class="sec-title"><i data-lucide="alert-triangle"></i> ข้อมูลการแพ้</div>
+        <div class="info-card">
+          <div>
+            <label class="field-label" for="allergyFood">อาหาร</label>
+            <textarea id="allergyFood" placeholder="เช่น ไก่ ข้าวสาลี นม"></textarea>
+          </div>
+          <div>
+            <label class="field-label" for="allergyEnv">สิ่งแวดล้อม</label>
+            <textarea id="allergyEnv" placeholder="เช่น ละอองเกสร ฝุ่น ไรฝุ่น"></textarea>
           </div>
         </div>
-        <button class="btn-outline" id="vaccineAddBtn" onclick="showVaccineForm()">
-          <i data-lucide="plus"></i> เพิ่มบันทึกวัคซีน
-        </button>
+      </div>
+
+      <button class="btn-gold" onclick="saveAll()">
+        <i data-lucide="save"></i> บันทึกข้อมูล
+      </button>
+    </div>
+
+    <!-- ── Tab: ประเมิน ── -->
+    <div id="tab-assess" class="tab-panel">
+      <div>
+        <div class="sec-title"><i data-lucide="bar-chart-2"></i> ผลประเมินบุคลิกภาพ</div>
+        <div id="assessContent">
+          <div class="empty-state"><div class="icon">🐾</div><p>ยังไม่มีผลประเมิน</p></div>
+        </div>
       </div>
     </div>
 
-    <!-- ประวัติรักษา -->
-    <div>
-      <div class="sec-title"><i data-lucide="stethoscope"></i> ประวัติรักษา</div>
-      <div class="info-card">
-        <div id="treatmentList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
-        <div class="add-form" id="treatmentForm" style="margin-bottom:0;border:none;padding:0;background:none;">
-          <div>
-            <label class="field-label" for="tDate">วันที่</label>
-            <input type="date" id="tDate">
-          </div>
-          <div>
-            <label class="field-label" for="tNote">รายละเอียด</label>
-            <textarea id="tNote" placeholder="เช่น ผ่าตัดกระดูก ตรวจเลือด ฉีดยาปฏิชีวนะ"></textarea>
-          </div>
-          <div class="add-form-actions">
-            <button class="btn-sm-outline" type="button" onclick="hideTreatmentForm()">ยกเลิก</button>
-            <button class="btn-sm" type="button" onclick="saveTreatmentEntry()">บันทึก</button>
-          </div>
-        </div>
-        <button class="btn-outline" id="treatmentAddBtn" onclick="showTreatmentForm()">
-          <i data-lucide="plus"></i> เพิ่มบันทึกการรักษา
-        </button>
-      </div>
-    </div>
-
-    <!-- ประวัติยาเห็บหมัด -->
-    <div>
-      <div class="sec-title"><i data-lucide="shield-check"></i> ประวัติยาป้องกันเห็บหมัด</div>
-      <div class="info-card">
-        <div id="fleaList" class="entry-list" style="margin-bottom:0;gap:8px;"></div>
-        <div class="add-form" id="fleaForm" style="margin-bottom:0;border:none;padding:0;background:none;">
-          <div>
-            <label class="field-label" for="fDate">วันที่</label>
-            <input type="date" id="fDate">
-          </div>
-          <div>
-            <label class="field-label" for="fNote">ชื่อยา / หมายเหตุ</label>
-            <input type="text" id="fNote" placeholder="เช่น NexGard, Bravecto, Frontline">
-          </div>
-          <div class="add-form-actions">
-            <button class="btn-sm-outline" type="button" onclick="hideFleaForm()">ยกเลิก</button>
-            <button class="btn-sm" type="button" onclick="saveFleaEntry()">บันทึก</button>
-          </div>
-        </div>
-        <button class="btn-outline" id="fleaAddBtn" onclick="showFleaForm()">
-          <i data-lucide="plus"></i> เพิ่มบันทึกยาเห็บหมัด
-        </button>
-      </div>
-    </div>
-
-    <!-- ข้อมูลการแพ้ -->
-    <div>
-      <div class="sec-title"><i data-lucide="alert-triangle"></i> ข้อมูลการแพ้</div>
-      <div class="info-card">
-        <div>
-          <label class="field-label" for="allergyFood">อาหาร</label>
-          <textarea id="allergyFood" placeholder="เช่น ไก่ ข้าวสาลี นม"></textarea>
-        </div>
-        <div>
-          <label class="field-label" for="allergyEnv">สิ่งแวดล้อม</label>
-          <textarea id="allergyEnv" placeholder="เช่น ละอองเกสร ฝุ่น ไรฝุ่น"></textarea>
+    <!-- ── Tab: คอร์ส ── -->
+    <div id="tab-courses" class="tab-panel">
+      <div>
+        <div class="sec-title"><i data-lucide="graduation-cap"></i> คอร์สและความคืบหน้า</div>
+        <div id="coursesContent">
+          <div class="empty-state"><div class="icon">📚</div><p>กำลังโหลด...</p></div>
         </div>
       </div>
     </div>
 
-    <!-- Save button -->
-    <button class="btn-gold" onclick="saveAll()">
-      <i data-lucide="save"></i> บันทึกข้อมูล
-    </button>
+    <!-- ── Tab: การบ้าน ── -->
+    <div id="tab-homework" class="tab-panel">
+      <div>
+        <div class="sec-title"><i data-lucide="clipboard-list"></i> ประวัติการฝึก / การบ้าน</div>
+        <div id="homeworkList" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
 
-  </div>
-</div>
+      <!-- Submit form -->
+      <div>
+        <div class="sec-title"><i data-lucide="send"></i> ส่งการบ้าน</div>
+        <div class="info-card">
+          <div>
+            <label class="field-label" for="hwUrl">ลิงก์วิดีโอ (YouTube / Google Drive)</label>
+            <input type="url" id="hwUrl" placeholder="https://youtu.be/...">
+          </div>
+          <div>
+            <label class="field-label" for="hwNote">หมายเหตุ (ถ้ามี)</label>
+            <textarea id="hwNote" placeholder="อธิบายสั้น ๆ เช่น ฝึกคำสั่ง sit ครั้งที่ 3" style="min-height:56px;"></textarea>
+          </div>
+          <button class="btn-gold" onclick="submitHomework()">
+            <i data-lucide="send"></i> ส่งการบ้าน
+          </button>
+        </div>
+      </div>
+
+      <!-- Teacher notes section (shown only to teachers) -->
+      <div id="teacherNotesSection" style="display:none;">
+        <div class="sec-title"><i data-lucide="book-open"></i> บันทึกจากครู</div>
+        <div id="teacherNotesList" style="display:flex;flex-direction:column;gap:10px;"></div>
+        <div class="info-card" style="margin-top:12px;">
+          <label class="field-label" for="newTeacherNote">เพิ่มบันทึก</label>
+          <textarea id="newTeacherNote" placeholder="บันทึกสังเกตสำหรับครูเท่านั้น..." style="min-height:72px;"></textarea>
+          <button class="btn-gold" onclick="addTeacherNote()" style="margin-top:10px;">
+            <i data-lucide="plus"></i> บันทึก
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tab: ไทม์ไลน์ ── -->
+    <div id="tab-timeline" class="tab-panel">
+      <div>
+        <div class="sec-title"><i data-lucide="activity"></i> ไทม์ไลน์กิจกรรม</div>
+        <div id="timelineContent">
+          <div class="timeline" id="timelineList"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+</div><!-- /page -->
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ── State ──
-let dog = null;
-let dogs = [];
-let vaccinePhotoBase64 = null;
+var dog = null;
+var dogs = [];
+var vaccinePhotoBase64 = null;
+var currentTab = 'info';
+var isTeacher = false;
+var lineUserId = localStorage.getItem('db_lineUserId') || null;
+var homeworkSubmissions = [];
+var selectedReplyStatus = {};
 
 // ── Helpers ──
 function getParam(key) {
   return new URLSearchParams(location.search).get(key);
 }
-
 function showToast(msg) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+  setTimeout(function() { t.classList.remove('show'); }, 2200);
 }
-
 function formatDate(str) {
   if (!str) return '—';
-  const parts = str.split('-');
-  if (parts.length !== 3) return str;
-  return parts[2] + '/' + parts[1] + '/' + parts[0];
+  var d = new Date(str);
+  if (isNaN(d)) {
+    var parts = (str || '').split('-');
+    if (parts.length === 3) return parts[2] + '/' + parts[1] + '/' + parts[0];
+    return str;
+  }
+  return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+}
+function formatDateTime(str) {
+  if (!str) return '—';
+  var d = new Date(str);
+  if (isNaN(d)) return str;
+  return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear() +
+    ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+
+// ── Tab switching ──
+function switchTab(name) {
+  currentTab = name;
+  document.querySelectorAll('.tab-btn').forEach(function(b, i) {
+    var tabs = ['info','assess','courses','homework','timeline'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  document.getElementById('tab-' + name).classList.add('active');
+
+  if (name === 'assess')   renderAssessTab();
+  if (name === 'courses')  loadCourses();
+  if (name === 'homework') loadHomework();
+  if (name === 'timeline') renderTimeline();
+  lucide.createIcons();
 }
 
 // ── Render header ──
 function renderHeader() {
-  const avatarEl = document.getElementById('heroAvatar');
+  var avatarEl = document.getElementById('heroAvatar');
   if (dog.photo) {
     avatarEl.innerHTML = '<img src="' + dog.photo + '" alt="' + dog.name + '">';
   } else {
     avatarEl.textContent = '🐾';
   }
   document.getElementById('heroName').textContent = dog.name || '—';
-  const meta = [dog.breed, dog.age, dog.gender].filter(Boolean).join(' · ');
+  var meta = [dog.breed, dog.age, dog.gender].filter(Boolean).join(' · ');
   document.getElementById('heroMeta').textContent = meta || '';
-  const pill = document.getElementById('heroTypePill');
+  var pill = document.getElementById('heroTypePill');
   pill.textContent = dog.type || '—';
   pill.href = dog.type ? ('type-detail.html?type=' + dog.type) : '#';
 }
 
+// ── Assessment tab ──
+function renderAssessTab() {
+  var el = document.getElementById('assessContent');
+  var axes = dog.axes || null;
+  var type = dog.type || null;
+  if (!type && !axes) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">🐾</div><p>ยังไม่มีผลประเมิน<br><span style="font-size:12px;">ทำแบบสอบถามเพื่อค้นหาบุคลิกภาพของน้องหมา</span></p></div>';
+    return;
+  }
+  var html = '';
+  if (type) {
+    html += '<div class="archetype-card" style="margin-bottom:16px;">' +
+      '<div class="archetype-label">ประเภทบุคลิกภาพ</div>' +
+      '<div class="archetype-code">' + type + '</div>' +
+      (dog.updatedAt ? '<div class="archetype-date">ประเมินล่าสุด ' + formatDate(new Date(dog.updatedAt).toISOString().split('T')[0]) + '</div>' : '') +
+    '</div>';
+  }
+  if (axes) {
+    html += '<div style="margin-bottom:16px;">' + buildRadarSVG(axes) + '</div>';
+    html += buildAxisBars(axes);
+  }
+  el.innerHTML = html;
+  lucide.createIcons();
+}
+
+function buildRadarSVG(axes) {
+  var CX = 110, CY = 110, R = 80;
+  var dims = [
+    { label: 'Social',      val: axes.sr  || 0.5 },
+    { label: 'Bold',        val: axes.cn  || 0.5 },
+    { label: 'Energy',      val: axes.am  || 0.5 },
+    { label: 'Food Drive',  val: axes.fd  || 0 },
+    { label: 'Recovery',    val: axes.rc  || 0 },
+    { label: 'Engagement',  val: axes.ef  !== undefined ? (1 - axes.ef) : 0.5 },
+    { label: 'Arousal',     val: axes.ar  || 0 }
+  ];
+  var n = dims.length;
+  function pt(i, r) {
+    var angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+    return { x: CX + r * Math.cos(angle), y: CY + r * Math.sin(angle) };
+  }
+  // Background rings
+  var rings = '';
+  [0.25, 0.5, 0.75, 1].forEach(function(frac) {
+    var pts = dims.map(function(_, i) { var p = pt(i, R * frac); return p.x + ',' + p.y; }).join(' ');
+    rings += '<polygon points="' + pts + '" class="radar-bg-polygon"/>';
+  });
+  // Axis lines
+  var lines = dims.map(function(_, i) {
+    var p = pt(i, R);
+    return '<line x1="' + CX + '" y1="' + CY + '" x2="' + p.x + '" y2="' + p.y + '" class="radar-axis-line"/>';
+  }).join('');
+  // Data polygon
+  var dataPoints = dims.map(function(d, i) { var p = pt(i, R * Math.max(0.05, d.val)); return p.x + ',' + p.y; }).join(' ');
+  // Dots
+  var dots = dims.map(function(d, i) {
+    var p = pt(i, R * Math.max(0.05, d.val));
+    return '<circle cx="' + p.x + '" cy="' + p.y + '" r="4" class="radar-dot"/>';
+  }).join('');
+  // Labels
+  var labels = dims.map(function(d, i) {
+    var p = pt(i, R + 18);
+    var anchor = p.x < CX - 5 ? 'end' : p.x > CX + 5 ? 'start' : 'middle';
+    var dimClass = (d.val === 0) ? ' radar-label-dim' : '';
+    return '<text x="' + p.x + '" y="' + (p.y + 4) + '" text-anchor="' + anchor + '" class="radar-label' + dimClass + '">' + d.label + '</text>';
+  }).join('');
+
+  return '<div class="radar-wrap"><svg viewBox="0 0 220 220" width="220" height="220">' +
+    rings + lines +
+    '<polygon points="' + dataPoints + '" class="radar-polygon"/>' +
+    dots + labels +
+  '</svg></div>';
+}
+
+function buildAxisBars(axes) {
+  var items = [
+    { label: 'Active ↔ Moderate', val: axes.am || 0.5, lo: 'Moderate', hi: 'Active' },
+    { label: 'Social ↔ Reserved', val: axes.sr || 0.5, lo: 'Reserved', hi: 'Social' },
+    { label: 'Confident ↔ Nervous', val: axes.cn || 0.5, lo: 'Nervous', hi: 'Confident' },
+    { label: 'Focused ↔ Explorer', val: axes.ef !== undefined ? axes.ef : 0.5, lo: 'Explorer', hi: 'Focused' }
+  ];
+  var html = '<div class="info-card" style="display:flex;flex-direction:column;gap:14px;">';
+  items.forEach(function(item) {
+    var pct = Math.round(item.val * 100);
+    html += '<div>' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:5px;">' +
+        '<span style="font-size:11px;font-weight:800;color:var(--muted);">' + item.label + '</span>' +
+        '<span style="font-size:11px;font-weight:800;color:var(--amber);">' + pct + '%</span>' +
+      '</div>' +
+      '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%;"></div></div>' +
+      '<div style="display:flex;justify-content:space-between;margin-top:3px;">' +
+        '<span style="font-size:10px;color:var(--muted);">' + item.lo + '</span>' +
+        '<span style="font-size:10px;color:var(--muted);">' + item.hi + '</span>' +
+      '</div>' +
+    '</div>';
+  });
+  return html + '</div>';
+}
+
+// ── Courses tab ──
+function loadCourses() {
+  var owner = JSON.parse(localStorage.getItem('db_owner') || '{}');
+  var studentId = (owner.student && owner.student.id) || null;
+  var el = document.getElementById('coursesContent');
+  if (!studentId) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📚</div><p>ลงทะเบียนนักเรียนในหน้าโปรไฟล์เพื่อดูคอร์ส</p></div>';
+    return;
+  }
+  // Use lineUserId or studentId to check entitlements
+  var uid = lineUserId || '';
+  fetch('/api/me', { headers: { 'x-line-user-id': uid } })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      var entitlements = (data && data.entitlements) || [];
+      renderCourses(entitlements);
+    })
+    .catch(function() {
+      el.innerHTML = '<div class="empty-state"><div class="icon">📚</div><p>ไม่สามารถโหลดข้อมูลคอร์สได้</p></div>';
+    });
+}
+
+var COURSE_NAMES = {
+  'FBI': 'FBI · Four Basic Instinct',
+  'STOP_BARK': 'หยุดเห่าอย่างเข้าใจ',
+  'NOSE_WORK': 'Nose Work',
+  'FITNESS': 'Dog Fitness',
+  'TRICKS': 'Dog Show Tricks',
+  'AGILITY': 'Agility Dog'
+};
+
+function renderCourses(entitlements) {
+  var el = document.getElementById('coursesContent');
+  if (!entitlements || entitlements.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📚</div><p>ยังไม่ได้ลงคอร์ส</p></div>';
+    return;
+  }
+  var html = '<div style="display:flex;flex-direction:column;gap:10px;">';
+  entitlements.forEach(function(e) {
+    var name = COURSE_NAMES[e.course_code] || e.course_code;
+    var progress = e.progress || 0;
+    var total = e.lesson_count || 0;
+    var completed = e.completed_count || 0;
+    var pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+    html += '<div class="course-row">' +
+      '<div class="course-name">' + name + '</div>' +
+      '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%;"></div></div>' +
+      '<div class="progress-text">' + completed + '/' + total + ' บท · ' + pct + '%</div>' +
+    '</div>';
+  });
+  el.innerHTML = html + '</div>';
+}
+
+// ── Homework tab ──
+function loadHomework() {
+  var el = document.getElementById('homeworkList');
+  el.innerHTML = '<div class="empty-state"><p>กำลังโหลด...</p></div>';
+  if (!dog) return;
+
+  // Check teacher role
+  checkTeacherRole(function(teacher) {
+    isTeacher = teacher;
+    if (teacher) {
+      document.getElementById('teacherNotesSection').style.display = '';
+      loadTeacherNotes();
+    }
+  });
+
+  fetch('/api/homework?dogId=' + encodeURIComponent(dog.id))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      homeworkSubmissions = data.submissions || [];
+      renderHomework();
+    })
+    .catch(function() {
+      el.innerHTML = '<div class="empty-state"><div class="icon">📋</div><p>ไม่สามารถโหลดการบ้านได้</p></div>';
+    });
+}
+
+function renderHomework() {
+  var el = document.getElementById('homeworkList');
+  if (homeworkSubmissions.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📋</div><p>ยังไม่มีการบ้านที่ส่ง</p></div>';
+    return;
+  }
+  var html = '';
+  homeworkSubmissions.forEach(function(sub) {
+    var statusClass = sub.status === 'ผ่าน' ? 'status-pass' : sub.status === 'ให้ทำซ้ำ' ? 'status-redo' : 'status-pending';
+    var feedbacks = sub.homework_feedback || [];
+    html += '<div class="hw-card">' +
+      '<div class="hw-card-head">' +
+        '<a href="' + escHtml(sub.url) + '" target="_blank" class="hw-link">' + shortenUrl(sub.url) + '</a>' +
+        '<span class="status-badge ' + statusClass + '">' + (sub.status || 'รอตรวจ') + '</span>' +
+      '</div>';
+    if (sub.note) html += '<div class="hw-note">' + escHtml(sub.note) + '</div>';
+    html += '<div class="hw-date">' + formatDateTime(sub.submitted_at) + '</div>';
+    if (feedbacks.length > 0) {
+      html += '<div class="hw-feedback-thread">';
+      feedbacks.forEach(function(fb) {
+        html += '<div class="hw-feedback-item">' +
+          '<div class="hw-feedback-teacher">🎓 ' + escHtml(fb.teacher_name || 'ครู') + ' · ' + formatDateTime(fb.created_at) + '</div>' +
+          '<div class="hw-feedback-text">' + escHtml(fb.text) + '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    }
+    if (isTeacher) {
+      html += buildTeacherReplyForm(sub.id, sub.status);
+    }
+    html += '</div>';
+  });
+  el.innerHTML = html;
+  lucide.createIcons();
+}
+
+function buildTeacherReplyForm(subId, currentStatus) {
+  var statuses = ['รอตรวจ', 'ผ่าน', 'ให้ทำซ้ำ'];
+  var chips = statuses.map(function(s) {
+    var sel = (selectedReplyStatus[subId] || currentStatus) === s ? ' selected' : '';
+    return '<button class="status-chip' + sel + '" data-val="' + s + '" onclick="selectStatus(\'' + subId + '\',\'' + s + '\')">' + s + '</button>';
+  }).join('');
+  return '<div class="teacher-reply-form">' +
+    '<div class="status-selector">' + chips + '</div>' +
+    '<textarea id="fbText_' + subId + '" placeholder="ความคิดเห็นจากครู..." style="min-height:52px;background:var(--cream);border:1.5px solid #D8D2C8;border-radius:10px;padding:9px 12px;font-family:inherit;font-size:13px;color:var(--dark);outline:none;width:100%;resize:none;"></textarea>' +
+    '<button class="btn-sm" onclick="sendTeacherReply(\'' + subId + '\')">ส่งความคิดเห็น</button>' +
+  '</div>';
+}
+
+function selectStatus(subId, status) {
+  selectedReplyStatus[subId] = status;
+  // Update chip UI
+  var forms = document.querySelectorAll('.teacher-reply-form');
+  forms.forEach(function(form) {
+    var chips = form.querySelectorAll('.status-chip');
+    chips.forEach(function(chip) {
+      if (chip.closest('.hw-card') && chip.closest('.hw-card').querySelector('[onclick*="' + subId + '"]')) {
+        chip.classList.toggle('selected', chip.getAttribute('data-val') === status);
+      }
+    });
+  });
+  // Simple re-render of just that card's chips is complex, just reload
+  renderHomework();
+}
+
+function sendTeacherReply(subId) {
+  var fbText = document.getElementById('fbText_' + subId);
+  var feedback = fbText ? fbText.value.trim() : '';
+  var status = selectedReplyStatus[subId] || null;
+  if (!feedback && !status) { showToast('กรุณาใส่ความคิดเห็นหรือเลือกสถานะ'); return; }
+  fetch('/api/homework', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ submissionId: subId, feedback: feedback || undefined, status: status || undefined, lineUserId: lineUserId })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      showToast('บันทึกแล้ว ✓');
+      delete selectedReplyStatus[subId];
+      loadHomework();
+    } else {
+      showToast('ผิดพลาด: ' + (data.error || ''));
+    }
+  })
+  .catch(function() { showToast('เกิดข้อผิดพลาด'); });
+}
+
+function submitHomework() {
+  var url = document.getElementById('hwUrl').value.trim();
+  var note = document.getElementById('hwNote').value.trim();
+  if (!url) { showToast('กรุณาใส่ลิงก์วิดีโอ'); return; }
+  var owner = JSON.parse(localStorage.getItem('db_owner') || '{}');
+  var studentId = (owner.student && owner.student.id) || null;
+  fetch('/api/homework', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ dogId: dog.id, studentId: studentId, url: url, note: note || undefined })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      showToast('ส่งการบ้านแล้ว ✓');
+      document.getElementById('hwUrl').value = '';
+      document.getElementById('hwNote').value = '';
+      loadHomework();
+    } else {
+      showToast('ผิดพลาด: ' + (data.error || ''));
+    }
+  })
+  .catch(function() { showToast('เกิดข้อผิดพลาด'); });
+}
+
+// ── Teacher notes ──
+function checkTeacherRole(callback) {
+  if (!lineUserId) { callback(false); return; }
+  fetch('/api/teacher-notes?dogId=' + encodeURIComponent(dog.id) + '&lineUserId=' + encodeURIComponent(lineUserId))
+    .then(function(r) { callback(r.ok); })
+    .catch(function() { callback(false); });
+}
+
+function loadTeacherNotes() {
+  if (!lineUserId) return;
+  fetch('/api/teacher-notes?dogId=' + encodeURIComponent(dog.id) + '&lineUserId=' + encodeURIComponent(lineUserId))
+    .then(function(r) { return r.json(); })
+    .then(function(data) { renderTeacherNotes(data.notes || []); })
+    .catch(function() {});
+}
+
+function renderTeacherNotes(notes) {
+  var el = document.getElementById('teacherNotesList');
+  if (notes.length === 0) {
+    el.innerHTML = '<div class="empty-state" style="padding:12px;"><p style="font-size:13px;">ยังไม่มีบันทึก</p></div>';
+    return;
+  }
+  el.innerHTML = notes.map(function(n) {
+    return '<div class="hw-card">' +
+      '<div class="hw-feedback-teacher">🎓 ' + escHtml(n.teacher_name || 'ครู') + ' · ' + formatDateTime(n.created_at) + '</div>' +
+      '<div class="hw-feedback-text" style="font-size:14px;margin-top:4px;">' + escHtml(n.text) + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function addTeacherNote() {
+  var text = document.getElementById('newTeacherNote').value.trim();
+  if (!text) { showToast('กรุณาใส่บันทึก'); return; }
+  fetch('/api/teacher-notes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ dogId: dog.id, text: text, lineUserId: lineUserId })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      showToast('บันทึกแล้ว ✓');
+      document.getElementById('newTeacherNote').value = '';
+      loadTeacherNotes();
+    } else { showToast('ผิดพลาด: ' + (data.error || '')); }
+  })
+  .catch(function() { showToast('เกิดข้อผิดพลาด'); });
+}
+
+// ── Timeline ──
+function renderTimeline() {
+  var el = document.getElementById('timelineList');
+  if (!dog) { el.innerHTML = ''; return; }
+  var events = [];
+
+  // Dog created
+  if (dog.id) {
+    var createdTs = dog.id.split('-')[0];
+    var createdNum = parseInt(createdTs, 16);
+    if (!isNaN(createdNum)) {
+      events.push({ ts: createdNum, icon: '🐾', title: 'เพิ่มน้องหมา', sub: dog.name, gold: true });
+    }
+  }
+
+  // Assessment
+  if (dog.type && dog.updatedAt) {
+    events.push({ ts: dog.updatedAt, icon: '📊', title: 'ผลประเมิน: ' + dog.type, sub: 'บุคลิกภาพ', gold: true });
+  }
+
+  // Vaccines
+  (dog.vaccines || []).forEach(function(v) {
+    if (v.date) events.push({ ts: new Date(v.date).getTime(), icon: '💉', title: 'วัคซีน', sub: v.note || '' });
+  });
+
+  // Treatments
+  (dog.treatments || []).forEach(function(t) {
+    if (t.date) events.push({ ts: new Date(t.date).getTime(), icon: '🏥', title: 'การรักษา', sub: t.note || '' });
+  });
+
+  // Homework from API
+  homeworkSubmissions.forEach(function(h) {
+    var ts = new Date(h.submitted_at).getTime();
+    var statusMap = { 'ผ่าน': '✅', 'ให้ทำซ้ำ': '🔄', 'รอตรวจ': '📋' };
+    events.push({ ts: ts, icon: statusMap[h.status] || '📋', title: 'ส่งการบ้าน', sub: h.note || shortenUrl(h.url) });
+  });
+
+  // Sort newest first
+  events.sort(function(a, b) { return b.ts - a.ts; });
+
+  if (events.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📅</div><p>ยังไม่มีกิจกรรม</p></div>';
+    return;
+  }
+
+  el.innerHTML = events.map(function(e) {
+    return '<div class="tl-item">' +
+      '<div class="tl-dot' + (e.gold ? ' gold' : '') + '" style="font-size:10px;">' + e.icon + '</div>' +
+      '<div class="tl-content">' +
+        '<div class="tl-title">' + escHtml(e.title) + '</div>' +
+        (e.sub ? '<div class="tl-sub">' + escHtml(e.sub) + '</div>' : '') +
+        '<div class="tl-date">' + (e.ts ? formatDateTime(new Date(e.ts).toISOString()) : '') + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── Utils ──
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function shortenUrl(url) {
+  try {
+    var u = new URL(url);
+    return u.hostname + (u.pathname.length > 20 ? u.pathname.substring(0, 20) + '…' : u.pathname);
+  } catch (e) { return url; }
+}
+
 // ── Render vaccine list ──
 function renderVaccines() {
-  const list = document.getElementById('vaccineList');
-  const vaccines = dog.vaccines || [];
+  var list = document.getElementById('vaccineList');
+  var vaccines = dog.vaccines || [];
   if (vaccines.length === 0) { list.innerHTML = ''; return; }
   list.innerHTML = vaccines.map(function(v, i) {
-    const thumbHTML = v.photo
+    var thumbHTML = v.photo
       ? '<img src="' + v.photo + '" alt="">'
       : '<i data-lucide="syringe" style="width:20px;height:20px;color:var(--muted)"></i>';
     return '<div class="entry-item">' +
@@ -414,8 +1059,8 @@ function renderVaccines() {
 
 // ── Render treatment list ──
 function renderTreatments() {
-  const list = document.getElementById('treatmentList');
-  const treatments = dog.treatments || [];
+  var list = document.getElementById('treatmentList');
+  var treatments = dog.treatments || [];
   if (treatments.length === 0) { list.innerHTML = ''; return; }
   list.innerHTML = treatments.map(function(t, i) {
     return '<div class="entry-item">' +
@@ -478,7 +1123,6 @@ function compressImage(file, maxPx, quality, callback) {
   };
   reader.readAsDataURL(file);
 }
-
 function handleVaccinePhoto(input) {
   if (!input.files || !input.files[0]) return;
   compressImage(input.files[0], 800, 0.7, function(compressed) {
@@ -600,7 +1244,6 @@ function saveAll() {
     environment: document.getElementById('allergyEnv').value.trim()
   };
   dog.updatedAt = Date.now();
-
   var idx = dogs.findIndex(function(d) { return d.id === dog.id; });
   if (idx !== -1) dogs[idx] = dog;
   localStorage.setItem('db_dogs', JSON.stringify(dogs));
@@ -611,14 +1254,12 @@ function saveAll() {
 document.addEventListener('DOMContentLoaded', function() {
   function init() {
     if (!window.lucide) { setTimeout(init, 80); return; }
-
     var id = getParam('id');
     dogs = JSON.parse(localStorage.getItem('db_dogs') || '[]');
     dog = null;
     for (var i = 0; i < dogs.length; i++) {
       if (dogs[i].id === id) { dog = dogs[i]; break; }
     }
-
     if (!dog) {
       document.querySelector('.body').innerHTML =
         '<div style="text-align:center;padding:40px 16px;color:var(--muted);">' +
@@ -627,6 +1268,10 @@ document.addEventListener('DOMContentLoaded', function() {
       lucide.createIcons();
       return;
     }
+    // Restore dog photo from sessionStorage if same dog
+    var photoKey = sessionStorage.getItem('dogPhoto');
+    var activeDogId = localStorage.getItem('db_activeDogId');
+    if (photoKey && activeDogId === dog.id) dog.photo = photoKey;
 
     renderHeader();
     loadFields();
