@@ -508,7 +508,17 @@
           <option>Whippet</option>
           <option>Yorkshire Terrier</option>
           <option>Yorkipoo</option>
+          <option value="__other__">อื่นๆ (ระบุเอง)</option>
         </select>
+        <input class="form-input" type="text" id="dogBreedOther" placeholder="ระบุสายพันธุ์" style="display:none;margin-top:10px;"
+          onchange="" >
+        <script>
+          document.getElementById('dogBreed').addEventListener('change', function() {
+            var other = document.getElementById('dogBreedOther');
+            if (this.value === '__other__') { other.style.display = 'block'; other.focus(); }
+            else { other.style.display = 'none'; }
+          });
+        </script>
       </div>
       <div class="form-row">
         <div>
@@ -774,7 +784,8 @@ const answers = {};
 
 function validateProfile() {
   const name  = document.getElementById('dogName').value.trim();
-  const breed = document.getElementById('dogBreed').value;
+  let breed = document.getElementById('dogBreed').value;
+  if (breed === '__other__') breed = document.getElementById('dogBreedOther').value.trim();
   const age   = document.getElementById('dogAge').value;
   const gender= document.getElementById('dogGender').value;
   const photo = sessionStorage.getItem('dogPhoto');
