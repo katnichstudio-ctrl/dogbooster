@@ -76,6 +76,20 @@
       </div>
       <div id="empty" class="empty" style="display:none">ยังไม่มีผู้ใช้ — ให้ผู้ใช้ล็อกอินด้วย LINE ก่อน แล้วกดรีเฟรช</div>
     </div>
+
+    <!-- ผลงาน DogBooster -->
+    <h1 style="margin-top:40px;">ผลงาน DogBooster</h1>
+    <p class="sub">อัปโหลดรูปผลงานที่จะแสดงในหน้าโรงเรียน (school.html)</p>
+
+    <div class="toolbar">
+      <input id="pfCaption" class="search" placeholder="คำอธิบาย (ถ้ามี)" style="min-width:160px;">
+      <input id="pfFile" type="file" accept="image/*" style="display:none" onchange="uploadPortfolio(this)">
+      <button class="btn sm" onclick="document.getElementById('pfFile').click()">＋ อัปโหลดรูป</button>
+      <button class="btn sm" style="background:#EDE7DA" onclick="loadPortfolio()">รีเฟรช</button>
+      <span id="pfMsg" class="msg"></span>
+    </div>
+
+    <div id="pfGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;"></div>
   </div>
 
   <script>
@@ -105,6 +119,7 @@
         sessionStorage.setItem('db_admin_token', TOKEN);
         document.getElementById('gate').style.display = 'none';
         document.getElementById('app').style.display = 'block';
+        loadPortfolio();
       } catch (e) {
         document.getElementById('gate-msg').textContent =
           e.message === 'unauthorized' ? 'Token ไม่ถูกต้อง' : ('ผิดพลาด: ' + e.message);
@@ -186,11 +201,87 @@
       }
     }
 
+    // ── ผลงาน DogBooster ──
+    function compressImage(file, maxPx, quality, cb) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var img = new Image();
+        img.onload = function () {
+          var scale = Math.min(1, maxPx / Math.max(img.width, img.height));
+          var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+          var canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          cb(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function setPfMsg(t, isErr) {
+      var el = document.getElementById('pfMsg');
+      el.textContent = t || ''; el.className = 'msg' + (isErr ? ' err' : '');
+    }
+
+    async function loadPortfolio() {
+      try {
+        var r = await fetch('/api/portfolio');
+        var data = await r.json();
+        renderPortfolio(data.items || []);
+        setPfMsg('โหลดล่าสุด ' + new Date().toLocaleTimeString('th-TH'));
+      } catch (e) { setPfMsg('โหลดไม่สำเร็จ: ' + e.message, true); }
+    }
+
+    function renderPortfolio(items) {
+      if (!items.length) {
+        document.getElementById('pfGrid').innerHTML =
+          '<div class="empty" style="grid-column:1/-1;">ยังไม่มีรูปผลงาน</div>';
+        return;
+      }
+      document.getElementById('pfGrid').innerHTML = items.map(function (it) {
+        return '<div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#fff;">' +
+          '<img src="' + it.image + '" style="width:100%;height:130px;object-fit:cover;display:block;">' +
+          (it.caption ? '<div style="padding:8px 10px;font-size:12px;color:var(--muted);">' + it.caption + '</div>' : '') +
+          '<button onclick="deletePortfolio(\'' + it.id + '\')" style="position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:15px;line-height:1;">×</button>' +
+        '</div>';
+      }).join('');
+    }
+
+    function uploadPortfolio(input) {
+      if (!input.files || !input.files[0]) return;
+      var caption = document.getElementById('pfCaption').value.trim();
+      setPfMsg('กำลังบีบรูป...');
+      compressImage(input.files[0], 1000, 0.75, async function (compressed) {
+        try {
+          setPfMsg('กำลังอัปโหลด...');
+          await api('/api/portfolio', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: compressed, caption: caption })
+          });
+          document.getElementById('pfCaption').value = '';
+          input.value = '';
+          setPfMsg('อัปโหลดแล้ว ✓');
+          loadPortfolio();
+        } catch (e) { setPfMsg('อัปโหลดไม่สำเร็จ: ' + e.message, true); }
+      });
+    }
+
+    async function deletePortfolio(id) {
+      if (!confirm('ลบรูปนี้?')) return;
+      try {
+        await api('/api/portfolio?id=' + encodeURIComponent(id), { method: 'DELETE' });
+        loadPortfolio();
+      } catch (e) { setPfMsg('ลบไม่สำเร็จ: ' + e.message, true); }
+    }
+
     // auto-login ถ้ามี token เก็บไว้
     if (TOKEN) {
       loadUsers().then(function () {
         document.getElementById('gate').style.display = 'none';
         document.getElementById('app').style.display = 'block';
+        loadPortfolio();
       }).catch(function () { logout(); });
     }
   </script>
