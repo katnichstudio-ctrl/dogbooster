@@ -279,6 +279,24 @@
   .pbtn:hover { background: #E0A02F; }
   .pbtn:active { background: #C8821A; }
 
+  /* ---- Reviews ---- */
+  .review-card {
+    background: #1C1A15; border-radius: 16px; padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .review-header { display: flex; align-items: center; gap: 10px; }
+  .review-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--dark); border: 1.5px solid rgba(240,183,76,.4);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--gold); font-weight: 800;
+    font-family: ui-monospace, monospace; font-size: 11px; overflow: hidden;
+  }
+  .review-name { font-size: 13px; font-weight: 800; color: var(--gold); font-family: ui-monospace, monospace; }
+  .review-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .review-text { font-size: 14px; color: var(--cream); line-height: 1.6; }
+  .no-review-msg { text-align: center; color: var(--muted); font-size: 13px; padding: 16px 0; }
+
   /* ---- Contact ---- */
   .contact-links {
     display: flex;
@@ -620,6 +638,15 @@
         <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
       </a>
 
+
+      <!-- Reviews -->
+      <div style="margin-top:28px" id="reviewSection">
+        <div class="section-head">
+          <div class="sec-icon"><span class="ic" style="font-size:16px"><i data-lucide="star"></i></span></div>
+          รีวิวจากนักเรียน
+        </div>
+        <div id="reviewList" style="display:flex;flex-direction:column;gap:10px;margin-top:12px;"></div>
+      </div>
 
       <!-- Contact -->
       <div style="margin-top:28px">
@@ -1462,17 +1489,53 @@
     });
   }
 
+  // ── รีวิวจากนักเรียน ──
+  function loadReviews() {
+    var listEl = document.getElementById('reviewList');
+    if (!listEl) return;
+    listEl.innerHTML = '<div class="no-review-msg" style="opacity:.5;">กำลังโหลด...</div>';
+    fetch('/api/reviews').then(function(r){ return r.json(); }).then(function(data) {
+      var reviews = data.reviews || [];
+      if (reviews.length === 0) {
+        listEl.innerHTML = '<div class="no-review-msg">ยังไม่มีรีวิว</div>';
+        return;
+      }
+      listEl.innerHTML = '';
+      reviews.forEach(function(r) {
+        var card = document.createElement('div');
+        card.className = 'review-card';
+        var avatarHtml = r.owner_photo
+          ? '<img src="' + r.owner_photo + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">'
+          : (r.student_id || '').slice(0, 6);
+        var dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+        card.innerHTML =
+          '<div class="review-header">' +
+            '<div class="review-avatar">' + avatarHtml + '</div>' +
+            '<div><div class="review-name">' + (r.student_id || '') + '</div>' +
+            '<div style="font-size:12px;color:var(--muted);margin-top:1px;">' + (r.owner_name || '') + '</div>' +
+            '<div class="review-date">' + dateStr + '</div></div>' +
+          '</div>' +
+          (r.text ? '<div class="review-text">' + String(r.text).replace(/</g,'&lt;') + '</div>' : '');
+        listEl.appendChild(card);
+      });
+    }).catch(function() {
+      listEl.innerHTML = '<div class="no-review-msg">ไม่สามารถโหลดรีวิวได้</div>';
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     function init() {
       if (window.lucide && window.lucide.createIcons) {
         window.lucide.createIcons();
         loadPortfolio();
+        loadReviews();
       } else {
         var t = 0;
         var retry = setInterval(function() {
           if (window.lucide && window.lucide.createIcons) {
             window.lucide.createIcons();
             loadPortfolio();
+            loadReviews();
             clearInterval(retry);
           } else if (++t > 60) {
             clearInterval(retry);

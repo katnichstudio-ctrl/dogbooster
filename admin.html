@@ -90,6 +90,25 @@
     </div>
 
     <div id="pfGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;"></div>
+
+    <!-- รีวิวจากนักเรียน -->
+    <h1 style="margin-top:40px;">รีวิวจากนักเรียน</h1>
+    <p class="sub">เพิ่มรีวิวที่จะแสดงในหน้าโรงเรียน (school.html)</p>
+
+    <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;margin:14px 0;display:flex;flex-direction:column;gap:12px;max-width:520px;">
+      <input id="rvStudent" class="field" style="margin-top:0;" placeholder="รหัสนักเรียน (เช่น BF2400015)">
+      <input id="rvName" class="field" style="margin-top:0;" placeholder="ชื่อเจ้าของ">
+      <textarea id="rvText" class="field" style="margin-top:0;min-height:90px;resize:vertical;" placeholder="ข้อความรีวิว"></textarea>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div id="rvPhotoPrev" style="width:44px;height:44px;border-radius:50%;background:#E4DECF;overflow:hidden;flex-shrink:0;display:none;"></div>
+        <input id="rvFile" type="file" accept="image/*" style="display:none" onchange="rvPhoto(this)">
+        <button class="btn sm" style="background:#EDE7DA" onclick="document.getElementById('rvFile').click()">แนบรูปเจ้าของ (ถ้ามี)</button>
+        <button class="btn sm" onclick="addReview()">＋ เพิ่มรีวิว</button>
+      </div>
+      <span id="rvMsg" class="msg"></span>
+    </div>
+
+    <div id="rvList" style="display:flex;flex-direction:column;gap:10px;max-width:640px;"></div>
   </div>
 
   <script>
@@ -120,6 +139,7 @@
         document.getElementById('gate').style.display = 'none';
         document.getElementById('app').style.display = 'block';
         loadPortfolio();
+        loadReviews();
       } catch (e) {
         document.getElementById('gate-msg').textContent =
           e.message === 'unauthorized' ? 'Token ไม่ถูกต้อง' : ('ผิดพลาด: ' + e.message);
@@ -276,12 +296,91 @@
       } catch (e) { setPfMsg('ลบไม่สำเร็จ: ' + e.message, true); }
     }
 
+    // ── รีวิวจากนักเรียน ──
+    var rvPhotoData = null;
+
+    function setRvMsg(t, isErr) {
+      var el = document.getElementById('rvMsg');
+      el.textContent = t || ''; el.className = 'msg' + (isErr ? ' err' : '');
+    }
+
+    function rvPhoto(input) {
+      if (!input.files || !input.files[0]) return;
+      compressImage(input.files[0], 300, 0.75, function (c) {
+        rvPhotoData = c;
+        var prev = document.getElementById('rvPhotoPrev');
+        prev.style.display = 'block';
+        prev.innerHTML = '<img src="' + c + '" style="width:100%;height:100%;object-fit:cover;">';
+      });
+    }
+
+    async function loadReviews() {
+      try {
+        var r = await fetch('/api/reviews');
+        var data = await r.json();
+        renderReviews(data.reviews || []);
+      } catch (e) { setRvMsg('โหลดรีวิวไม่สำเร็จ: ' + e.message, true); }
+    }
+
+    function renderReviews(reviews) {
+      if (!reviews.length) {
+        document.getElementById('rvList').innerHTML = '<div class="empty">ยังไม่มีรีวิว</div>';
+        return;
+      }
+      document.getElementById('rvList').innerHTML = reviews.map(function (rv) {
+        var av = rv.owner_photo
+          ? '<img src="' + rv.owner_photo + '" style="width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;">'
+          : '<div style="width:38px;height:38px;border-radius:50%;background:#E4DECF;flex-shrink:0;"></div>';
+        return '<div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:flex-start;">' +
+          av +
+          '<div style="flex:1;min-width:0;">' +
+            '<div style="font-weight:800;font-size:13px;color:var(--gold-dark);font-family:ui-monospace,monospace;">' + (rv.student_id || '') + '</div>' +
+            '<div style="font-size:12px;color:var(--muted);">' + (rv.owner_name || '') + '</div>' +
+            '<div style="font-size:14px;margin-top:6px;">' + String(rv.text || '').replace(/</g,'&lt;') + '</div>' +
+          '</div>' +
+          '<button onclick="deleteReview(\'' + rv.id + '\')" style="background:none;border:none;cursor:pointer;font-size:18px;color:#B4452F;">×</button>' +
+        '</div>';
+      }).join('');
+    }
+
+    async function addReview() {
+      var studentId = document.getElementById('rvStudent').value.trim();
+      var name = document.getElementById('rvName').value.trim();
+      var text = document.getElementById('rvText').value.trim();
+      if (!text) { setRvMsg('กรุณาใส่ข้อความรีวิว', true); return; }
+      try {
+        setRvMsg('กำลังบันทึก...');
+        await api('/api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ studentId: studentId, ownerName: name, text: text, ownerPhoto: rvPhotoData })
+        });
+        document.getElementById('rvStudent').value = '';
+        document.getElementById('rvName').value = '';
+        document.getElementById('rvText').value = '';
+        document.getElementById('rvFile').value = '';
+        document.getElementById('rvPhotoPrev').style.display = 'none';
+        rvPhotoData = null;
+        setRvMsg('เพิ่มรีวิวแล้ว ✓');
+        loadReviews();
+      } catch (e) { setRvMsg('บันทึกไม่สำเร็จ: ' + e.message, true); }
+    }
+
+    async function deleteReview(id) {
+      if (!confirm('ลบรีวิวนี้?')) return;
+      try {
+        await api('/api/reviews?id=' + encodeURIComponent(id), { method: 'DELETE' });
+        loadReviews();
+      } catch (e) { setRvMsg('ลบไม่สำเร็จ: ' + e.message, true); }
+    }
+
     // auto-login ถ้ามี token เก็บไว้
     if (TOKEN) {
       loadUsers().then(function () {
         document.getElementById('gate').style.display = 'none';
         document.getElementById('app').style.display = 'block';
         loadPortfolio();
+        loadReviews();
       }).catch(function () { logout(); });
     }
   </script>
