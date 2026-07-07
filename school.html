@@ -1512,11 +1512,11 @@
   function loadReviews() {
     var listEl = document.getElementById('reviewList');
     if (!listEl) return;
-    listEl.innerHTML = '<div class="no-review-msg" style="opacity:.5;">กำลังโหลด...</div>';
+    listEl.innerHTML = '';
     fetch('/api/reviews').then(function(r){ return r.json(); }).then(function(data) {
       var reviews = data.reviews || [];
       if (reviews.length === 0) {
-        listEl.innerHTML = '<div class="no-review-msg">ยังไม่มีรีวิว</div>';
+        listEl.innerHTML = '';
         return;
       }
       listEl.innerHTML = '';
