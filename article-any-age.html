@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ฝึกหมาอายุเยอะได้มั้ย? — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 16px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.9; margin-bottom: 16px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .highlight {
+    background: #FBEEEC; border-left: 3px solid #D9705F; border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin: 20px 0; font-size: 15px; color: #7A3B31; line-height: 1.8; font-weight: 600;
+  }
+  .good {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin: 20px 0; font-size: 15px; color: var(--text-body); line-height: 1.8;
+  }
+  .conclude {
+    background: var(--dark2); color: var(--cream); border-radius: 16px; padding: 20px;
+    font-size: 15px; line-height: 1.85; margin-top: 24px; text-align: center; font-weight: 700;
+  }
+  .conclude .hl { color: var(--gold); }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 20px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-any-age.jpg" alt="สุนัขฝึกได้ทุกช่วงอายุ">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>ฝึกหมาอายุเยอะได้มั้ย?</h1>
+
+    <p>หลายคนอาจคิดว่า… <strong>“แก่แล้ว สอนไม่ได้แล้ว”</strong></p>
+
+    <p>แต่ความจริงคือ สิ่งที่เรามองว่าเป็น “ปัญหา” เช่น เห่า กัด ทำลายของ
+      เบื้องหลังคือ <strong>“ความทุกข์”</strong> ที่หมากำลังเผชิญ</p>
+
+    <div class="highlight">
+      ถ้าเราไม่ช่วยแก้ นั่นหมายความว่า
+      เรายอมให้เขาต้อง “ทนทุกข์ไปจนวันสุดท้ายของชีวิต”
+    </div>
+
+    <div class="good">
+      ✅ แต่ถ้าเราเลือกฝึก เลือกปรับ เลือกเข้าใจ<br>
+      ต่อให้ชีวิตที่เหลือมีไม่มาก
+      เขาก็ยังได้ใช้ “ช่วงสุดท้าย” อย่างมีความสุข
+    </div>
+
+    <div class="conclude">
+      ❤️ หมาเรียนรู้ได้ตลอดชีวิต<br>
+      ไม่มีคำว่าสายเกินไปที่จะเริ่มต้น<br>
+      สิ่งที่หมาต้องการ…คือ <span class="hl">โอกาสและความเข้าใจ</span> จากเรา
+    </div>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มฝึกกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
