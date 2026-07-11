@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ทำไมต้องฝึกหมาด้วยตัวเอง — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .quote {
+    border-left: 3px solid var(--gold); background: #FFF8EC; border-radius: 0 12px 12px 0;
+    padding: 14px 16px; font-size: 15px; color: var(--text-body); line-height: 1.8; margin: 20px 0;
+  }
+  .conclude {
+    background: var(--dark2); color: var(--cream); border-radius: 16px; padding: 20px;
+    font-size: 15px; line-height: 1.85; margin-top: 24px; text-align: center; font-weight: 700;
+  }
+  .conclude .hl { color: var(--gold); }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 20px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-self-train.jpg" alt="ทำไมต้องฝึกหมาด้วยตัวเอง">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>ทำไมต้องฝึกหมาด้วยตัวเอง 🐶</h1>
+
+    <p>เพราะผลลัพธ์ไม่ได้สำคัญ ความสำคัญคือ
+      <strong>ระหว่างทางที่เราอยู่กับเค้า</strong></p>
+
+    <p>มีหลาย ๆ คน มีน้องหมาใหม่ แล้วอยากส่งไปโรงเรียนกลับมาเก่งเลย
+      แต่นี่คือหมานะครับ ไม่ใช่หุ่นยนต์ที่จะใส่ข้อมูลไปได้ แล้วจะไม่เปลี่ยนแปลง</p>
+
+    <div class="quote">
+      ระยะเวลาของเราและน้องต่างหาก
+      ที่จะหล่อหลอมเค้าให้เค้าจะเป็นอย่างไร
+    </div>
+
+    <p>ต้องใช้ความเข้าใจ และการสังเกตภาษาของน้อง
+      มีแค่พ่อแม่เท่านั้นที่จะรู้ว่าน้องเป็นยังไง</p>
+
+    <p>การที่จะให้น้องเป็นสุนัขที่มีนิสัยที่ดี ไม่ก้าวร้าว
+      ต้องการศึกษาน้องอย่างถูกต้อง มีความรู้ในการสร้างสภาพแวดล้อมที่ดี
+      สุนัขที่มีนิสัยก้าวร้าว หรือมีนิสัยที่เราไม่ชอบ
+      ก็มาจากเรานั้นเองที่ไม่รู้ตัว ไปสร้างให้เค้าเป็นแบบนั้นเอง</p>
+
+    <div class="conclude">
+      นี่คือหนึ่งเหตุผลที่เราเปิดคลาสเรียนออนไลน์<br>
+      เพื่อให้พ่อแม่เข้าใจในตัวน้องด้วยตัวเอง<br>
+      เพราะเราเองเป็นคนที่ต้องอยู่กับเค้า<span class="hl">ตลอดไป</span>
+    </div>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มเรียนกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
