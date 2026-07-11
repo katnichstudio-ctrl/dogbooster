@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>หมาทำเพราะ “เข้าใจ” หรือทำเพราะ “กลัว” — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .pair { display: flex; flex-direction: column; gap: 10px; margin-bottom: 4px; }
+  .blk { border-radius: 14px; padding: 13px 15px; font-size: 14.5px; line-height: 1.75; }
+  .blk .lbl { font-weight: 800; display: block; margin-bottom: 3px; }
+  .blk-fear { background: #FBEEEC; color: #7A3B31; border-left: 3px solid #D9705F; }
+  .blk-fear .lbl { color: #C0503E; }
+  .blk-ok { background: #FFF8EC; color: var(--text-body); border-left: 3px solid var(--gold); }
+  .blk-ok .lbl { color: var(--gold-dark); }
+  .conclude {
+    background: var(--dark2); color: var(--cream); border-radius: 16px; padding: 18px;
+    font-size: 15px; line-height: 1.8; margin-top: 24px; text-align: center; font-weight: 700;
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 20px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-fear-understand.jpg" alt="หมาทำเพราะเข้าใจหรือกลัว">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>หมาทำเพราะ “เข้าใจ” หรือทำเพราะ “กลัว”</h1>
+
+    <p>เคยสังเกตไหมคะว่าน้องหมาที่บ้านทำตามคำสั่งเพราะอะไร?
+      ระหว่าง… <strong>“ถ้าไม่ทำจะโดนดุ”</strong> กับ
+      <strong>“ถ้าทำแล้วจะมีเรื่องดี ๆ เกิดขึ้น”</strong></p>
+    <p>เราไม่ได้ต้องการแค่สุนัขที่เชื่อฟังแบบหุ่นยนต์
+      แต่เราต้องการสร้าง <strong>“Thinker”</strong>
+      หรือนักคิดที่รู้จักเลือกทำสิ่งที่ถูกต้องด้วยตัวเอง</p>
+
+    <div class="divider"></div>
+
+    <div class="pair">
+      <div class="blk blk-fear"><span class="lbl">🐶💔 หมากลัว</span>ทำงานเพื่อ “หลีกเลี่ยง” สิ่งที่ไม่ดี เช่น กลัวโดนดุ กลัวโดนกระตุกปลอกคอ หรือกลัวเจ้าของโกรธ — แรงจูงใจเกิดจากความเครียด</div>
+      <div class="blk blk-ok"><span class="lbl">🐶💛 หมาเข้าใจ</span>ทำงานเพื่อ “เข้าหา” สิ่งที่ดี เรียนรู้ว่าการเลือกทำพฤติกรรมที่เจ้าของต้องการ จะนำไปสู่สิ่งที่เขาต้องการ (ขนม, การเล่น, อิสระ) ตามหลัก ItsYerChoice (IYC)</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pair">
+      <div class="blk blk-fear"><span class="lbl">🐶💔 เมื่อเจอสถานการณ์ใหม่</span>หมามักจะชะงัก (Freeze) หรือลนลาน เพราะไม่กล้าลองผิดลองถูก เนื่องจากกลัวการถูกทำโทษ</div>
+      <div class="blk blk-ok"><span class="lbl">🐶💛 เมื่อเจอสถานการณ์ใหม่</span>หมาจะเป็นนักแก้ปัญหา พยายามเสนอพฤติกรรมเพื่อดูว่าแบบไหนคือคำตอบที่ถูกต้อง เพราะรู้สึกปลอดภัยที่จะเรียนรู้</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pair">
+      <div class="blk blk-fear"><span class="lbl">🐶💔 ภาษากาย</span>หางตก, หูลู่, ตัวเกร็ง, เลียปากบ่อย, หลบสายตา — ทำตามคำสั่งด้วยท่าทีที่ดูฝืน ๆ</div>
+      <div class="blk blk-ok"><span class="lbl">🐶💛 ภาษากาย</span>แววตามีความสุข, ส่ายหาง, ร่างกายผ่อนคลายแต่ตื่นตัว และให้ความสำคัญกับเจ้าของด้วยความเต็มใจ</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pair">
+      <div class="blk blk-fear"><span class="lbl">🐶💔 ความคงทน</span>พฤติกรรมมักหายไปเมื่อ “สิ่งที่น่ากลัว” ไม่อยู่ตรงนั้น (เช่น ทำตามแค่ตอนเห็นปลอกคอไฟฟ้า หรือตอนเจ้าของถือไม้)</div>
+      <div class="blk blk-ok"><span class="lbl">🐶💛 ความคงทน</span>พฤติกรรมติดตัวไปทุกที่เพราะมันคือ “ทักษะชีวิต” เขาเข้าใจกฎกติกา จึงเลือกทำสิ่งที่ถูกต้องได้แม้ไม่มีขนมในมือ หรือไม่มีเจ้าของคอยคุมเข้ม</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p>✅ <strong>หมาที่เข้าใจ:</strong> กล้าลองผิดลองถูก มีความสุข สนุกกับการเรียนรู้ และพร้อมจะเลือกเราเสมอแม้มีสิ่งเร้า</p>
+    <p>❌ <strong>หมาที่กลัว:</strong> ทำงานภายใต้ความเครียด หยุดคิด และทำเพียงเพื่อให้อุปสรรคหรือความน่ากลัวผ่านไป</p>
+
+    <div class="conclude">
+      การฝึกไม่ใช่การบังคับ<br>แต่นำทางให้เขาเข้าใจกติกาของเกมที่ชื่อว่า “ชีวิต” 🐾
+    </div>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มฝึกกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
