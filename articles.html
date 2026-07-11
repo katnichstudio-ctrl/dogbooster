@@ -35,7 +35,19 @@
   .back-btn svg { width: 20px; height: 20px; }
   .header h1 { font-size: 24px; font-weight: 800; color: var(--cream); position: relative; }
   .header p { font-size: 13px; color: var(--muted); margin-top: 6px; position: relative; }
-  .body { padding: 22px 20px 60px; display: flex; flex-direction: column; gap: 14px; }
+  .cat-bar {
+    display: flex; gap: 8px; overflow-x: auto; padding: 16px 20px 4px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .cat-bar::-webkit-scrollbar { display: none; }
+  .cat-chip {
+    flex-shrink: 0; background: var(--sand); color: var(--text-body);
+    border: 1.5px solid transparent; border-radius: 100px;
+    font-family: inherit; font-size: 13px; font-weight: 800; padding: 8px 16px;
+    cursor: pointer; white-space: nowrap; transition: all .15s;
+  }
+  .cat-chip.active { background: var(--dark); color: var(--gold); }
+  .body { padding: 8px 20px 60px; display: flex; flex-direction: column; gap: 14px; }
   .article-card {
     background: var(--sand); border-radius: 16px; overflow: hidden; display: block;
     text-decoration: none; color: inherit;
@@ -64,22 +76,62 @@
     <p>ความรู้และเคล็ดลับการฝึกสุนัขจาก DogBooster</p>
   </div>
 
-  <div class="body" id="articleList">
-    <a href="article-iyc.html" class="article-card">
-      <img src="assets/article-iyc.jpg" alt="ItsYerChoice">
-      <div class="body-txt">
-        <span class="article-tag">🐾 การฝึกสุนัข</span>
-        <div class="article-title">ทำไม “การเลือก” ถึงเป็นกุญแจสำคัญที่สุดในการสร้างสุนัขที่ยอดเยี่ยม</div>
-        <div class="article-excerpt">ItsYerChoice (IYC) เกมที่เปลี่ยนกระบวนการคิดของสุนัข ให้เรียนรู้ที่จะควบคุมตนเอง แทนที่จะถูกควบคุมจากภายนอก</div>
-      </div>
-    </a>
-  </div>
+  <div class="cat-bar" id="catBar"></div>
+  <div class="body" id="articleList"></div>
 </div>
 <script>
+  // ── หมวดหมู่ ── (เพิ่มหมวดได้ที่นี่)
+  var CATEGORIES = ['ทั้งหมด', 'ฝึกสุนัข', 'Puppy', 'ก้าวร้าว'];
+
+  // ── บทความ ── (เพิ่มบทความใหม่โดยเติมออบเจกต์ในลิสต์นี้)
+  var ARTICLES = [
+    {
+      category: 'ฝึกสุนัข',
+      url: 'article-iyc.html',
+      image: 'assets/article-iyc.jpg',
+      tag: '🐾 การฝึกสุนัข',
+      title: 'ทำไม “การเลือก” ถึงเป็นกุญแจสำคัญที่สุดในการสร้างสุนัขที่ยอดเยี่ยม',
+      excerpt: 'ItsYerChoice (IYC) เกมที่เปลี่ยนกระบวนการคิดของสุนัข ให้เรียนรู้ที่จะควบคุมตนเอง แทนที่จะถูกควบคุมจากภายนอก'
+    }
+  ];
+
+  var activeCat = 'ทั้งหมด';
+
+  function renderCats() {
+    document.getElementById('catBar').innerHTML = CATEGORIES.map(function(c) {
+      return '<button class="cat-chip' + (c === activeCat ? ' active' : '') +
+        '" onclick="selectCat(\'' + c + '\')">' + c + '</button>';
+    }).join('');
+  }
+
+  function selectCat(c) { activeCat = c; renderCats(); renderArticles(); }
+
+  function renderArticles() {
+    var list = ARTICLES.filter(function(a) {
+      return activeCat === 'ทั้งหมด' || a.category === activeCat;
+    });
+    var el = document.getElementById('articleList');
+    if (list.length === 0) {
+      el.innerHTML = '<div class="empty-state"><div class="icon">📝</div><p>ยังไม่มีบทความในหมวดนี้</p></div>';
+      return;
+    }
+    el.innerHTML = list.map(function(a) {
+      return '<a href="' + a.url + '" class="article-card">' +
+        '<img src="' + a.image + '" alt="' + a.title + '" loading="lazy">' +
+        '<div class="body-txt">' +
+          '<span class="article-tag">' + a.tag + '</span>' +
+          '<div class="article-title">' + a.title + '</div>' +
+          '<div class="article-excerpt">' + a.excerpt + '</div>' +
+        '</div>' +
+      '</a>';
+    }).join('');
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     function init() {
-      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
-      else { setTimeout(init, 80); }
+      if (window.lucide && window.lucide.createIcons) {
+        renderCats(); renderArticles(); window.lucide.createIcons();
+      } else { setTimeout(init, 80); }
     }
     init();
   });
