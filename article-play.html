@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>การเล่นคือการฝึก — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 16px; }
+  h2 { font-size: 17px; font-weight: 800; color: var(--dark); line-height: 1.45; margin: 24px 0 8px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .quote {
+    border-left: 3px solid var(--gold); background: #FFF8EC; border-radius: 0 12px 12px 0;
+    padding: 14px 16px; font-size: 15px; color: var(--text-body); line-height: 1.8; margin: 20px 0;
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 28px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-play.jpg" alt="การเล่นคือการฝึก">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>การเล่นคือการฝึก… และการฝึกคือการเล่น 🎾</h1>
+
+    <p>การฝึกสุนัขไม่ใช่การออกคำสั่งให้เขา “จำยอม”
+      แต่คือการทำให้เขารู้สึกว่า
+      <strong>“การเลือกทำพฤติกรรมที่ดีนั้นมีค่าสำหรับเขาที่สุด”</strong></p>
+
+    <h2>เปลี่ยนจาก “ต้องทำ” เป็น “อยากทำ”</h2>
+    <p>เมื่อเราใช้การเสริมแรงทางบวก (Positive Reinforcement) อย่างมีขั้นตอน
+      สุนัขจะเรียนรู้ว่าการนั่ง การรอ หรือการเดินข้างเรา
+      ไม่ใช่เพราะเขากลัวโดนดุ แต่เพราะเขารู้ว่า “ทำแล้วคุ้ม”
+      ความรู้สึกดี ๆ เหล่านี้จะถูกสะสมจนกลายเป็นแรงจูงใจจากภายใน</p>
+
+    <p>ในโลกของ <strong>Force-free</strong> หากสุนัขทำไม่ได้ เราจะไม่ลงโทษ
+      แต่เราจะกลับมาดูว่า “ขั้นตอน” ของเรายากไปไหม?
+      เราสร้างคุณค่าให้พฤติกรรมนั้นมากพอหรือยัง?
+      วิธีนี้ช่วยรักษาความมั่นใจของสุนัขไว้ได้อย่างเต็มเปี่ยม</p>
+
+    <h2>จากพฤติกรรม สู่ “นิสัย” ที่ถาวร</h2>
+    <p>นิสัยไม่ได้เกิดจากการทำตามคำสั่งเพียงครั้งคราว
+      แต่นิสัยคือ “สิ่งที่ทำโดยอัตโนมัติ” เมื่อสุนัขได้รับคุณค่าจากการทำสิ่งดี ๆ
+      ซ้ำแล้วซ้ำเล่า พฤติกรรมเหล่านั้นจะกลายเป็นตัวตนใหม่ของเขา
+      เป็นสุนัขที่คิดเป็น เลือกเป็น และอยากร่วมมือกับเราด้วยความสุข</p>
+
+    <h2>การฝึกคือการเล่น… และการเล่นคือการฝึก 🎾</h2>
+    <p>หัวใจสำคัญคือ “ขั้นตอน” ที่ชัดเจน เริ่มจากจุดเล็ก ๆ ที่เขาทำสำเร็จได้ง่าย
+      แล้วค่อย ๆ เพิ่มความท้าทาย โดยมีเราเป็น <strong>“ผู้สนับสนุน”</strong>
+      ไม่ใช่ “ผู้คุมกฎ”</p>
+
+    <p>การสร้างสายสัมพันธ์ที่แน่นแฟ้นผ่านความเข้าใจ
+      ไม่เพียงแต่จะได้สุนัขที่เชื่อฟัง แต่คุณจะได้คู่หูที่ไว้วางใจคุณสุดหัวใจ
+      ซึ่งนั่นคือรางวัลที่มีค่าที่สุดของการเป็นเจ้าของสุนัข</p>
+
+    <div class="quote">
+      เพราะนิสัยที่ดี… ไม่ได้สร้างจากความกลัว
+      แต่สร้างจากความสุขที่มีคุณค่า ❤️
+    </div>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มฝึกกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
