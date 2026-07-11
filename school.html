@@ -309,20 +309,11 @@
   .review-photo img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 3/4; }
   .portfolio-photo { display: block; border-radius: 14px; overflow: hidden; background: var(--dark2); }
   .portfolio-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .fb-video-card {
-    display: flex; align-items: center; gap: 14px; text-decoration: none;
-    background: var(--dark2); border: 1.5px solid rgba(240,183,76,.25);
-    border-radius: 16px; padding: 16px 18px; transition: border-color .15s;
+  .fb-video-embed {
+    border-radius: 16px; overflow: hidden; background: var(--dark2);
+    position: relative; width: 100%; aspect-ratio: 9/16; max-height: 80vh;
   }
-  .fb-video-card:hover { border-color: var(--gold); }
-  .fb-video-play {
-    width: 48px; height: 48px; border-radius: 50%; background: var(--gold);
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .fb-video-play svg { width: 22px; height: 22px; color: var(--dark); fill: var(--dark); }
-  .fb-video-txt { flex: 1; min-width: 0; }
-  .fb-video-txt .t { font-size: 14px; font-weight: 800; color: var(--cream); }
-  .fb-video-txt .s { font-size: 12px; color: var(--muted); margin-top: 2px; display: flex; align-items: center; gap: 5px; }
+  .fb-video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 
   /* ---- Contact ---- */
   .contact-links {
@@ -527,14 +518,8 @@
         ผ่านกิจกรรมที่สนุกและเห็นผลจริง
       </p>
 
-      <!-- About video (Facebook Reel) -->
-      <a href="https://www.facebook.com/reel/2222608341476699" target="_blank" rel="noopener" class="fb-video-card" style="margin-top:16px;">
-        <div class="fb-video-play"><i data-lucide="play"></i></div>
-        <div class="fb-video-txt">
-          <div class="t">ดูวิดีโอแนะนำสถาบัน</div>
-          <div class="s"><i data-lucide="facebook" style="width:13px;height:13px;"></i> เปิดใน Facebook</div>
-        </div>
-      </a>
+      <!-- About video (Facebook Reel embed) -->
+      <div class="fb-video-embed" data-href="https://www.facebook.com/reel/2222608341476699" style="margin-top:16px;"></div>
 
       <!-- Instructors -->
       <div style="margin-top:26px">
@@ -911,14 +896,8 @@
       <img src="assets/fbi-class.jpg" alt="FBI · Four Basic Instinct"
            style="width:100%;border-radius:16px;object-fit:cover;margin-bottom:16px;display:block;">
 
-      <!-- Course video (Facebook Reel) -->
-      <a href="https://www.facebook.com/reel/1097435165836728" target="_blank" rel="noopener" class="fb-video-card" style="margin-bottom:16px;">
-        <div class="fb-video-play"><i data-lucide="play"></i></div>
-        <div class="fb-video-txt">
-          <div class="t">ดูวิดีโอคอร์ส FBI</div>
-          <div class="s"><i data-lucide="facebook" style="width:13px;height:13px;"></i> เปิดใน Facebook</div>
-        </div>
-      </a>
+      <!-- Course video (Facebook Reel embed) -->
+      <div class="fb-video-embed" data-href="https://www.facebook.com/reel/1097435165836728" style="margin-bottom:16px;"></div>
 
       <!-- Benefits -->
       <div style="font-weight:800;font-size:14px;color:var(--dark);margin-bottom:12px;">คำอธิบาย</div>
@@ -1028,14 +1007,8 @@
       <img src="assets/stopbark.jpg" alt="หยุดเห่าอย่างเข้าใจ"
            style="width:100%;border-radius:16px;object-fit:cover;margin-bottom:16px;display:block;">
 
-      <!-- Course video (Facebook Reel) -->
-      <a href="https://www.facebook.com/reel/812502567789802" target="_blank" rel="noopener" class="fb-video-card" style="margin-bottom:16px;">
-        <div class="fb-video-play"><i data-lucide="play"></i></div>
-        <div class="fb-video-txt">
-          <div class="t">ดูวิดีโอคอร์สหยุดเห่า</div>
-          <div class="s"><i data-lucide="facebook" style="width:13px;height:13px;"></i> เปิดใน Facebook</div>
-        </div>
-      </a>
+      <!-- Course video (Facebook Reel embed) -->
+      <div class="fb-video-embed" data-href="https://www.facebook.com/reel/812502567789802" style="margin-bottom:16px;"></div>
 
       <!-- Benefits -->
       <div style="font-weight:800;font-size:14px;color:var(--dark);margin-bottom:12px;">คำอธิบาย</div>
@@ -1536,6 +1509,7 @@
     if (target) {
       target.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (typeof renderFbVideos === 'function') setTimeout(renderFbVideos, 60);
     }
   }
 
@@ -1594,12 +1568,39 @@
     });
   }
 
+  // ── Facebook video embeds (render responsive iframe at container width) ──
+  function renderFbVideos() {
+    var nodes = document.querySelectorAll('.fb-video-embed');
+    nodes.forEach(function(el) {
+      if (el.dataset.done) return;
+      var href = el.getAttribute('data-href');
+      if (!href) return;
+      var w = Math.round(el.clientWidth || el.offsetWidth || 320);
+      if (!w) return;
+      el.dataset.done = '1';
+      var src = 'https://www.facebook.com/plugins/video.php?href=' +
+        encodeURIComponent(href) + '&show_text=false&width=' + w + '&height=' +
+        Math.round(w * 16 / 9);
+      var f = document.createElement('iframe');
+      f.src = src;
+      f.setAttribute('scrolling', 'no');
+      f.setAttribute('frameborder', '0');
+      f.setAttribute('allowfullscreen', 'true');
+      f.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share');
+      el.appendChild(f);
+    });
+  }
+  window.addEventListener('resize', function() {
+    // re-render only if width changed significantly is overkill; skip for simplicity
+  });
+
   document.addEventListener('DOMContentLoaded', function() {
     function init() {
       if (window.lucide && window.lucide.createIcons) {
         window.lucide.createIcons();
         loadPortfolio();
         loadReviews();
+        renderFbVideos();
       } else {
         var t = 0;
         var retry = setInterval(function() {
@@ -1607,6 +1608,7 @@
             window.lucide.createIcons();
             loadPortfolio();
             loadReviews();
+            renderFbVideos();
             clearInterval(retry);
           } else if (++t > 60) {
             clearInterval(retry);
