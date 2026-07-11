@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ส่องสมองน้องหมา — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 16px; }
+  h2 { font-size: 17px; font-weight: 800; color: var(--dark); line-height: 1.45; margin: 24px 0 8px; }
+  h3 { font-size: 15px; font-weight: 800; color: var(--gold-dark); margin: 14px 0 4px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 28px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-brain.jpg" alt="ส่องสมองน้องหมา">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>🧠 ส่องสมองน้องหมา ความลับเบื้องหลังสัญชาตญาณและความฉลาด! 🐾</h1>
+
+    <p>เคยสงสัยไหมคะ? ทำไมน้องหมาถึงจมูกไวเบอร์นั้น
+      หรือทำไมบางทีเขาก็ทำอะไรไปตามสัญชาตญาณ จนเราเบรกไม่ทัน
+      วันนี้มาไขความลับการทำงานของสมองเจ้าตูบกันค่ะ</p>
+
+    <p>โครงสร้างสมองของสุนัขแบ่งการทำงานหลัก ๆ ออกเป็น
+      <strong>2 ส่วน</strong> ที่ทำงานร่วมกันอย่างน่าทึ่ง:</p>
+
+    <h2>1️⃣ สมองส่วนหน้า (Forebrain): ศูนย์บัญชาการความฉลาด 🎓</h2>
+    <p>ส่วนนี้คือส่วนที่ทำให้สุนัขแต่ละตัวมี “บุคลิก” และ “การเรียนรู้” ที่ต่างกัน</p>
+    <h3>Olfactory Bulb</h3>
+    <p>เป็นส่วนที่ใหญ่มาก! ทำหน้าที่ประมวลผลกลิ่นโดยเฉพาะ
+      สุนัขไม่ได้ “มอง” โลกด้วยตาอย่างเดียว แต่ใช้กลิ่นในการสร้างภาพจำ</p>
+    <h3>Cerebral Cortex</h3>
+    <p>ส่วนที่ใช้ในการเรียนรู้คำสั่ง (นั่ง, หมอบ, คอย) การแก้ปัญหา และการตัดสินใจ
+      เวลาเราฝึกเขา สมองส่วนนี้จะทำงานหนักที่สุด</p>
+
+    <h2>2️⃣ สมองส่วนหลัง (Hindbrain): ระบบขับเคลื่อนอัตโนมัติ 🏎️</h2>
+    <p>ส่วนนี้เป็นรากฐานของชีวิตและสัญชาตญาณดิบที่สืบทอดมาจากบรรพบุรุษ</p>
+    <h3>Cerebellum (สมองน้อย)</h3>
+    <p>คุมการทรงตัวและการเคลื่อนไหวที่คล่องแคล่ว</p>
+    <h3>Brainstem (ก้านสมอง)</h3>
+    <p>ดูแลระบบพื้นฐานที่ขาดไม่ได้ เช่น การหายใจ การเต้นของหัวใจ และการย่อยอาหาร</p>
+
+    <h2>🐕 พฤติกรรมตามสัญชาตญาณ (Instinctive Behaviors)</h2>
+    <p>บางอย่างน้องหมาทำไปโดยไม่ต้องสอน เพราะมันถูกฝังอยู่ในดีเอ็นเอ</p>
+    <p>
+      <strong>Prey Drive:</strong> สัญชาตญาณนักล่า เริ่มตั้งแต่ จ้อง → ไล่ → กัด<br>
+      <strong>Resource Guarding:</strong> การหวงของ (อาหาร/ที่พัก) เพื่อความอยู่รอด<br>
+      <strong>Social Instinct:</strong> การสื่อสารด้วยภาษากายเพื่อลดความขัดแย้ง<br>
+      <strong>Reflexes:</strong> การตอบโต้อัตโนมัติ เช่น การสะดุ้งเมื่อได้ยินเสียงดัง
+    </p>
+
+    <p>DogBooster เราเชื่อว่าการฝึกที่ดีที่สุดไม่ใช่แค่การออกคำสั่ง
+      แต่คือการขัดเกลาพฤติกรรมให้ฝังลึกถึงระดับสมอง
+      เราฝึกให้น้องหมาทำจนเป็น <strong>สัญชาตญาณใหม่</strong>
+      เพื่อให้เขาตัดสินใจทำในสิ่งที่ถูกต้องได้เอง
+      โดยที่คุณไม่ต้องคอยดุหรือคอยห้ามตลอดไป 🐾✨</p>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มฝึกกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
