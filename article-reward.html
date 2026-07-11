@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ฝึกด้วย “ใจ” ได้ผลไกลกว่าที่คิด — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-reward.jpg" alt="Reward-Based Training">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>ฝึกด้วย “ใจ” ได้ผลไกลกว่าที่คิด 🐶💬</h1>
+
+    <p>การฝึกแบบ <strong>Reward-Based</strong> ไม่ใช่แค่การป้อนขนม
+      แต่คือการทำให้สุนัขเห็น “คุณค่า” ในตัวเราและพฤติกรรมที่เราต้องการ</p>
+
+    <div class="intro">
+      <p>เมื่อเขาสนุก เขาจะอยากเรียนรู้</p>
+      <p>เมื่อเขาเชื่อใจ เขาจะยอมทำตาม</p>
+      <p>และเมื่อเขาได้ “เลือก” เอง พฤติกรรมนั้นจะอยู่กับเขาไปตลอดกาล</p>
+    </div>
+
+    <h2>การสร้างตัวเลือก (Choice-Based Learning)</h2>
+    <p>เน้นให้สุนัข “เลือก” ที่จะทำพฤติกรรมที่ดีด้วยตัวเอง มากกว่าการถูกบังคับ
+      สุนัขจะเรียนรู้ว่าการตัดสินใจเลือกสิ่งที่เราต้องการนำไปสู่ผลลัพธ์ที่ยอดเยี่ยมเสมอ
+      เมื่อสุนัขรู้สึกว่าเขามีอำนาจในการตัดสินใจ เขาจะมีความกระตือรือร้น
+      และจดจำสิ่งที่เรียนรู้ได้ดีกว่าการทำตามเพราะกลัวถูกลงโทษ</p>
+
+    <div class="divider"></div>
+
+    <h2>การสร้างคุณค่า (Building Value)</h2>
+    <p>ในระบบนี้ เราไม่ได้ใช้รางวัลเพื่อ “ติดสินบน” แต่ใช้เพื่อ “สร้างคุณค่า”
+      ให้กับพฤติกรรมหรืองานที่เราต้องการ เช่น การเรียกให้กลับมาหา (Recall)
+      หากเราสร้างคุณค่าให้การกลับมาหาเจ้าของสูงกว่าการไปวิ่งไล่กระรอก
+      สุนัขจะเลือกกลับมาหาเราโดยอัตโนมัติ
+      เพราะสมองของเขาเชื่อมโยงพฤติกรรมนั้นเข้ากับความรู้สึกเชิงบวกอย่างรุนแรง</p>
+
+    <div class="divider"></div>
+
+    <h2>วงจรความสัมพันธ์และความเชื่อใจ (Relationship &amp; Trust)</h2>
+    <p>การฝึกแบบใช้รางวัลช่วยเสริมสร้างสายสัมพันธ์ระหว่างผู้ฝึกและสุนัข
+      เมื่อการฝึกเป็นเรื่องสนุกและไม่มีความกลัวเข้ามาเกี่ยวข้อง
+      สุนัขจะมองว่าเจ้าของคือแหล่งของสิ่งที่น่าตื่นเต้นและปลอดภัย
+      ความเชื่อใจนี้เองที่เป็นรากฐานสำคัญในสถานการณ์ที่ยากลำบากหรือมีสิ่งเร้าสูง
+      ซึ่งสุนัขที่ฝึกด้วยความกลัวมักจะหลุดการควบคุมได้ง่ายกว่า</p>
+
+    <div class="divider"></div>
+
+    <h2>การจัดการกับ “ความล้มเหลว” อย่างสร้างสรรค์</h2>
+    <p>ความผิดพลาดไม่ใช่เรื่องน่าตำหนิ แต่เป็น “ข้อมูล”
+      เมื่อสุนัขทำผิด เราแค่ไม่ให้รางวัลและเริ่มใหม่
+      กระบวนการนี้ทำให้สุนัขไม่เครียดและกล้าที่จะลองผิดลองถูกเพื่อหาคำตอบที่ถูกต้อง
+      ทำให้เขากลายเป็นสุนัขที่ “คิดเป็น”</p>
+
+    <div class="divider"></div>
+
+    <h2>วิทยาศาสตร์ของสารโดปามีน (Dopamine &amp; Learning)</h2>
+    <p>การได้รับรางวัลจะกระตุ้นการหลั่งโดปามีนในสมอง ซึ่งช่วยในเรื่องความจำและการเรียนรู้
+      พฤติกรรมที่ได้รับการเสริมแรงเชิงบวกบ่อย ๆ
+      จะกลายเป็นนิสัยที่ฝังลึกในระบบประสาท
+      ทำให้ได้ผลลัพธ์ที่คงเส้นคงวาแม้เวลาจะผ่านไปนาน</p>
+
+    <p>ลองเปลี่ยนจากการ “บังคับ” มาเป็นการ “สร้างแรงจูงใจ” ดูนะคะ
+      แล้วคุณจะเห็นความเปลี่ยนแปลงที่ยั่งยืน 🦴✨</p>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มฝึกกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
