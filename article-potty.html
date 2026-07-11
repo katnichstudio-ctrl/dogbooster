@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ขับถ่ายลูกสุนัขให้เป็นที่ — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15; --dark3: #3A352D;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .header {
+    background: var(--dark); padding: 52px 22px 26px; position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -60px; right: -40px; width: 240px; height: 240px;
+    border-radius: 50%; background: radial-gradient(circle, rgba(240,183,76,.18), transparent 70%);
+  }
+  .back-btn {
+    background: none; border: none; cursor: pointer; color: var(--cream);
+    display: flex; align-items: center; gap: 8px; font-family: inherit; font-size: 14px;
+    font-weight: 700; padding: 0; margin-bottom: 18px; position: relative;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .header .tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--gold);
+    letter-spacing: .04em; margin-bottom: 8px; position: relative;
+  }
+  .header h1 { font-size: 23px; font-weight: 800; color: var(--cream); position: relative; line-height: 1.35; }
+  .body { padding: 22px 20px 60px; }
+  .intro { font-size: 15px; color: var(--text-body); line-height: 1.8; margin-bottom: 22px; }
+  .vid-block { margin-bottom: 24px; }
+  .vid-teacher {
+    display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 800;
+    color: var(--dark); margin-bottom: 10px;
+  }
+  .vid-teacher .chip {
+    background: var(--gold); color: var(--dark); font-size: 12px; font-weight: 800;
+    padding: 3px 12px; border-radius: 100px;
+  }
+  .vid-frame {
+    border-radius: 16px; overflow: hidden; background: var(--dark2);
+    position: relative; width: 100%; aspect-ratio: 9/16; max-height: 80vh;
+  }
+  .vid-frame.wide { aspect-ratio: 16/9; }
+  .vid-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 8px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <button class="back-btn" onclick="history.back()">
+      <i data-lucide="arrow-left"></i> กลับ
+    </button>
+    <span class="tag">🐶 Puppy</span>
+    <h1>ขับถ่ายลูกสุนัขให้เป็นที่</h1>
+  </div>
+
+  <div class="body">
+    <p class="intro">รวมวิดีโอสอนฝึกขับถ่ายลูกสุนัขให้เป็นที่ จากครูของ DogBooster
+      ดูแล้วนำไปฝึกตามได้เลย 🐾</p>
+
+    <div class="vid-block">
+      <div class="vid-teacher"><span class="chip">ครูเข็ม</span> วิธีฝึกขับถ่าย</div>
+      <div class="vid-frame">
+        <iframe src="https://www.youtube.com/embed/1_dTC9noKyk" title="ฝึกขับถ่าย โดยครูเข็ม"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="vid-block">
+      <div class="vid-teacher"><span class="chip">ครูแคท</span> วิธีฝึกขับถ่าย</div>
+      <div class="vid-frame">
+        <iframe src="https://www.youtube.com/embed/AwSBYEiYEEY" title="ฝึกขับถ่าย โดยครูแคท"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / ปรึกษาการเลี้ยงลูกสุนัข
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
