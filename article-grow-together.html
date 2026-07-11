@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ไม่ใช่ควบคุม แต่เติบโตไปด้วยกัน — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 22px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 16px; }
+  h2 { font-size: 17px; font-weight: 800; color: var(--dark); line-height: 1.45; margin: 24px 0 10px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .quote {
+    border-left: 3px solid var(--gold); background: #FFF8EC; border-radius: 0 12px 12px 0;
+    padding: 14px 16px; font-size: 15px; color: var(--text-body); line-height: 1.8; margin: 20px 0;
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 28px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-grow-together.jpg" alt="ไม่ใช่ควบคุม แต่เติบโตไปด้วยกัน">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>ไม่ใช่ควบคุม แต่เติบโตไปด้วยกัน</h1>
+
+    <p>หลายคนมักรอให้หมาโต… ถึงค่อยเริ่มฝึก 🐶
+      แต่ความจริงคือ ช่วงวัยลูกหมานี่แหละ คือช่วงที่หัวใจของเขา
+      <strong>“เปิดรับ”</strong> เราได้มากที่สุด</p>
+
+    <p>เขายังเหมือนผ้าขาวที่พร้อมจะเติบโตขึ้น ตามนิสัยที่เขาสะสมในทุกวัน
+      และแน่นอนว่า ถ้าเราไม่ตั้งใจสร้างนิสัยตั้งแต่วันนี้
+      สิ่งที่เขาเรียนรู้ไป อาจไม่ใช่สิ่งที่เราอยากให้เป็น</p>
+
+    <h2>แล้วเราจะทำยังไง? 🤔</h2>
+    <p>เพื่อให้เขาเติบโตขึ้นเป็นหมาที่เราภูมิใจ และอยู่ด้วยแล้วสบายใจ</p>
+
+    <h2>การฝึกแบบ Force-Free Shaping Dog</h2>
+    <p>ไม่ใช่แค่ “เปลี่ยนนิสัยให้ดี” แต่ยังช่วยสร้างสายใยบางอย่าง
+      ที่ทำให้เรากับเขา <strong>“เข้าใจกันมากขึ้นในทุกวัน”</strong>
+      และยิ่งเราฝึกเร็วเท่าไหร่ เขาก็จะมีนิสัยดี
+      และประสบการณ์ดีติดตัวไปจนโต</p>
+
+    <div class="quote">
+      “ความผูกพัน และนิสัยดี ๆ ไม่ได้เกิดขึ้นในวันเดียว
+      แต่มันเกิดขึ้นทุกวันที่เราตั้งใจฟังเขา และสอนเขาด้วยความรัก”
+    </div>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มฝึกกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
