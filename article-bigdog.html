@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>หมาตัวใหญ่แรงเยอะ จัดการยังไง — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  h2 { font-size: 17px; font-weight: 800; color: var(--dark); line-height: 1.45; margin: 24px 0 8px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .tip {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin: 20px 0;
+  }
+  .steps { margin: 0 0 14px; padding: 0; list-style: none; counter-reset: s; }
+  .steps li {
+    position: relative; padding: 10px 12px 10px 44px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 15px; color: var(--text-body); line-height: 1.6;
+  }
+  .steps li::before {
+    counter-increment: s; content: counter(s);
+    position: absolute; left: 12px; top: 10px; width: 24px; height: 24px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
+  }
+  .conclude {
+    background: var(--dark2); color: var(--cream); border-radius: 16px; padding: 18px;
+    font-size: 15px; line-height: 1.8; margin-top: 24px; text-align: center; font-weight: 700;
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 20px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-biggog.jpg" alt="หมาตัวใหญ่แรงเยอะ">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>หมาตัวใหญ่แรงเยอะ จัดการยังไง</h1>
+
+    <p>หมาตัวใหญ่เขาแรงมากกว่าเราอยู่แล้ว ถ้าไม่ฝึกให้ดี
+      แค่พลาดนิดเดียว… ก็อาจเกิดอุบัติเหตุได้ จนหลายคนคิดว่า
+      <strong>“หมาตัวใหญ่ต้องใช้สายรัดคอถึงจะเอาอยู่”</strong></p>
+
+    <h2>แต่จริง ๆ แล้ว สายรัดคออาจทำร้ายเขา</h2>
+    <p>เพราะเวลาเขาดึง แรงจะกดไปที่หลอดลมและกระดูกคอ
+      หมาจะเจ็บ → เครียด → และอาจหยุดเดินได้จริง
+      แต่ผลคือ ยิ่งดึง ยิ่งแพ้ ทั้งคนทั้งหมา
+      สุดท้าย แม้หมาจะหยุดดึงเพราะเจ็บ
+      แต่ความรู้สึกไม่ดีกับสิ่งที่เจอ จะฝังลึกกว่าเดิม</p>
+
+    <h2>ทางออกที่ดีกว่า คือ “Harness แบบ front-clip”</h2>
+    <p>เพราะมันกระจายแรงทั่วตัว และจุดคลิปอยู่หน้าอก
+      พอหมาดึง ตัวเขาจะหมุนกลับเข้าหาเราโดยอัตโนมัติ
+      ไม่ต้องใช้แรงแข่ง ไม่เจ็บ และไม่ทำให้รู้สึกแย่กับสิ่งรอบข้าง</p>
+
+    <h2>วิธีฝึกเบื้องต้น</h2>
+    <ol class="steps">
+      <li>ใช้ front-clip harness</li>
+      <li>หยุดทุกครั้งที่หมาดึง → เดินต่อเมื่อสายหลวม</li>
+      <li>ให้รางวัลทันทีตอนสายหลวมและหันกลับมา</li>
+      <li>เริ่มฝึกในที่สงบ ก่อนค่อยเพิ่มสิ่งรบกวน</li>
+    </ol>
+
+    <div class="tip">
+      ฝึกวันละ <strong>5–10 นาที</strong> หมาจะเริ่มเข้าใจว่า
+      “เดินดี = ได้ไปต่อ”
+    </div>
+
+    <p>เพราะหมาตัวใหญ่ไม่ได้ต้องใช้แรงมากกว่า
+      แต่ต้องการ <strong>“คนที่เขาอยากเดินด้วยมากกว่า”</strong></p>
+
+    <div class="conclude">
+      อยากให้หมาตัวใหญ่ของคุณ<br>เดินข้างอย่างสงบ ไม่ลาก ไม่ล้ม ไม่เจ็บทั้งคู่ 🐾
+    </div>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> สอบถาม / เริ่มฝึกกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
