@@ -645,22 +645,6 @@
             </div>
           </div>
 
-          <!-- Aggression — featured -->
-          <div class="format-card format-card-featured" onclick="showView('view-aggression')" role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter')showView('view-aggression')">
-            <div class="format-card-glow"></div>
-            <div class="format-card-inner">
-              <div class="format-card-icon">
-                <span class="ic" style="font-size:23px"><i data-lucide="shield-alert"></i></span>
-              </div>
-              <div style="flex:1;min-width:0">
-                <div class="format-card-title" style="font-size:16px">แก้ปัญหาดุ-กัด-ก้าวร้าว</div>
-                <div class="format-card-sub" style="font-size:12.5px">Behavior Management</div>
-              </div>
-              <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -1445,79 +1429,6 @@
     </div>
   </div>
 
-  <!-- ===== VIEW: แก้ปัญหาดุ-กัด-ก้าวร้าว ===== -->
-  <div id="view-aggression" class="view">
-    <div class="view2-header">
-      <div class="view2-glow"></div>
-      <button onclick="showView('view-school')" aria-label="ย้อนกลับ"
-              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
-        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
-      </button>
-      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--cream);margin-top:8px;line-height:1.2;position:relative">
-        แก้ปัญหาดุ-กัด-<br>ก้าวร้าว
-      </h2>
-      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;position:relative">
-        Behavior Management
-      </p>
-    </div>
-    <div class="view2-content">
-
-      <!-- Intro -->
-      <p style="font-size:14px;color:var(--text-body);line-height:1.75;margin-bottom:24px;">
-        ครูเข้าไปบริหารจัดการถึงบ้าน — หาต้นตอของปัญหาที่แท้จริง แล้วออกแบบทางแก้เป็นขั้นเป็นตอน พร้อมติดตามผลต่อเนื่อง
-      </p>
-
-      <!-- Step 1 -->
-      <div style="background:var(--dark);border-radius:16px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-30px;right:-20px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(240,183,76,.18),transparent 70%);pointer-events:none;"></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-          <div style="width:28px;height:28px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--dark);flex-shrink:0;">1</div>
-          <div style="font-weight:800;font-size:15px;color:var(--cream);">ครูเข้าบ้านครั้งแรก · ~2 ชม.</div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:9px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="ic" style="font-size:16px;color:var(--gold);flex-shrink:0"><i data-lucide="home"></i></span>
-            <span style="font-size:13px;color:var(--muted);">ออกแบบการเลี้ยง ให้ความรู้ในการดูแล</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="ic" style="font-size:16px;color:var(--gold);flex-shrink:0"><i data-lucide="search"></i></span>
-            <span style="font-size:13px;color:var(--muted);">มองหาปัญหาที่แท้จริง</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="ic" style="font-size:16px;color:var(--gold);flex-shrink:0"><i data-lucide="list-checks"></i></span>
-            <span style="font-size:13px;color:var(--muted);">ออกแบบการแก้ปัญหาเป็นขั้นเป็นตอน</span>
-          </div>
-        </div>
-        <div style="margin-top:14px;background:rgba(255,255,255,.06);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:9px;">
-          <span class="ic" style="font-size:16px;color:var(--gold);flex-shrink:0"><i data-lucide="message-square"></i></span>
-          <span style="font-size:12.5px;color:var(--muted);line-height:1.55;">ติดตามผล 30 วัน — ปรึกษาผ่านไลน์ส่วนตัวได้ตลอด 30 วัน เพื่อติดตามผลอย่างใกล้ชิด</span>
-        </div>
-      </div>
-
-      <!-- Step 2 -->
-      <div style="background:var(--dark);border-radius:16px;padding:18px;margin-bottom:24px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-30px;right:-20px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(240,183,76,.18),transparent 70%);pointer-events:none;"></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <div style="width:28px;height:28px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--dark);flex-shrink:0;">2</div>
-          <div style="font-weight:800;font-size:15px;color:var(--cream);">ครูเข้าบ้านอีกครั้ง</div>
-        </div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.65;margin:0;">ครบ 30 วัน เมื่อครูประเมินว่าน้องดีขึ้นจริง จะเข้าไปอัปเดต/ทบทวนอีก 1 ครั้ง</p>
-      </div>
-
-      <!-- Price -->
-      <!-- After better note -->
-      <div style="background:#FFF8EC;border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:13px 15px;margin-bottom:24px;">
-        <p style="font-size:12.5px;color:var(--text-body);line-height:1.65;margin:0;">เมื่อน้องดีขึ้นจากการจัดการสภาพแวดล้อมแล้ว ต่อด้วยคลาสออนไลน์ หรือให้ครูไปฝึกที่บ้านต่อได้ — เพื่อสร้างความรัก ความผูกพัน วินัย และความอดทนอดกลั้น โดยไม่ต้องบังคับหรือลงโทษ ซึ่งเป็นพื้นฐานในการจัดการปัญหาต่าง ๆ ต่อไป</p>
-      </div>
-
-      <!-- CTA -->
-      <a href="https://lin.ee/tApUqyB" target="_blank" rel="noopener" class="pbtn" style="text-decoration:none;margin-bottom:32px;">
-        ปรึกษาปัญหาก้าวร้าว
-        <span class="ic" style="font-size:18px"><i data-lucide="message-circle"></i></span>
-      </a>
-
-    </div>
-  </div>
 
 </div><!-- /app-shell -->
 
