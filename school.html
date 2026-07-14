@@ -356,14 +356,45 @@
     display: block;
   }
 
-  /* ---- Desktop centering chrome ---- */
-  @media (min-width: 431px) {
-    body { padding: 32px 16px; }
+  /* ---- Tablet: framed centered card ---- */
+  @media (min-width: 431px) and (max-width: 767px) {
+    body { padding: 28px 16px; }
     .app-shell {
-      border-radius: 42px;
+      max-width: 480px;
+      border-radius: 36px;
       box-shadow: 0 40px 80px -30px rgba(0,0,0,.45);
       min-height: unset;
     }
+  }
+
+  /* ---- Desktop: full-width, multi-column ---- */
+  @media (min-width: 768px) {
+    body { padding: 40px 24px; }
+    .app-shell {
+      max-width: 1000px;
+      border-radius: 28px;
+      box-shadow: 0 40px 90px -40px rgba(0,0,0,.4);
+      min-height: unset;
+    }
+    .cover { height: 320px; }
+    .content { padding: 32px 48px 56px; }
+    /* long-form / detail views stay readable */
+    .view2-content { max-width: 720px; margin-left: auto; margin-right: auto; }
+    /* card lists → 2 columns */
+    .resp-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px !important;
+    }
+    /* review slider: fixed card width instead of 72% of viewport */
+    .review-slider .review-photo { flex: 0 0 240px; }
+    /* portfolio grid → 3 columns */
+    #portfolioGrid { grid-template-columns: repeat(3, 1fr) !important; }
+    /* vertical reels stay phone-sized, centered */
+    .fb-video-embed { max-width: 360px; margin-left: auto; margin-right: auto; }
+  }
+  @media (min-width: 1040px) {
+    .app-shell { max-width: 1120px; }
   }
 
   /* ---- Class Detail View ---- */
@@ -549,7 +580,7 @@
           </div>
           ผู้สอน
         </div>
-        <div style="display:flex;flex-direction:column;gap:11px">
+        <div class="resp-grid" style="display:flex;flex-direction:column;gap:11px">
           <div class="instructor-card" style="align-items:flex-start;">
             <div class="instructor-avatar" style="flex-shrink:0;">
               <img src="assets/khem.jpg" alt="ครูเข็ม" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">
@@ -615,7 +646,7 @@
           </div>
           เลือกรูปแบบการเรียน
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="resp-grid" style="display:flex;flex-direction:column;gap:12px">
 
           <!-- Online -->
           <div class="format-card" onclick="showView('view-class-detail')" role="button" tabindex="0"
