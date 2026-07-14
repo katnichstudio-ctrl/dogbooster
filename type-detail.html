@@ -58,7 +58,19 @@
 
     .not-found { text-align: center; padding: 80px 24px; color: #6B6459; }
     .not-found a { color: #B8860B; font-weight: 800; }
-  </style>
+  
+  /* ---- Responsive frame ---- */
+  @media (min-width: 768px) {
+    body { padding: 40px 24px; }
+    .screen {
+      max-width: 640px;
+      border-radius: 28px;
+      overflow: hidden;
+      min-height: auto;
+      box-shadow: 0 40px 90px -40px rgba(0,0,0,.4);
+    }
+  }
+</style>
 </head>
 <body>
   <div class="screen">
