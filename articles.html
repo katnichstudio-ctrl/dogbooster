@@ -64,6 +64,20 @@
   .empty-state { text-align: center; padding: 48px 16px; color: var(--muted); }
   .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
   .empty-state p { font-size: 14px; font-weight: 600; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    html{ background: var(--sand); }
+    .page{ max-width: 900px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .header{ padding: 40px 40px 30px; }
+    .cat-bar{ padding: 20px 40px 6px; }
+    .body{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 12px 40px 70px; }
+    .empty-state{ grid-column: 1 / -1; }
+  }
+  @media (min-width: 1040px){
+    .page{ max-width: 1120px; }
+    .body{ grid-template-columns: repeat(3, 1fr); }
+  }
 </style>
   <link rel="canonical" href="https://dogbooster.vercel.app/articles.html">
   <meta name="description" content="รวมบทความความรู้การฝึกสุนัข ลูกสุนัข (Puppy) และการแก้พฤติกรรมก้าวร้าว จาก DogBooster — ฝึกด้วยความเข้าใจแบบ Force-free">
