@@ -356,28 +356,38 @@
     display: block;
   }
 
-  /* ---- Tablet: framed centered card ---- */
+  /* ---- Tablet: centered, no frame ---- */
   @media (min-width: 431px) and (max-width: 767px) {
-    body { padding: 28px 16px; }
+    body { padding: 0; }
     .app-shell {
       max-width: 480px;
-      border-radius: 36px;
-      box-shadow: 0 40px 80px -30px rgba(0,0,0,.45);
-      min-height: unset;
+      border-radius: 0;
+      box-shadow: none;
     }
   }
 
-  /* ---- Desktop: full-width, multi-column ---- */
+  /* ---- Desktop: full-width, multi-column, no frame ---- */
   @media (min-width: 768px) {
-    body { padding: 40px 24px; }
+    body { padding: 0; }
     .app-shell {
       max-width: 1000px;
-      border-radius: 28px;
-      box-shadow: 0 40px 90px -40px rgba(0,0,0,.4);
+      border-radius: 0;
+      box-shadow: none;
       min-height: unset;
     }
     .cover { height: 320px; }
     .content { padding: 32px 48px 56px; }
+    /* About video (left) + Instructors (right) */
+    .about-instructors {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-top: 8px;
+    }
+    .about-instructors .fb-video-embed { margin-top: 0 !important; max-width: 360px; }
+    .about-instructors > div:last-child { margin-top: 0 !important; }
+    .about-instructors .resp-grid { grid-template-columns: 1fr !important; }
     /* long-form / detail views stay readable */
     .view2-content { max-width: 720px; margin-left: auto; margin-right: auto; }
     /* card lists → 2 columns */
@@ -569,6 +579,8 @@
         ผ่านกิจกรรมที่สนุกและเห็นผลจริง
       </p>
 
+      <!-- About video + Instructors (2-col on desktop) -->
+      <div class="about-instructors">
       <!-- About video (Facebook Reel embed) -->
       <div class="fb-video-embed" data-href="https://www.facebook.com/reel/2222608341476699" style="margin-top:16px;"></div>
 
@@ -622,6 +634,7 @@
           </div>
         </div>
       </div>
+      </div><!-- /about-instructors -->
 
       <!-- Portfolio -->
       <div style="margin-top:28px">
