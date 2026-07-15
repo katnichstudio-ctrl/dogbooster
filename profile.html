@@ -226,21 +226,21 @@
             <input type="text" id="stId" placeholder="เช่น BF2506XXXX" style="font-family:ui-monospace,monospace;letter-spacing:.04em;">
           </div>
           <div>
-            <label class="field-label">ชื่อเจ้าของ</label>
+            <label class="field-label">ชื่อเจ้าของ <span style="color:#D9534F;">*</span></label>
             <input type="text" id="stOwner" placeholder="ชื่อ-นามสกุล">
           </div>
           <div>
-            <label class="field-label">เบอร์โทรศัพท์</label>
+            <label class="field-label">เบอร์โทรศัพท์ <span style="color:#D9534F;">*</span></label>
             <input type="text" id="stPhone" placeholder="0XX-XXX-XXXX" inputmode="tel">
           </div>
           <div>
-            <label class="field-label">จังหวัด</label>
+            <label class="field-label">จังหวัด <span style="color:#D9534F;">*</span></label>
             <select id="stProvince" onchange="onProvinceChange()">
               <option value="">— เลือกจังหวัด —</option>
             </select>
           </div>
           <div>
-            <label class="field-label">เขต / อำเภอ</label>
+            <label class="field-label">เขต / อำเภอ <span style="color:#D9534F;">*</span></label>
             <select id="stDistrict">
               <option value="">— เลือกจังหวัดก่อน —</option>
             </select>
@@ -481,7 +481,7 @@ function saveEnroll() {
   const phone = document.getElementById('stPhone').value.trim();
   const provinceCode = document.getElementById('stProvince').value;
   const district = document.getElementById('stDistrict').value;
-  if (!stId || !owner || !phone) { alert('กรุณากรอก รหัสนักเรียน ชื่อเจ้าของ และเบอร์โทร'); return; }
+  if (!owner || !phone || !provinceCode || !district) { alert('กรุณากรอก ชื่อเจ้าของ เบอร์โทรศัพท์ จังหวัด และเขต/อำเภอ ให้ครบ'); return; }
 
   const ownerData = JSON.parse(localStorage.getItem('db_owner') || '{}');
   const existing = ownerData.student || {};
