@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="assets/th-geo.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -209,29 +210,11 @@
 
   <div class="body">
 
-    <!-- Owner section -->
+    <!-- Owner / Student section (merged) -->
     <div>
-      <div class="sec-title"><i data-lucide="user"></i> ข้อมูลเจ้าของ</div>
-      <div class="info-card" style="margin-bottom:12px;">
-        <div class="info-row">
-          <span class="info-label">ชื่อ</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="info-val" id="ownerNameCard">—</span>
-            <button onclick="startEditName()" id="editNameBtn" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;display:flex;align-items:center;">
-              <i data-lucide="pencil" style="width:14px;height:14px;"></i>
-            </button>
-          </div>
-        </div>
-        <div id="editNameRow" style="display:none;gap:8px;align-items:center;">
-          <input id="ownerNameInput" type="text" style="flex:1;background:var(--cream);border:1.5px solid var(--gold);border-radius:10px;padding:8px 12px;font-family:inherit;font-size:14px;font-weight:700;color:var(--dark);outline:none;">
-          <button onclick="saveOwnerName()" style="background:var(--gold);border:none;border-radius:10px;padding:8px 14px;font-family:inherit;font-size:13px;font-weight:800;color:var(--dark);cursor:pointer;">บันทึก</button>
-          <button onclick="cancelEditName()" style="background:none;border:1.5px solid #D8D2C8;border-radius:10px;padding:8px 10px;font-family:inherit;font-size:13px;color:var(--muted);cursor:pointer;">ยกเลิก</button>
-        </div>
-      </div>
-
       <!-- นักเรียน DogBooster -->
       <div id="studentSection">
-        <div class="sec-title" style="margin-top:16px;"><i data-lucide="graduation-cap"></i> นักเรียน DogBooster</div>
+        <div class="sec-title"><i data-lucide="user"></i> ข้อมูลเจ้าของ</div>
         <div id="noStudentPanel">
           <button class="btn-enroll" onclick="showEnrollForm()">
             <i data-lucide="plus-circle"></i> เพิ่มการเป็นนักเรียนของ DogBooster
@@ -251,14 +234,15 @@
             <input type="text" id="stPhone" placeholder="0XX-XXX-XXXX" inputmode="tel">
           </div>
           <div>
-            <label class="field-label">คลาสที่เรียน</label>
-            <select id="stClass">
-              <option value="">— เลือกคลาส —</option>
-              <option>FBI · Four Basic Instinct</option>
-              <option>หยุดเห่าอย่างเข้าใจ ใน 21 วัน</option>
-              <option>ครูไปฝึกที่บ้าน</option>
-              <option>ฝากฝึก 30 วัน</option>
-              <option>แก้ปัญหาดุ กัด ก้าวร้าว</option>
+            <label class="field-label">จังหวัด</label>
+            <select id="stProvince" onchange="onProvinceChange()">
+              <option value="">— เลือกจังหวัด —</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">เขต / อำเภอ</label>
+            <select id="stDistrict">
+              <option value="">— เลือกจังหวัดก่อน —</option>
             </select>
           </div>
           <div class="enroll-actions">
@@ -306,7 +290,6 @@ function loadProfile() {
   // Owner header + card
   const name = (owner && owner.name) || '—';
   document.getElementById('ownerNameDisplay').textContent = name;
-  document.getElementById('ownerNameCard').textContent = name;
 
   // Owner avatar
   const ownerPhoto = localStorage.getItem('db_ownerPhoto');
@@ -366,28 +349,40 @@ function loadProfile() {
   });
 }
 
-function startEditName() {
-  const cur = document.getElementById('ownerNameCard').textContent;
-  document.getElementById('ownerNameInput').value = cur === '—' ? '' : cur;
-  document.getElementById('editNameRow').style.display = 'flex';
-  document.getElementById('editNameBtn').style.display = 'none';
-  document.getElementById('ownerNameInput').focus();
+// ── Thai province / district dropdowns ──
+function populateProvinces(selectedProvince) {
+  var sel = document.getElementById('stProvince');
+  if (!sel || !window.TH_GEO) return;
+  var opts = '<option value="">— เลือกจังหวัด —</option>';
+  TH_GEO.provinces.forEach(function(p) {
+    opts += '<option value="' + p.c + '"' + (String(selectedProvince) === String(p.c) ? ' selected' : '') + '>' + p.n + '</option>';
+  });
+  sel.innerHTML = opts;
 }
 
-function cancelEditName() {
-  document.getElementById('editNameRow').style.display = 'none';
-  document.getElementById('editNameBtn').style.display = '';
+function populateDistricts(provinceCode, selectedDistrict) {
+  var sel = document.getElementById('stDistrict');
+  if (!sel || !window.TH_GEO) return;
+  var list = (TH_GEO.amphures[String(provinceCode)]) || [];
+  if (!provinceCode || list.length === 0) {
+    sel.innerHTML = '<option value="">— เลือกจังหวัดก่อน —</option>';
+    return;
+  }
+  var opts = '<option value="">— เลือกเขต/อำเภอ —</option>';
+  list.forEach(function(d) {
+    opts += '<option value="' + d + '"' + (selectedDistrict === d ? ' selected' : '') + '>' + d + '</option>';
+  });
+  sel.innerHTML = opts;
 }
 
-function saveOwnerName() {
-  const newName = document.getElementById('ownerNameInput').value.trim().split(/\s+/)[0];
-  if (!newName) { alert('กรุณากรอกชื่อ'); return; }
-  const owner = JSON.parse(localStorage.getItem('db_owner') || '{}');
-  owner.name = newName;
-  localStorage.setItem('db_owner', JSON.stringify(owner));
-  document.getElementById('ownerNameCard').textContent = newName;
-  document.getElementById('ownerNameDisplay').textContent = newName;
-  cancelEditName();
+function onProvinceChange() {
+  populateDistricts(document.getElementById('stProvince').value, '');
+}
+
+function provinceName(code) {
+  if (!window.TH_GEO) return '';
+  var p = TH_GEO.provinces.find(function(x){ return String(x.c) === String(code); });
+  return p ? p.n : '';
 }
 
 function changeOwnerPhoto(input) {
@@ -446,9 +441,7 @@ function showStudentCard(st) {
   document.getElementById('stIdDisplay').textContent = st.id;
   document.getElementById('studentRows').innerHTML = [
     ['ชื่อเจ้าของ', st.owner || '—'],
-    ['เบอร์โทร', st.phone || '—'],
-    ['คลาสที่เรียน', st.class || '—'],
-    ['วันที่สมัคร', st.enrollDate || '—']
+    ['เบอร์โทร', st.phone || '—']
   ].map(r => '<div class="student-row"><span class="student-row-label">' + r[0] + '</span><span class="student-row-val">' + r[1] + '</span></div>').join('');
   lucide.createIcons();
 }
@@ -461,7 +454,8 @@ function showEnrollForm() {
   document.getElementById('stId').value = st.id || '';
   document.getElementById('stOwner').value = st.owner || (owner && owner.name) || '';
   document.getElementById('stPhone').value = st.phone || '';
-  document.getElementById('stClass').value = st.class || '';
+  populateProvinces(st.provinceCode || '');
+  populateDistricts(st.provinceCode || '', st.district || '');
   lucide.createIcons();
 }
 
@@ -485,17 +479,24 @@ function saveEnroll() {
   const stId  = document.getElementById('stId').value.trim();
   const owner = document.getElementById('stOwner').value.trim();
   const phone = document.getElementById('stPhone').value.trim();
-  const cls   = document.getElementById('stClass').value;
-  if (!stId || !owner || !phone || !cls) { alert('กรุณากรอกข้อมูลให้ครบ'); return; }
+  const provinceCode = document.getElementById('stProvince').value;
+  const district = document.getElementById('stDistrict').value;
+  if (!stId || !owner || !phone) { alert('กรุณากรอก รหัสนักเรียน ชื่อเจ้าของ และเบอร์โทร'); return; }
 
   const ownerData = JSON.parse(localStorage.getItem('db_owner') || '{}');
   const existing = ownerData.student || {};
   ownerData.student = {
     id: stId,
-    owner, phone, class: cls,
+    owner, phone,
+    provinceCode: provinceCode || '',
+    province: provinceName(provinceCode),
+    district: district || '',
     enrollDate: existing.enrollDate || new Date().toISOString().slice(0, 10)
   };
+  // ชื่อเจ้าของ = ชื่อเจ้าของโปรไฟล์ (รวมกัน) — เก็บชื่อแรก
+  ownerData.name = owner.split(/\s+/)[0];
   localStorage.setItem('db_owner', JSON.stringify(ownerData));
+  document.getElementById('ownerNameDisplay').textContent = ownerData.name;
 
   document.getElementById('enrollForm').classList.remove('visible');
   showStudentCard(ownerData.student);
@@ -509,7 +510,7 @@ async function syncStudent(st, lineUserId) {
     await fetch('/api/students', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lineUserId, studentId: st.id, owner: st.owner, phone: st.phone, class: st.class, enrollDate: st.enrollDate })
+      body: JSON.stringify({ lineUserId, studentId: st.id, owner: st.owner, phone: st.phone, province: st.province, district: st.district, enrollDate: st.enrollDate })
     });
   } catch(e) {}
 }
