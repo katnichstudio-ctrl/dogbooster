@@ -109,6 +109,25 @@
     </div>
 
     <div id="rvList" style="display:flex;flex-direction:column;gap:10px;max-width:640px;"></div>
+
+    <!-- สินค้า -->
+    <h1 style="margin-top:40px;">สินค้า DogBooster</h1>
+    <p class="sub">เพิ่มสินค้าที่จะแสดงในหน้าโรงเรียน (ใต้รีวิว)</p>
+
+    <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;margin:14px 0;display:flex;flex-direction:column;gap:12px;max-width:520px;">
+      <input id="pdName" class="field" style="margin-top:0;" placeholder="ชื่อสินค้า">
+      <input id="pdPrice" class="field" style="margin-top:0;" placeholder="ราคา (เช่น 350 บาท)">
+      <textarea id="pdDetail" class="field" style="margin-top:0;min-height:64px;resize:vertical;" placeholder="รายละเอียด (ถ้ามี)"></textarea>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div id="pdPhotoPrev" style="width:54px;height:54px;border-radius:10px;background:#E4DECF;overflow:hidden;flex-shrink:0;display:none;"></div>
+        <input id="pdFile" type="file" accept="image/*" style="display:none" onchange="pdPhoto(this)">
+        <button class="btn sm" style="background:#EDE7DA" onclick="document.getElementById('pdFile').click()">แนบรูปสินค้า</button>
+        <button class="btn sm" onclick="addProduct()">＋ เพิ่มสินค้า</button>
+      </div>
+      <span id="pdMsg" class="msg"></span>
+    </div>
+
+    <div id="pdGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;"></div>
   </div>
 
   <script>
@@ -140,6 +159,7 @@
         document.getElementById('app').style.display = 'block';
         loadPortfolio();
         loadReviews();
+        loadProducts();
       } catch (e) {
         document.getElementById('gate-msg').textContent =
           e.message === 'unauthorized' ? 'Token ไม่ถูกต้อง' : ('ผิดพลาด: ' + e.message);
@@ -374,6 +394,71 @@
       } catch (e) { setRvMsg('ลบไม่สำเร็จ: ' + e.message, true); }
     }
 
+    // ── สินค้า ──
+    var pdPhotoData = null;
+    function setPdMsg(t, isErr) {
+      var el = document.getElementById('pdMsg');
+      el.textContent = t || ''; el.className = 'msg' + (isErr ? ' err' : '');
+    }
+    function pdPhoto(input) {
+      if (!input.files || !input.files[0]) return;
+      compressImage(input.files[0], 600, 0.72, function (c) {
+        pdPhotoData = c;
+        var prev = document.getElementById('pdPhotoPrev');
+        prev.style.display = 'block';
+        prev.innerHTML = '<img src="' + c + '" style="width:100%;height:100%;object-fit:cover;">';
+      });
+    }
+    async function loadProducts() {
+      try {
+        var r = await fetch('/api/products');
+        var data = await r.json();
+        renderProducts(data.products || []);
+      } catch (e) { setPdMsg('โหลดสินค้าไม่สำเร็จ: ' + e.message, true); }
+    }
+    function renderProducts(items) {
+      if (!items.length) { document.getElementById('pdGrid').innerHTML = '<div class="empty" style="grid-column:1/-1;">ยังไม่มีสินค้า</div>'; return; }
+      document.getElementById('pdGrid').innerHTML = items.map(function (p) {
+        return '<div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#fff;">' +
+          (p.image ? '<img src="' + p.image + '" style="width:100%;height:130px;object-fit:cover;display:block;">' : '<div style="height:130px;background:#E4DECF;"></div>') +
+          '<div style="padding:8px 10px;">' +
+            '<div style="font-size:13px;font-weight:800;">' + String(p.name||'').replace(/</g,'&lt;') + '</div>' +
+            (p.price ? '<div style="font-size:12px;color:var(--gold-dark);font-weight:800;">' + String(p.price).replace(/</g,'&lt;') + '</div>' : '') +
+          '</div>' +
+          '<button onclick="deleteProduct(\'' + p.id + '\')" style="position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:15px;line-height:1;">×</button>' +
+        '</div>';
+      }).join('');
+    }
+    async function addProduct() {
+      var name = document.getElementById('pdName').value.trim();
+      var price = document.getElementById('pdPrice').value.trim();
+      var detail = document.getElementById('pdDetail').value.trim();
+      if (!name) { setPdMsg('กรุณาใส่ชื่อสินค้า', true); return; }
+      try {
+        setPdMsg('กำลังบันทึก...');
+        await api('/api/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, price: price, detail: detail, image: pdPhotoData })
+        });
+        document.getElementById('pdName').value = '';
+        document.getElementById('pdPrice').value = '';
+        document.getElementById('pdDetail').value = '';
+        document.getElementById('pdFile').value = '';
+        document.getElementById('pdPhotoPrev').style.display = 'none';
+        pdPhotoData = null;
+        setPdMsg('เพิ่มสินค้าแล้ว ✓');
+        loadProducts();
+      } catch (e) { setPdMsg('บันทึกไม่สำเร็จ: ' + e.message, true); }
+    }
+    async function deleteProduct(id) {
+      if (!confirm('ลบสินค้านี้?')) return;
+      try {
+        await api('/api/products?id=' + encodeURIComponent(id), { method: 'DELETE' });
+        loadProducts();
+      } catch (e) { setPdMsg('ลบไม่สำเร็จ: ' + e.message, true); }
+    }
+
     // auto-login ถ้ามี token เก็บไว้
     if (TOKEN) {
       loadUsers().then(function () {
@@ -381,6 +466,7 @@
         document.getElementById('app').style.display = 'block';
         loadPortfolio();
         loadReviews();
+        loadProducts();
       }).catch(function () { logout(); });
     }
   </script>
