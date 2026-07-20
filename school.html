@@ -1281,10 +1281,96 @@
   </div><!-- /view-treats -->
 
   <!-- ===== VIEW: ฝึกส่วนตัวกับครู ===== -->
+  <!-- ===== VIEW: ฝึกส่วนตัว — เลือกสาขา ===== -->
   <div id="view-private" class="view">
     <div class="view2-header">
       <div class="view2-glow"></div>
       <button onclick="showView('view-classes')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--cream);margin-top:8px;line-height:1.2;position:relative">
+        ฝึกส่วนตัวกับครู<br>ที่บ้าน
+      </h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;position:relative">
+        เลือกสาขาที่สะดวก
+      </p>
+    </div>
+    <div class="view2-content">
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- ศาลายา -->
+        <div class="format-card" onclick="showView('view-private-detail')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-private-detail')">
+          <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
+          <div class="format-card-inner">
+            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาศาลายา</div><div class="format-card-sub">ฝึกส่วนตัวถึงบ้าน</div></div>
+            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+          </div>
+        </div>
+
+        <!-- สายไหม -->
+        <div class="format-card" onclick="showView('view-private-detail')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-private-detail')">
+          <div class="format-card-glow"></div>
+          <div class="format-card-inner">
+            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาสายไหม</div><div class="format-card-sub">ฝึกส่วนตัวถึงบ้าน</div></div>
+            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+          </div>
+        </div>
+
+        <!-- สุวรรณภูมิ (external) -->
+        <a href="https://dogsanook.com/" target="_blank" rel="noopener" class="format-card" style="text-decoration:none;">
+          <div class="format-card-glow"></div>
+          <div class="format-card-inner">
+            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาสุวรรณภูมิ</div><div class="format-card-sub">เปิดเว็บ dogsanook.com</div></div>
+            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="external-link"></i></span>
+          </div>
+        </a>
+
+        <!-- ระนอง (coming soon) -->
+        <div class="format-card" onclick="showView('view-private-ranong')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-private-ranong')">
+          <div class="format-card-glow"></div>
+          <div class="format-card-inner">
+            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาระนอง</div><div class="format-card-sub">เร็วๆ นี้</div></div>
+            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /view-private -->
+
+  <!-- ===== VIEW: สาขาระนอง (coming soon) ===== -->
+  <div id="view-private-ranong" class="view">
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <button onclick="showView('view-private')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--cream);margin-top:8px;line-height:1.2;position:relative">
+        สาขาระนอง
+      </h2>
+    </div>
+    <div class="view2-content">
+      <div style="text-align:center;padding:48px 16px;color:var(--muted);">
+        <div style="font-size:40px;margin-bottom:12px;">📍</div>
+        <div style="font-size:15px;font-weight:700;">เร็วๆ นี้</div>
+      </div>
+    </div>
+  </div><!-- /view-private-ranong -->
+
+  <!-- ===== VIEW: ฝึกส่วนตัว — เนื้อหา (ศาลายา/สายไหม) ===== -->
+  <div id="view-private-detail" class="view">
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <button onclick="showView('view-private')" aria-label="ย้อนกลับ"
               style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
         <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
       </button>
