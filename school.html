@@ -795,22 +795,6 @@
           </div>
         </div>
 
-        <!-- Board & Train 30 days -->
-        <div class="format-card" onclick="showView('view-board')" role="button" tabindex="0"
-             onkeydown="if(event.key==='Enter')showView('view-board')">
-          <div class="format-card-glow"></div>
-          <div class="format-card-inner">
-            <div class="format-card-icon">
-              <span class="ic" style="font-size:21px"><i data-lucide="calendar-days"></i></span>
-            </div>
-            <div style="flex:1;min-width:0">
-              <div class="format-card-title">ฝากครูฝึก 30 วัน</div>
-              <div class="format-card-sub">ฝึกให้ใช้ชีวิตกับคนได้จริง</div>
-            </div>
-            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
-          </div>
-        </div>
-
       </div>
 
       <!-- CTA -->
@@ -1300,12 +1284,12 @@
       <div style="display:flex;flex-direction:column;gap:12px">
 
         <!-- ศาลายา -->
-        <div class="format-card" onclick="showView('view-private-detail')" role="button" tabindex="0"
-             onkeydown="if(event.key==='Enter')showView('view-private-detail')">
+        <div class="format-card" onclick="showView('view-salaya')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-salaya')">
           <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
           <div class="format-card-inner">
             <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
-            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาศาลายา</div><div class="format-card-sub">ฝึกส่วนตัวถึงบ้าน</div></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาศาลายา</div><div class="format-card-sub">ครูไปฝึกที่บ้าน · ฝากครูฝึก 30 วัน</div></div>
             <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
           </div>
         </div>
@@ -1345,6 +1329,50 @@
       </div>
     </div>
   </div><!-- /view-private -->
+
+  <!-- ===== VIEW: สาขาศาลายา (2 options) ===== -->
+  <div id="view-salaya" class="view">
+    <div class="view2-header">
+      <div class="view2-glow"></div>
+      <button onclick="showView('view-private')" aria-label="ย้อนกลับ"
+              style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
+        <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
+      </button>
+      <h2 style="font-size:26px;font-weight:800;letter-spacing:-.01em;color:var(--cream);margin-top:8px;line-height:1.2;position:relative">
+        สาขาศาลายา
+      </h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:10px;position:relative">
+        เลือกบริการที่ต้องการ
+      </p>
+    </div>
+    <div class="view2-content">
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- ครูไปฝึกที่บ้าน -->
+        <div class="format-card" onclick="showView('view-private-detail')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-private-detail')">
+          <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
+          <div class="format-card-inner">
+            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="user-round"></i></span></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">ครูไปฝึกที่บ้าน</div><div class="format-card-sub">1:1 กับครูฝึก · ตามนัด</div></div>
+            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+          </div>
+        </div>
+
+        <!-- ฝากครูฝึก 30 วัน -->
+        <div class="format-card" onclick="showView('view-board')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-board')">
+          <div class="format-card-glow"></div>
+          <div class="format-card-inner">
+            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="calendar-days"></i></span></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">ฝากครูฝึก 30 วัน</div><div class="format-card-sub">ฝึกให้ใช้ชีวิตกับคนได้จริง</div></div>
+            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /view-salaya -->
 
   <!-- ===== VIEW: สาขาระนอง (coming soon) ===== -->
   <div id="view-private-ranong" class="view">
@@ -1461,7 +1489,7 @@
   <div id="view-board" class="view">
     <div class="view2-header">
       <div class="view2-glow"></div>
-      <button onclick="showView('view-classes')" aria-label="ย้อนกลับ"
+      <button onclick="showView('view-salaya')" aria-label="ย้อนกลับ"
               style="background:none;border:none;cursor:pointer;color:var(--cream);padding:8px 0;position:relative">
         <span class="ic" style="font-size:22px"><i data-lucide="arrow-left"></i></span>
       </button>
