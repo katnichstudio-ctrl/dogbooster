@@ -138,19 +138,19 @@
     <button class="back-btn" onclick="goBack()">
       <i data-lucide="arrow-left"></i> กลับ
     </button>
-    <span class="tag">🐾 DogBooster Meetup</span>
-    <h1>วิดีโอเรียนย้อนหลัง</h1>
-    <p>เฉพาะผู้ที่มาร่วม Meetup กับเราเท่านั้น · กรุณาใส่รหัสประจำรุ่น</p>
+    <span class="tag">🐾 Meet up DogBooster</span>
+    <h1>วิดีโอเรียน</h1>
+    <p>เฉพาะผู้ร่วม Meet up เท่านั้น</p>
   </div>
 
   <div class="body">
     <!-- Gate -->
     <div id="gate" class="gate">
       <div class="lock"><i data-lucide="lock"></i></div>
-      <h2>ใส่รหัสประจำรุ่น</h2>
-      <p>รหัสนี้แจกให้เฉพาะผู้ที่มาร่วม Meetup<br>กรุณาอย่าเผยแพร่ต่อ 🙏</p>
+      <h2>ใส่รหัสผ่าน</h2>
+      <p>รหัสนี้เฉพาะผู้มาร่วม Meetup<br>กรุณาอย่าเผยแพร่ต่อ 🙏🏼</p>
       <input id="code" type="text" inputmode="text" autocomplete="off"
-        placeholder="รหัสรุ่น" onkeydown="if(event.key==='Enter')unlock()">
+        placeholder="ใส่รหัส" onkeydown="if(event.key==='Enter')unlock()">
       <button id="unlockBtn" onclick="unlock()">ปลดล็อกดูวิดีโอ</button>
       <div id="err" class="err"></div>
       <div class="hint">ยังไม่มีรหัส? <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener">ทักไลน์เรา</a></div>
