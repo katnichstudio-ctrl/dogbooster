@@ -85,6 +85,9 @@
     position: relative; width: 100%; aspect-ratio: 16/9; margin-bottom: 12px;
   }
   .player-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  /* บังแถบบน (ชื่อคลิป/ปุ่มแชร์) และมุมล่างขวา (โลโก้ YouTube) ไม่ให้กดออกไปหน้า YouTube */
+  .pf-shield-top { position: absolute; top: 0; left: 0; right: 0; height: 64px; z-index: 3; cursor: default; }
+  .pf-shield-logo { position: absolute; bottom: 0; right: 0; width: 92px; height: 44px; z-index: 3; cursor: default; }
   .now-title { font-size: 16px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 18px; }
   .pl-head {
     display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800;
@@ -161,7 +164,11 @@
       <div id="batchName" class="batch-name"></div>
       <div class="playlist-wrap">
         <div class="player-col">
-          <div class="player-frame"><iframe id="player" src="" title="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+          <div class="player-frame">
+            <iframe id="player" src="" title="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <div class="pf-shield-top"></div>
+            <div class="pf-shield-logo"></div>
+          </div>
         </div>
         <div class="list-col">
           <div class="pl-head"><i data-lucide="list-video" style="width:16px;height:16px;"></i> เพลย์ลิสต์ <span id="plCount"></span></div>
@@ -213,7 +220,8 @@
   function playAt(i) {
     var v = PLAYLIST[i]; if (!v) return;
     var iframe = document.getElementById('player');
-    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(v.youtube) + '?rel=0&autoplay=1';
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.youtube) +
+      '?rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&autoplay=1';
     iframe.title = v.title || '';
     var items = document.querySelectorAll('.pl-item');
     for (var k = 0; k < items.length; k++) items[k].classList.toggle('active', k === i);
