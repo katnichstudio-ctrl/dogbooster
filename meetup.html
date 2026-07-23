@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Meetup · วิดีโอเรียนย้อนหลัง — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="icon" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<meta name="theme-color" content="#15130F">
+<meta name="robots" content="noindex,nofollow">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 760px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .header {
+    background: var(--dark); padding: 52px 22px 26px; position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -60px; right: -40px; width: 240px; height: 240px;
+    border-radius: 50%; background: radial-gradient(circle, rgba(240,183,76,.18), transparent 70%);
+  }
+  .back-btn {
+    background: none; border: none; cursor: pointer; color: var(--cream);
+    display: flex; align-items: center; gap: 8px; font-family: inherit; font-size: 14px;
+    font-weight: 700; padding: 0; margin-bottom: 18px; position: relative;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .header .tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--gold);
+    letter-spacing: .04em; margin-bottom: 8px; position: relative;
+  }
+  .header h1 { font-size: 24px; font-weight: 800; color: var(--cream); position: relative; line-height: 1.35; }
+  .header p { font-size: 13.5px; color: var(--muted); margin-top: 8px; position: relative; line-height: 1.6; }
+  .body { padding: 24px 20px 60px; }
+
+  /* ---- Gate (ใส่รหัส) ---- */
+  .gate {
+    background: #fff; border: 1px solid #E4DECF; border-radius: 18px;
+    padding: 26px 22px; max-width: 420px; margin: 10px auto 0; text-align: center;
+    box-shadow: 0 14px 40px -22px rgba(0,0,0,.3);
+  }
+  .gate .lock {
+    width: 60px; height: 60px; border-radius: 50%; background: #FFF3DC;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+  }
+  .gate .lock svg { width: 28px; height: 28px; color: var(--gold-dark); }
+  .gate h2 { font-size: 18px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+  .gate p { font-size: 13.5px; color: var(--text-body); line-height: 1.7; margin-bottom: 18px; }
+  .gate input {
+    width: 100%; font-family: inherit; font-size: 16px; text-align: center; letter-spacing: .06em;
+    padding: 14px 16px; border: 1.5px solid #E0DAD0; border-radius: 12px; background: var(--cream);
+    color: var(--dark); font-weight: 700; outline: none;
+  }
+  .gate input:focus { border-color: var(--gold); }
+  .gate button {
+    width: 100%; margin-top: 12px; font-family: inherit; font-weight: 800; font-size: 15px;
+    padding: 14px; border: none; border-radius: 12px; background: var(--gold); color: var(--dark);
+    cursor: pointer; box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .gate button:disabled { opacity: .6; cursor: default; }
+  .gate .err { color: #C0392B; font-size: 13px; font-weight: 700; margin-top: 12px; min-height: 18px; }
+  .gate .hint { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+  .gate .hint a { color: var(--gold-dark); font-weight: 800; text-decoration: none; }
+
+  /* ---- Video list ---- */
+  .batch-name {
+    display: inline-flex; align-items: center; gap: 8px; background: #FFF3DC; color: var(--amber);
+    font-size: 13px; font-weight: 800; padding: 7px 16px; border-radius: 100px; margin-bottom: 20px;
+  }
+  .vid-block { margin-bottom: 26px; }
+  .vid-title {
+    display: flex; align-items: center; gap: 8px; font-size: 15.5px; font-weight: 800;
+    color: var(--dark); margin-bottom: 10px;
+  }
+  .vid-title .n {
+    background: var(--gold); color: var(--dark); min-width: 26px; height: 26px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0;
+  }
+  .vid-frame {
+    border-radius: 16px; overflow: hidden; background: var(--dark2);
+    position: relative; width: 100%; aspect-ratio: 16/9;
+  }
+  .vid-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .empty { text-align: center; color: var(--muted); font-size: 14px; padding: 30px 0; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: #06C755; color: #fff; text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 14px;
+  }
+  .cta svg { width: 18px; height: 18px; }
+
+  @media (min-width: 700px){
+    .page{ box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .body{ padding: 30px 40px 90px; }
+    .vid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .vid-block { margin-bottom: 0; }
+    html{ background: var(--sand); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <button class="back-btn" onclick="goBack()">
+      <i data-lucide="arrow-left"></i> กลับ
+    </button>
+    <span class="tag">🐾 DogBooster Meetup</span>
+    <h1>วิดีโอเรียนย้อนหลัง</h1>
+    <p>เฉพาะผู้ที่มาร่วม Meetup กับเราเท่านั้น · กรุณาใส่รหัสประจำรุ่น</p>
+  </div>
+
+  <div class="body">
+    <!-- Gate -->
+    <div id="gate" class="gate">
+      <div class="lock"><i data-lucide="lock"></i></div>
+      <h2>ใส่รหัสประจำรุ่น</h2>
+      <p>รหัสนี้แจกให้เฉพาะผู้ที่มาร่วม Meetup<br>กรุณาอย่าเผยแพร่ต่อ 🙏</p>
+      <input id="code" type="text" inputmode="text" autocomplete="off"
+        placeholder="รหัสรุ่น" onkeydown="if(event.key==='Enter')unlock()">
+      <button id="unlockBtn" onclick="unlock()">ปลดล็อกดูวิดีโอ</button>
+      <div id="err" class="err"></div>
+      <div class="hint">ยังไม่มีรหัส? <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener">ทักไลน์เรา</a></div>
+    </div>
+
+    <!-- Videos (hidden until unlocked) -->
+    <div id="videos" style="display:none;">
+      <div id="batchName" class="batch-name"></div>
+      <div id="vidGrid" class="vid-grid"></div>
+      <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+        <i data-lucide="message-circle"></i> สอบถามเพิ่มเติมกับ DogBooster
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function goBack() {
+    if (document.referrer && document.referrer.indexOf(location.host) !== -1) history.back();
+    else location.href = 'school.html';
+  }
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  }); }
+
+  async function unlock() {
+    var btn = document.getElementById('unlockBtn');
+    var code = document.getElementById('code').value.trim();
+    var err = document.getElementById('err');
+    err.textContent = '';
+    if (!code) { err.textContent = 'กรุณาใส่รหัส'; return; }
+    btn.disabled = true; btn.textContent = 'กำลังตรวจสอบ...';
+    try {
+      var r = await fetch('/api/meetup?unlock=1', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code })
+      });
+      var data = await r.json();
+      if (!r.ok) { throw new Error(data.error || 'รหัสไม่ถูกต้อง'); }
+      showVideos(data);
+    } catch (e) {
+      err.textContent = e.message || 'รหัสไม่ถูกต้อง';
+      btn.disabled = false; btn.textContent = 'ปลดล็อกดูวิดีโอ';
+    }
+  }
+
+  function showVideos(data) {
+    var videos = data.videos || [];
+    document.getElementById('gate').style.display = 'none';
+    var wrap = document.getElementById('videos');
+    wrap.style.display = 'block';
+    document.getElementById('batchName').innerHTML =
+      '<i data-lucide="graduation-cap" style="width:16px;height:16px;"></i> ' + esc(data.name || 'Meetup');
+    var grid = document.getElementById('vidGrid');
+    if (!videos.length) {
+      grid.innerHTML = '<div class="empty">รุ่นนี้ยังไม่มีวิดีโอ · โปรดติดต่อทีมงาน</div>';
+    } else {
+      grid.innerHTML = videos.map(function (v, i) {
+        return '<div class="vid-block">' +
+          '<div class="vid-title"><span class="n">' + (i + 1) + '</span>' + esc(v.title || ('วิดีโอ ' + (i + 1))) + '</div>' +
+          '<div class="vid-frame"><iframe src="https://www.youtube.com/embed/' + encodeURIComponent(v.youtube) +
+            '" title="' + esc(v.title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>' +
+        '</div>';
+      }).join('');
+    }
+    if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+    window.scrollTo(0, 0);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+    document.getElementById('code').focus();
+  });
+</script>
+</body>
+</html>

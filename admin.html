@@ -128,6 +128,22 @@
     </div>
 
     <div id="pdGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;"></div>
+
+    <!-- Meetup รุ่น -->
+    <h1 style="margin-top:40px;">Meetup · วิดีโอเรียนย้อนหลัง</h1>
+    <p class="sub">สร้างรุ่นพร้อมรหัสประจำรุ่น ผู้เรียนใส่รหัสในหน้า Meetup เพื่อดูวิดีโอ (YouTube Unlisted)</p>
+
+    <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;margin:14px 0;display:flex;flex-direction:column;gap:12px;max-width:560px;">
+      <input id="muName" class="field" style="margin-top:0;" placeholder="ชื่อรุ่น เช่น Meetup รุ่น 1 (ก.ค. 2026)">
+      <input id="muCode" class="field" style="margin-top:0;" placeholder="รหัสประจำรุ่น เช่น MEETUP01">
+      <textarea id="muVideos" class="field" style="margin-top:0;min-height:120px;resize:vertical;font-family:inherit;" placeholder="วิดีโอ บรรทัดละ 1 คลิป รูปแบบ:  ชื่อคลิป | ลิงก์ YouTube หรือรหัสวิดีโอ&#10;เช่น&#10;สอนฝึกนั่ง | https://youtu.be/abc123XYZ&#10;สอนเรียกกลับมา | dQw4w9WgXcQ"></textarea>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn sm" onclick="addMeetup()">＋ สร้างรุ่น</button>
+      </div>
+      <span id="muMsg" class="msg"></span>
+    </div>
+
+    <div id="muList" style="display:flex;flex-direction:column;gap:10px;max-width:640px;"></div>
   </div>
 
   <script>
@@ -160,6 +176,7 @@
         loadPortfolio();
         loadReviews();
         loadProducts();
+        loadMeetup();
       } catch (e) {
         document.getElementById('gate-msg').textContent =
           e.message === 'unauthorized' ? 'Token ไม่ถูกต้อง' : ('ผิดพลาด: ' + e.message);
@@ -459,6 +476,71 @@
       } catch (e) { setPdMsg('ลบไม่สำเร็จ: ' + e.message, true); }
     }
 
+    // ---- Meetup ----
+    function setMuMsg(t, isErr) {
+      var el = document.getElementById('muMsg');
+      el.textContent = t || ''; el.className = 'msg' + (isErr ? ' err' : '');
+    }
+    function parseVideos(text) {
+      return String(text || '').split('\n').map(function (line) {
+        line = line.trim(); if (!line) return null;
+        var parts = line.split('|');
+        var title = (parts[0] || '').trim();
+        var yt = (parts[1] || parts[0] || '').trim();
+        return { title: title, youtube: yt };
+      }).filter(Boolean);
+    }
+    async function loadMeetup() {
+      try {
+        var data = await api('/api/meetup');
+        renderMeetup(data.batches || []);
+      } catch (e) { setMuMsg('โหลดรุ่นไม่สำเร็จ: ' + e.message, true); }
+    }
+    function renderMeetup(items) {
+      if (!items.length) { document.getElementById('muList').innerHTML = '<div class="empty">ยังไม่มีรุ่น</div>'; return; }
+      document.getElementById('muList').innerHTML = items.map(function (b) {
+        var vids = (b.videos || []).map(function (v, i) {
+          return '<div style="font-size:12.5px;color:#555;">' + (i + 1) + '. ' +
+            String(v.title || '').replace(/</g, '&lt;') + ' <span style="color:#999;">(' +
+            String(v.youtube || '').replace(/</g, '&lt;') + ')</span></div>';
+        }).join('');
+        return '<div style="position:relative;border:1px solid var(--border);border-radius:12px;background:#fff;padding:14px 16px;">' +
+          '<div style="font-size:14px;font-weight:800;">' + String(b.name || '').replace(/</g, '&lt;') + '</div>' +
+          '<div style="font-size:12.5px;margin:4px 0 8px;">รหัส: <b style="color:var(--gold-dark);letter-spacing:.03em;">' +
+            String(b.code || '').replace(/</g, '&lt;') + '</b> · ' + (b.videos || []).length + ' คลิป</div>' +
+          vids +
+          '<button onclick="deleteMeetup(\'' + b.id + '\')" style="position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:15px;line-height:1;">×</button>' +
+        '</div>';
+      }).join('');
+    }
+    async function addMeetup() {
+      var name = document.getElementById('muName').value.trim();
+      var code = document.getElementById('muCode').value.trim();
+      var videos = parseVideos(document.getElementById('muVideos').value);
+      if (!name) { setMuMsg('กรุณาใส่ชื่อรุ่น', true); return; }
+      if (!code) { setMuMsg('กรุณาใส่รหัสประจำรุ่น', true); return; }
+      try {
+        setMuMsg('กำลังบันทึก...');
+        await api('/api/meetup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, code: code, videos: videos })
+        });
+        document.getElementById('muName').value = '';
+        document.getElementById('muCode').value = '';
+        document.getElementById('muVideos').value = '';
+        setMuMsg('สร้างรุ่นแล้ว ✓');
+        loadMeetup();
+      } catch (e) { setMuMsg('บันทึกไม่สำเร็จ: ' + e.message, true); }
+    }
+    async function deleteMeetup(id) {
+      if (!confirm('ลบรุ่นนี้?')) return;
+      try {
+        await api('/api/meetup?id=' + encodeURIComponent(id), { method: 'DELETE' });
+        loadMeetup();
+      } catch (e) { setMuMsg('ลบไม่สำเร็จ: ' + e.message, true); }
+    }
+
     // auto-login ถ้ามี token เก็บไว้
     if (TOKEN) {
       loadUsers().then(function () {
@@ -467,6 +549,7 @@
         loadPortfolio();
         loadReviews();
         loadProducts();
+        loadMeetup();
       }).catch(function () { logout(); });
     }
   </script>
