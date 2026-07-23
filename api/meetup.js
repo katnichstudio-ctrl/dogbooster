@@ -16,6 +16,12 @@
 //   );
 const { readJson, sb, requireAdmin } = require('./_lib');
 
+// รุ่นแบบตั้งค่าในโค้ด (ใช้งานได้ทันทีโดยไม่ต้องรอตาราง Supabase)
+// วิดีโอต้อนรับถูกใส่ให้อัตโนมัติจากฝั่งหน้าเว็บอยู่แล้ว
+const BUILTIN_BATCHES = [
+  { code: 'MeetTB02', name: 'DogBooster Meetup รุ่น TB02', videos: [] }
+];
+
 function qsId(req) {
   const qs = new URLSearchParams((req.url || '').split('?')[1] || '');
   return req.query?.id || qs.get('id');
@@ -47,11 +53,17 @@ module.exports = async (req, res) => {
       const body = await readJson(req);
       const code = String(body.code || '').trim();
       if (!code) return res.status(400).json({ error: 'กรุณาใส่รหัส' });
-      const rows = await sb(
-        `meetup_batches?select=name,videos&code=eq.${encodeURIComponent(code)}&limit=1`
-      );
-      if (!rows || !rows.length) return res.status(404).json({ error: 'รหัสไม่ถูกต้อง' });
-      return res.status(200).json({ name: rows[0].name, videos: rows[0].videos || [] });
+      // ลองหาในตาราง Supabase ก่อน (ถ้ามี) แล้วค่อย fallback รุ่นในโค้ด
+      let rows = null;
+      try {
+        rows = await sb(`meetup_batches?select=name,videos&code=eq.${encodeURIComponent(code)}&limit=1`);
+      } catch (e) { rows = null; }
+      if (rows && rows.length) {
+        return res.status(200).json({ name: rows[0].name, videos: rows[0].videos || [] });
+      }
+      const builtin = BUILTIN_BATCHES.find((b) => b.code === code);
+      if (builtin) return res.status(200).json({ name: builtin.name, videos: builtin.videos });
+      return res.status(404).json({ error: 'รหัสไม่ถูกต้อง' });
     }
 
     if (req.method === 'GET') {
