@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin.html
 Disallow: /api/
 
-Sitemap: https://dogbooster.vercel.app/sitemap.xml
+Sitemap: https://dogbooster.net/sitemap.xml
