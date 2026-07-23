@@ -140,7 +140,7 @@
     </button>
     <span class="tag">🐾 Meet up DogBooster</span>
     <h1>วิดีโอเรียน</h1>
-    <p>เฉพาะผู้ร่วม Meet up เท่านั้น</p>
+    <p>เฉพาะผู้ร่วม Meet up เท่านั้น กรุณาไม่เผยแพร่ต่อ<br>รหัสการเข้าดูจะเปลี่ยนทุก 30 วัน</p>
   </div>
 
   <div class="body">
@@ -162,7 +162,6 @@
       <div class="playlist-wrap">
         <div class="player-col">
           <div class="player-frame"><iframe id="player" src="" title="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-          <div id="nowTitle" class="now-title"></div>
         </div>
         <div class="list-col">
           <div class="pl-head"><i data-lucide="list-video" style="width:16px;height:16px;"></i> เพลย์ลิสต์ <span id="plCount"></span></div>
@@ -208,7 +207,7 @@
   }
 
   // วิดีโอต้อนรับ (เล่นเป็นคลิปแรกของทุกรุ่น)
-  var INTRO_VIDEO = { title: 'วิดีโอต้อนรับ · DogBooster Meetup', youtube: 'S-FH2OaL9ng' };
+  var INTRO_VIDEO = { title: 'วิดีโอต้อนรับ', youtube: 'S-FH2OaL9ng' };
   var PLAYLIST = [];
 
   function playAt(i) {
@@ -216,7 +215,6 @@
     var iframe = document.getElementById('player');
     iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(v.youtube) + '?rel=0&autoplay=1';
     iframe.title = v.title || '';
-    document.getElementById('nowTitle').textContent = v.title || ('วิดีโอ ' + (i + 1));
     var items = document.querySelectorAll('.pl-item');
     for (var k = 0; k < items.length; k++) items[k].classList.toggle('active', k === i);
   }
@@ -226,7 +224,7 @@
     document.getElementById('gate').style.display = 'none';
     document.getElementById('videos').style.display = 'block';
     document.getElementById('batchName').innerHTML =
-      '<i data-lucide="graduation-cap" style="width:16px;height:16px;"></i> ' + esc(data.name || 'Meetup');
+      '<i data-lucide="graduation-cap" style="width:16px;height:16px;"></i> Meet up DogBooster';
 
     // วิดีโอต้อนรับก่อน แล้วตามด้วยวิดีโอของรุ่น
     PLAYLIST = [INTRO_VIDEO].concat(videos);
