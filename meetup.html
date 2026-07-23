@@ -79,33 +79,55 @@
     display: inline-flex; align-items: center; gap: 8px; background: #FFF3DC; color: var(--amber);
     font-size: 13px; font-weight: 800; padding: 7px 16px; border-radius: 100px; margin-bottom: 20px;
   }
-  .vid-block { margin-bottom: 26px; }
-  .vid-title {
-    display: flex; align-items: center; gap: 8px; font-size: 15.5px; font-weight: 800;
-    color: var(--dark); margin-bottom: 10px;
-  }
-  .vid-title .n {
-    background: var(--gold); color: var(--dark); min-width: 26px; height: 26px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0;
-  }
-  .vid-frame {
+  /* ---- Playlist ---- */
+  .player-frame {
     border-radius: 16px; overflow: hidden; background: var(--dark2);
-    position: relative; width: 100%; aspect-ratio: 16/9;
+    position: relative; width: 100%; aspect-ratio: 16/9; margin-bottom: 12px;
   }
-  .vid-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .player-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .now-title { font-size: 16px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 18px; }
+  .pl-head {
+    display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800;
+    color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px;
+  }
+  .pl-list { display: flex; flex-direction: column; gap: 8px; }
+  .pl-item {
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px;
+    background: #fff; border: 1px solid #E7E1D4; cursor: pointer; text-align: left; width: 100%;
+    font-family: inherit; transition: border-color .15s, background .15s;
+  }
+  .pl-item:hover { border-color: var(--gold); }
+  .pl-item.active { background: #FFF6E4; border-color: var(--gold); }
+  .pl-thumb {
+    width: 92px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; flex-shrink: 0;
+    background: var(--dark2); position: relative;
+  }
+  .pl-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pl-thumb .play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.28); color: #fff;
+  }
+  .pl-thumb .play svg { width: 22px; height: 22px; }
+  .pl-item.active .pl-thumb .play { background: rgba(240,183,76,.35); color: var(--gold); }
+  .pl-meta { flex: 1; min-width: 0; }
+  .pl-n { font-size: 11px; font-weight: 800; color: var(--gold-dark); }
+  .pl-t {
+    font-size: 14px; font-weight: 700; color: var(--dark); line-height: 1.35;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
   .empty { text-align: center; color: var(--muted); font-size: 14px; padding: 30px 0; }
   .cta {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     background: #06C755; color: #fff; text-decoration: none;
-    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 14px;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 20px;
   }
   .cta svg { width: 18px; height: 18px; }
 
-  @media (min-width: 700px){
+  @media (min-width: 820px){
     .page{ box-shadow: 0 0 60px rgba(0,0,0,.08); }
     .body{ padding: 30px 40px 90px; }
-    .vid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-    .vid-block { margin-bottom: 0; }
+    .playlist-wrap { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; }
+    .player-col { position: sticky; top: 24px; }
     html{ background: var(--sand); }
   }
 </style>
@@ -137,7 +159,16 @@
     <!-- Videos (hidden until unlocked) -->
     <div id="videos" style="display:none;">
       <div id="batchName" class="batch-name"></div>
-      <div id="vidGrid" class="vid-grid"></div>
+      <div class="playlist-wrap">
+        <div class="player-col">
+          <div class="player-frame"><iframe id="player" src="" title="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+          <div id="nowTitle" class="now-title"></div>
+        </div>
+        <div class="list-col">
+          <div class="pl-head"><i data-lucide="list-video" style="width:16px;height:16px;"></i> เพลย์ลิสต์ <span id="plCount"></span></div>
+          <div id="plList" class="pl-list"></div>
+        </div>
+      </div>
       <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
         <i data-lucide="message-circle"></i> สอบถามเพิ่มเติมกับ DogBooster
       </a>
@@ -176,25 +207,43 @@
     }
   }
 
+  // วิดีโอต้อนรับ (เล่นเป็นคลิปแรกของทุกรุ่น)
+  var INTRO_VIDEO = { title: 'วิดีโอต้อนรับ · DogBooster Meetup', youtube: 'S-FH2OaL9ng' };
+  var PLAYLIST = [];
+
+  function playAt(i) {
+    var v = PLAYLIST[i]; if (!v) return;
+    var iframe = document.getElementById('player');
+    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(v.youtube) + '?rel=0&autoplay=1';
+    iframe.title = v.title || '';
+    document.getElementById('nowTitle').textContent = v.title || ('วิดีโอ ' + (i + 1));
+    var items = document.querySelectorAll('.pl-item');
+    for (var k = 0; k < items.length; k++) items[k].classList.toggle('active', k === i);
+  }
+
   function showVideos(data) {
     var videos = data.videos || [];
     document.getElementById('gate').style.display = 'none';
-    var wrap = document.getElementById('videos');
-    wrap.style.display = 'block';
+    document.getElementById('videos').style.display = 'block';
     document.getElementById('batchName').innerHTML =
       '<i data-lucide="graduation-cap" style="width:16px;height:16px;"></i> ' + esc(data.name || 'Meetup');
-    var grid = document.getElementById('vidGrid');
-    if (!videos.length) {
-      grid.innerHTML = '<div class="empty">รุ่นนี้ยังไม่มีวิดีโอ · โปรดติดต่อทีมงาน</div>';
-    } else {
-      grid.innerHTML = videos.map(function (v, i) {
-        return '<div class="vid-block">' +
-          '<div class="vid-title"><span class="n">' + (i + 1) + '</span>' + esc(v.title || ('วิดีโอ ' + (i + 1))) + '</div>' +
-          '<div class="vid-frame"><iframe src="https://www.youtube.com/embed/' + encodeURIComponent(v.youtube) +
-            '" title="' + esc(v.title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>' +
-        '</div>';
-      }).join('');
-    }
+
+    // วิดีโอต้อนรับก่อน แล้วตามด้วยวิดีโอของรุ่น
+    PLAYLIST = [INTRO_VIDEO].concat(videos);
+    document.getElementById('plCount').textContent = '(' + PLAYLIST.length + ')';
+
+    document.getElementById('plList').innerHTML = PLAYLIST.map(function (v, i) {
+      var t = esc(v.title || ('วิดีโอ ' + (i + 1)));
+      return '<button class="pl-item" onclick="playAt(' + i + ')">' +
+        '<div class="pl-thumb">' +
+          '<img src="https://img.youtube.com/vi/' + encodeURIComponent(v.youtube) + '/mqdefault.jpg" alt="" loading="lazy">' +
+          '<span class="play"><i data-lucide="play"></i></span>' +
+        '</div>' +
+        '<div class="pl-meta"><div class="pl-n">EP ' + (i + 1) + '</div><div class="pl-t">' + t + '</div></div>' +
+      '</button>';
+    }).join('');
+
+    playAt(0);
     if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
     window.scrollTo(0, 0);
   }
