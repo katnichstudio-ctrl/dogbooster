@@ -1365,10 +1365,21 @@
     <div class="view2-content">
       <div style="display:flex;flex-direction:column;gap:12px">
 
+        <!-- ระนอง (coming soon) -->
+        <div class="format-card" onclick="showView('view-private-ranong')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')showView('view-private-ranong')">
+          <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
+          <div class="format-card-inner">
+            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
+            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาระนอง</div><div class="format-card-sub">เร็วๆ นี้</div></div>
+            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
+          </div>
+        </div>
+
         <!-- ศาลายา -->
         <div class="format-card" onclick="showView('view-salaya')" role="button" tabindex="0"
              onkeydown="if(event.key==='Enter')showView('view-salaya')">
-          <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
+          <div class="format-card-glow"></div>
           <div class="format-card-inner">
             <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
             <div style="flex:1;min-width:0"><div class="format-card-title">สาขาศาลายา</div><div class="format-card-sub">ครูไปฝึกที่บ้าน · ฝากครูฝึก 30 วัน</div></div>
@@ -1396,17 +1407,6 @@
             <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="external-link"></i></span>
           </div>
         </a>
-
-        <!-- ระนอง (coming soon) -->
-        <div class="format-card" onclick="showView('view-private-ranong')" role="button" tabindex="0"
-             onkeydown="if(event.key==='Enter')showView('view-private-ranong')">
-          <div class="format-card-glow"></div>
-          <div class="format-card-inner">
-            <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="map-pin"></i></span></div>
-            <div style="flex:1;min-width:0"><div class="format-card-title">สาขาระนอง</div><div class="format-card-sub">เร็วๆ นี้</div></div>
-            <span class="format-card-chevron ic" style="font-size:18px"><i data-lucide="chevron-right"></i></span>
-          </div>
-        </div>
 
       </div>
     </div>
