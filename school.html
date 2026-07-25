@@ -1932,7 +1932,7 @@
 </div><!-- /app-shell -->
 
 <script>
-  function showView(id) {
+  function showView(id, opts) {
     document.querySelectorAll('.view').forEach(function(v) {
       v.classList.remove('active');
     });
@@ -1942,16 +1942,37 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (typeof renderFbVideos === 'function') setTimeout(renderFbVideos, 60);
     }
+    if (!(opts && opts.noHash)) {
+      var h = (id === 'view-school') ? '' : id.replace(/^view-/, '');
+      if ((location.hash || '').replace(/^#/, '') !== h) {
+        location.hash = h;
+      }
+    }
   }
 
   // เปิดหน้า "ครูไปฝึกที่บ้าน" พร้อมแสดงเขตบริการตามสาขา
-  function openHomeTraining(branch) {
+  function openHomeTraining(branch, opts) {
     ['salaya','saimai'].forEach(function(b){
       var el = document.getElementById('area-' + b);
       if (el) el.style.display = (b === branch) ? '' : 'none';
     });
-    showView('view-private-detail');
+    showView('view-private-detail', { noHash: true });
+    if (!(opts && opts.noHash)) {
+      var h = 'home-' + branch;
+      if ((location.hash || '').replace(/^#/, '') !== h) location.hash = h;
+    }
   }
+
+  // ── Hash routing: ทุก view มีลิงก์ของตัวเอง (เช่น #classes, #ranong, #home-salaya) ──
+  function routeFromHash() {
+    var h = (location.hash || '').replace(/^#/, '');
+    if (!h) { showView('view-school', { noHash: true }); return; }
+    if (h === 'home-salaya') { openHomeTraining('salaya', { noHash: true }); return; }
+    if (h === 'home-saimai') { openHomeTraining('saimai', { noHash: true }); return; }
+    var id = 'view-' + h;
+    if (document.getElementById(id)) { showView(id, { noHash: true }); }
+  }
+  window.addEventListener('hashchange', routeFromHash);
 
   // ── ผลงาน DogBooster ──
   function loadPortfolio() {
@@ -2090,6 +2111,7 @@
       }
     }
     init();
+    if (location.hash) routeFromHash();
   });
 </script>
 </body>
