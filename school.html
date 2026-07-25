@@ -1430,8 +1430,8 @@
       <div style="display:flex;flex-direction:column;gap:12px">
 
         <!-- ครูไปฝึกที่บ้าน -->
-        <div class="format-card" onclick="showView('view-private-detail')" role="button" tabindex="0"
-             onkeydown="if(event.key==='Enter')showView('view-private-detail')">
+        <div class="format-card" onclick="openHomeTraining('salaya')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')openHomeTraining('salaya')">
           <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
           <div class="format-card-inner">
             <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="user-round"></i></span></div>
@@ -1452,42 +1452,6 @@
         </div>
 
       </div>
-
-      <!-- เขตบริการ -->
-      <div class="section-head" style="margin-top:26px;margin-bottom:12px;">เขตบริการ</div>
-      <div style="background:var(--sand);border-radius:16px;padding:16px 18px;">
-        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
-          <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:var(--dark);">จังหวัดนครปฐม</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
-          <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:var(--dark);">จังหวัดนนทบุรี</div>
-            <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">บางบัวทอง · บางกรวย · บางใหญ่ · ไทรน้อย</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:10px;">
-          <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:var(--dark);">กรุงเทพฯ (ฝั่งธนบุรี)</div>
-            <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">ตลิ่งชัน · ทวีวัฒนา · บางแค · หนองแขม</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Map -->
-      <a href="https://maps.app.goo.gl/eVbyzmWSXKz3EU2i8" target="_blank" rel="noopener"
-         style="display:flex;align-items:center;gap:10px;background:#F5F3EF;border:1px solid var(--border);border-radius:14px;padding:13px 16px;text-decoration:none;margin-top:14px;">
-        <span class="ic" style="font-size:20px;color:#E53935"><i data-lucide="map-pin"></i></span>
-        <div>
-          <div style="font-weight:800;font-size:14px;color:var(--dark);">บ้านครูแคทนิช · ศาลายา</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px;">กดเพื่อดูใน Google Maps</div>
-        </div>
-        <span class="ic" style="font-size:16px;color:var(--muted);margin-left:auto"><i data-lucide="chevron-right"></i></span>
-      </a>
 
     </div>
   </div><!-- /view-salaya -->
@@ -1511,8 +1475,8 @@
       <div style="display:flex;flex-direction:column;gap:12px">
 
         <!-- ครูไปฝึกที่บ้าน -->
-        <div class="format-card" onclick="showView('view-private-detail')" role="button" tabindex="0"
-             onkeydown="if(event.key==='Enter')showView('view-private-detail')">
+        <div class="format-card" onclick="openHomeTraining('saimai')" role="button" tabindex="0"
+             onkeydown="if(event.key==='Enter')openHomeTraining('saimai')">
           <div class="format-card-glow" style="background:radial-gradient(circle,rgba(240,183,76,.2),transparent 70%)"></div>
           <div class="format-card-inner">
             <div class="format-card-icon"><span class="ic" style="font-size:21px"><i data-lucide="user-round"></i></span></div>
@@ -1521,25 +1485,6 @@
           </div>
         </div>
 
-      </div>
-
-      <!-- เขตบริการ -->
-      <div class="section-head" style="margin-top:26px;margin-bottom:12px;">เขตบริการ</div>
-      <div style="background:var(--sand);border-radius:16px;padding:16px 18px;">
-        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
-          <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:var(--dark);">กรุงเทพฯ (โซนเหนือ)</div>
-            <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">สายไหม · ดอนเมือง · บางเขน · หลักสี่</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:10px;">
-          <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:var(--dark);">จังหวัดปทุมธานี</div>
-            <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">รังสิต · คลองหลวง · ลำลูกกา · คูคต</div>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -1701,6 +1646,52 @@
           </div>
         </div>
         <div style="font-size:12px;color:var(--muted);margin-top:10px;padding:0 2px;">* เกิน 15 กม. คิดค่าเดินทาง 1,500–3,000 บาท/คอร์ส</div>
+      </div>
+
+      <!-- เขตบริการ (ศาลายา) -->
+      <div id="area-salaya" style="display:none;margin-bottom:22px;">
+        <div class="section-head" style="margin-bottom:12px;">เขตบริการ</div>
+        <div style="background:var(--sand);border-radius:16px;padding:16px 18px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+            <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
+            <div><div style="font-size:13px;font-weight:800;color:var(--dark);">จังหวัดนครปฐม</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+            <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
+            <div>
+              <div style="font-size:13px;font-weight:800;color:var(--dark);">จังหวัดนนทบุรี</div>
+              <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">บางบัวทอง · บางกรวย · บางใหญ่ · ไทรน้อย</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
+            <div>
+              <div style="font-size:13px;font-weight:800;color:var(--dark);">กรุงเทพฯ (ฝั่งธนบุรี)</div>
+              <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">ตลิ่งชัน · ทวีวัฒนา · บางแค · หนองแขม</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- เขตบริการ (สายไหม) -->
+      <div id="area-saimai" style="display:none;margin-bottom:22px;">
+        <div class="section-head" style="margin-bottom:12px;">เขตบริการ</div>
+        <div style="background:var(--sand);border-radius:16px;padding:16px 18px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+            <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
+            <div>
+              <div style="font-size:13px;font-weight:800;color:var(--dark);">กรุงเทพฯ (โซนเหนือ)</div>
+              <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">สายไหม · ดอนเมือง · บางเขน · หลักสี่</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <span class="ic" style="font-size:18px;color:var(--gold-dark);flex-shrink:0;margin-top:1px;"><i data-lucide="map-pin"></i></span>
+            <div>
+              <div style="font-size:13px;font-weight:800;color:var(--dark);">จังหวัดปทุมธานี</div>
+              <div style="font-size:12.5px;color:var(--text-body);margin-top:2px;">รังสิต · คลองหลวง · ลำลูกกา · คูคต</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Price -->
@@ -1930,6 +1921,15 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (typeof renderFbVideos === 'function') setTimeout(renderFbVideos, 60);
     }
+  }
+
+  // เปิดหน้า "ครูไปฝึกที่บ้าน" พร้อมแสดงเขตบริการตามสาขา
+  function openHomeTraining(branch) {
+    ['salaya','saimai'].forEach(function(b){
+      var el = document.getElementById('area-' + b);
+      if (el) el.style.display = (b === branch) ? '' : 'none';
+    });
+    showView('view-private-detail');
   }
 
   // ── ผลงาน DogBooster ──
