@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -439,8 +440,38 @@ async function syncStudent(st, lineUserId) {
   } catch(e) {}
 }
 
+// หน้านี้เดิมเช็คแค่ localStorage ('db_lineUserId') ที่ตั้งไว้จากหน้า login/index เท่านั้น
+// ถ้าค่านั้นหายไป (เช่น in-app browser ล้าง storage) หน้านี้จะขึ้น "ยังไม่ได้ล็อกอิน" ทันที
+// ทั้งที่ผู้ใช้ยังล็อกอิน LINE อยู่จริง (โดยเฉพาะเข้าจากริชเมนู ซึ่งมักเป็น LIFF client mode)
+// เลยเช็คสถานะ LIFF สดใหม่ทุกครั้งที่เข้าหน้านี้ก่อน แล้วค่อยเซตคีย์ให้ตรงถ้ายังล็อกอินอยู่จริง
+const PROFILE_LIFF_ID = '2010372666-SryiLU85';
+
+async function ensureLineSync() {
+  try {
+    if (typeof liff === 'undefined') return;
+    await Promise.race([
+      liff.init({ liffId: PROFILE_LIFF_ID }),
+      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 8000))
+    ]);
+    if (liff.isLoggedIn() && !localStorage.getItem('db_lineUserId')) {
+      const profile = await liff.getProfile();
+      localStorage.setItem('db_lineUserId', profile.userId);
+      localStorage.setItem('db_lineDisplayName', profile.displayName || '');
+    }
+  } catch (e) {
+    // LIFF ใช้ไม่ได้ (เช่น เปิดนอกแอป LINE) — ปล่อยผ่าน ให้ตกไปที่ลิงก์ "ล็อกอิน LINE" ตามปกติ
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const init = () => { if (window.lucide) { lucide.createIcons(); loadProfile(); } else { setTimeout(init, 80); } };
+  const init = () => {
+    if (window.lucide) {
+      lucide.createIcons();
+      ensureLineSync().finally(loadProfile);
+    } else {
+      setTimeout(init, 80);
+    }
+  };
   init();
 });
 </script>
