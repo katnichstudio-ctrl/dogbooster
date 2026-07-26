@@ -338,6 +338,20 @@
       if (!liffReady()) return;
       try {
         await liff.init({ liffId: LIFF_ID });
+
+        /* ถ้าเปิดจาก LINE in-app browser แบบลิงก์ธรรมดา (ไม่ใช่ผ่าน liff.line.me) จะไม่ใช่
+           "client mode" (liff.isInClient() === false) ล็อกอินเลยต้องพึ่ง localStorage/cookie
+           ของ webview นั้นล้วน ๆ ซึ่ง in-app browser มักไม่เก็บข้อมูลข้ามการเปิด-ปิดแต่ละครั้ง
+           ทำให้ต้องล็อกอิน LINE ใหม่ทุกครั้ง แก้โดยเด้งเข้า liff.line.me ให้ LINE เปิดเป็น
+           Mini App จริง ซึ่งใช้ session ของแอป LINE เอง ไม่ใช่ storage ของ webview */
+        var openedInLineApp = /\bLine\//.test(navigator.userAgent);
+        var alreadyRedirected = sessionStorage.getItem('liffRedirected') === '1';
+        if (openedInLineApp && !liff.isInClient() && !alreadyRedirected) {
+          sessionStorage.setItem('liffRedirected', '1');
+          location.href = 'https://liff.line.me/' + LIFF_ID;
+          return;
+        }
+
         /* ถ้ากลับมาจากการ login ของ LINE และล็อกอินอยู่แล้ว -> ไปต่อทันที */
         if (liff.isLoggedIn()) {
           await afterLogin();

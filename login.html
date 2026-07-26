@@ -196,6 +196,17 @@ async function initPage() {
       new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
     ]);
 
+    // เปิดจาก LINE in-app browser แบบลิงก์ธรรมดา (ไม่ใช่ liff.line.me) ไม่ใช่ client mode
+    // ล็อกอินต้องพึ่ง storage ของ webview ล้วน ๆ ซึ่งมักไม่เก็บข้ามการเปิด-ปิด — เด้งเข้า
+    // liff.line.me ให้ LINE เปิดเป็น Mini App จริง ใช้ session ของแอป LINE เองแทน
+    const openedInLineApp = /\bLine\//.test(navigator.userAgent);
+    const alreadyRedirected = sessionStorage.getItem('liffRedirected') === '1';
+    if (openedInLineApp && !liff.isInClient() && !alreadyRedirected) {
+      sessionStorage.setItem('liffRedirected', '1');
+      location.href = 'https://liff.line.me/' + LIFF_ID;
+      return;
+    }
+
     // Came back from LINE auth redirect
     if (liff.isLoggedIn()) {
       await handleLogin();
