@@ -320,6 +320,10 @@
   <!-- ══ STEP 1 · WELCOME ══ -->
   <div id="s1" class="step active">
     <div class="welcome-hero">
+      <button onclick="goHome()" aria-label="ย้อนกลับ"
+              style="position:absolute;top:46px;left:16px;z-index:2;background:rgba(21,19,15,.55);backdrop-filter:blur(6px);border:none;cursor:pointer;color:var(--cream);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+      </button>
       <div class="logo-wrap"><img src="assets/logo.png" alt="DogBooster"></div>
       <div style="color:var(--cream);font-size:28px;font-weight:800;line-height:1.2;">รู้จักสุนัขของคุณ<br>ก่อนเริ่มฝึก</div>
       <div style="color:#A39B8C;font-size:14px;margin-top:10px;line-height:1.6;">แบบประเมินบุคลิก 20 ข้อ ใช้เวลา ~5 นาที เพื่อให้เราออกแบบเส้นทางการฝึกที่เหมาะกับนิสัยสุนัขของคุณ</div>
@@ -766,6 +770,10 @@
 
 
 <script>
+function goHome() {
+  if (document.referrer && document.referrer.indexOf(location.host) !== -1) history.back();
+  else location.href = 'school.html';
+}
 const QUESTIONS = [
   { id:1,  axis:"am", dir:1,  group:"ด้านพลังงาน",       icon:"zap",          th:"น้องหมาชอบออกไปสำรวจสถานที่ใหม่" },
   { id:2,  axis:"am", dir:1,  group:"ด้านพลังงาน",       icon:"zap",          th:"อยู่เฉยเกิน 30 นาทีได้ยาก" },
