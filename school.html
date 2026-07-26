@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -540,7 +541,7 @@
     border-radius: 12px;
   }
 </style>
-  <link rel="canonical" href="https://dogbooster.net/school.html">
+  <link rel="canonical" href="https://dogbooster.net/">
   <meta name="description" content="DogBooster โรงเรียนฝึกสุนัขแบบ Force-free 100% ประสบการณ์ 30 ปี ที่ศาลายา — คอร์สออนไลน์ FBI, หยุดเห่าอย่างเข้าใจ, ทำขนมสุนัข, ฝึกส่วนตัวถึงบ้าน และฝากฝึก 30 วัน · บริการฝึกถึงบ้าน นครปฐม, ศาลายา, บางบัวทอง, บางกรวย, บางใหญ่, ไทรน้อย, ตลิ่งชัน, ทวีวัฒนา, บางแค และระนอง">
   <link rel="icon" href="/assets/logo.png">
   <link rel="apple-touch-icon" href="/assets/logo.png">
@@ -551,7 +552,7 @@
   <meta property="og:title" content="ข้อมูลสถาบัน DogBooster · โรงเรียนฝึกสุนัข Force-free">
   <meta property="og:description" content="DogBooster โรงเรียนฝึกสุนัขแบบ Force-free 100% ประสบการณ์ 30 ปี ที่ศาลายา — คอร์สออนไลน์ FBI, หยุดเห่าอย่างเข้าใจ, ทำขนมสุนัข, ฝึกส่วนตัวถึงบ้าน และฝากฝึก 30 วัน">
   <meta property="og:image" content="https://dogbooster.net/assets/logo.png">
-  <meta property="og:url" content="https://dogbooster.net/school.html">
+  <meta property="og:url" content="https://dogbooster.net/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ข้อมูลสถาบัน DogBooster · โรงเรียนฝึกสุนัข Force-free">
   <meta name="twitter:description" content="DogBooster โรงเรียนฝึกสุนัขแบบ Force-free 100% ประสบการณ์ 30 ปี ที่ศาลายา — คอร์สออนไลน์ FBI, หยุดเห่าอย่างเข้าใจ, ทำขนมสุนัข, ฝึกส่วนตัวถึงบ้าน และฝากฝึก 30 วัน">
@@ -2152,6 +2153,33 @@
     init();
     if (location.hash) routeFromHash();
   });
+
+  // ── LINE login แบบเงียบ (ไม่ redirect, ไม่บล็อกเนื้อหา) เพื่อให้ profile/คอร์สทำงานเมื่อเข้าผ่าน LINE ──
+  (function silentLineLogin() {
+    var LIFF_ID = '2010372666-SryiLU85';
+    if (typeof liff === 'undefined' || !LIFF_ID) return;
+    liff.init({ liffId: LIFF_ID }).then(function () {
+      if (!liff.isLoggedIn()) return;
+      liff.getProfile().then(function (p) {
+        localStorage.setItem('db_user', JSON.stringify({
+          userId: p.userId, displayName: p.displayName, pictureUrl: p.pictureUrl
+        }));
+        localStorage.setItem('db_lineUserId', p.userId);
+      }).catch(function () {});
+      try {
+        var idToken = liff.getIDToken();
+        if (idToken) {
+          fetch('/api/me', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idToken: idToken })
+          }).then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (d) { if (d) localStorage.setItem('db_courses', JSON.stringify(d.courses || [])); })
+            .catch(function () {});
+        }
+      } catch (e) {}
+    }).catch(function () {});
+  })();
 </script>
 </body>
 </html>
