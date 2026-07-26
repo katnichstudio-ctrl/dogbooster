@@ -309,6 +309,10 @@
           displayName: profile.displayName,
           pictureUrl: profile.pictureUrl
         }));
+        /* profile.html/onboarding.html/dog-detail.html เช็คสถานะล็อกอินจากคีย์นี้ ไม่ใช่ db_user
+           ถ้าไม่ตั้งไว้ที่นี่ หน้าโปรไฟล์จะขึ้น "ยังไม่ได้ล็อกอิน" ทุกครั้งแม้ล็อกอินผ่านหน้านี้ไปแล้ว */
+        localStorage.setItem('db_lineUserId', profile.userId);
+        localStorage.setItem('db_lineDisplayName', profile.displayName || '');
         /* ลงทะเบียนผู้ใช้กับ backend + ดึงสิทธิเข้าเรียนมา cache (ไม่บล็อกถ้า /api ยังไม่พร้อม) */
         try {
           var idToken = liff.getIDToken();

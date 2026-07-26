@@ -173,6 +173,14 @@ function showError(msg) {
 }
 
 async function initPage() {
+  // เช็ค LINE userId ที่เคยล็อกอินไว้ก่อน liff.init() ทั้งหมด — กันกรณีเน็ตช้าแล้ว
+  // liff.init() ค้างจน timeout ด้านล่างทำงาน ทั้งที่จริง ๆ ผู้ใช้ล็อกอินอยู่แล้ว
+  const existing = localStorage.getItem('db_lineUserId');
+  if (existing) {
+    goToResult();
+    return;
+  }
+
   try {
     // บันทึก ?next param ไว้ก่อน LIFF init (เพราะ LIFF อาจลบ query params)
     const next = new URLSearchParams(location.search).get('next');
@@ -181,18 +189,12 @@ async function initPage() {
       localStorage.setItem('liffNext', next); // survive LINE OAuth redirect (sessionStorage gets cleared)
     }
 
-    // timeout 6 วินาที ถ้า LIFF ค้างให้แสดง UI ปกติ
+    // timeout 15 วินาที ถ้า LIFF ค้างให้แสดง UI ปกติ (6 วิเดิมสั้นเกินไปสำหรับเน็ตมือถือ
+    // ทำให้บางทีขึ้น error แล้วต้องล็อกอินใหม่ทั้งที่ session ยังไม่หมดจริง)
     await Promise.race([
       liff.init({ liffId: LIFF_ID }),
-      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 6000))
+      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
     ]);
-
-    // Already have LINE userId saved → skip to result
-    const existing = localStorage.getItem('db_lineUserId');
-    if (existing) {
-      goToResult();
-      return;
-    }
 
     // Came back from LINE auth redirect
     if (liff.isLoggedIn()) {
