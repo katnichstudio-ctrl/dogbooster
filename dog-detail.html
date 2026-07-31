@@ -355,20 +355,11 @@
     </div>
   </div>
 
-  <!-- ── Tab bar ── -->
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('info')">ข้อมูล</button>
-    <button class="tab-btn" onclick="switchTab('assess')">ประเมิน</button>
-    <button class="tab-btn" onclick="switchTab('courses')">คอร์ส</button>
-    <button class="tab-btn" onclick="switchTab('homework')">การบ้าน</button>
-    <button class="tab-btn" onclick="switchTab('timeline')">ไทม์ไลน์</button>
-  </div>
-
   <!-- ── Body ── -->
   <div class="body">
 
     <!-- ── Tab: ข้อมูล ── -->
-    <div id="tab-info" class="tab-panel active">
+    <div id="tab-info" class="tab-panel">
 
       <!-- ข้อมูลพื้นฐาน -->
       <div>
@@ -1285,8 +1276,27 @@ document.addEventListener('DOMContentLoaded', function() {
     var activeDogId = localStorage.getItem('db_activeDogId');
     if (photoKey && activeDogId === dog.id) dog.photo = photoKey;
 
-    renderHeader();
-    loadFields();
+    // เหลือเฉพาะ "ผลประเมินบุคลิก" → ไปหน้าแสดงผลแบบเต็ม (type-detail) ตามที่กำหนด
+    if (dog.type) {
+      try {
+        sessionStorage.setItem('dogName', dog.name || 'น้อง');
+        if (dog.axes) sessionStorage.setItem('dogAxes', JSON.stringify(dog.axes));
+        if (dog.photo) sessionStorage.setItem('dogPhoto', dog.photo);
+      } catch (e) {}
+      location.replace('type-detail.html?type=' + encodeURIComponent(dog.type));
+      return;
+    }
+
+    // ยังไม่มีผลประเมิน → ชวนทำแบบประเมิน
+    document.querySelector('.body').innerHTML =
+      '<div style="text-align:center;padding:48px 20px;color:var(--muted);">' +
+        '<div style="font-size:44px;margin-bottom:14px;">🐾</div>' +
+        '<div style="font-size:16px;font-weight:800;color:var(--dark);">' + (dog.name || 'น้อง') + ' ยังไม่มีผลประเมิน</div>' +
+        '<div style="font-size:13px;margin-top:6px;line-height:1.6;">ทำแบบประเมินบุคลิกเพื่อค้นหา Type ของน้องหมา</div>' +
+        '<a href="onboarding.html" class="pbtn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;text-decoration:none;background:var(--gold);color:var(--dark);font-weight:800;padding:13px 22px;border-radius:14px;">' +
+          '<i data-lucide="clipboard-list" style="width:18px;height:18px;"></i> ทำแบบประเมินบุคลิก' +
+        '</a>' +
+      '</div>';
     lucide.createIcons();
   }
   init();
