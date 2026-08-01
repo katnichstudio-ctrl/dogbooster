@@ -1277,13 +1277,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if (photoKey && activeDogId === dog.id) dog.photo = photoKey;
 
     // เหลือเฉพาะ "ผลประเมินบุคลิก" → ไปหน้าแสดงผลแบบเต็ม (type-detail) ตามที่กำหนด
-    if (dog.type) {
+    var code = dog.type || null;
+    if (!code && dog.axes) {
+      var a = dog.axes;
+      code = (a.ef>=.5?'E':'F') + (a.sr>=.5?'S':'R') + (a.cn>=.5?'C':'N') + (a.am>=.5?'A':'M');
+    }
+    if (code) {
       try {
         sessionStorage.setItem('dogName', dog.name || 'น้อง');
         if (dog.axes) sessionStorage.setItem('dogAxes', JSON.stringify(dog.axes));
         if (dog.photo) sessionStorage.setItem('dogPhoto', dog.photo);
       } catch (e) {}
-      location.replace('type-detail.html?type=' + encodeURIComponent(dog.type));
+      location.replace('type-detail.html?type=' + encodeURIComponent(code));
       return;
     }
 
