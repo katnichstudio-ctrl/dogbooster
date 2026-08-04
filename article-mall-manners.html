@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>มารยาทพาสัตว์เลี้ยงเข้าห้าง: สิ่งที่เจ้าของควรรู้ — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .num-list { margin: 4px 0 8px; padding: 0; list-style: none; counter-reset: n; }
+  .num-list li {
+    position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .num-list li b { color: var(--dark); font-weight: 800; display: block; margin-bottom: 2px; }
+  .num-list li::before {
+    counter-increment: n; content: counter(n);
+    position: absolute; left: 12px; top: 12px; width: 26px; height: 26px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .tip { margin-bottom: 14px; }
+  .tip b { color: var(--dark); font-weight: 800; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-mall-manners.html">
+  <meta name="description" content="รวมมารยาทสำคัญเมื่อพาน้องหมาเข้าห้างสรรพสินค้า ทั้งฝั่งที่ต้องคำนึงถึงคนรอบข้าง และสวัสดิภาพของน้องหมาเอง พร้อมวิธีสังเกตสัญญาณเครียดตามหลักพฤติกรรมศาสตร์">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="มารยาทพาสัตว์เลี้ยงเข้าห้าง: สิ่งที่เจ้าของควรรู้">
+  <meta property="og:description" content="รวมมารยาทสำคัญเมื่อพาน้องหมาเข้าห้างสรรพสินค้า ทั้งฝั่งที่ต้องคำนึงถึงคนรอบข้าง และสวัสดิภาพของน้องหมาเอง พร้อมวิธีสังเกตสัญญาณเครียดตามหลักพฤติกรรมศาสตร์">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-mall-manners.jpg">
+  <meta property="og:url" content="https://dogbooster.net/article-mall-manners.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="มารยาทพาสัตว์เลี้ยงเข้าห้าง: สิ่งที่เจ้าของควรรู้">
+  <meta name="twitter:description" content="รวมมารยาทสำคัญเมื่อพาน้องหมาเข้าห้างสรรพสินค้า ทั้งฝั่งที่ต้องคำนึงถึงคนรอบข้าง และสวัสดิภาพของน้องหมาเอง">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-mall-manners.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"มารยาทพาสัตว์เลี้ยงเข้าห้าง: สิ่งที่เจ้าของควรรู้ เพื่อคนรอบข้างและตัวน้องหมาเอง","image":["https://dogbooster.net/assets/article-mall-manners.jpg"],"author":{"@type":"Organization","name":"DogBooster"},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-mall-manners.html","inLanguage":"th"}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-mall-manners.jpg" alt="มารยาทพาสุนัขเข้าห้าง">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐕 พาสุนัขเข้าสังคม</span>
+    <h1>มารยาทพาสัตว์เลี้ยงเข้าห้าง: สิ่งที่เจ้าของควรรู้ เพื่อคนรอบข้างและตัวน้องหมาเอง</h1>
+
+    <div class="intro">
+      <p>ช่วงสุดสัปดาห์ที่ผ่านมา มีเจ้าของน้องหมาโกลเด้นวัย 2 ขวบท่านหนึ่งมาปรึกษาเราหลังพาน้องไปเดินห้างครั้งแรก
+        น้องหมาเห่าใส่เด็กที่วิ่งเข้ามาหา ดึงสายจูงแรงจนเกือบล้ม และปัสสาวะรดพื้นตรงทางเดิน
+        เจ้าของรู้สึกอายและกังวลว่า “หมาตัวเองนิสัยไม่ดี”</p>
+      <p>ทั้งที่ความจริงแล้วสิ่งที่เกิดขึ้นคือน้องหมายัง <strong>ไม่พร้อม</strong> สำหรับสภาพแวดล้อมแบบนั้น
+        ไม่ใช่เรื่องนิสัยเสีย</p>
+    </div>
+
+    <p>การพาสัตว์เลี้ยงเข้าห้างเป็นเรื่องที่ได้รับความนิยมมากขึ้นเรื่อย ๆ ในไทย
+      แต่หลายคนยังไม่รู้ว่ามารยาทที่ดีไม่ได้มีแค่เรื่อง “ทำอย่างไรไม่ให้รบกวนคนอื่น” เท่านั้น
+      แต่ยังรวมถึงการดูแลสวัสดิภาพของน้องหมาเองด้วย</p>
+
+    <h2>ทำไมมารยาทเรื่องนี้ถึงสำคัญกว่าที่คิด</h2>
+    <p>ห้างสรรพสินค้าเป็นสภาพแวดล้อมที่กระตุ้นระบบประสาทของสุนัขได้ง่ายมาก ทั้งเสียงดัง แสงสะท้อน
+      พื้นผิวลื่น กลิ่นแปลกใหม่ และคนแปลกหน้าจำนวนมากที่เดินเข้าใกล้ตลอดเวลา สิ่งเหล่านี้กระตุ้นการหลั่ง
+      <strong>อะดรีนาลีน (adrenaline)</strong> และเพิ่มระดับ <strong>arousal</strong> ของสุนัขได้อย่างรวดเร็ว</p>
+    <p>หากไม่มีการเตรียมตัวที่ดี น้องหมาอาจ “เกินขีดจำกัด” หรือที่เรียกกันว่า <strong>หูดับ</strong>
+      ซึ่งเป็นภาวะที่สมองส่วนพรีฟรอนทัลคอร์เท็กซ์ (prefrontal cortex) ที่ทำหน้าที่คิดและตัดสินใจ
+      ถูกสมองส่วนอารมณ์เข้าครอบงำ ทำให้น้องหมาตอบสนองแบบสัญชาตญาณล้วน ๆ ไม่ใช่ดื้อหรือนิสัยไม่ดีอย่างที่เจ้าของหลายคนเข้าใจผิด</p>
+    <p>มารยาทที่ดีจึงไม่ใช่แค่มาตรฐานทางสังคม แต่เป็นเครื่องมือ <strong>ป้องกัน</strong>
+      ไม่ให้น้องหมาต้องเผชิญสถานการณ์ที่เกินความสามารถในการรับมือของตัวเอง</p>
+
+    <div class="divider"></div>
+
+    <h2>มารยาทที่คำนึงถึงคนรอบข้าง</h2>
+    <ol class="num-list">
+      <li><b>ใช้สายจูงสั้นและควบคุมได้เสมอ</b>ห้างมีพื้นที่แคบ คนพลุกพล่าน และมุมอับสายตาเยอะ สายจูงแบบยืดหดจึงไม่เหมาะ ควรใช้สายจูงความยาวคงที่ที่ควบคุมระยะห่างจากตัวเองได้ตลอดเวลา</li>
+      <li><b>พกอุปกรณ์เก็บสิ่งปฏิกูลติดตัวเสมอ</b>แม้จะฝึกให้ขับถ่ายก่อนออกจากบ้านแล้ว ควรพกถุงเก็บอึและกระดาษเช็ดทำความสะอาดติดตัวไว้เสมอ เผื่อเกิดอุบัติเหตุ</li>
+      <li><b>อย่าปล่อยให้น้องหมาเข้าใกล้คนอื่นโดยไม่ได้รับอนุญาต</b>ไม่ใช่ทุกคนชอบสุนัข และบางคนอาจกลัวมาก การขอก่อนเสมอเป็นมารยาทพื้นฐานที่แสดงความเคารพต่อพื้นที่ส่วนตัวของผู้อื่น</li>
+      <li><b>เลือกช่วงเวลาที่คนไม่พลุกพล่าน</b>ช่วงเช้าวันธรรมดาหรือก่อนเที่ยงมักมีคนน้อยกว่า เหมาะสำหรับการพาน้องหมาไปทำความคุ้นเคยกับสถานที่แบบค่อยเป็นค่อยไป</li>
+    </ol>
+
+    <div class="divider"></div>
+
+    <h2>มารยาทที่คำนึงถึงตัวน้องหมาเอง</h2>
+    <p>นี่คือส่วนที่เจ้าของหลายคนมองข้าม เพราะมารยาทไม่ได้มีไว้เพื่อคนอื่นเท่านั้น
+      แต่ยังเป็นการปกป้องน้องหมาจากความเครียดสะสมที่มองไม่เห็นด้วยตาเปล่า</p>
+    <p class="tip"><b>สังเกตสัญญาณเครียดตั้งแต่เนิ่น ๆ</b> เช่น เลียปาก หาวบ่อยผิดปกติ หูลู่ หางตก
+      หรือพยายามหลบไปทางใดทางหนึ่ง สัญญาณเหล่านี้มักมาก่อนพฤติกรรมที่รุนแรงขึ้นอย่างการเห่าหรือดึงสายจูง
+      หากเจ้าของจับสัญญาณได้ทัน จะสามารถพาน้องหมาออกจากสถานการณ์นั้นก่อนที่จะเกินขีดจำกัดได้</p>
+    <p class="tip"><b>อย่าฝืนถ้าน้องหมายังไม่พร้อม</b> สุนัขแต่ละตัวมีขีดความทนทานต่อสิ่งกระตุ้นไม่เท่ากัน
+      บางตัวอาจต้องใช้เวลาหลายสัปดาห์ในการค่อย ๆ ทำความคุ้นเคยกับสภาพแวดล้อมที่วุ่นวายแบบห้าง
+      การเทรนแบบ Susan Garrett ซึ่งเน้นเกมและการเสริมแรงเชิงบวก เป็นแนวทางหนึ่งที่ช่วยสร้างความมั่นใจให้น้องหมาแบบค่อยเป็นค่อยไป
+      โดยไม่ต้องใช้การลงโทษหรือการบังคับ ซึ่งมีแต่จะเพิ่มความเครียดให้มากขึ้น</p>
+    <p class="tip"><b>เตรียมตัวล่วงหน้าด้วยการฝึกแบบค่อยเป็นค่อยไป (desensitization)</b> เช่น ฝึกเดินผ่านพื้นผิวต่าง ๆ
+      ฝึกให้คุ้นเคยกับเสียงดัง หรือฝึกขึ้นลิฟต์ที่บ้านหรือสวนสาธารณะก่อน
+      จะช่วยลดโอกาสที่น้องหมาจะตกใจหรือเครียดเกินไปเมื่อเจอสถานการณ์จริง</p>
+
+    <div class="divider"></div>
+
+    <h2>ถ้าน้องหมาเริ่มมีอาการเกินขีดจำกัดควรทำอย่างไร</h2>
+    <p>หากสังเกตเห็นสัญญาณเครียดชัดเจน สิ่งที่ควรทำคือพาน้องหมาออกจากพื้นที่นั้นทันทีอย่างสงบ
+      <strong>ไม่ตำหนิหรือดุ</strong> เพราะในภาวะนี้สมองส่วนที่ใช้เรียนรู้ทำงานได้จำกัดอยู่แล้ว
+      การลงโทษไม่ได้ช่วยแก้ปัญหา แต่มีแต่จะเพิ่มความเชื่อมโยงเชิงลบกับสถานที่นั้นในระยะยาว</p>
+    <p>ควรให้เวลาน้องหมาสงบลงในที่เงียบ แล้วค่อยประเมินใหม่ว่าจะลองอีกครั้ง
+      หรือกลับบ้านไปฝึกเตรียมความพร้อมเพิ่มเติมก่อน</p>
+
+    <div class="divider"></div>
+
+    <h2>สรุป</h2>
+    <p>การพาสัตว์เลี้ยงเข้าห้างให้สนุกและปลอดภัยสำหรับทุกฝ่าย ต้องอาศัยมารยาทสองด้านควบคู่กัน
+      คือการเคารพพื้นที่และความรู้สึกของคนรอบข้าง และการเข้าใจขีดจำกัดทางระบบประสาทของน้องหมาเอง
+      เจ้าของที่เตรียมตัวดีไม่เพียงป้องกันปัญหาเฉพาะหน้า
+      แต่ยังช่วยให้น้องหมามีประสบการณ์เชิงบวกกับโลกภายนอกในระยะยาวด้วย</p>
+    <p>หากบทความนี้มีประโยชน์ อย่าลืมกดบันทึกไว้อ่านซ้ำ และแชร์ให้เพื่อนเจ้าของสัตว์เลี้ยงคนอื่น ๆ
+      ได้เตรียมตัวก่อนพาน้องหมาไปเดินห้างครั้งแรกด้วยนะคะ 🐾</p>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาการพาน้องหมาเข้าสังคมกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
