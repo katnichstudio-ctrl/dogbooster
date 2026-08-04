@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>เตรียมตัวก่อนนำสุนัขเข้าบ้าน: คู่มือฉบับสมบูรณ์สำหรับเจ้าของมือใหม่ — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .bullet-list { margin: 4px 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .bullet-list li {
+    position: relative; padding: 11px 14px 11px 40px; background: var(--sand);
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.6;
+  }
+  .bullet-list li::before {
+    content: ''; position: absolute; left: 15px; top: 18px; width: 8px; height: 8px;
+    background: var(--gold); border-radius: 50%;
+  }
+  .bullet-list li b { color: var(--dark); font-weight: 800; }
+  .tipbox { background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 13.5px; color: var(--text-body); line-height: 1.7; margin-bottom: 14px; }
+  .tipbox b { color: var(--gold-dark); font-weight: 800; }
+  .check-list { margin: 4px 0 8px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .check-list li {
+    position: relative; padding: 11px 14px 11px 42px; background: var(--sand);
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.6;
+  }
+  .check-list li::before {
+    content: '✓'; position: absolute; left: 12px; top: 11px; width: 22px; height: 22px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+  .related { display:flex; align-items:center; gap:12px; background:var(--sand); border-radius:12px; padding:12px 14px; text-decoration:none; margin-bottom:10px; }
+  .related .rt { display:block; font-size:14px; font-weight:800; color:var(--dark); line-height:1.4; }
+  .related .rs { display:block; font-size:12.5px; color:var(--text-body); margin-top:2px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-prepare-home.html">
+  <meta name="description" content="คู่มือเตรียมตัวก่อนนำสุนัขเข้าบ้านฉบับสมบูรณ์สำหรับเจ้าของมือใหม่ — เตรียมพื้นที่ ของใช้ กติกาในบ้าน กิจวัตรคืนแรก และเช็กลิสต์ก่อนวันรับสุนัข ตามแนวทาง Susan Garrett">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="เตรียมตัวก่อนนำสุนัขเข้าบ้าน: คู่มือฉบับสมบูรณ์สำหรับเจ้าของมือใหม่">
+  <meta property="og:description" content="เตรียมพื้นที่ ของใช้ กติกาในบ้าน กิจวัตรคืนแรก และเช็กลิสต์ก่อนวันรับสุนัข ตามแนวทาง Susan Garrett">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-prepare-home.png">
+  <meta property="og:url" content="https://dogbooster.net/article-prepare-home.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="เตรียมตัวก่อนนำสุนัขเข้าบ้าน: คู่มือฉบับสมบูรณ์สำหรับเจ้าของมือใหม่">
+  <meta name="twitter:description" content="เตรียมพื้นที่ ของใช้ กติกาในบ้าน กิจวัตรคืนแรก และเช็กลิสต์ก่อนวันรับสุนัข">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-prepare-home.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"เตรียมตัวก่อนนำสุนัขเข้าบ้าน: คู่มือฉบับสมบูรณ์สำหรับเจ้าของมือใหม่","image":["https://dogbooster.net/assets/article-prepare-home.png"],"author":{"@type":"Organization","name":"DogBooster"},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-prepare-home.html","inLanguage":"th"}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-prepare-home.png" alt="เตรียมตัวก่อนนำสุนัขเข้าบ้าน">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐶 Puppy</span>
+    <h1>เตรียมตัวก่อนนำสุนัขเข้าบ้าน: คู่มือฉบับสมบูรณ์สำหรับเจ้าของมือใหม่</h1>
+
+    <div class="intro">
+      <p>ก่อนที่สุนัขตัวใหม่จะก้าวเข้ามาในบ้าน สิ่งที่เจ้าของเตรียมไว้ล่วงหน้าจะส่งผลต่อความสัมพันธ์ในระยะยาวมากกว่าที่หลายคนคิด
+        นักฝึกสุนัขระดับโลกอย่าง <strong>Susan Garrett</strong> ผู้มีประสบการณ์ฝึกสุนัขมากว่า 30 ปี และเป็นเจ้าของแนวคิด games-based training
+        เคยย้ำเสมอว่า <strong>“24 ชั่วโมงแรก”</strong> ของสุนัขในบ้านใหม่คือช่วงเวลาที่สุนัขเรียนรู้ได้ตลอดเวลา
+        ไม่ว่าเราจะตั้งใจสอนหรือไม่ก็ตาม</p>
+    </div>
+    <p>บทความนี้รวบรวมสิ่งที่ต้องเตรียม ทั้งด้านกายภาพ กติกาในบ้าน และการเตรียมใจ
+      โดยอิงจากหลักการฝึกสุนัขเชิงพฤติกรรมศาสตร์และแนวทางของ Susan Garrett เพื่อให้เจ้าของมือใหม่เริ่มต้นได้อย่างมั่นใจ</p>
+
+    <div class="divider"></div>
+
+    <h2>ทำไมการเตรียมตัวก่อนถึงสำคัญกว่าที่คิด</h2>
+    <p>สมองของสุนัข โดยเฉพาะส่วน <strong>prefrontal cortex</strong> ซึ่งทำหน้าที่ควบคุมการตัดสินใจและความสงบ
+      ยังทำงานได้ไม่เต็มที่ในสภาพแวดล้อมใหม่ที่ยังไม่คุ้นเคย เมื่อสุนัขเผชิญกับสิ่งเร้าใหม่ ๆ พร้อมกันหลายอย่าง
+      เช่น กลิ่นใหม่ เสียงใหม่ คนแปลกหน้า ร่างกายจะหลั่ง adrenaline (อะดรีนาลีน) และเข้าสู่ภาวะตื่นตัวสูง
+      ซึ่งเป็นสาเหตุที่สุนัขหลายตัวแสดงพฤติกรรมที่ดูเหมือน “ไม่ฟัง” ในวันแรก ๆ
+      ทั้งที่จริงแล้วเป็นเรื่องของระบบประสาทที่ยังปรับตัวไม่ทัน ไม่ใช่ความดื้อ</p>
+    <p>การเตรียมบ้านและกิจวัตรให้พร้อมล่วงหน้า จึงเป็นการลดสิ่งเร้าที่ไม่จำเป็น ช่วยให้สุนัขข้ามผ่านช่วงปรับตัวได้เร็วขึ้น
+      และเปิดโอกาสให้สมองส่วนคิดวิเคราะห์ทำงานแทนที่จะตอบสนองด้วยสัญชาตญาณเพียงอย่างเดียว</p>
+
+    <div class="divider"></div>
+
+    <h2>1. เตรียมพื้นที่และของใช้จำเป็นก่อนวันรับสุนัข</h2>
+    <p>ควรจัดเตรียมทุกอย่างให้เสร็จ <strong>ก่อน</strong> สุนัขมาถึงบ้าน ไม่ใช่รีบไปซื้อในวันเดียวกัน
+      เพราะการพาสุนัขไปเดินในร้านที่มีคนพลุกพล่านตั้งแต่วันแรกอาจเพิ่มความเครียดโดยไม่จำเป็น</p>
+    <ul class="bullet-list">
+      <li><b>กรง (crate)</b> ขนาดพอดีตัว ไม่ใหญ่หรือเล็กเกินไป — Susan Garrett ใช้แนวคิด “Crate Games” ที่มองว่ากรงคือพื้นที่ปลอดภัยและเป็นเครื่องมือฝึกสมาธิ ไม่ใช่กรงขังลงโทษ</li>
+      <li><b>ที่นอน ชามอาหาร-น้ำ</b> (แนะนำวัสดุที่ทำความสะอาดง่ายอย่างสแตนเลส)</li>
+      <li><b>อาหารสูตรเดิม</b> ที่สุนัขเคยกินจากเบรดเดอร์หรือที่พักพิงเดิม เพื่อลดปัญหาระบบย่อยอาหารปั่นป่วนจากการเปลี่ยนอาหารกะทันหัน</li>
+      <li><b>ปลอกคอ สายจูง และป้ายชื่อ</b></li>
+      <li><b>ของเล่นสำหรับกัดแทะ</b> และของเล่นที่ใช้เล่นเกมร่วมกับเจ้าของ เช่น ของเล่นดึงเล่น (tug toy)</li>
+      <li><b>อุปกรณ์ทำความสะอาด</b> สำหรับอุบัติเหตุขับถ่ายในบ้านช่วงแรก</li>
+    </ul>
+    <div class="tipbox"><b>เคล็ดลับ:</b> จัดโซนในบ้านให้ชัดเจนตั้งแต่ก่อนวันแรก เช่น มุมกรง มุมกินอาหาร และเส้นทางเดินออกไปขับถ่าย เพื่อไม่ต้องมาคิดหน้างานตอนที่สุนัขมาถึงแล้ว</div>
+
+    <div class="divider"></div>
+
+    <h2>2. วางกติกาในบ้านล่วงหน้า ก่อนให้อิสระ</h2>
+    <p>หนึ่งในหลักการที่ Susan Garrett พูดถึงบ่อยที่สุดคือเกม <strong>“It's Yer Choice” (IYC)</strong>
+      ซึ่งเป็นรากฐานของการฝึกสุนัขในระบบของเธอ แนวคิดหลักคือการสอนให้สุนัขเรียนรู้ว่า
+      พฤติกรรมที่สงบและใจเย็นนำไปสู่รางวัล แทนที่จะให้อิสระเต็มที่ตั้งแต่วันแรกแล้วค่อยแก้ปัญหาทีหลัง</p>
+    <p>ก่อนสุนัขเข้าบ้าน ครอบครัวควรตกลงกันให้ชัดเจนว่า:</p>
+    <ul class="bullet-list">
+      <li>สุนัขจะขึ้นโซฟาหรือเตียงได้หรือไม่</li>
+      <li>ใครเป็นคนให้อาหาร และให้เวลาไหนของวัน</li>
+      <li>พื้นที่ในบ้านส่วนไหนที่สุนัขเข้าได้อย่างอิสระ และส่วนไหนต้องมีการดูแล</li>
+      <li>คำสั่งพื้นฐานที่ทุกคนในบ้านจะใช้คำเดียวกัน เพื่อไม่ให้สุนัขสับสน</li>
+    </ul>
+    <p>การจำกัดอิสระของสุนัขในช่วงแรกผ่านการจัดการสิ่งแวดล้อม (environmental management) เช่น การใช้เกตกั้นหรือกรง
+      ไม่ใช่การลงโทษ แต่เป็นการป้องกันไม่ให้สุนัขมีโอกาสฝึกพฤติกรรมที่ไม่พึงประสงค์ตั้งแต่ต้น
+      ซึ่งแก้ไขทีหลังได้ยากกว่าการป้องกันตั้งแต่แรกมาก</p>
+
+    <div class="divider"></div>
+
+    <h2>3. เตรียมกิจวัตรวันแรกและคืนแรก</h2>
+    <p>คืนแรกมักเป็นช่วงที่เจ้าของกังวลที่สุด สุนัขหลายตัวร้องหรือกระสับกระส่ายเพราะคิดถึงแม่หรือพี่น้องในครอกเดิม
+      สิ่งที่ควรเตรียมไว้ล่วงหน้า:</p>
+    <ul class="bullet-list">
+      <li><b>ตำแหน่งวางกรงสำหรับนอน</b> ควรอยู่ใกล้เจ้าของในช่วงแรกเพื่อลดความวิตกกังวลจากการแยกจาก (separation distress)</li>
+      <li><b>แผนพาสุนัขออกไปขับถ่าย</b> ก่อนนอนและทันทีหลังตื่น</li>
+      <li><b>งดเชิญเพื่อนหรือญาติ</b> มาเยี่ยมชมสุนัขเป็นจำนวนมากในวันแรก เพราะระบบประสาทของสุนัขยังรับสิ่งเร้าใหม่ได้จำกัด</li>
+      <li><b>เผื่อเวลาลาหยุดงาน</b> อย่างน้อย 2–3 วันแรก เพื่อให้สุนัขมีคนอยู่ด้วยระหว่างปรับตัว</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>4. เตรียมใจเจ้าของและสมาชิกในบ้าน</h2>
+    <p>การเตรียมตัวที่มักถูกมองข้ามคือการเตรียม <strong>ความคาดหวัง</strong> ของมนุษย์เอง
+      ช่วง 1–2 สัปดาห์แรกอาจไม่ราบรื่นอย่างที่จินตนาการไว้ สุนัขอาจขับถ่ายผิดที่ นอนไม่หลับ หรือดูเหมือนไม่ฟังคำสั่งเลย</p>
+    <p>สิ่งสำคัญคือการมองพฤติกรรมเหล่านี้ด้วยความเข้าใจ ไม่ใช่การตีความว่าสุนัข “ดื้อ” หรือ “ต่อต้าน”
+      เพราะในความเป็นจริง สุนัขในสภาพแวดล้อมใหม่มักอยู่ในภาวะตื่นตัวสูงเกินกว่าที่สมองส่วนคิดจะทำงานได้เต็มที่
+      การให้เวลาสุนัขค่อย ๆ ปรับตัว พร้อมกับใช้เกมง่าย ๆ เพื่อสร้างความมั่นใจ จะได้ผลดีกว่าการกดดันให้เชื่อฟังทันที</p>
+    <p>หากมีเด็กในบ้าน ควรพูดคุยกับเด็กล่วงหน้าเกี่ยวกับการให้พื้นที่ส่วนตัวแก่สุนัข
+      ไม่รบกวนเวลาสุนัขอยู่ในกรงหรือกำลังกินอาหาร</p>
+
+    <div class="divider"></div>
+
+    <h2>เช็กลิสต์ก่อนวันรับสุนัขเข้าบ้าน</h2>
+    <ul class="check-list">
+      <li>จัดเตรียมกรง ที่นอน ชามอาหาร-น้ำ เรียบร้อย</li>
+      <li>ซื้ออาหารสูตรเดิมจากเบรดเดอร์/ที่พักพิง</li>
+      <li>ตกลงกติกาในบ้านร่วมกันทุกคน</li>
+      <li>วางแผนวันลาหยุดช่วงแรก</li>
+      <li>เตรียมเส้นทางพาออกไปขับถ่าย</li>
+      <li>งดนัดหมายเยี่ยมเยียนในสัปดาห์แรก</li>
+      <li>เตรียมของเล่นสำหรับเล่นเกมสร้างความผูกพัน</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>สรุป</h2>
+    <p>การเตรียมตัวก่อนนำสุนัขเข้าบ้านไม่ใช่แค่เรื่องของการช้อปปิ้งอุปกรณ์
+      แต่คือการวางรากฐานของความสัมพันธ์ที่จะอยู่ร่วมกันไปอีกหลายปี
+      การจัดสิ่งแวดล้อมให้พร้อม การตกลงกติกาในครอบครัวล่วงหน้า
+      และการเข้าใจว่าพฤติกรรมในช่วงปรับตัวเป็นเรื่องของระบบประสาท ไม่ใช่นิสัยเสีย
+      จะช่วยให้ทั้งเจ้าของและสุนัขเริ่มต้นชีวิตร่วมกันได้อย่างมั่นคงและมีความสุข</p>
+    <p>หากบทความนี้มีประโยชน์ อย่าลืม <strong>บันทึกและแชร์</strong> ไว้เตือนตัวเองก่อนวันรับสุนัขตัวใหม่เข้าบ้าน 🐾</p>
+
+    <div class="divider"></div>
+
+    <h2>บทความที่เกี่ยวข้อง</h2>
+    <a href="article-puppy-blue.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="cloud-rain"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">Puppy Blue คืออะไร? เมื่อความสุขกลายเป็นความเหนื่อยล้า</span>
+        <span class="rs">รับมือกับภาวะเครียดและอดนอนในสัปดาห์แรกหลังรับลูกสุนัข</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+    <a href="article-housetraining.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="footprints"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">วิธีฝึกขับถ่ายลูกสุนัข (Housetraining) ฉบับสมบูรณ์</span>
+        <span class="rs">สอนลูกสุนัขให้เข้าห้องน้ำเป็นที่ ตั้งแต่ตารางเวลาจนถึงนอนตลอดคืน</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาการเตรียมรับลูกสุนัขกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
