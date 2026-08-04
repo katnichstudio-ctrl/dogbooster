@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ป้องกันสุนัขจากควันไฟป่า | วิธีดูแลเมื่อค่าฝุ่น PM2.5 สูง — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .num-list { margin: 4px 0 8px; padding: 0; list-style: none; counter-reset: n; }
+  .num-list li {
+    position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .num-list li b { color: var(--dark); font-weight: 800; display: block; margin-bottom: 2px; }
+  .num-list li::before {
+    counter-increment: n; content: counter(n);
+    position: absolute; left: 12px; top: 12px; width: 26px; height: 26px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .sign-list { margin: 4px 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .sign-list li {
+    position: relative; padding: 11px 14px 11px 42px; background: var(--sand);
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.6;
+  }
+  .sign-list li::before {
+    content: '!'; position: absolute; left: 12px; top: 11px; width: 22px; height: 22px;
+    background: #E7A33E; color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
+  }
+  .warnbox { background: #FBEEE9; border-left: 3px solid #C0603C; border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 13.5px; color: var(--text-body); line-height: 1.7; margin-bottom: 14px; }
+  .warnbox b { color: #A8492A; font-weight: 800; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+  .related { display:flex; align-items:center; gap:12px; background:var(--sand); border-radius:12px; padding:12px 14px; text-decoration:none; margin-bottom:10px; }
+  .related .rt { display:block; font-size:14px; font-weight:800; color:var(--dark); line-height:1.4; }
+  .related .rs { display:block; font-size:12.5px; color:var(--text-body); margin-top:2px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-wildfire-smoke.html">
+  <meta name="description" content="ควันไฟป่าอันตรายกับสุนัขแค่ไหน? รวมสัญญาณเตือนและวิธีป้องกันที่ทำได้จริง เมื่อค่าฝุ่น PM2.5 สูง จากแนวคิดของ Susan Garrett">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="ป้องกันสุนัขจากควันไฟป่า | วิธีดูแลเมื่อค่าฝุ่น PM2.5 สูง">
+  <meta property="og:description" content="ควันไฟป่าอันตรายกับสุนัขแค่ไหน? รวมสัญญาณเตือนและวิธีป้องกันที่ทำได้จริง เมื่อค่าฝุ่น PM2.5 สูง">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-wildfire-smoke.png">
+  <meta property="og:url" content="https://dogbooster.net/article-wildfire-smoke.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ป้องกันสุนัขจากควันไฟป่า | วิธีดูแลเมื่อค่าฝุ่น PM2.5 สูง">
+  <meta name="twitter:description" content="ควันไฟป่าอันตรายกับสุนัขแค่ไหน? สัญญาณเตือนและวิธีป้องกันเมื่อค่าฝุ่น PM2.5 สูง">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-wildfire-smoke.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ป้องกันสุนัขจากควันไฟป่า: วิธีดูแลน้องหมาเมื่อค่าฝุ่น PM2.5 สูง","image":["https://dogbooster.net/assets/article-wildfire-smoke.png"],"author":{"@type":"Organization","name":"DogBooster"},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-wildfire-smoke.html","inLanguage":"th"}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-wildfire-smoke.png" alt="สุนัขอยู่ในบ้านช่วงค่าฝุ่น PM2.5 สูงจากควันไฟป่า">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🩺 ดูแลสุขภาพ</span>
+    <h1>ป้องกันสุนัขจากควันไฟป่า: วิธีดูแลน้องหมาเมื่อค่าฝุ่น PM2.5 สูง</h1>
+
+    <h2>ควันไฟป่ากับสุนัข: เมื่อไฟป่าที่ไกลแสนไกล กลายเป็นอากาศที่เราหายใจอยู่บ้าน</h2>
+    <div class="intro">
+      <p>ช่วงนี้หลายพื้นที่ทั่วโลกเผชิญกับไฟป่าที่รุนแรงและถี่ขึ้นเรื่อย ๆ แม้บ้านของเราจะอยู่ห่างจากจุดเกิดไฟหลายร้อยหรือหลายพันกิโลเมตร
+        แต่ควันไฟสามารถลอยไปได้ไกลมาก และแทรกซึมเข้าสู่อากาศที่ทั้งเราและสุนัขของเราหายใจเข้าไปทุกวันโดยไม่รู้ตัว</p>
+    </div>
+    <p><strong>Susan Garrett</strong> เทรนเนอร์สุนัขระดับโลกที่คนไทยหลายคนรู้จักผ่านแนวคิดการฝึกด้วยเกมและแรงเสริมทางบวก
+      เคยแชร์ประเด็นนี้ผ่านช่องทางของเธอ โดยเตือนให้เจ้าของสุนัขตระหนักว่าคุณภาพอากาศเป็นเรื่องที่ไม่ควรมองข้าม
+      แม้จะดูเหมือนเป็นปัญหาไกลตัว</p>
+
+    <div class="divider"></div>
+
+    <h2>ทำไมควันไฟป่าถึงอันตรายกับสุนัข (PM2.5 ส่งผลต่อสุนัขอย่างไร)</h2>
+    <p>ระบบทางเดินหายใจของสุนัขไวต่อฝุ่นละอองขนาดเล็ก (PM2.5) ไม่ต่างจากคน
+      อนุภาคเหล่านี้เล็กพอที่จะลงลึกไปถึงถุงลมปอด กระตุ้นการอักเสบ
+      และในสุนัขที่มีโรคประจำตัว เช่น โรคหัวใจหรือโรคทางเดินหายใจ อาจทำให้อาการกำเริบได้ง่ายกว่าปกติ</p>
+    <p>สุนัข <strong>พันธุ์หน้าสั้น</strong> (เช่น บูลด็อก ปั๊ก) มีความเสี่ยงสูงกว่าพันธุ์อื่น
+      เพราะโครงสร้างทางเดินหายใจที่แคบอยู่แล้ว</p>
+
+    <div class="divider"></div>
+
+    <h2>สัญญาณสุนัขหายใจลำบากจากควันที่ควรสังเกต</h2>
+    <ul class="sign-list">
+      <li>ไอหรือจาม</li>
+      <li>หายใจลำบาก หายใจถี่ผิดปกติ</li>
+      <li>ซึม เหนื่อยง่ายกว่าปกติ</li>
+      <li>เยื่อบุตาแดง น้ำตาไหล</li>
+      <li>เบื่ออาหาร</li>
+    </ul>
+    <div class="warnbox"><b>สำคัญ:</b> หากพบอาการเหล่านี้ โดยเฉพาะหายใจลำบาก ควรพาไปพบสัตวแพทย์ทันที ไม่ควรรอดูอาการเอง</div>
+
+    <div class="divider"></div>
+
+    <h2>วิธีป้องกันสุนัขจากควันไฟป่าที่ทำได้จริงในแต่ละวัน</h2>
+    <ol class="num-list">
+      <li><b>จำกัดเวลาอยู่กลางแจ้ง</b>พาออกไปทำธุระจำเป็นสั้น ๆ พอ ไม่ควรปล่อยให้วิ่งเล่นนาน ๆ ในวันที่คุณภาพอากาศไม่ดี</li>
+      <li><b>ตรวจสอบคุณภาพอากาศก่อนออกจากบ้าน</b>ใช้แอปหรือเว็บไซต์ตรวจค่าฝุ่น PM2.5 ในพื้นที่ก่อนพาสุนัขออกไปเดินเล่นทุกครั้ง</li>
+      <li><b>มีน้ำสะอาดให้ตลอดเวลา</b>น้ำช่วยลดการระคายเคืองของระบบทางเดินหายใจและช่วยให้ร่างกายขับสารระคายเคืองได้ดีขึ้น</li>
+      <li><b>จัดพื้นที่ในบ้านให้ปลอดภัย</b>ปิดหน้าต่างในวันที่ควันหนา และถ้าเป็นไปได้ใช้เครื่องฟอกอากาศในห้องที่สุนัขใช้เวลาส่วนใหญ่</li>
+      <li><b>เปลี่ยนกิจกรรมกลางแจ้งเป็นเกมในบ้าน</b>วันที่อากาศไม่ดี ลองใช้เกมฝึกสมองแบบที่ Susan Garrett แนะนำ เช่น เกมดมกลิ่นหาของ (nose work) หรือเกมฝึกคำสั่งง่าย ๆ ในบ้าน เพื่อให้สุนัขยังได้ระบายพลังงานและกระตุ้นสมองโดยไม่ต้องออกไปเผชิญอากาศแย่ ๆ ข้างนอก</li>
+    </ol>
+
+    <div class="divider"></div>
+
+    <h2>สรุป</h2>
+    <p>สุนัขของเราไม่สามารถบอกเราได้ว่าอากาศวันนี้แย่แค่ไหน หน้าที่ของเจ้าของคือคอยสังเกตและตัดสินใจแทนเขา
+      การใส่ใจเล็ก ๆ น้อย ๆ เช่น เช็กค่าฝุ่นก่อนออกจากบ้าน หรือลดเวลากลางแจ้งในวันที่อากาศไม่ดี
+      อาจช่วยป้องกันปัญหาสุขภาพที่ร้ายแรงในระยะยาวได้</p>
+    <p>หากสังเกตเห็นอาการผิดปกติ อย่าลังเลที่จะปรึกษาสัตวแพทย์ ดีกว่าปล่อยไว้แล้วอาการลุกลาม 🐾</p>
+
+    <div class="divider"></div>
+
+    <h2>บทความที่เกี่ยวข้อง</h2>
+    <a href="article-mall-manners.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="store"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">มารยาทพาสัตว์เลี้ยงเข้าห้าง: สิ่งที่เจ้าของควรรู้</span>
+        <span class="rs">พาน้องหมาออกไปข้างนอกอย่างปลอดภัยและใส่ใจสวัสดิภาพ</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+    <a href="article-daily.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="sun"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">กิจวัตรประจำวันของน้องหมา</span>
+        <span class="rs">จัดกิจกรรมในบ้านให้น้องได้ระบายพลังงานแม้ออกไปข้างนอกไม่ได้</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาการดูแลน้องหมากับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
