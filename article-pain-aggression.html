@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>สุนัขดุเพราะเจ็บ สังเกตยังไง? สาเหตุและวิธีรับมือ (ฉบับเข้าใจง่าย) — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  h3 { font-size: 14.5px; font-weight: 800; color: var(--dark); margin: 16px 0 4px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .sign-list { margin: 4px 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .sign-list li {
+    position: relative; padding: 11px 14px 11px 42px; background: var(--sand);
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.6;
+  }
+  .sign-list li::before {
+    content: '!'; position: absolute; left: 12px; top: 11px; width: 22px; height: 22px;
+    background: #E7A33E; color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
+  }
+  .num-list { margin: 4px 0 8px; padding: 0; list-style: none; counter-reset: n; }
+  .num-list li {
+    position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .num-list li b { color: var(--dark); font-weight: 800; }
+  .num-list li::before {
+    counter-increment: n; content: counter(n);
+    position: absolute; left: 12px; top: 12px; width: 26px; height: 26px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .faq { background: var(--sand); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+  .faq .q { font-weight: 800; color: var(--dark); font-size: 14.5px; margin-bottom: 4px; }
+  .faq .a { font-size: 13.5px; color: var(--text-body); line-height: 1.7; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-pain-aggression.html">
+  <meta name="description" content="สุนัขดุเพราะเจ็บ เป็นสาเหตุที่เจ้าของมักมองข้าม บทความนี้อธิบายกลไกทางร่างกาย สัญญาณเตือน และวิธีรับมืออย่างถูกต้อง โดยไม่ใช้การลงโทษ">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="สุนัขดุเพราะเจ็บ สังเกตยังไง? สาเหตุและวิธีรับมือ (ฉบับเข้าใจง่าย)">
+  <meta property="og:description" content="สุนัขดุเพราะเจ็บ เป็นสาเหตุที่เจ้าของมักมองข้าม บทความนี้อธิบายกลไกทางร่างกาย สัญญาณเตือน และวิธีรับมืออย่างถูกต้อง โดยไม่ใช้การลงโทษ">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-pain-aggression.png">
+  <meta property="og:url" content="https://dogbooster.net/article-pain-aggression.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="สุนัขดุเพราะเจ็บ สังเกตยังไง? สาเหตุและวิธีรับมือ">
+  <meta name="twitter:description" content="สุนัขดุเพราะเจ็บ เป็นสาเหตุที่เจ้าของมักมองข้าม — กลไก สัญญาณเตือน และวิธีรับมืออย่างถูกต้องโดยไม่ใช้การลงโทษ">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-pain-aggression.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"สุนัขดุเพราะเจ็บ: สาเหตุที่เจ้าของมักมองข้าม และวิธีสังเกตให้ทัน","image":["https://dogbooster.net/assets/article-pain-aggression.png"],"author":{"@type":"Organization","name":"DogBooster"},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-pain-aggression.html","inLanguage":"th"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"สุนัขดุเพราะเจ็บ ต่างจากสุนัขดุร้ายทั่วไปยังไง?","acceptedAnswer":{"@type":"Answer","text":"สุนัขดุเพราะเจ็บมักเป็นพฤติกรรมที่เกิดขึ้นแบบกะทันหันในสุนัขที่ไม่เคยมีประวัติก้าวร้าวมาก่อน และมักเกิดเฉพาะเมื่อถูกสัมผัสจุดใดจุดหนึ่ง ต่างจากความก้าวร้าวที่มาจากสาเหตุอื่น เช่น การหวงทรัพยากรหรือความกลัว ซึ่งมักมีรูปแบบสม่ำเสมอกว่า"}},{"@type":"Question","name":"พาไปหาสัตวแพทย์แล้วตรวจไม่เจออะไร ต้องทำยังไงต่อ?","acceptedAnswer":{"@type":"Answer","text":"อาการปวดบางชนิด เช่น ปวดข้อระยะเริ่มต้นหรือปวดเส้นประสาท อาจตรวจพบได้ยากในการตรวจทั่วไป หากสงสัยควรปรึกษาสัตวแพทย์เฉพาะทางด้านกระดูกและข้อ หรือขอตรวจเพิ่มเติม เช่น เอกซเรย์หรือ MRI"}},{"@type":"Question","name":"ลูกสุนัขดุเพราะเจ็บได้ไหม?","acceptedAnswer":{"@type":"Answer","text":"ได้ ลูกสุนัขที่กำลังงอกฟันหรือมีปัญหาทางกระดูกแต่กำเนิดก็อาจแสดงพฤติกรรมขู่หรือกัดเมื่อถูกสัมผัสจุดที่เจ็บได้เช่นกัน"}}]}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-pain-aggression.png" alt="สุนัขดุเพราะเจ็บ แสดงอาการเครียดก่อนขู่">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🛑 พฤติกรรมก้าวร้าว</span>
+    <h1>สุนัขดุเพราะเจ็บ: สาเหตุที่เจ้าของมักมองข้าม และวิธีสังเกตให้ทัน</h1>
+
+    <h2>สุนัขนิสัยดีอยู่ ๆ ก็ดุ เกิดจากอะไร</h2>
+    <div class="intro">
+      <p>“น้องไม่เคยเป็นแบบนี้มาก่อนเลยค่ะ อยู่ ๆ ก็ขู่ตอนอุ้ม” — ประโยคแบบนี้เป็นสิ่งที่เจ้าของสุนัขหลายคนพูดออกมาด้วยความสับสนและเสียใจ</p>
+      <p>สุนัขที่เคยเป็นมิตร ชอบให้ลูบหัว นอนตักได้ทั้งวัน จู่ ๆ ก็ขู่หรือกัดเมื่อถูกสัมผัสในบางจุด
+        ในทางพฤติกรรมศาสตร์ นี่คือสัญญาณที่ควรตั้งคำถามก่อนเสมอว่า <strong>“ตัวเขาเจ็บอยู่หรือเปล่า”</strong></p>
+    </div>
+    <p><strong>สุนัขดุเพราะเจ็บ</strong> หรือ Pain-Induced Aggression เป็นหนึ่งในสาเหตุของพฤติกรรมก้าวร้าวที่ถูกมองข้ามบ่อยที่สุด
+      เพราะสุนัขไม่สามารถพูดบอกเราตรง ๆ ได้ว่า “ตรงนี้เจ็บ”</p>
+
+    <div class="divider"></div>
+
+    <h2>สุนัขดุเพราะเจ็บ เกิดขึ้นในร่างกายอย่างไร</h2>
+    <p>เมื่อร่างกายสุนัขรับรู้ความเจ็บปวด (nociception) สัญญาณจะถูกส่งไปยังสมองอย่างรวดเร็ว
+      กระตุ้นระบบประสาทอัตโนมัติให้หลั่งอะดรีนาลีนและคอร์ติซอล ร่างกายเข้าสู่ภาวะเตรียมพร้อมสู้หรือหนี
+      (fight-or-flight response) ทันที</p>
+    <p>สิ่งสำคัญคือ ความเจ็บปวดทำให้ <strong>เกณฑ์ความอดทนต่อสิ่งกระตุ้น (arousal threshold)</strong> ของสุนัขต่ำลงกว่าปกติมาก
+      เดิมทีสุนัขอาจทนให้เด็กดึงหางเล่นได้ แต่เมื่อมีอาการปวดข้อหรือปวดหลังแฝงอยู่
+      พลังงานสำรองในการควบคุมตัวเอง (self-regulation) ก็ลดลง ทำให้ระบบสมองส่วนอารมณ์ (limbic system)
+      ทำงานเหนือกว่าสมองส่วนหน้า (prefrontal cortex) ซึ่งปกติทำหน้าที่ยับยั้งชั่งใจและตัดสินใจอย่างมีเหตุผล</p>
+    <p>พูดง่าย ๆ คือ เมื่อเจ็บ สุนัขจะ “คิดไม่ทัน” และตอบสนองด้วยสัญชาตญาณล้วน ๆ
+      นี่คือกลไกหลักที่อธิบายว่าทำไมสุนัขดุเพราะเจ็บจึงไม่ใช่การเลือกที่จะดุ
+      แต่เป็นกลไกป้องกันตัวเองที่ร่างกายสั่งการโดยแทบไม่ผ่านการไตร่ตรอง</p>
+
+    <div class="divider"></div>
+
+    <h2>วิธีสังเกตว่าสุนัขดุเพราะเจ็บ ไม่ใช่นิสัยไม่ดี</h2>
+    <p>ก่อนที่จะถึงขั้นขู่หรือกัด สุนัขมักส่งสัญญาณเตือนมาก่อนเสมอ เพียงแต่สัญญาณเหล่านี้เบาและเรียบง่ายจนถูกมองข้าม เช่น</p>
+    <ul class="sign-list">
+      <li>เลี่ยงไม่ให้แตะบริเวณใดบริเวณหนึ่งของร่างกาย</li>
+      <li>ลุกนั่งหรือเดินขึ้นบันไดช้าลงกว่าเดิม</li>
+      <li>หงอยผิดปกติ ไม่อยากเล่นเท่าที่เคย</li>
+      <li>เลียหรือกัดบริเวณข้อต่อซ้ำ ๆ</li>
+      <li>ตัวสั่นเล็กน้อยเมื่อถูกจับในท่าบางท่า</li>
+      <li>หูลู่ ปากหุบแน่น หรือแสดงสีหน้าตึงเครียดก่อนขู่</li>
+    </ul>
+    <p>หากสังเกตเห็นสัญญาณเหล่านี้ร่วมกับพฤติกรรมก้าวร้าวที่เกิดขึ้นใหม่ <strong>ควรพาไปพบสัตวแพทย์เพื่อตรวจร่างกายอย่างละเอียดก่อนเป็นอันดับแรก</strong>
+      ไม่ใช่รีบไปหาโปรแกรมฝึกพฤติกรรม</p>
+
+    <div class="divider"></div>
+
+    <h2>ทำไม “งับ” ถึงเป็นภาษาเดียวที่สุนัขมีในวันที่เจ็บ</h2>
+    <p>สุนัขไม่มีคำพูด สิ่งที่เขามีคือภาษากาย และเมื่อภาษากายทั้งหมด (เลี่ยงหน้า หันหน้าหนี ขู่เบา ๆ)
+      ถูกละเลยหรือไม่ได้รับการตอบสนอง ขั้นตอนสุดท้ายที่เหลืออยู่คือการงับหรือกัด
+      นี่คือเหตุผลที่นักพฤติกรรมสัตวแพทย์มักพูดถึง <strong>“บันไดแห่งความก้าวร้าว” (Ladder of Aggression)</strong>
+      — การกัดมักไม่ใช่จุดเริ่มต้น แต่เป็นปลายทางของสัญญาณที่ถูกเพิกเฉยมาหลายขั้น</p>
+    <p>ในกรณีที่สุนัขดุเพราะเจ็บ สิ่งนี้ยิ่งชัดเจน เพราะสุนัขไม่ได้ต้องการ “ทำร้าย” เจ้าของ
+      แต่ต้องการเพียงให้หยุดสัมผัสจุดที่เจ็บโดยเร็วที่สุด</p>
+
+    <div class="divider"></div>
+
+    <h2>มุมมองจากแนวคิดการฝึกเชิงบวก</h2>
+    <p>ปรัชญาการฝึกแบบ games-based ของ Susan Garrett วางอยู่บนหลักที่ว่า
+      พฤติกรรมที่ไม่พึงประสงค์มักมีสาเหตุที่ต้องแก้ไขก่อนเสมอ ไม่ใช่แค่ “หยุดพฤติกรรม” ด้วยการลงโทษ
+      แนวคิดนี้สอดคล้องกับหลักการทางสัตวแพทยศาสตร์พฤติกรรมที่ว่า
+      <strong>ก่อนเริ่มโปรแกรมฝึกพฤติกรรมใด ๆ ควรตัดปัจจัยทางการแพทย์ออกไปก่อนเสมอ (rule out medical causes first)</strong></p>
+    <p>การลงโทษสุนัขที่ขู่เพราะเจ็บ ไม่เพียงไม่แก้ปัญหาที่ต้นเหตุ แต่ยังอาจทำให้สุนัขเรียนรู้ที่จะ
+      <strong>ไม่ส่งสัญญาณเตือนอีกต่อไป (suppression)</strong> ซึ่งอันตรายกว่าเดิม
+      เพราะครั้งต่อไปเขาอาจกัดโดยไม่มีการขู่เตือนล่วงหน้าเลย</p>
+
+    <div class="divider"></div>
+
+    <h2>สุนัขดุเพราะเจ็บ ควรทำอย่างไร</h2>
+    <ol class="num-list">
+      <li><b>พาไปพบสัตวแพทย์ก่อนเสมอ</b> โดยเฉพาะเมื่อพฤติกรรมก้าวร้าวเกิดขึ้นแบบกะทันหันในสุนัขที่ไม่เคยมีประวัติดุมาก่อน</li>
+      <li><b>จดบันทึกสถานการณ์</b> ว่าขู่หรือกัดตอนไหน สัมผัสจุดไหน ท่าทางแบบไหน เพื่อให้ข้อมูลสัตวแพทย์ได้ละเอียดขึ้น</li>
+      <li><b>หลีกเลี่ยงการลงโทษ</b> เมื่อสุนัขขู่หรือแสดงอาการไม่พอใจ ให้ถอยออกมาแทนที่จะฝืนสัมผัสต่อ</li>
+      <li><b>จัดการสภาพแวดล้อม</b> ลดกิจกรรมที่กระตุ้นจุดเจ็บ เช่น การกระโดด ขึ้นบันไดสูง จนกว่าจะได้รับการวินิจฉัย</li>
+      <li><b>รอให้อาการทางกายดีขึ้นก่อน</b> ค่อยกลับมาทำงานด้านพฤติกรรมร่วมกับผู้เชี่ยวชาญ</li>
+    </ol>
+
+    <div class="divider"></div>
+
+    <h2>คำถามที่พบบ่อยเกี่ยวกับสุนัขดุเพราะเจ็บ</h2>
+    <div class="faq">
+      <div class="q">สุนัขดุเพราะเจ็บ ต่างจากสุนัขดุร้ายทั่วไปยังไง?</div>
+      <div class="a">สุนัขดุเพราะเจ็บมักเป็นพฤติกรรมที่เกิดขึ้นแบบกะทันหันในสุนัขที่ไม่เคยมีประวัติก้าวร้าวมาก่อน และมักเกิดเฉพาะเมื่อถูกสัมผัสจุดใดจุดหนึ่ง ต่างจากความก้าวร้าวที่มาจากสาเหตุอื่น เช่น การหวงทรัพยากรหรือความกลัว ซึ่งมักมีรูปแบบสม่ำเสมอกว่า</div>
+    </div>
+    <div class="faq">
+      <div class="q">พาไปหาสัตวแพทย์แล้วตรวจไม่เจออะไร ต้องทำยังไงต่อ?</div>
+      <div class="a">อาการปวดบางชนิด เช่น ปวดข้อระยะเริ่มต้นหรือปวดเส้นประสาท อาจตรวจพบได้ยากในการตรวจทั่วไป หากสงสัยควรปรึกษาสัตวแพทย์เฉพาะทางด้านกระดูกและข้อ หรือขอตรวจเพิ่มเติม เช่น เอกซเรย์หรือ MRI</div>
+    </div>
+    <div class="faq">
+      <div class="q">ลูกสุนัขดุเพราะเจ็บได้ไหม?</div>
+      <div class="a">ได้ ลูกสุนัขที่กำลังงอกฟันหรือมีปัญหาทางกระดูกแต่กำเนิดก็อาจแสดงพฤติกรรมขู่หรือกัดเมื่อถูกสัมผัสจุดที่เจ็บได้เช่นกัน</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>สรุป</h2>
+    <p>สุนัขดุเพราะเจ็บ เป็นพฤติกรรมที่ควรถูกมองเป็น <strong>“สัญญาณเตือน”</strong> มากกว่า “ปัญหานิสัย” เสมอ
+      ร่างกายและพฤติกรรมของสุนัขเชื่อมโยงกันอย่างแยกไม่ออก
+      การเข้าใจกลไกนี้ไม่เพียงช่วยให้เจ้าของตอบสนองได้อย่างเห็นอกเห็นใจมากขึ้น
+      แต่ยังช่วยป้องกันไม่ให้เกิดเหตุการณ์ที่รุนแรงขึ้นในอนาคตด้วย</p>
+    <p>หากสุนัขที่บ้านมีพฤติกรรมเปลี่ยนไปแบบนี้ อย่ารอช้า — <strong>ปรึกษาสัตวแพทย์ก่อนเป็นอันดับแรก</strong>
+      แล้วค่อยวางแผนเรื่องพฤติกรรมร่วมกับผู้เชี่ยวชาญด้านการฝึกเชิงบวกในลำดับถัดไป</p>
+    <p>หากบทความนี้เป็นประโยชน์ อย่าลืมกดบันทึกและแชร์ไว้ให้เพื่อนเจ้าของสุนัขคนอื่น ๆ ได้อ่านด้วยนะคะ 🐾</p>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาพฤติกรรมก้าวร้าวกับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
