@@ -453,6 +453,10 @@
     #portfolioGrid { grid-template-columns: repeat(3, 1fr) !important; }
     /* vertical reels stay phone-sized, centered */
     .fb-video-embed { max-width: 360px; margin-left: auto; margin-right: auto; }
+    /* founder bio: image + text side-by-side */
+    .founder-bio { flex-direction: row !important; align-items: flex-start; gap: 28px !important; }
+    .founder-bio > div:first-child { flex: 0 0 42%; max-width: 42%; }
+    .founder-bio > div:last-child { flex: 1; }
   }
   @media (min-width: 1040px) {
     .app-shell { max-width: 1120px; }
@@ -636,6 +640,31 @@
       <div class="fb-video-embed" data-href="https://www.facebook.com/reel/2222608341476699" style="margin-top:16px;"></div>
 
       </div><!-- /about video -->
+
+      <!-- Founder bio: ครูเข็ม -->
+      <div style="margin-top:28px;background:linear-gradient(180deg,#faf6ee,#fff);border:1px solid rgba(0,0,0,.06);border-radius:22px;padding:18px;">
+        <div class="founder-bio" style="display:flex;flex-direction:column;gap:16px;">
+          <div style="border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.12);">
+            <img src="assets/khem-hero.jpg" alt="ครูเข็ม กับดา" loading="lazy" style="width:100%;display:block;">
+          </div>
+          <div>
+            <h3 style="font-size:22px;font-weight:800;letter-spacing:-.01em;margin:0;line-height:1.3;">
+              ครูเข็ม<br>ผู้ก่อตั้ง DogBooster
+            </h3>
+            <p style="font-size:13.5px;color:var(--text-body);line-height:1.75;margin:12px 0 0;">
+              <strong>ครูเข็ม</strong> ผู้ก่อตั้งสถาบัน DogBooster ประเทศไทย มีประสบการณ์ฝึกและเลี้ยงสุนัขมากกว่า <strong>30 ปี</strong> ผ่านการฝึกสุนัขหลากหลายรูปแบบ จนค้นพบว่าการบังคับ ลงโทษ หรือการล่อ อาจทำให้สุนัขขาดความสนุกและแรงจูงใจในการเรียนรู้
+            </p>
+            <div style="background:#fff;border:1px solid rgba(0,0,0,.06);border-left:4px solid var(--gold-dark);border-radius:14px;padding:14px 16px;margin-top:14px;">
+              <p style="font-size:13.5px;color:var(--text-body);line-height:1.75;margin:0;">
+                จากความสนใจในศาสตร์ <strong>Agility</strong> และแนวคิดการฝึกของ <strong>Susan Garrett</strong> แชมป์ Agility ระดับโลก จึงนำหลักการส่งเสริมพฤติกรรมโดยไม่บังคับ มาผสานกับประสบการณ์ที่สั่งสมมายาวนาน
+              </p>
+            </div>
+            <p style="font-size:13.5px;color:var(--text-body);line-height:1.75;margin:14px 0 0;">
+              และพัฒนาเป็นแนวทางการฝึกของ DogBooster ที่นำ <strong>“เกม”</strong> มาใช้ในการแก้ปัญหาและพัฒนาสุนัข เพื่อให้สุนัขเรียนรู้ด้วยความสนุก เต็มใจ และสร้างความสัมพันธ์ที่ดีกับเจ้าของ
+            </p>
+          </div>
+        </div>
+      </div>
 
       <!-- Event -->
       <div style="margin-top:28px">
