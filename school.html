@@ -447,6 +447,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 14px !important;
     }
+    /* instructor grid: ครูเข็ม full-width on top, others paired below */
+    .instructor-grid .instructor-lead { grid-column: 1 / -1; }
     /* review slider: fixed card width instead of 72% of viewport */
     .review-slider .review-photo { flex: 0 0 240px; }
     /* portfolio grid → 3 columns */
@@ -743,8 +745,8 @@
           </div>
           ผู้สอน
         </div>
-        <div class="resp-grid" style="display:flex;flex-direction:column;gap:11px">
-          <div class="instructor-card" style="align-items:flex-start;">
+        <div class="resp-grid instructor-grid" style="display:flex;flex-direction:column;gap:11px">
+          <div class="instructor-card instructor-lead" style="align-items:flex-start;">
             <div class="instructor-avatar" style="flex-shrink:0;">
               <img src="assets/khem.jpg" alt="ครูเข็ม" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">
             </div>
