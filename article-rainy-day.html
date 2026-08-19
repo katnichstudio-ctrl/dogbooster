@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>วันที่ฝนตก ไม่จำเป็นต้องทำให้หมา “เหนื่อย” เสมอไป — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 14px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  h3 { font-size: 14.5px; font-weight: 800; color: var(--dark); line-height: 1.45; margin: 16px 0 6px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .quote {
+    background: var(--sand); border-left: 3px solid var(--gold-dark); border-radius: 0 12px 12px 0;
+    padding: 12px 16px; margin: 4px 0 16px; font-size: 15px; font-weight: 800; color: var(--dark); line-height: 1.6;
+  }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .num-list { margin: 4px 0 8px; padding: 0; list-style: none; counter-reset: n; }
+  .num-list li {
+    position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .num-list li b { color: var(--dark); font-weight: 800; display: block; margin-bottom: 2px; }
+  .num-list li::before {
+    counter-increment: n; content: counter(n);
+    position: absolute; left: 12px; top: 12px; width: 26px; height: 26px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .faq { margin-top: 6px; }
+  .faq-q { font-size: 14.5px; font-weight: 800; color: var(--dark); margin: 14px 0 4px; }
+  .faq-a { font-size: 14px; color: var(--text-body); line-height: 1.75; margin-bottom: 6px; }
+  .signbox {
+    background: #F0FAF0; border-radius: 12px; padding: 14px 16px; margin: 8px 0 16px;
+    font-size: 14.5px; color: var(--text-body); line-height: 1.7;
+  }
+  .signbox b { color: var(--dark); font-weight: 800; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+  .related { display:flex; align-items:center; gap:12px; background:var(--sand); border-radius:12px; padding:12px 14px; text-decoration:none; margin-bottom:10px; }
+  .related .rt { display:block; font-size:14px; font-weight:800; color:var(--dark); line-height:1.4; }
+  .related .rs { display:block; font-size:12.5px; color:var(--text-body); margin-top:2px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    h3{ font-size: 17px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-rainy-day.html">
+  <meta name="description" content="วันฝนตกพาหมาออกไปเดินไม่ได้ ไม่จำเป็นต้องทำให้เขาเหนื่อยเสมอไป เข้าใจว่าทำไม “ความสงบ” เป็นทักษะที่ฝึกได้ พร้อมเกมในบ้านและวิธีสอนให้สุนัขพักเป็น จาก DogBooster">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="วันที่ฝนตก ไม่จำเป็นต้องทำให้หมา “เหนื่อย” เสมอไป">
+  <meta property="og:description" content="ความสงบไม่จำเป็นต้องมาจากความเหนื่อย — วันฝนตกคือโอกาสสอนสุนัขให้พักเป็น ด้วยเกมในบ้านและการฝึกจัดการตัวเอง">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-rainy-day.png">
+  <meta property="og:url" content="https://dogbooster.net/article-rainy-day.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="วันที่ฝนตก ไม่จำเป็นต้องทำให้หมา “เหนื่อย” เสมอไป">
+  <meta name="twitter:description" content="ความสงบไม่จำเป็นต้องมาจากความเหนื่อย — วันฝนตกคือโอกาสสอนสุนัขให้พักเป็น">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-rainy-day.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"วันที่ฝนตก เราไม่จำเป็นต้องทำให้หมา “เหนื่อย” เสมอไป","description":"วันฝนตกพาหมาออกไปเดินไม่ได้ ไม่จำเป็นต้องทำให้เขาเหนื่อยเสมอไป — ความสงบเป็นทักษะที่ฝึกได้ พร้อมเกมในบ้านและวิธีสอนให้สุนัขพักเป็น","image":["https://dogbooster.net/assets/article-rainy-day.png"],"author":{"@type":"Organization","name":"DogBooster","url":"https://dogbooster.net/"},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-rainy-day.html","datePublished":"2026-08-09","dateModified":"2026-08-09","inLanguage":"th"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ฝนตกและไม่ได้พาสุนัขเดินหนึ่งวันเป็นอะไรไหม?","acceptedAnswer":{"@type":"Answer","text":"สำหรับสุนัขสุขภาพดีโดยทั่วไป การเปลี่ยนกิจวัตรเป็นครั้งคราวไม่ได้หมายความว่าจะต้องหากิจกรรมหนักมาชดเชยทันที อย่างไรก็ตาม ความต้องการด้านการออกกำลังกาย การขับถ่าย และกิจกรรมของสุนัขแต่ละตัวแตกต่างกันตามอายุ สุขภาพ สายพันธุ์ และตัวสุนัขเอง"}},{"@type":"Question","name":"เล่นอะไรกับสุนัขในบ้านช่วงฝนตกได้บ้าง?","acceptedAnswer":{"@type":"Answer","text":"ลองกิจกรรมที่ใช้พื้นที่น้อย เช่น เกมค้นหาอาหารด้วยจมูก ฝึกแตะมือ ฝึกขึ้นแท่น เกมแก้ปัญหาง่าย ๆ หรือการฝึก Foundation สั้น ๆ ครั้งละไม่กี่นาที"}},{"@type":"Question","name":"ต้องเล่นกับสุนัขจนเหนื่อยไหม ถึงจะยอมนอน?","acceptedAnswer":{"@type":"Answer","text":"ไม่จำเป็นต้องตั้งเป้าว่าทุกกิจกรรมต้องทำให้สุนัขหมดแรง นอกจากการออกกำลังกายที่เหมาะสมแล้ว การสร้างกิจวัตร การจัดสิ่งแวดล้อม และการเรียนรู้ที่จะเปลี่ยนจากกิจกรรมไปสู่การพักก็เป็นทักษะสำคัญเช่นกัน"}}]}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-rainy-day.png" alt="สุนัขพักผ่อนอย่างสงบอยู่ในบ้านช่วงวันฝนตก">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 ฝึกสุนัข</span>
+    <h1>วันที่ฝนตก เราไม่จำเป็นต้องทำให้หมา “เหนื่อย” เสมอไป</h1>
+
+    <div class="intro">
+      <p>ฝนตกทั้งวัน พาหมาออกไปเดินไม่ได้ สิ่งแรกที่เจ้าของหลายคนนึกถึงอาจเป็น…</p>
+      <p><strong>“วันนี้ไม่ได้เดิน แล้วจะทำยังไงให้เขาเหนื่อย?”</strong></p>
+      <p>ต้องหาของเล่นไหม? ต้องโยนบอลให้วิ่งเยอะ ๆ หรือเปล่า? ต้องหากิจกรรมให้ทำทั้งวัน ไม่อย่างนั้นคืนนี้จะไม่ยอมนอนแน่ ๆ</p>
+    </div>
+
+    <p>แต่จริง ๆ แล้ว วันที่ฝนตกอาจเป็นวันที่เรา <strong>ไม่จำเป็นต้องพยายามทำให้สุนัขเหนื่อยเลยก็ได้</strong>
+      เพราะเป้าหมายของกิจกรรมกับสุนัข ไม่จำเป็นต้องจบที่คำว่า “หมดพลัง” เสมอไป</p>
+    <p>บางครั้งสิ่งที่สุนัขต้องเรียนรู้ อาจเป็นสิ่งที่ตรงกันข้าม นั่นคือ
+      <strong>การหยุดพัก การคิด และการอยู่เฉย ๆ โดยไม่จำเป็นต้องมีอะไรเกิดขึ้นตลอดเวลา</strong></p>
+
+    <div class="divider"></div>
+
+    <h2>เราอาจกำลังสร้าง “นักกีฬา” โดยไม่รู้ตัว</h2>
+    <p>เวลาเห็นสุนัขพลังงานเยอะ เจ้าของมักได้รับคำแนะนำว่า “ต้องพาไปวิ่งเยอะ ๆ” “ต้องเล่นให้เหนื่อย”
+      หรือ “พันธุ์นี้พลังงานสูง ต้องออกกำลังกายหนัก”</p>
+    <p>การออกกำลังกายเป็นสิ่งสำคัญต่อสุขภาพและคุณภาพชีวิตของสุนัขแน่นอน แต่ถ้าทุกครั้งที่สุนัขมีพลังงาน
+      เราตอบด้วยการเพิ่มกิจกรรมที่ใช้ร่างกายมากขึ้นเรื่อย ๆ สิ่งหนึ่งที่อาจเกิดขึ้นคือ
+      <strong>สุนัขเก่งขึ้นในการออกกำลังกาย</strong></p>
+    <p>จากเคยเดิน 20 นาทีแล้วเหนื่อย วันหนึ่งอาจเดิน 40 นาทีได้สบาย จากเคยเล่นบอล 10 นาที
+      ไม่นานอาจพร้อมเล่นต่ออีกครึ่งชั่วโมง เพราะร่างกายสามารถปรับตัวกับกิจกรรมได้</p>
+    <div class="quote">ถ้าเป้าหมายของเราคือ “ต้องทำให้เหนื่อย ถึงจะสงบ” เราอาจพบว่าต้องใช้กิจกรรมมากขึ้นเรื่อย ๆ เพื่อให้ได้ผลลัพธ์เดิม</div>
+    <p>DogBooster จึงไม่ได้มองเพียงว่า <strong>วันนี้หมาใช้พลังงานไปมากแค่ไหน?</strong>
+      แต่เราสนใจอีกคำถามหนึ่งด้วยว่า <strong>วันนี้เขาได้ฝึกทักษะในการจัดการตัวเองบ้างหรือยัง?</strong></p>
+
+    <div class="divider"></div>
+
+    <h2>สุนัขที่สงบ ไม่จำเป็นต้องเป็นสุนัขที่เหนื่อย</h2>
+    <p>ลองนึกถึงสุนัขสองตัว ตัวแรกเพิ่งวิ่งเล่นมาหนึ่งชั่วโมง จึงกลับมานอนเพราะร่างกายเหนื่อย
+      อีกตัวสามารถเล่นกับเจ้าของ แล้วเมื่อกิจกรรมจบ เขาค่อย ๆ เปลี่ยนจากโหมดเล่นมาเป็นโหมดพักได้</p>
+    <p>ภาพภายนอกอาจดูเหมือนกัน — ทั้งคู่กำลังนอน แต่สิ่งที่เกิดขึ้นก่อนหน้านั้นต่างกัน
+      ตัวหนึ่ง <strong>สงบเพราะหมดแรง</strong> ในขณะที่อีกตัวกำลังเรียนรู้ว่า
+      <strong>“กิจกรรมจบแล้ว ฉันสามารถพักได้”</strong></p>
+    <p>นี่เป็นทักษะที่มีคุณค่ามากในชีวิตจริง เพราะเราไม่สามารถพาสุนัขไปวิ่งให้เหนื่อยก่อนทุกสถานการณ์ได้ —
+      ก่อนพาไปร้านกาแฟ ก่อนมีแขกมาที่บ้าน ก่อนเดินทาง ก่อนพาไปเที่ยว หรือก่อนวันที่เจ้าของต้องทำงานทั้งวัน</p>
+    <p>เราอยากให้สุนัขค่อย ๆ เรียนรู้ว่า ชีวิตไม่ได้มีเพียงสองโหมดคือ “ทำกิจกรรมเต็มที่” กับ “หมดแรงจนหลับ”
+      ระหว่างสองจุดนั้นยังมีพื้นที่ของการผ่อนคลาย การรอ การสังเกต และการเลือกที่จะพักด้วย</p>
+
+    <div class="divider"></div>
+
+    <h2>แล้ววันที่ฝนตก เราทำอะไรกับสุนัขได้บ้าง?</h2>
+    <p>แทนที่จะถามว่า “วันนี้จะทำอะไรให้หมาเหนื่อยดี?” ลองเปลี่ยนเป็น
+      <strong>“วันนี้เราอยากให้หมาได้เรียนรู้อะไร?”</strong> เราอาจใช้เวลาเพียงไม่กี่นาทีเล่นเกมง่าย ๆ ในบ้าน</p>
+    <ol class="num-list">
+      <li><b>เกมค้นหาด้วยจมูก</b>ซ่อนอาหารหรือของเล่นในจุดที่ปลอดภัย แล้วให้สุนัขใช้จมูกค้นหา เริ่มง่ายจนสุนัขเข้าใจกติกา แล้วค่อยเพิ่มความท้าทาย เป้าหมายไม่ใช่การแข่งว่าเขาจะหาได้เร็วแค่ไหน แต่เป็นการเปิดโอกาสให้สุนัขคิดและแก้ปัญหาด้วยตัวเอง</li>
+      <li><b>ฝึกพฤติกรรมเล็ก ๆ ที่ใช้พื้นที่ไม่มาก</b>วันฝนตกเหมาะกับการกลับมาฝึก Foundation เช่น การแตะมือ การเข้าหาเจ้าของ การขึ้นแท่น การหมุนตัว หรือการเลือกกลับมาหาเราเมื่อมีสิ่งอื่นอยู่ในสิ่งแวดล้อม ใช้เพียงครั้งละ 3–5 นาที และหยุดในตอนที่เขายังอยากเล่นกับเราอีกนิดก็ได้</li>
+      <li><b>ฝึก “หลังจากเล่นแล้ว เราพักได้”</b>เราเก่งเรื่องการเริ่มกิจกรรมกับสุนัขมาก แต่บางครั้งไม่ได้สอนเรื่องการจบกิจกรรม ลองทำให้ช่วงเปลี่ยนผ่านชัดเจนขึ้น — เกมจบ กิจกรรมลดลง สิ่งแวดล้อมสงบลง แล้วเปิดโอกาสให้สุนัขเลือกพัก โดยไม่ต้องสั่ง “นอน” ซ้ำ ๆ</li>
+    </ol>
+    <p>เป้าหมายระยะยาวคือช่วยให้สุนัขค้นพบว่า <strong>ความสงบก็เป็นทางเลือกที่มีคุณค่าได้เหมือนกัน</strong></p>
+
+    <div class="divider"></div>
+
+    <h2>“Mental Stimulation” ก็ไม่จำเป็นต้องทำทั้งวัน</h2>
+    <p>เมื่อพูดว่าไม่ต้องทำให้หมาเหนื่อยทางร่างกาย หลายคนอาจเปลี่ยนไปอีกสุดทางหนึ่งทันที — ของเล่นฝึกสมอง Puzzle
+      Lick mat เกมดมกลิ่น ฝึกคำสั่ง กิจกรรม Enrichment เรียงกันตั้งแต่เช้าจนเย็น
+      แต่การกระตุ้นสมองตลอดเวลาก็ยังคงเป็น <strong>การกระตุ้น</strong></p>
+    <p>เราไม่จำเป็นต้องหาอะไรให้สุนัขทำทุกนาทีที่เขาตื่น การมีช่วงเวลาที่ไม่มีอะไรเกิดขึ้นบ้าง
+      เป็นส่วนหนึ่งของชีวิตปกติ สิ่งที่เราต้องการจึงไม่ใช่สุนัขที่รอให้มนุษย์สร้าง Entertainment ให้ตลอดเวลา
+      แต่เป็นสุนัขที่ค่อย ๆ เรียนรู้ว่า…</p>
+    <div class="signbox"><b>มีเวลาเล่น · มีเวลาฝึก · มีเวลาออกไปสำรวจ · และมีเวลาที่ไม่มีอะไรต้องทำ</b><br>ทั้งหมดสามารถอยู่ในวันเดียวกันได้</div>
+
+    <div class="divider"></div>
+
+    <h2>ฝนตกหนึ่งวัน ไม่ได้ทำให้ทุกอย่างที่ฝึกมาหายไป</h2>
+    <p>ถ้าวันนี้ฝนตกหนักและพาสุนัขออกไปเดินไม่ได้ตามปกติ ไม่จำเป็นต้องรู้สึกผิดจนต้องพยายามชดเชยทุกนาทีที่หายไป
+      แน่นอนว่าสุนัขยังต้องได้รับการดูแลเรื่องการขับถ่าย การเคลื่อนไหวที่เหมาะสม สุขภาพ
+      และกิจกรรมตามความต้องการของแต่ละตัว</p>
+    <p>แต่หนึ่งวันที่กิจวัตรเปลี่ยนไป ไม่ได้หมายความว่าเราต้องเปลี่ยนบ้านให้กลายเป็นสนามออกกำลังกาย
+      บางทีวันฝนตกอาจเป็นโอกาสดีเสียด้วยซ้ำ — โอกาสที่เราจะลดความเร็วลง เล่นเกมด้วยกันสั้น ๆ ฝึกอะไรเล็ก ๆ
+      ให้สุนัขได้ใช้จมูก ให้เขาได้คิด แล้วก็… <strong>ไม่ต้องทำอะไรบ้าง</strong></p>
+    <p>เพราะเป้าหมายของการเลี้ยงและฝึกสุนัข ไม่ใช่การสร้างสุนัขที่เราต้องคอยทำให้เหนื่อยเพื่อให้เขาสงบ
+      แต่คือการค่อย ๆ สร้างทักษะที่ช่วยให้เขาใช้ชีวิตร่วมกับเราได้ — รู้ว่าเมื่อไหร่ควรเล่น รู้ว่าเมื่อไหร่ควรคิด
+      และค่อย ๆ เรียนรู้ว่าเมื่อไม่มีอะไรเกิดขึ้น… <strong>เขาก็สามารถพักได้เหมือนกัน</strong></p>
+
+    <div class="divider"></div>
+
+    <h2>คำถามที่พบบ่อย</h2>
+    <div class="faq">
+      <div class="faq-q">ฝนตกและไม่ได้พาสุนัขเดินหนึ่งวันเป็นอะไรไหม?</div>
+      <div class="faq-a">สำหรับสุนัขสุขภาพดีโดยทั่วไป การเปลี่ยนกิจวัตรเป็นครั้งคราวไม่ได้หมายความว่าจะต้องหากิจกรรมหนักมาชดเชยทันที อย่างไรก็ตาม ความต้องการด้านการออกกำลังกาย การขับถ่าย และกิจกรรมของสุนัขแต่ละตัวแตกต่างกันตามอายุ สุขภาพ สายพันธุ์ และตัวสุนัขเอง</div>
+      <div class="faq-q">เล่นอะไรกับสุนัขในบ้านช่วงฝนตกได้บ้าง?</div>
+      <div class="faq-a">ลองกิจกรรมที่ใช้พื้นที่น้อย เช่น เกมค้นหาอาหารด้วยจมูก ฝึกแตะมือ ฝึกขึ้นแท่น เกมแก้ปัญหาง่าย ๆ หรือการฝึก Foundation สั้น ๆ ครั้งละไม่กี่นาที</div>
+      <div class="faq-q">ต้องเล่นกับสุนัขจนเหนื่อยไหม ถึงจะยอมนอน?</div>
+      <div class="faq-a">ไม่จำเป็นต้องตั้งเป้าว่าทุกกิจกรรมต้องทำให้สุนัขหมดแรง นอกจากการออกกำลังกายที่เหมาะสมแล้ว การสร้างกิจวัตร การจัดสิ่งแวดล้อม และการเรียนรู้ที่จะเปลี่ยนจากกิจกรรมไปสู่การพักก็เป็นทักษะสำคัญเช่นกัน</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="intro">
+      <p><strong>DogBooster</strong> — เราเชื่อว่าการฝึกไม่ใช่การบังคับให้สุนัขหยุดทำสิ่งที่เราไม่ต้องการ
+        แต่คือการสร้างทักษะและทางเลือกใหม่ ๆ ให้เขาค่อย ๆ เรียนรู้ที่จะใช้ชีวิตร่วมกับเรา</p>
+      <p><strong>ไม่บังคับ ไม่ลงโทษ — แต่สร้างพฤติกรรมที่เราอยากเห็น</strong></p>
+    </div>
+
+    <h2>บทความที่เกี่ยวข้อง</h2>
+    <a href="article-play.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="gamepad-2"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">การเล่นคือการฝึก… และการฝึกคือการเล่น</span>
+        <span class="rs">เปลี่ยนจาก “ต้องทำ” เป็น “อยากทำ” ด้วยการเสริมแรงทางบวก</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+    <a href="article-iyc.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="brain"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">ทำไม “การเลือก” ถึงเป็นกุญแจสำคัญที่สุด</span>
+        <span class="rs">ItsYerChoice เกมที่สอนสุนัขให้ควบคุมตัวเอง แทนที่จะถูกควบคุมจากภายนอก</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาการฝึกน้องหมากับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+</body>
+</html>
