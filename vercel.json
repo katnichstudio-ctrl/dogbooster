@@ -3,6 +3,9 @@
   "rewrites": [
     { "source": "/", "destination": "/school.html" }
   ],
+  "crons": [
+    { "path": "/api/keep-alive", "schedule": "0 3 * * *" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
