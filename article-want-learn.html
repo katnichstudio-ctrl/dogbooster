@@ -140,5 +140,18 @@
     init();
   });
 </script>
+<script>
+  (function(){
+    try {
+      var ref = new URLSearchParams(window.location.search).get("ref");
+      if (!ref) return;
+      document.querySelectorAll('a[href^="https://app.dogbooster.net/register"]').forEach(function(a){
+        var u = new URL(a.href);
+        u.searchParams.set("ref", ref);
+        a.href = u.toString();
+      });
+    } catch (e) {}
+  })();
+</script>
 </body>
 </html>
