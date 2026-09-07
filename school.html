@@ -488,6 +488,10 @@
   }
   .pkg-card:hover .pkg-btn { background: var(--dark); color: var(--cream); border-color: var(--dark); }
 
+  /* ---- Event slider ---- */
+  .event-slider { scrollbar-width: none; }
+  .event-slider::-webkit-scrollbar { display: none; }
+
   /* ---- Articles preview ---- */
   .art-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
   @media (min-width: 720px) { .art-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
@@ -706,8 +710,13 @@
           </div>
           Event
         </div>
-        <div style="margin-top:12px;border-radius:18px;overflow:hidden;">
-          <img src="assets/event-meetup-v3.png" alt="DogBooster Meetup" loading="lazy" style="width:100%;display:block;">
+        <div class="event-slider" style="margin-top:12px;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:4px;">
+          <div style="flex:0 0 100%;scroll-snap-align:center;border-radius:18px;overflow:hidden;">
+            <img src="assets/event-meetup-v3.png" alt="DogBooster Meetup" loading="lazy" style="width:100%;display:block;">
+          </div>
+          <div style="flex:0 0 100%;scroll-snap-align:center;border-radius:18px;overflow:hidden;">
+            <img src="assets/event-walk-katnich.png" alt="Walk with Katnich" loading="lazy" style="width:100%;display:block;">
+          </div>
         </div>
       </div>
 
