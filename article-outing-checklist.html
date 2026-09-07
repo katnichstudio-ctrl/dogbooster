@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>เช็คลิสต์พาน้องหมาไปเที่ยว/เดินเล่น เตรียมอะไรบ้าง? — DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 8px; }
+  .byline { font-size: 12.5px; color: var(--muted); font-weight: 700; margin-bottom: 16px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  h3 { font-size: 14.5px; font-weight: 800; color: var(--dark); line-height: 1.45; margin: 16px 0 6px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .num-list { margin: 4px 0 8px; padding: 0; list-style: none; counter-reset: n; }
+  .num-list li {
+    position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .num-list li b { color: var(--dark); font-weight: 800; display: block; margin-bottom: 2px; }
+  .num-list li::before {
+    counter-increment: n; content: counter(n);
+    position: absolute; left: 12px; top: 12px; width: 26px; height: 26px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .dot-list { margin: 4px 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .dot-list li {
+    position: relative; padding: 11px 14px 11px 40px; background: var(--sand);
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .dot-list li b { color: var(--dark); font-weight: 800; }
+  .dot-list li::before {
+    content: ''; position: absolute; left: 15px; top: 17px; width: 9px; height: 9px;
+    background: var(--gold-dark); border-radius: 50%;
+  }
+  .check-list { margin: 4px 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .check-list li {
+    position: relative; padding: 11px 14px 11px 44px; background: #F0FAF0;
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.6;
+  }
+  .check-list li::before {
+    content: '✓'; position: absolute; left: 13px; top: 10px; width: 22px; height: 22px;
+    background: #4CAF50; color: #fff; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+  .related { display:flex; align-items:center; gap:12px; background:var(--sand); border-radius:12px; padding:12px 14px; text-decoration:none; margin-bottom:10px; }
+  .related .rt { display:block; font-size:14px; font-weight:800; color:var(--dark); line-height:1.4; }
+  .related .rs { display:block; font-size:12.5px; color:var(--text-body); margin-top:2px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    h3{ font-size: 17px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-outing-checklist.html">
+  <meta name="description" content="รวมของที่ต้องเตรียมก่อนพาน้องหมาออกไปข้างนอก ตั้งแต่สายจูง ชามน้ำ ไปจนถึงของที่มักถูกลืม เช่น สเปรย์กันเห็บหมัด และการป้องกันโรคติดต่อ อ่านก่อนพาไปเที่ยวครั้งหน้า">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="เช็คลิสต์พาน้องหมาไปเที่ยว/เดินเล่น เตรียมอะไรบ้าง? ครบทุกด้าน">
+  <meta property="og:description" content="รวมของที่ต้องเตรียมก่อนพาน้องหมาออกไปข้างนอก ตั้งแต่สายจูง ชามน้ำ ไปจนถึงของที่มักถูกลืม">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-outing-checklist.png">
+  <meta property="og:url" content="https://dogbooster.net/article-outing-checklist.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="เช็คลิสต์พาน้องหมาไปเที่ยว/เดินเล่น เตรียมอะไรบ้าง?">
+  <meta name="twitter:description" content="รวมของที่ต้องเตรียมก่อนพาน้องหมาออกไปข้างนอก รวมถึงของที่มักถูกลืม">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-outing-checklist.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"เช็คลิสต์พาน้องหมาออกไปข้างนอก: เตรียมตัวให้ครบ ป้องกันรอบด้าน","description":"รวมของที่ต้องเตรียมก่อนพาน้องหมาออกไปข้างนอก ตั้งแต่สายจูง ชามน้ำ ไปจนถึงของที่มักถูกลืม เช่น สเปรย์กันเห็บหมัด และการป้องกันโรคติดต่อ","image":["https://dogbooster.net/assets/article-outing-checklist.png"],"author":{"@type":"Person","name":"ครูแคทนิช","worksFor":{"@type":"Organization","name":"DogBooster"}},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-outing-checklist.html","datePublished":"2026-09-07","dateModified":"2026-09-07","inLanguage":"th"}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-outing-checklist.png" alt="เจ้าของเตรียมกระเป๋าอุปกรณ์ก่อนพาสุนัขออกไปเดินเล่นข้างนอก">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>เช็คลิสต์พาน้องหมาออกไปข้างนอก: เตรียมตัวให้ครบ ป้องกันรอบด้าน</h1>
+    <div class="byline">โดย ครูแคทนิช · katnich dogsQuest</div>
+
+    <div class="intro">
+      <p>หลายคนมองว่าการพาน้องหมาออกไปเดินเล่นเป็นเรื่องง่าย แค่ใส่สายจูงแล้วเดินออกจากบ้านก็พอ
+        แต่ในความเป็นจริง การออกไปข้างนอกหมายถึงการพาน้องหมาเข้าสู่สภาพแวดล้อมที่ควบคุมไม่ได้เต็มร้อย</p>
+    </div>
+    <p>ทั้งอากาศ พื้นผิวถนน สัตว์อื่น คนแปลกหน้า และเชื้อโรคที่มองไม่เห็น การเตรียมอุปกรณ์ให้ครบจึงไม่ใช่แค่เรื่องความสะดวก
+      แต่เป็นส่วนหนึ่งของการดูแลสวัสดิภาพ (welfare) ของน้องหมาโดยตรง บทความนี้จะพาไปดูทีละส่วน
+      ตั้งแต่ของพื้นฐานที่ทุกคนรู้จัก ไปจนถึงของที่มักถูกมองข้ามแต่สำคัญไม่แพ้กัน</p>
+
+    <div class="divider"></div>
+
+    <h2>กลุ่มที่ 1: อุปกรณ์พื้นฐานที่ขาดไม่ได้</h2>
+    <h3>สายจูงและปลอกคอ/รัดอก</h3>
+    <p>สายจูงคือจุดเชื่อมต่อความปลอดภัยระหว่างเรากับน้องหมา ควรเลือกความยาวและวัสดุให้เหมาะกับขนาดตัวและพฤติกรรมของแต่ละตัว
+      สำหรับน้องหมาที่ยังฝึกเดินสายจูงไม่คล่อง การใช้ <strong>รัดอก (harness)</strong> แทนปลอกคอรอบคอ
+      จะช่วยลดแรงกระชากที่กระทบต่อหลอดลมได้</p>
+    <h3>ชามน้ำแบบพกพาและน้ำดื่ม</h3>
+    <p>ความร้อนในบ้านเรา โดยเฉพาะช่วงกลางวัน ทำให้น้องหมาเสี่ยงต่อภาวะร่างกายร้อนเกิน (heat stress) ได้ง่าย
+      การพกน้ำสะอาดและชามพับได้ติดตัวไปด้วยทุกครั้ง ช่วยให้หยุดพักเติมน้ำได้ทันทีที่สังเกตเห็นสัญญาณหอบหรือเหนื่อยล้า</p>
+    <h3>ขนมสำหรับให้รางวัล</h3>
+    <p>ขนมไม่ได้มีไว้แค่ “เอาใจ” แต่เป็นเครื่องมือสำคัญในการเสริมแรงทางบวก (positive reinforcement) เมื่อน้องหมาแสดงพฤติกรรมที่เราต้องการ
+      เช่น เดินข้างตัวโดยไม่ดึงสาย หรือหันกลับมามองเมื่อถูกเรียกชื่อ ท่ามกลางสิ่งเร้าภายนอกที่เยอะกว่าปกติ
+      ขนมที่มีมูลค่าสูง (high-value treats) จะช่วยแข่งขันกับสิ่งเร้ารอบข้างได้ดีกว่าขนมทั่วไป</p>
+    <h3>ถุงเก็บอึ</h3>
+    <p>เป็นความรับผิดชอบพื้นฐานต่อพื้นที่สาธารณะและชุมชน ควรพกมากกว่าจำนวนที่คาดว่าจะใช้เสมอ</p>
+
+    <div class="divider"></div>
+
+    <h2>กลุ่มที่ 2: ของที่ควรเตรียมเพิ่ม เพื่อป้องกันรอบด้าน</h2>
+    <h3>สเปรย์ป้องกันแมลง เห็บ และหมัด</h3>
+    <p>พื้นที่หญ้า สวนสาธารณะ หรือแม้แต่ทางเท้าที่มีพุ่มไม้ ล้วนเป็นแหล่งที่เห็บและหมัดสามารถกระโดดเกาะขนน้องหมาได้
+      นอกจากสเปรย์ป้องกันที่ใช้ก่อนออกจากบ้าน การหมั่นตรวจดูตามซอกขนหลังกลับถึงบ้านก็ช่วยลดความเสี่ยงของโรคที่เห็บและหมัดเป็นพาหะได้เพิ่มเติม</p>
+    <h3>ผ้าเช็ดทำความสะอาดตัวและอุ้งเท้า</h3>
+    <p>พื้นผิวสาธารณะอาจมีเชื้อโรคหรือสารเคมีตกค้างที่เรามองไม่เห็นด้วยตาเปล่า การเช็ดอุ้งเท้าและลำตัวก่อนกลับเข้าบ้าน
+      โดยเฉพาะก่อนที่น้องหมาจะขึ้นเตียงหรือโซฟา ช่วยลดโอกาสนำสิ่งปนเปื้อนเข้าสู่พื้นที่อยู่อาศัยได้</p>
+    <h3>เจลหรือสเปรย์ทำความสะอาดมือสำหรับเจ้าของ</h3>
+    <p>หลังจากสัมผัสน้องหมา เก็บอึ หรือสัมผัสพื้นที่สาธารณะ การทำความสะอาดมือของเจ้าของเองก็เป็นส่วนหนึ่งของการป้องกันโรคติดต่อระหว่างสัตว์และคนที่มักถูกมองข้าม</p>
+
+    <div class="divider"></div>
+
+    <h2>กลุ่มที่ 3: สิ่งที่มักถูกลืม แต่ควรมีติดกระเป๋า</h2>
+    <ul class="dot-list">
+      <li><b>ป้ายชื่อและเบอร์ติดต่อ หรือไมโครชิป:</b> ในกรณีที่น้องหมาตกใจหลุดสายจูงและวิ่งหาย การมีข้อมูลติดตัวจะช่วยให้ตามหาได้ง่ายขึ้นมาก</li>
+      <li><b>ชุดปฐมพยาบาลเบื้องต้น:</b> ผ้าก๊อซ พลาสเตอร์ปิดแผล และน้ำเกลือล้างแผล สำหรับกรณีบาดแผลเล็กน้อยจากเศษแก้วหรือหนามระหว่างทาง</li>
+      <li><b>ร่มหรือที่บังแดด:</b> ในวันที่แดดจัด การมีร่มเงาชั่วคราวช่วยให้พักได้โดยไม่ต้องรีบกลับบ้านทันที</li>
+      <li><b>ผ้าขนหนูผืนเล็ก:</b> ใช้เช็ดตัวเมื่อเปียกฝนหรือลุยน้ำ และรองนั่งพักได้ในกรณีฉุกเฉิน</li>
+      <li><b>สมุดบันทึกวัคซีนหรือรูปถ่ายในโทรศัพท์:</b> หากไปในพื้นที่ที่ต้องแสดงหลักฐานการฉีดวัคซีน เช่น สวนสาธารณะบางแห่งหรือคาเฟ่สำหรับสัตว์เลี้ยง</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>ก่อนออกจากบ้านทุกครั้ง ลองเช็กสั้น ๆ</h2>
+    <ul class="check-list">
+      <li>สายจูง/รัดอกแน่นหนาดีหรือยัง</li>
+      <li>มีน้ำและชามพกพาหรือไม่</li>
+      <li>ขนมสำหรับฝึกพร้อมหรือไม่</li>
+      <li>ถุงเก็บอึเพียงพอหรือไม่</li>
+      <li>สเปรย์กันเห็บหมัดใช้แล้วหรือยัง (ตามรอบที่กำหนด)</li>
+      <li>สภาพอากาศวันนี้เหมาะกับการพาออกไปหรือไม่</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>สรุป</h2>
+    <p>การเตรียมตัวที่ครบถ้วนไม่ได้แปลว่าต้องพกทุกอย่างที่กล่าวมาทั้งหมดทุกครั้ง แต่ควรเลือกให้เหมาะกับระยะเวลา สถานที่
+      และสภาพอากาศของแต่ละทริป การเดินเล่นระยะสั้นแถวบ้านอาจต้องการแค่กลุ่มอุปกรณ์พื้นฐาน
+      ในขณะที่การไปเที่ยวทั้งวันหรือไปในพื้นที่ที่ไม่คุ้นเคยควรเตรียมของในกลุ่มป้องกันรอบด้านเพิ่มเติมด้วย</p>
+    <p>หากน้องหมาของคุณมีพฤติกรรมตื่นตกใจ ดึงสายจูงแรง หรือแสดงอาการเครียดเมื่อออกไปข้างนอก
+      ทีมผู้เชี่ยวชาญของ DogBooster ยินดีให้คำปรึกษาเพื่อวางแผนการฝึกที่เหมาะกับน้องหมาของคุณโดยเฉพาะ 🐾</p>
+
+    <div class="divider"></div>
+
+    <h2>บทความที่เกี่ยวข้อง</h2>
+    <a href="article-bigdog.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="dog"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">หมาตัวใหญ่แรงเยอะ จัดการยังไง</span>
+        <span class="rs">เดินสวยด้วย front-clip harness ไม่ลาก ไม่เจ็บทั้งคู่</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+    <a href="article-mall-manners.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="store"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">มารยาทพาสัตว์เลี้ยงเข้าห้าง</span>
+        <span class="rs">พาน้องออกไปข้างนอกอย่างปลอดภัยและใส่ใจสวัสดิภาพ</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+
+    <a href="https://app.dogbooster.net/register" target="_blank" rel="noopener" class="cta" style="background:var(--dark);color:var(--cream);box-shadow:0 8px 20px -8px rgba(21,19,15,.45);">
+      <i data-lucide="user-plus"></i> สมัครเรียนกับ DogBooster
+    </a>
+    <a href="https://lin.ee/PTaq5zs" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาการฝึกน้องหมากับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+<script>
+  (function(){
+    try {
+      var ref = new URLSearchParams(window.location.search).get("ref");
+      if (!ref) return;
+      document.querySelectorAll('a[href^="https://app.dogbooster.net/register"]').forEach(function(a){
+        var u = new URL(a.href);
+        u.searchParams.set("ref", ref);
+        a.href = u.toString();
+      });
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
