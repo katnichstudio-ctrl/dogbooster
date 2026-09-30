@@ -44,9 +44,27 @@ create table if not exists public.staff (
   created_at       timestamptz default now()
 );
 
+-- ใบสมัครจากหน้า /register.html (สาธารณะ) — เก็บราคา/ชื่อคลาส ณ ตอนสมัครไว้ (snapshot)
+-- เผื่อราคาภายหลังถูกแก้ไข ไม่ให้ประวัติเก่าเปลี่ยนตาม
+create table if not exists public.registrations (
+  id                uuid primary key default gen_random_uuid(),
+  class_pricing_id  uuid references public.class_pricing(id) on delete set null,
+  class_label       text not null,
+  price             numeric(10, 2) not null default 0,
+  customer_name     text not null,
+  customer_phone    text not null,
+  staff_code        text,
+  staff_id          uuid references public.staff(id) on delete set null,
+  status            text not null default 'pending' check (status in ('pending', 'confirmed', 'cancelled')),
+  created_at        timestamptz default now()
+);
+
+create index if not exists registrations_created_idx on public.registrations(created_at desc);
+
 -- เปิด RLS แต่ไม่สร้าง policy ใด ๆ → ไม่มีใครเข้าถึงตรง ๆ ได้
 -- มีแต่ service_role key (ฝั่ง server /api เท่านั้น) ที่ bypass RLS ได้
 alter table public.users         enable row level security;
 alter table public.entitlements  enable row level security;
 alter table public.class_pricing enable row level security;
 alter table public.staff         enable row level security;
+alter table public.registrations enable row level security;

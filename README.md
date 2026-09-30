@@ -16,6 +16,8 @@ Supabase + Vercel serverless functions
 | `result-style-options.html` | รูปแบบแสดงผลบุคลิก |
 | `admin.html` | จัดการสิทธิเข้าเรียน (แอดมิน) |
 | `admin-pricing.html` | ราคา/ค่าคอมมิชชันตามคลาส + สตาฟ (แอดมิน) |
+| `register.html` | สมัครเรียน (สาธารณะ) — เลือกคลาส กรอกชื่อ/เบอร์โทร/รหัสแนะนำ |
+| `admin-registrations.html` | ใบสมัครเรียนทั้งหมด + เปลี่ยนสถานะ (แอดมิน) |
 
 ## LINE Login (LIFF)
 ตั้งค่า `LIFF_ID` ใน `index.html` — Scope ที่ต้องเปิดใน LINE Login channel: `profile`, `openid`
@@ -43,6 +45,9 @@ Supabase + Vercel serverless functions
 | `POST /api/admin-grant` | (แอดมิน) ให้/ถอนสิทธิคอร์สของผู้ใช้ |
 | `GET/POST/DELETE /api/admin-classes` | (แอดมิน) ราคา/ค่าคอมมิชชันตามคลาส (ตาราง `class_pricing`) |
 | `GET/POST/DELETE /api/admin-staff` | (แอดมิน) สตาฟ/พาร์ทเนอร์ — ชื่อ/รหัส/เลขบัญชี (ตาราง `staff`) |
+| `GET /api/classes` | (สาธารณะ) คลาสที่เปิดขาย — เฉพาะ label/price ไม่มีค่าคอม ใช้ที่ `/register.html` |
+| `POST /api/register` | (สาธารณะ) ส่งใบสมัคร (ตาราง `registrations`) |
+| `GET/POST/DELETE /api/admin-registrations` | (แอดมิน) ดู/เปลี่ยนสถานะ/ลบใบสมัคร |
 
 ### คอร์ส (catalog)
 `FBI` · `STOP_BARK` · `NOSE_WORK` · `FITNESS` · `TRICKS` · `AGILITY`
