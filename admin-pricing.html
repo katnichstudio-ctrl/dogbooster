@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DogBooster — ราคา/ค่าคอมมิชชัน (Admin)</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --gold:#F0B74C; --gold-dark:#E0A02F; --dark:#15130F; --cream:#FAF7F1; --bg:#E7E2D7; --border:#E4DECF; --muted:#6B6459; --red:#B4452F; }
+    html, body { font-family:'LINE Seed Sans TH',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--dark); -webkit-font-smoothing:antialiased; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 28px 20px 80px; }
+    h1 { font-size: 22px; font-weight: 800; }
+    .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    a.navlink { color: var(--muted); font-size: 13px; text-decoration: underline; }
+
+    .gate { max-width: 380px; margin: 60px auto; background:#fff; border:1px solid var(--border); border-radius:18px; padding:26px; }
+    .gate h2 { font-size: 18px; font-weight: 800; }
+    .gate p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .field { width:100%; margin-top:16px; padding:13px 15px; border:1.5px solid var(--border); border-radius:12px; font-family:inherit; font-size:15px; font-weight:600; outline:none; }
+    .field:focus { border-color: var(--gold); }
+    .btn { border:none; border-radius:100px; padding:11px 20px; font-family:inherit; font-weight:800; font-size:14px; cursor:pointer; color:var(--dark); background:var(--gold); }
+    .btn:hover { background: var(--gold-dark); }
+    .btn.block { width:100%; border-radius:12px; padding:14px; margin-top:14px; }
+    .btn.outline { background:#fff; border:1.5px solid var(--red); color:var(--red); }
+    .btn.outline:hover { background:#FBEDEA; }
+    .btn.ghost { background:#EDE7DA; }
+
+    .section-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin: 26px 0 14px; }
+    .section-head:first-of-type { margin-top: 6px; }
+    .section-head h2 { font-size: 17px; font-weight: 800; }
+    .section-head .sub { margin-top: 4px; max-width: 460px; }
+
+    .card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:18px; margin-bottom:14px; }
+    label { display:block; font-size:12px; font-weight:700; color:var(--muted); margin-bottom:6px; }
+    input, select { width:100%; padding:11px 13px; border:1.5px solid var(--border); border-radius:12px; font-family:inherit; font-size:14px; font-weight:600; outline:none; background:#fff; }
+    input:focus, select:focus { border-color: var(--gold); }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+    .field-group { margin-top:12px; }
+    .checkline { display:flex; align-items:center; gap:8px; margin-top:14px; font-size:14px; font-weight:600; }
+    .checkline input { width:20px; height:20px; accent-color:var(--gold); cursor:pointer; }
+    .actions { display:flex; gap:10px; margin-top:14px; }
+    .rowmsg { font-size:12px; margin-top:8px; min-height: 14px; }
+    .rowmsg.err { color: var(--red); }
+    .rowmsg.ok { color: #2E7D4F; }
+
+    .empty { padding:30px; text-align:center; color:var(--muted); font-size:14px; background:#fff; border:1px solid var(--border); border-radius:16px; }
+    @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="gate" class="gate">
+    <h2>เข้าสู่ระบบแอดมิน</h2>
+    <p>ใส่ Admin Token (ค่าเดียวกับ <code>ADMIN_TOKEN</code> ที่ตั้งไว้ใน Vercel)</p>
+    <input id="token" class="field" type="password" placeholder="Admin token" autocomplete="off">
+    <button class="btn block" onclick="enter()">เข้าสู่ระบบ</button>
+    <p id="gate-msg" class="rowmsg err" style="margin-top:12px"></p>
+  </div>
+
+  <div id="app" class="wrap" style="display:none">
+    <a class="navlink" href="/admin.html">← จัดการสิทธิเข้าเรียน</a>
+
+    <div class="section-head">
+      <div>
+        <h1>ราคาและค่าคอมมิชชันตามคลาส</h1>
+        <p class="sub">ราคาโชว์ให้ลูกค้าเห็นตอนลงทะเบียนที่ /register — ค่าคอม Partner กับค่าคอม Sale
+          เป็นคนละอัตรากันแม้เป็นคลาสเดียวกัน</p>
+      </div>
+      <button class="btn" onclick="addClassRow()">+ เพิ่มคลาสใหม่</button>
+    </div>
+    <div id="classList"></div>
+    <div id="classEmpty" class="empty" style="display:none">ยังไม่มีคลาส — กด "+ เพิ่มคลาสใหม่"</div>
+
+    <div class="section-head">
+      <div>
+        <h2>สตาฟ / พาร์ทเนอร์</h2>
+        <p class="sub">แต่ละคนมีรหัสของตัวเอง — ลูกค้าใส่รหัสนี้ตอนลงทะเบียนเพื่อผูกยอดขายกับค่าคอม</p>
+      </div>
+      <button class="btn" onclick="addStaffRow()">+ เพิ่มสตาฟใหม่</button>
+    </div>
+    <div id="staffList"></div>
+    <div id="staffEmpty" class="empty" style="display:none">ยังไม่มีสตาฟ — กด "+ เพิ่มสตาฟใหม่"</div>
+  </div>
+
+  <script>
+    var TOKEN = sessionStorage.getItem('db_admin_token') || '';
+    var CLASSES = [];
+    var STAFF = [];
+
+    async function api(path, opts) {
+      opts = opts || {};
+      opts.headers = Object.assign({ 'x-admin-token': TOKEN }, opts.headers || {});
+      var r = await fetch(path, opts);
+      if (r.status === 401) { throw new Error('unauthorized'); }
+      if (!r.ok) {
+        var t = await r.text();
+        try { var j = JSON.parse(t); throw new Error(j.error || t); } catch (e2) {
+          if (e2 instanceof SyntaxError) throw new Error(t || ('error ' + r.status));
+          throw e2;
+        }
+      }
+      return r.json();
+    }
+
+    async function enter() {
+      TOKEN = document.getElementById('token').value.trim();
+      if (!TOKEN) return;
+      try {
+        await loadAll();
+        sessionStorage.setItem('db_admin_token', TOKEN);
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+      } catch (e) {
+        document.getElementById('gate-msg').textContent =
+          e.message === 'unauthorized' ? 'Token ไม่ถูกต้อง' : ('ผิดพลาด: ' + e.message);
+      }
+    }
+
+    async function loadAll() {
+      var c = await api('/api/admin-classes');
+      CLASSES = c.classes || [];
+      var s = await api('/api/admin-staff');
+      STAFF = s.staff || [];
+      renderClasses();
+      renderStaff();
+    }
+
+    function escAttr(v) { return String(v == null ? '' : v).replace(/"/g, '&quot;'); }
+    function escHtml(v) {
+      return String(v == null ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function classCardHtml(c) {
+      var id = c.id || '';
+      var isNew = !id;
+      return (
+        '<div class="card" data-row="class" data-id="' + escAttr(id) + '">' +
+        '<div class="field-group"><label>ชื่อที่แสดง (label)</label>' +
+        '<input data-f="label" value="' + escAttr(c.label || '') + '" placeholder="เช่น FBI Program - Online Class"></div>' +
+        '<div class="row">' +
+        '<div><label>ราคา (บาท)</label><input data-f="price" type="number" min="0" step="1" value="' + escAttr(c.price || 0) + '"></div>' +
+        '<div><label>ค่าคอม Partner (บาท/รายการ)</label><input data-f="partner" type="number" min="0" step="1" value="' + escAttr(c.partner_commission_baht || 0) + '"></div>' +
+        '</div>' +
+        '<div class="row">' +
+        '<div><label>ค่าคอม Sale — ประเภท</label>' +
+        '<select data-f="saleType">' +
+        '<option value="percent"' + (c.sale_commission_type !== 'amount' ? ' selected' : '') + '>% ของยอดขาย</option>' +
+        '<option value="amount"' + (c.sale_commission_type === 'amount' ? ' selected' : '') + '>บาทคงที่/รายการ</option>' +
+        '</select></div>' +
+        '<div><label>ค่าคอม Sale — ค่า</label><input data-f="saleValue" type="number" min="0" step="0.1" value="' + escAttr(c.sale_commission_value || 0) + '"></div>' +
+        '</div>' +
+        '<label class="checkline"><input data-f="isOpen" type="checkbox"' + (c.is_open !== false ? ' checked' : '') + '> เปิดขาย (โชว์ในดรอปดาวน์ลงทะเบียน)</label>' +
+        '<div class="actions">' +
+        '<button class="btn" onclick="saveClassRow(this)">บันทึก</button>' +
+        (isNew ? '<button class="btn ghost" onclick="removeUnsavedRow(this)">ยกเลิก</button>'
+               : '<button class="btn outline" onclick="deleteClassRow(this)">ลบ</button>') +
+        '</div>' +
+        '<div class="rowmsg"></div>' +
+        '</div>'
+      );
+    }
+
+    function staffCardHtml(s) {
+      var id = s.id || '';
+      var isNew = !id;
+      return (
+        '<div class="card" data-row="staff" data-id="' + escAttr(id) + '">' +
+        '<div class="row">' +
+        '<div><label>ชื่อสตาฟ</label><input data-f="name" value="' + escAttr(s.name || '') + '" placeholder="เช่น ครูแคทนิช"></div>' +
+        '<div><label>รหัสของตัวเอง</label><input data-f="staffCode" value="' + escAttr(s.staff_code || '') + '" placeholder="เช่น KAT01"></div>' +
+        '</div>' +
+        '<div class="row">' +
+        '<div><label>ธนาคาร</label><input data-f="bankName" value="' + escAttr(s.bank_name || '') + '" placeholder="เช่น กสิกรไทย"></div>' +
+        '<div><label>เลขที่บัญชี</label><input data-f="bankAccountNo" value="' + escAttr(s.bank_account_no || '') + '"></div>' +
+        '</div>' +
+        '<div class="actions">' +
+        '<button class="btn" onclick="saveStaffRow(this)">บันทึก</button>' +
+        (isNew ? '<button class="btn ghost" onclick="removeUnsavedRow(this)">ยกเลิก</button>'
+               : '<button class="btn outline" onclick="deleteStaffRow(this)">ลบ</button>') +
+        '</div>' +
+        '<div class="rowmsg"></div>' +
+        '</div>'
+      );
+    }
+
+    function renderClasses() {
+      document.getElementById('classList').innerHTML = CLASSES.map(classCardHtml).join('');
+      document.getElementById('classEmpty').style.display = CLASSES.length ? 'none' : 'block';
+    }
+
+    function renderStaff() {
+      document.getElementById('staffList').innerHTML = STAFF.map(staffCardHtml).join('');
+      document.getElementById('staffEmpty').style.display = STAFF.length ? 'none' : 'block';
+    }
+
+    function addClassRow() {
+      document.getElementById('classEmpty').style.display = 'none';
+      document.getElementById('classList').insertAdjacentHTML('afterbegin', classCardHtml({}));
+    }
+
+    function addStaffRow() {
+      document.getElementById('staffEmpty').style.display = 'none';
+      document.getElementById('staffList').insertAdjacentHTML('afterbegin', staffCardHtml({}));
+    }
+
+    function removeUnsavedRow(btn) {
+      btn.closest('.card').remove();
+    }
+
+    function fieldVal(card, name) {
+      var el = card.querySelector('[data-f="' + name + '"]');
+      if (!el) return '';
+      if (el.type === 'checkbox') return el.checked;
+      return el.value;
+    }
+
+    function setRowMsg(card, text, isErr) {
+      var el = card.querySelector('.rowmsg');
+      el.textContent = text || '';
+      el.className = 'rowmsg' + (isErr ? ' err' : ' ok');
+    }
+
+    async function saveClassRow(btn) {
+      var card = btn.closest('.card');
+      var id = card.getAttribute('data-id') || null;
+      var label = fieldVal(card, 'label').trim();
+      if (!label) { setRowMsg(card, 'กรุณาใส่ชื่อที่แสดง', true); return; }
+      btn.disabled = true;
+      try {
+        var body = {
+          label: label,
+          price: fieldVal(card, 'price'),
+          partnerCommissionBaht: fieldVal(card, 'partner'),
+          saleCommissionType: fieldVal(card, 'saleType'),
+          saleCommissionValue: fieldVal(card, 'saleValue'),
+          isOpen: fieldVal(card, 'isOpen')
+        };
+        if (id) body.id = id;
+        await api('/api/admin-classes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        setRowMsg(card, 'บันทึกแล้ว ✓');
+        await reloadClasses();
+      } catch (e) {
+        setRowMsg(card, 'บันทึกไม่สำเร็จ: ' + e.message, true);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function deleteClassRow(btn) {
+      var card = btn.closest('.card');
+      var id = card.getAttribute('data-id');
+      if (!id) return;
+      if (!confirm('ลบคลาสนี้?')) return;
+      btn.disabled = true;
+      try {
+        await api('/api/admin-classes?id=' + encodeURIComponent(id), { method: 'DELETE' });
+        await reloadClasses();
+      } catch (e) {
+        setRowMsg(card, 'ลบไม่สำเร็จ: ' + e.message, true);
+        btn.disabled = false;
+      }
+    }
+
+    async function saveStaffRow(btn) {
+      var card = btn.closest('.card');
+      var id = card.getAttribute('data-id') || null;
+      var name = fieldVal(card, 'name').trim();
+      var staffCode = fieldVal(card, 'staffCode').trim();
+      if (!name || !staffCode) { setRowMsg(card, 'กรุณาใส่ชื่อและรหัส', true); return; }
+      btn.disabled = true;
+      try {
+        var body = {
+          name: name,
+          staffCode: staffCode,
+          bankName: fieldVal(card, 'bankName'),
+          bankAccountNo: fieldVal(card, 'bankAccountNo')
+        };
+        if (id) body.id = id;
+        await api('/api/admin-staff', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        setRowMsg(card, 'บันทึกแล้ว ✓');
+        await reloadStaff();
+      } catch (e) {
+        setRowMsg(card, 'บันทึกไม่สำเร็จ: ' + e.message, true);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function deleteStaffRow(btn) {
+      var card = btn.closest('.card');
+      var id = card.getAttribute('data-id');
+      if (!id) return;
+      if (!confirm('ลบสตาฟคนนี้?')) return;
+      btn.disabled = true;
+      try {
+        await api('/api/admin-staff?id=' + encodeURIComponent(id), { method: 'DELETE' });
+        await reloadStaff();
+      } catch (e) {
+        setRowMsg(card, 'ลบไม่สำเร็จ: ' + e.message, true);
+        btn.disabled = false;
+      }
+    }
+
+    async function reloadClasses() {
+      var c = await api('/api/admin-classes');
+      CLASSES = c.classes || [];
+      renderClasses();
+    }
+
+    async function reloadStaff() {
+      var s = await api('/api/admin-staff');
+      STAFF = s.staff || [];
+      renderStaff();
+    }
+
+    if (TOKEN) {
+      loadAll().then(function () {
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+      }).catch(function () {
+        sessionStorage.removeItem('db_admin_token'); TOKEN = '';
+      });
+    }
+  </script>
+</body>
+</html>

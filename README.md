@@ -15,6 +15,7 @@ Supabase + Vercel serverless functions
 | `type-detail.html?type=CODE` | รายละเอียดบุคลิก (16 ไทป์ data-driven) |
 | `result-style-options.html` | รูปแบบแสดงผลบุคลิก |
 | `admin.html` | จัดการสิทธิเข้าเรียน (แอดมิน) |
+| `admin-pricing.html` | ราคา/ค่าคอมมิชชันตามคลาส + สตาฟ (แอดมิน) |
 
 ## LINE Login (LIFF)
 ตั้งค่า `LIFF_ID` ใน `index.html` — Scope ที่ต้องเปิดใน LINE Login channel: `profile`, `openid`
@@ -40,6 +41,8 @@ Supabase + Vercel serverless functions
 | `POST /api/me` | ตรวจ LINE id token → upsert ผู้ใช้ → คืนสิทธิที่มี |
 | `GET /api/admin-users` | (แอดมิน) รายชื่อผู้ใช้ + สิทธิ + แคตตาล็อกคอร์ส |
 | `POST /api/admin-grant` | (แอดมิน) ให้/ถอนสิทธิคอร์สของผู้ใช้ |
+| `GET/POST/DELETE /api/admin-classes` | (แอดมิน) ราคา/ค่าคอมมิชชันตามคลาส (ตาราง `class_pricing`) |
+| `GET/POST/DELETE /api/admin-staff` | (แอดมิน) สตาฟ/พาร์ทเนอร์ — ชื่อ/รหัส/เลขบัญชี (ตาราง `staff`) |
 
 ### คอร์ส (catalog)
 `FBI` · `STOP_BARK` · `NOSE_WORK` · `FITNESS` · `TRICKS` · `AGILITY`
