@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ทำไมสุนัขชอบเอาตัวไถพื้น? 7 เหตุผลที่เจ้าของควรรู้ | DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 8px; }
+  .byline { font-size: 12.5px; color: var(--muted); font-weight: 700; margin-bottom: 16px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  h3 { font-size: 14.5px; font-weight: 800; color: var(--dark); line-height: 1.45; margin: 16px 0 6px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .num-list { margin: 4px 0 8px; padding: 0; list-style: none; counter-reset: n; }
+  .num-list li {
+    position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .num-list li b { color: var(--dark); font-weight: 800; display: block; margin-bottom: 2px; }
+  .num-list li::before {
+    counter-increment: n; content: counter(n);
+    position: absolute; left: 12px; top: 12px; width: 26px; height: 26px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .dot-list { margin: 4px 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .dot-list li {
+    position: relative; padding: 11px 14px 11px 40px; background: var(--sand);
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .dot-list li b { color: var(--dark); font-weight: 800; }
+  .dot-list li::before {
+    content: ''; position: absolute; left: 15px; top: 17px; width: 9px; height: 9px;
+    background: var(--gold-dark); border-radius: 50%;
+  }
+  .warnbox { background: #FBEEE9; border-left: 3px solid #C0603C; border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 13.5px; color: var(--text-body); line-height: 1.7; margin-bottom: 14px; }
+  .warnbox b { color: #A8492A; font-weight: 800; }
+  .table-wrap { overflow-x: auto; margin: 4px 0 14px; -webkit-overflow-scrolling: touch; }
+  table.cmp { border-collapse: collapse; width: 100%; min-width: 440px; font-size: 13px; }
+  table.cmp th, table.cmp td { border: 1px solid #E0DAD0; padding: 9px 11px; text-align: left; vertical-align: top; line-height: 1.5; }
+  table.cmp th { background: var(--sand); color: var(--dark); font-weight: 800; }
+  table.cmp td b { color: var(--dark); }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+  .related { display:flex; align-items:center; gap:12px; background:var(--sand); border-radius:12px; padding:12px 14px; text-decoration:none; margin-bottom:10px; }
+  .related .rt { display:block; font-size:14px; font-weight:800; color:var(--dark); line-height:1.4; }
+  .related .rs { display:block; font-size:12.5px; color:var(--text-body); margin-top:2px; }
+  .disclaimer { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 20px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    h3{ font-size: 17px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-rub-floor.html">
+  <meta name="description" content="สุนัขนอนกลิ้ง ไถหลัง หรือลากก้นกับพื้น เกิดจากอะไร? เข้าใจพฤติกรรมผ่านมุมมองพฤติกรรมศาสตร์ พร้อมสัญญาณที่ควรพาไปพบสัตวแพทย์">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="ทำไมสุนัขชอบเอาตัวไถพื้น? 7 เหตุผลที่เจ้าของควรรู้">
+  <meta property="og:description" content="สุนัขนอนกลิ้ง ไถหลัง หรือลากก้นกับพื้น เกิดจากอะไร? เข้าใจพฤติกรรมพร้อมสัญญาณที่ควรพาไปพบสัตวแพทย์">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-rub-floor.jpg">
+  <meta property="og:url" content="https://dogbooster.net/article-rub-floor.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ทำไมสุนัขชอบเอาตัวไถพื้น? 7 เหตุผลที่เจ้าของควรรู้">
+  <meta name="twitter:description" content="สุนัขนอนกลิ้ง ไถหลัง หรือลากก้นกับพื้น เกิดจากอะไร? พร้อมสัญญาณที่ควรพาไปพบสัตวแพทย์">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-rub-floor.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ทำไมสุนัขชอบเอาตัวไถพื้น? ถอดรหัสพฤติกรรมที่ดูตลก แต่มีเหตุผลมากกว่าที่คิด","description":"สุนัขนอนกลิ้ง ไถหลัง หรือลากก้นกับพื้น เกิดจากอะไร? เข้าใจพฤติกรรมผ่านมุมมองพฤติกรรมศาสตร์ พร้อมสัญญาณที่ควรพาไปพบสัตวแพทย์","image":["https://dogbooster.net/assets/article-rub-floor.jpg"],"author":{"@type":"Person","name":"ครูแคทนิช","worksFor":{"@type":"Organization","name":"DogBooster"}},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-rub-floor.html","datePublished":"2026-10-14","dateModified":"2026-10-14","inLanguage":"th"}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-rub-floor.jpg" alt="สุนัขนอนหงายไถหลังกับพื้นหญ้าอย่างมีความสุข">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>ทำไมสุนัขชอบเอาตัวไถพื้น? ถอดรหัสพฤติกรรมที่ดูตลก แต่มีเหตุผลมากกว่าที่คิด</h1>
+    <div class="byline">โดย ครูแคทนิช · katnich DogsQuest</div>
+
+    <div class="intro">
+      <p>ทุกครั้งที่อาบน้ำให้สุนัขเสร็จ ยังไม่ทันหยิบผ้าเช็ดตัว เขาก็พุ่งไปที่พรม เริ่มไถหน้า ไถหลัง กลิ้งไปมา
+        เหมือนตั้งใจจะลบทุกอย่างที่เพิ่งทำไปทิ้ง ส่วนเวลาพาเดินเล่น บางวันก็เจอเขาก้มดม แล้วทิ้งไหล่ลงไปกลิ้งบนจุดที่มีกลิ่นแปลก ๆ อย่างมีความสุขสุด ๆ</p>
+    </div>
+    <p>คำถามว่า “ทำไมหมาชอบเอาตัวไถพื้น” เป็นคำถามที่เจ้าของถามบ่อยมาก และคำตอบที่ตรงที่สุดคือ —
+      <strong>ขึ้นอยู่กับว่าเขาไถแบบไหน ไถเมื่อไร และไถบ่อยแค่ไหน</strong> เพราะพฤติกรรมที่ดูเหมือนกันจากภายนอก
+      อาจมาจากเหตุผลที่ต่างกันโดยสิ้นเชิง ตั้งแต่ความสนุก การสื่อสารด้วยกลิ่น ไปจนถึงสัญญาณว่าร่างกายกำลังไม่สบาย</p>
+
+    <div class="divider"></div>
+
+    <h2>1. ไถหลังเพื่อเกาจุดที่เท้าเอื้อมไม่ถึง</h2>
+    <p>เหตุผลที่ตรงไปตรงมาที่สุดคือ <strong>อาการคัน</strong> สุนัขไม่มีมือไว้เกาหลัง พื้นหญ้า พรม หรือพื้นผิวหยาบ
+      จึงเป็นเครื่องมือเกาตามธรรมชาติ มักดูเป็นจังหวะ ไถซ้ำ ๆ ที่จุดเดิม หากนาน ๆ ครั้งก็มักปกติ แต่ถ้าเริ่มถี่ขึ้น อาจเกี่ยวกับ:</p>
+    <ul class="dot-list">
+      <li>ผิวแห้ง โดยเฉพาะช่วงอากาศเปลี่ยนหรืออาบน้ำบ่อยเกินไป</li>
+      <li>เห็บ หมัด หรือปรสิตภายนอก</li>
+      <li>ภาวะภูมิแพ้ ทั้งจากอาหารและสิ่งแวดล้อม</li>
+      <li>การติดเชื้อที่ผิวหนัง</li>
+    </ul>
+    <div class="warnbox"><b>สิ่งที่ควรสังเกต:</b> ขนร่วงเป็นหย่อม ผิวแดง มีสะเก็ด มีกลิ่นผิดปกติ หรือสุนัขเลีย/กัดตัวเองร่วมด้วย — หากพบสัญญาณเหล่านี้ ควรพาไปพบสัตวแพทย์</div>
+
+    <div class="divider"></div>
+
+    <h2>2. กลิ้งบนของเหม็น: ภาษากลิ่นที่มนุษย์ไม่เข้าใจ</h2>
+    <p>พฤติกรรมที่ทำให้เจ้าของปวดหัวที่สุด — สุนัขเจอซากสัตว์ มูลสัตว์ หรือของกลิ่นแรง แล้วเลือกจะ “ใส่” กลิ่นนั้นไว้บนตัว
+      โดยมักเริ่มจากไหล่หรือคอก่อน นักพฤติกรรมศาสตร์ยังไม่มีข้อสรุปแน่ชัด แต่มีสมมติฐานที่พูดถึงบ่อย ได้แก่:</p>
+    <ul class="dot-list">
+      <li><b>การกลบกลิ่นตัวเอง</b> — บรรพบุรุษของสุนัขอาจใช้กลิ่นจากสิ่งแวดล้อมเพื่อพรางตัวขณะล่า</li>
+      <li><b>การนำ “ข้อมูล” กลับไปบอกฝูง</b> — กลิ่นบนตัวอาจคล้ายการรายงานว่าไปเจออะไรมา พบพฤติกรรมคล้ายกันในสัตว์ตระกูลสุนัขป่า</li>
+      <li><b>ความพึงพอใจจากกลิ่นนั้นเอง</b> — สุนัขมีประสาทรับกลิ่นละเอียดกว่ามนุษย์หลายเท่า กลิ่นที่เราว่าเหม็นอาจน่าสนใจมากสำหรับเขา</li>
+    </ul>
+    <p>สิ่งสำคัญคือ <strong>นี่ไม่ใช่การดื้อหรือการท้าทายเจ้าของ</strong> เขาแค่ทำตามสิ่งที่สัญชาตญาณและสิ่งแวดล้อมให้รางวัลกับเขา</p>
+
+    <div class="divider"></div>
+
+    <h2>3. หลังอาบน้ำ: กำจัดกลิ่นแปลกปลอม และปลดปล่อยพลังงาน</h2>
+    <p>ฉากที่เห็นบ่อยที่สุดคือวิ่งพล่าน กลิ้งไปมา ไถหน้ากับพรมหรือโซฟาหลังอาบน้ำ ซึ่งอาจอธิบายได้จากหลายปัจจัยร่วมกัน:</p>
+    <ul class="dot-list">
+      <li><b>กลิ่นแชมพูไม่ใช่กลิ่นของเขา</b> — กลิ่นหอมดอกไม้อาจแรงและแปลกปลอม การไถตัวในบ้านช่วยให้กลิ่นกลับมาคุ้นเคย</li>
+      <li><b>ช่วยให้ตัวแห้งเร็วขึ้น</b> — ความรู้สึกเปียกชื้นที่ผิวอาจไม่สบายตัว</li>
+      <li><b>การระบายความตื่นเต้น</b> — หลายตัวเครียดเล็กน้อยระหว่างอาบน้ำ พอจบจึงปลดปล่อยพลังงานเป็น “zoomies” วิ่งรอบบ้าน</li>
+    </ul>
+    <p>จากประสบการณ์สอนเจ้าของหลายบ้าน สุนัขที่มีประสบการณ์ดีกับการอาบน้ำ (ได้รางวัล ได้ควบคุมจังหวะ ไม่ถูกบังคับ)
+      มักพุ่งพล่านหลังอาบน้ำน้อยลง สอดคล้องกับแนวคิดว่าส่วนหนึ่งของพฤติกรรมนี้มาจากการระบายความเครียด</p>
+
+    <div class="divider"></div>
+
+    <h2>4. ทิ้งกลิ่นของตัวเองไว้ — ทำเครื่องหมายด้วยร่างกาย</h2>
+    <p>สุนัขมีต่อมกลิ่นกระจายหลายจุดบนร่างกาย การไถตัวกับพื้น ผ้าห่ม หรือที่นอน โดยเฉพาะจุดที่เจ้าของเพิ่งนั่งหรือนอน
+      อาจเป็นการผสมกลิ่นของตัวเองเข้ากับกลิ่นของคนที่เขาผูกพัน หลายบ้านสังเกตว่าสุนัขชอบกลิ้งบนเสื้อผ้าที่เพิ่งถอด
+      หรือบนเตียงทันทีที่เจ้าของลุก — มักไม่ใช่ปัญหา และอาจสะท้อนว่าเขารู้สึกสบายใจกับพื้นที่และคนในบ้าน</p>
+
+    <div class="divider"></div>
+
+    <h2>5. ความสุขล้วน ๆ และการยืดเส้นยืดสาย</h2>
+    <p>บางครั้งคำตอบก็ง่ายกว่าที่คิด — <strong>มันรู้สึกดี</strong> การนอนหงาย บิดตัว ไถหลังกับหญ้านุ่ม ๆ ช่วยยืดกล้ามเนื้อ
+      และกระตุ้นความรู้สึกผ่อนคลาย สุนัขที่ไถตัวเพราะความสุขมักมีภาษากายผ่อนคลาย: ปากเปิดสบาย ลิ้นห้อย ตานุ่ม หางแกว่งช้า ๆ
+      ลำตัวไม่เกร็ง และหยุดเองได้ไม่นาน ในอากาศร้อนแบบบ้านเรา บางตัวยังชอบนอนไถกับพื้นกระเบื้องเย็น ๆ เพื่อระบายความร้อนด้วย</p>
+
+    <div class="divider"></div>
+
+    <h2>6. ไถตัวเพราะเคยได้รับความสนใจ</h2>
+    <p>มุมที่เจ้าของหลายคนมองข้าม — <strong>พฤติกรรมที่ได้รับผลตอบแทน มีแนวโน้มจะเกิดซ้ำ</strong>
+      ถ้าทุกครั้งที่สุนัขนอนหงายไถพื้น เราหัวเราะ เข้าไปเกาพุง หรือถ่ายวิดีโอพร้อมชมเสียงดัง สุนัขอาจเรียนรู้ว่าพฤติกรรมนี้ทำให้ได้รับความสนใจ
+      นี่ไม่ใช่เรื่องผิด และไม่ใช่การ “บงการ” เจ้าของ แต่เป็นการเรียนรู้ตามธรรมชาติ</p>
+    <p>ข่าวดีคือ หลักการเดียวกันนี้คือสิ่งที่เราใช้ในการฝึกแบบเสริมแรงทางบวก — เราเลือกได้ว่าจะให้รางวัลกับพฤติกรรมไหน</p>
+
+    <div class="divider"></div>
+
+    <h2>7. ลากก้นกับพื้น: สัญญาณที่ไม่ควรมองข้าม</h2>
+    <p>พฤติกรรมนี้ต่างจากการกลิ้งหรือไถหลังอย่างชัดเจน สุนัขจะนั่งลง ยกขาหน้าเล็กน้อย แล้วใช้ขาหน้าลากตัวไปข้างหน้าโดยให้ก้นถูกับพื้น
+      สาเหตุที่พบบ่อยคือ <strong>ปัญหาต่อมข้างก้น (anal sac)</strong> ซึ่งอาจอุดตัน อักเสบ หรือติดเชื้อ ทำให้ไม่สบาย
+      นอกจากนี้ยังอาจเกี่ยวกับพยาธิ ภูมิแพ้ ท้องเสีย หรือสิ่งแปลกปลอมติดบริเวณขนรอบก้น</p>
+    <div class="warnbox"><b>ควรพาไปพบสัตวแพทย์เมื่อ:</b> ลากก้นบ่อยหรือติดต่อกันหลายวัน เลียหรือกัดบริเวณก้น มีกลิ่นแรงผิดปกติ มีเลือดหรือหนอง มีอาการบวม หรือแสดงท่าทางเจ็บเวลานั่ง</div>
+
+    <div class="divider"></div>
+
+    <h2>วิธีแยกแยะ: ปกติ หรือ ควรกังวล?</h2>
+    <div class="table-wrap">
+      <table class="cmp">
+        <thead><tr><th>ลักษณะ</th><th>มีแนวโน้มปกติ</th><th>ควรสังเกต / พบสัตวแพทย์</th></tr></thead>
+        <tbody>
+          <tr><td><b>ความถี่</b></td><td>นาน ๆ ครั้ง มีจังหวะชัดเจน (หลังอาบน้ำ, ในสนาม)</td><td>บ่อยขึ้นเรื่อย ๆ โดยไม่มีตัวกระตุ้นชัดเจน</td></tr>
+          <tr><td><b>ภาษากาย</b></td><td>ผ่อนคลาย ร่าเริง หยุดเองได้</td><td>เกร็ง กระวนกระวาย หยุดไม่ได้</td></tr>
+          <tr><td><b>ผิวหนัง/ขน</b></td><td>ปกติ</td><td>แดง ร่วง มีสะเก็ด มีกลิ่น</td></tr>
+          <tr><td><b>พฤติกรรมร่วม</b></td><td>วิ่งเล่น ขอเล่นต่อ</td><td>เลีย กัด เกาตัวเองซ้ำ ๆ ลากก้น</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>อยากให้สุนัขกลิ้งบนของเหม็นน้อยลง ทำอย่างไรดี?</h2>
+    <p>แทนที่จะดุหรือลงโทษ ซึ่งอาจทำให้สุนัขสับสนและเสียความสัมพันธ์ ลองมองว่า <strong>นี่คือทักษะที่ยังไม่ได้สอน</strong> ไม่ใช่ความดื้อ</p>
+    <ol class="num-list">
+      <li><b>สร้างทักษะการควบคุมตัวเอง</b>แนวคิด It's Yer Choice (IYC) ของ Susan Garrett เป็นจุดเริ่มต้นที่ดี สอนให้สุนัขเรียนรู้ว่าการเลือกควบคุมตัวเองคือเส้นทางที่ทำให้ได้สิ่งที่ต้องการ</li>
+      <li><b>ฝึกการเรียกกลับให้มีค่ามากกว่ากลิ่น</b>เริ่มในที่สิ่งรบกวนน้อย ใช้รางวัลที่สุนัขชอบมาก ๆ แล้วค่อย ๆ เพิ่มความยาก การเรียกกลับที่แข็งแรงช่วยได้จริงในสนาม</li>
+      <li><b>สังเกตสัญญาณเตือนล่วงหน้า</b>สุนัขมักดมอย่างตั้งใจ หยุดนิ่ง แล้วค่อย ๆ ลดหัวไหล่ลงก่อนกลิ้ง หากเรียกหรือชวนเล่นตั้งแต่จังหวะนี้จะง่ายกว่ารอให้ลงไปกลิ้งแล้ว</li>
+      <li><b>จัดการสิ่งแวดล้อม</b>ใช้สายจูงยาวในพื้นที่ที่รู้ว่ามีของเหม็น หรือเลือกเส้นทางที่ควบคุมได้ระหว่างที่ทักษะยังไม่มั่นคง</li>
+      <li><b>ให้ทางออกที่เหมาะสม</b>หากชอบกลิ้งเพราะสนุก เตรียมพื้นที่ที่อนุญาต เช่น ผ้าห่มเก่าหรือพื้นหญ้าสะอาด แล้วให้รางวัลเมื่อเขาเลือกใช้ที่นั่น</li>
+    </ol>
+
+    <div class="divider"></div>
+
+    <h2>สรุป</h2>
+    <p>การที่สุนัขเอาตัวไถพื้นไม่ได้มีคำตอบเดียว อาจเป็นการเกาที่คัน การสื่อสารด้วยกลิ่น การระบายพลังงานหลังอาบน้ำ ความสุขธรรมดา ๆ
+      หรืออาจเป็นสัญญาณของปัญหาสุขภาพ หน้าที่ของเราคือ <strong>สังเกตบริบท อ่านภาษากาย และแยกให้ออกว่าแบบไหนคือความสุข แบบไหนคือความไม่สบาย</strong></p>
+    <p>เมื่อเข้าใจเหตุผลเบื้องหลัง เราจะตอบสนองได้ตรงจุด — ปล่อยให้เขาสนุกเมื่อเป็นเรื่องปกติ ช่วยเหลือเมื่อเขาไม่สบาย
+      และสอนทักษะใหม่ด้วยความเข้าใจ แทนการลงโทษ</p>
+
+    <p class="disclaimer">บทความนี้เป็นข้อมูลเพื่อความรู้ทั่วไป หากสุนัขของคุณมีพฤติกรรมไถตัวหรือลากก้นบ่อยผิดปกติ หรือมีอาการทางผิวหนังร่วมด้วย
+      ควรพาไปพบสัตวแพทย์เพื่อตรวจหาสาเหตุทางสุขภาพก่อนเสมอ และหากต้องการเริ่มฝึกทักษะการควบคุมตัวเองหรือการเรียกกลับ
+      แนะนำให้ปรึกษาทีมผู้เชี่ยวชาญของ DogBooster ก่อนเริ่มโปรแกรมการฝึก เพื่อให้ได้แผนที่เหมาะกับสุนัขของคุณ</p>
+
+    <div class="divider"></div>
+
+    <h2>บทความที่เกี่ยวข้อง</h2>
+    <a href="article-grooming.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="bath"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">ทำไมน้องหมาถึงต่อต้าน Grooming</span>
+        <span class="rs">เข้าใจความกลัวเรื่องอาบน้ำตัดขน และฝึกแบบ Force-free</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+    <a href="article-iyc.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="brain"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">ทำไม “การเลือก” ถึงเป็นกุญแจสำคัญที่สุด</span>
+        <span class="rs">It's Yer Choice เกมที่สอนสุนัขให้ควบคุมตัวเอง</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+
+    <a href="https://app.dogbooster.net/register" target="_blank" rel="noopener" class="cta" style="background:var(--dark);color:var(--cream);box-shadow:0 8px 20px -8px rgba(21,19,15,.45);">
+      <i data-lucide="user-plus"></i> สมัครเรียนกับ DogBooster
+    </a>
+    <a href="https://line.me/R/ti/p/@832nixxn" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาการฝึกน้องหมากับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+<script>
+  (function(){
+    try {
+      var ref = new URLSearchParams(window.location.search).get("ref");
+      if (!ref) return;
+      document.querySelectorAll('a[href^="https://app.dogbooster.net/register"]').forEach(function(a){
+        var u = new URL(a.href);
+        u.searchParams.set("ref", ref);
+        a.href = u.toString();
+      });
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
