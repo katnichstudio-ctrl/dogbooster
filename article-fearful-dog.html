@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>น้องหมาจิตประสาทดีหรือไม่ดี เกิดจากอะไร? | DogBooster</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #F0B74C; --gold-dark: #E0A02F;
+    --dark: #15130F; --dark2: #1C1A15;
+    --cream: #FAF7F1; --sand: #E7E2D7; --muted: #A39B8C; --text-body: #48433A;
+    --amber: #B8860B;
+  }
+  html, body {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; background: var(--sand); min-height: 100dvh;
+  }
+  .page { max-width: 430px; margin: 0 auto; min-height: 100dvh; background: var(--cream); }
+  .hero { position: relative; background: var(--dark2); }
+  .hero img { width: 100%; display: block; object-fit: cover; }
+  .back-btn {
+    position: absolute; top: 46px; left: 16px; z-index: 2;
+    background: rgba(21,19,15,.55); backdrop-filter: blur(6px); border: none; cursor: pointer;
+    color: var(--cream); width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back-btn svg { width: 20px; height: 20px; }
+  .body { padding: 22px 20px 60px; }
+  .article-tag {
+    display: inline-block; font-size: 11px; font-weight: 800; color: var(--amber);
+    letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  h1 { font-size: 21px; font-weight: 800; color: var(--dark); line-height: 1.4; margin-bottom: 8px; }
+  .byline { font-size: 12.5px; color: var(--muted); font-weight: 700; margin-bottom: 16px; }
+  h2 { font-size: 16px; font-weight: 800; color: var(--gold-dark); line-height: 1.45; margin: 22px 0 8px; }
+  p { font-size: 15px; color: var(--text-body); line-height: 1.85; margin-bottom: 14px; }
+  strong { color: var(--gold-dark); font-weight: 800; }
+  .intro {
+    background: #FFF8EC; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin-bottom: 20px;
+  }
+  .intro p { margin-bottom: 8px; font-size: 14.5px; }
+  .intro p:last-child { margin-bottom: 0; }
+  .divider { height: 1px; background: #E0DAD0; margin: 22px 0; }
+  .dot-list { margin: 4px 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .dot-list li {
+    position: relative; padding: 11px 14px 11px 40px; background: var(--sand);
+    border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .dot-list li b { color: var(--dark); font-weight: 800; }
+  .dot-list li::before {
+    content: ''; position: absolute; left: 15px; top: 17px; width: 9px; height: 9px;
+    background: var(--gold-dark); border-radius: 50%;
+  }
+  .num-list { margin: 4px 0 8px; padding: 0; list-style: none; counter-reset: n; }
+  .num-list li {
+    position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+    background: var(--sand); border-radius: 12px; font-size: 14px; color: var(--text-body); line-height: 1.65;
+  }
+  .num-list li b { color: var(--dark); font-weight: 800; display: block; margin-bottom: 2px; }
+  .num-list li::before {
+    counter-increment: n; content: counter(n);
+    position: absolute; left: 12px; top: 12px; width: 26px; height: 26px;
+    background: var(--gold); color: var(--dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px;
+  }
+  .faq-q { font-size: 14.5px; font-weight: 800; color: var(--dark); margin: 14px 0 4px; }
+  .faq-a { font-size: 14px; color: var(--text-body); line-height: 1.75; margin-bottom: 6px; }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--gold); color: var(--dark); text-decoration: none;
+    font-weight: 800; font-size: 15px; padding: 15px; border-radius: 14px; margin-top: 24px;
+    box-shadow: 0 8px 20px -8px rgba(240,183,76,.5);
+  }
+  .cta svg { width: 18px; height: 18px; }
+  .related { display:flex; align-items:center; gap:12px; background:var(--sand); border-radius:12px; padding:12px 14px; text-decoration:none; margin-bottom:10px; }
+  .related .rt { display:block; font-size:14px; font-weight:800; color:var(--dark); line-height:1.4; }
+  .related .rs { display:block; font-size:12.5px; color:var(--text-body); margin-top:2px; }
+  .disclaimer { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 20px; }
+
+  /* ---- Responsive (tablet/desktop) ---- */
+  @media (min-width: 700px){
+    .page{ max-width: 760px; box-shadow: 0 0 60px rgba(0,0,0,.08); }
+    .hero img{ max-height: 440px; }
+    .body{ padding: 34px 48px 90px; }
+    h1{ font-size: 30px; }
+    h2{ font-size: 20px; }
+    p, li{ font-size: 16.5px; }
+  }
+  @media (min-width: 700px){ html{ background: var(--sand); } }
+</style>
+  <link rel="canonical" href="https://dogbooster.net/article-fearful-dog.html">
+  <meta name="description" content="น้องหมาขี้กลัว ตกใจง่าย เป็นเพราะพันธุกรรมหรือการเลี้ยงดู? สรุปมุมมองของซูซาน แกเร็ตต์ ครูฝึกระดับโลก พร้อมวิธีช่วยน้องหมาให้มั่นใจขึ้น โดย Katnich DogsQuest">
+  <link rel="icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <meta name="theme-color" content="#15130F">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DogBooster">
+  <meta property="og:locale" content="th_TH">
+  <meta property="og:title" content="น้องหมาจิตประสาทดีหรือไม่ดี เกิดจากอะไร?">
+  <meta property="og:description" content="น้องหมาขี้กลัว ตกใจง่าย เป็นเพราะพันธุกรรมหรือการเลี้ยงดู? พร้อมวิธีช่วยน้องหมาให้มั่นใจขึ้น">
+  <meta property="og:image" content="https://dogbooster.net/assets/article-fearful-dog.png">
+  <meta property="og:url" content="https://dogbooster.net/article-fearful-dog.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="น้องหมาจิตประสาทดีหรือไม่ดี เกิดจากอะไร?">
+  <meta name="twitter:description" content="น้องหมาขี้กลัว ตกใจง่าย เป็นเพราะพันธุกรรมหรือการเลี้ยงดู? พร้อมวิธีช่วยน้องหมาให้มั่นใจขึ้น">
+  <meta name="twitter:image" content="https://dogbooster.net/assets/article-fearful-dog.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"น้องหมาจิตประสาทดีหรือไม่ดี เกิดจากอะไร? พันธุกรรม ความกลัว และสิ่งที่เจ้าของช่วยได้","description":"น้องหมาขี้กลัว ตกใจง่าย เป็นเพราะพันธุกรรมหรือการเลี้ยงดู? สรุปมุมมองของซูซาน แกเร็ตต์ พร้อมวิธีช่วยน้องหมาให้มั่นใจขึ้น","image":["https://dogbooster.net/assets/article-fearful-dog.png"],"author":{"@type":"Person","name":"ครูแคทนิช","worksFor":{"@type":"Organization","name":"DogBooster"}},"publisher":{"@type":"Organization","name":"DogBooster","logo":{"@type":"ImageObject","url":"https://dogbooster.net/assets/logo.png"}},"mainEntityOfPage":"https://dogbooster.net/article-fearful-dog.html","datePublished":"2026-11-06","dateModified":"2026-11-06","inLanguage":"th"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"น้องหมาขี้กลัวเพราะพันธุกรรมใช่ไหม?","acceptedAnswer":{"@type":"Answer","text":"ส่วนหนึ่งใช่ สายพันธุ์และพ่อแม่มีผลต่อความมั่นใจ แต่การเลี้ยงดูช่วงแรก สุขภาพ และประสบการณ์ในชีวิตก็มีผลไม่แพ้กัน"}},{"@type":"Question","name":"น้องหมาจิตประสาทไม่ดี ฝึกให้ดีขึ้นได้ไหม?","acceptedAnswer":{"@type":"Answer","text":"ได้ แม้จะเปลี่ยนพื้นฐานทางพันธุกรรมไม่ได้ แต่การฝึกด้วยเกมและรางวัลอย่างสม่ำเสมอ ช่วยให้น้องหมามั่นใจขึ้นและรับมือกับความเครียดได้ดีขึ้น"}},{"@type":"Question","name":"ทำไมลูกหมาที่เคยกล้า จู่ ๆ ก็กลายเป็นขี้กลัว?","acceptedAnswer":{"@type":"Answer","text":"อาจเป็นช่วงวัยที่กลัวง่ายตามธรรมชาติ หรืออาจมีเรื่องสุขภาพหรือเหตุการณ์ที่ทำให้ตกใจ ควรพาไปตรวจสุขภาพก่อน แล้วค่อย ๆ สร้างความมั่นใจกลับคืนมา"}},{"@type":"Question","name":"ทำหมันแล้วน้องหมาจะขี้กลัวขึ้นไหม?","acceptedAnswer":{"@type":"Answer","text":"ซูซานพูดถึงว่าการทำหมันอาจมีผลต่อฮอร์โมนของน้องหมาตัวเมีย ซึ่งเกี่ยวข้องกับอารมณ์ ควรปรึกษาสัตวแพทย์เรื่องช่วงเวลาที่เหมาะสม"}},{"@type":"Question","name":"เลือกลูกหมาอย่างไรให้ได้น้องหมาที่มั่นใจ?","acceptedAnswer":{"@type":"Answer","text":"ดูนิสัยพ่อแม่ ถามผู้เพาะพันธุ์เรื่องการทดสอบนิสัยและการเลี้ยงดูช่วงแรก และสังเกตว่าลูกหมาฟื้นตัวจากความตกใจได้เร็วแค่ไหน"}}]}</script>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <button class="back-btn" onclick="history.back()" aria-label="ย้อนกลับ">
+      <i data-lucide="arrow-left"></i>
+    </button>
+    <img src="assets/article-fearful-dog.png" alt="น้องหมาขี้กลัวหมอบตัวต่ำ แสดงภาษากายกังวล">
+  </div>
+
+  <div class="body">
+    <span class="article-tag">🐾 การฝึกสุนัข</span>
+    <h1>น้องหมาจิตประสาทดีหรือไม่ดี เกิดจากอะไร? พันธุกรรม ความกลัว และสิ่งที่เจ้าของช่วยได้</h1>
+    <div class="byline">โดย ครูแคทนิช · Katnich DogsQuest</div>
+
+    <div class="intro">
+      <p>หลายบ้านเคยสงสัยว่า ทำไมน้องหมาบางตัวเจอเสียงดัง คนแปลกหน้า หรือของใหม่ ๆ แล้วเฉย ๆ สบาย ๆ
+        แต่บางตัวกลับสะดุ้ง หลบ ตัวสั่น หรือเห่าขู่ไม่หยุด</p>
+    </div>
+    <p>ในวงการฝึกสุนัขบางกลุ่มจะเรียกสิ่งนี้ว่า “จิตประสาทดี” หรือ “จิตประสาทไม่ดี” ซึ่งหมายถึงความสามารถในการรับมือกับสิ่งที่ทำให้เครียด
+      และฟื้นตัวกลับมาเป็นปกติได้เร็วแค่ไหน</p>
+    <p><strong>ซูซาน แกเร็ตต์</strong> ครูฝึกสุนัขแนวเสริมแรงทางบวกระดับแชมป์โลก ไม่ได้ใช้คำนี้เป็นหลัก
+      แต่เธอพูดถึงเรื่องเดียวกันผ่านเรื่อง “ความมั่นใจ” และ “ความกลัว” ของน้องหมา และมองว่ามีหลายปัจจัยประกอบกัน ไม่ได้มาจากพันธุกรรมอย่างเดียว</p>
+
+    <div class="divider"></div>
+
+    <h2>1. พันธุกรรมคือจุดตั้งต้น ไม่ใช่คำตัดสิน</h2>
+    <ul class="dot-list">
+      <li><b>สายพันธุ์มีผลจริง</b> — น้องหมาแต่ละสายพันธุ์ถูกคัดเลือกมาเพื่องานต่างกัน สายพันธุ์ที่พัฒนามาเฝ้าฝูงสัตว์และคอยระวังภัย มักมั่นใจกว่าสายพันธุ์ที่พัฒนามาเพื่องานอื่น</li>
+      <li><b>ในสายพันธุ์เดียวกันก็ต่างกันได้มาก</b> — พันธุ์เดียวกัน หรือแม้แต่คอกเดียวกัน อาจมีความมั่นใจไม่เท่ากัน</li>
+      <li><b>ความกลัวส่งต่อข้ามรุ่นได้</b> — ประสบการณ์ที่น่ากลัวของพ่อแม่หรือรุ่นก่อน อาจถูกส่งต่อมาถึงลูกได้ แม้ลูกจะไม่เคยเจอเหตุการณ์นั้นเลย</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>2. ช่วงแรกเกิดถึง 10 สัปดาห์ สำคัญมาก</h2>
+    <ul class="dot-list">
+      <li>ช่วงที่ลูกหมายังอยู่กับผู้เพาะพันธุ์ คือช่วงที่สมองกำลังเรียนรู้โลก</li>
+      <li>ถ้าได้เจอเสียง พื้นผิว คน และสิ่งแวดล้อมที่หลากหลายอย่างปลอดภัย จะช่วยวางรากฐานความมั่นใจ</li>
+      <li>ถ้าขาดประสบการณ์ช่วงนี้ น้องหมาอาจโตมาขี้กลัวกว่าที่ควร ถึงแม้พันธุกรรมจะดีก็ตาม</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>3. สาเหตุอื่นที่ทำให้น้องหมาดูขี้กลัว</h2>
+    <p>ซูซานรวบรวมสาเหตุไว้หลายข้อ ตัวอย่างที่เจ้าของควรรู้ ได้แก่</p>
+    <ul class="dot-list">
+      <li><b>ช่วงวัยที่กลัวง่ายตามธรรมชาติ</b> — ลูกหมาบางตัวจะผ่านช่วงที่จู่ ๆ ก็กลัวของที่เคยไม่กลัว ช่วงนี้อาจเกิดหรือไม่เกิดก็ได้</li>
+      <li><b>เหตุการณ์ร้าย ๆ ในอดีต</b> — เช่น ถูกน้องหมาตัวอื่นทำร้าย หรือเจอเสียงดังมาก ๆ ตอนเด็ก</li>
+      <li><b>ปัญหาสุขภาพ</b> — ความเจ็บปวดหรือไม่สบายตัว ทำให้ไวต่อสิ่งรอบตัวมากขึ้น</li>
+      <li><b>ฮอร์โมน</b> — การทำหมันอาจมีผลต่อฮอร์โมนของน้องหมาตัวเมีย</li>
+      <li><b>สุขภาพลำไส้</b> — ระบบย่อยอาหารมีผลต่ออารมณ์และพฤติกรรม</li>
+      <li><b>ความเครียดสะสม</b> — เรื่องเล็ก ๆ หลายเรื่องติดกัน ทำให้ถึงจุดที่รับไม่ไหวง่ายขึ้น</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>4. แยกให้ออก: ตื่นตัว ตื่นเต้น หรือกังวล</h2>
+    <ul class="dot-list">
+      <li><b>ตื่นตัว</b> — หูตั้ง จ้องมอง แต่ยังผ่อนคลายกลับมาได้เอง</li>
+      <li><b>ตื่นเต้น</b> — กระโดด หางสะบัดแรง อยากเข้าไปหา</li>
+      <li><b>กังวลหรือกลัว</b> — หางตก หูลู่ ตัวต่ำ หลบสายตา เลียปาก หรือพยายามหนี</li>
+    </ul>
+    <p>การอ่านภาษากายให้ถูก ช่วยให้เจ้าของรู้ว่าน้องหมาต้องการความช่วยเหลือจริง ๆ หรือแค่สนใจสิ่งรอบตัว</p>
+
+    <div class="divider"></div>
+
+    <h2>5. เจ้าของช่วยอะไรได้บ้าง</h2>
+    <ul class="dot-list">
+      <li><b>ยอมรับสิ่งที่เปลี่ยนไม่ได้</b> — พันธุกรรมเราแก้ไม่ได้ แต่หลายสาเหตุข้างบน เราลดหรือป้องกันได้</li>
+      <li><b>ตรวจสุขภาพก่อน</b> — ถ้าเปลี่ยนไปกะทันหัน ควรพาไปหาสัตวแพทย์เพื่อตัดเรื่องความเจ็บป่วยออกก่อน</li>
+      <li><b>ฝึกผ่านเกม</b> — ซูซานเน้นการฝึกด้วยเกมและการให้รางวัล ช่วยให้น้องหมาเรียนรู้ว่าโลกปลอดภัย และสร้างความมั่นใจทีละนิด</li>
+      <li><b>อย่าเพิ่งท้อ</b> — อย่าด่วนสรุปว่าการฝึกแบบให้รางวัลใช้ไม่ได้ผลกับน้องหมาขี้กลัว ต้องใช้เวลาและความสม่ำเสมอ</li>
+      <li><b>จัดการสิ่งแวดล้อม</b> — ลดสิ่งที่ทำให้น้องหมาเครียดในช่วงที่กำลังฝึก ไม่ให้ความเครียดสะสม</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>6. ถ้ากำลังจะเลือกลูกหมา ดูอะไรดี</h2>
+    <ul class="dot-list">
+      <li><b>ถามผู้เพาะพันธุ์</b> — ว่าได้ทดสอบนิสัยลูกหมามาหรือยัง</li>
+      <li><b>ดูพ่อแม่</b> — นิสัยของพ่อแม่บอกอะไรได้หลายอย่าง</li>
+      <li><b>ดูความใจสู้และความกระตือรือร้น</b> — ลูกหมาที่ฟื้นตัวเร็วหลังตกใจ และอยากเข้าไปสำรวจสิ่งใหม่ มักมีพื้นฐานความมั่นใจที่ดี</li>
+      <li><b>ถามเรื่องการเลี้ยงดูช่วงแรก</b> — ลูกหมาได้เจอประสบการณ์อะไรบ้างก่อนมาอยู่กับเรา</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>สรุป</h2>
+    <p>น้องหมาจะ “จิตประสาทดี” หรือ “ไม่ดี” ไม่ได้มาจากพันธุกรรมอย่างเดียว พันธุกรรมเป็นแค่จุดตั้งต้น
+      ส่วนการเลี้ยงดูช่วงแรก สุขภาพ ประสบการณ์ในชีวิต และวิธีที่เจ้าของฝึก ล้วนมีผลทั้งนั้น
+      ซูซาน แกเร็ตต์ มองว่าแม้บางอย่างจะเปลี่ยนไม่ได้ แต่ยังมีอีกหลายอย่างที่เจ้าของช่วยได้
+      และการฝึกด้วยเกมแบบให้รางวัลคือเครื่องมือสำคัญที่ช่วยให้น้องหมาขี้กลัวค่อย ๆ มั่นใจขึ้น</p>
+
+    <div class="divider"></div>
+
+    <h2>คำถามที่พบบ่อย</h2>
+    <div class="faq-q">1. น้องหมาขี้กลัวเพราะพันธุกรรมใช่ไหม?</div>
+    <div class="faq-a">ส่วนหนึ่งใช่ สายพันธุ์และพ่อแม่มีผลต่อความมั่นใจ แต่การเลี้ยงดูช่วงแรก สุขภาพ และประสบการณ์ในชีวิตก็มีผลไม่แพ้กัน</div>
+    <div class="faq-q">2. น้องหมาจิตประสาทไม่ดี ฝึกให้ดีขึ้นได้ไหม?</div>
+    <div class="faq-a">ได้ แม้จะเปลี่ยนพื้นฐานทางพันธุกรรมไม่ได้ แต่การฝึกด้วยเกมและรางวัลอย่างสม่ำเสมอ ช่วยให้น้องหมามั่นใจขึ้นและรับมือกับความเครียดได้ดีขึ้น</div>
+    <div class="faq-q">3. ทำไมลูกหมาที่เคยกล้า จู่ ๆ ก็กลายเป็นขี้กลัว?</div>
+    <div class="faq-a">อาจเป็นช่วงวัยที่กลัวง่ายตามธรรมชาติ หรืออาจมีเรื่องสุขภาพหรือเหตุการณ์ที่ทำให้ตกใจ ควรพาไปตรวจสุขภาพก่อน แล้วค่อย ๆ สร้างความมั่นใจกลับคืนมา</div>
+    <div class="faq-q">4. ทำหมันแล้วน้องหมาจะขี้กลัวขึ้นไหม?</div>
+    <div class="faq-a">ซูซานพูดถึงว่าการทำหมันอาจมีผลต่อฮอร์โมนของน้องหมาตัวเมีย ซึ่งเกี่ยวข้องกับอารมณ์ ควรปรึกษาสัตวแพทย์เรื่องช่วงเวลาที่เหมาะสม</div>
+    <div class="faq-q">5. เลือกลูกหมาอย่างไรให้ได้น้องหมาที่มั่นใจ?</div>
+    <div class="faq-a">ดูนิสัยพ่อแม่ ถามผู้เพาะพันธุ์เรื่องการทดสอบนิสัยและการเลี้ยงดูช่วงแรก และสังเกตว่าลูกหมาฟื้นตัวจากความตกใจได้เร็วแค่ไหน</div>
+
+    <p class="disclaimer">บทความนี้เป็นข้อมูลเพื่อความรู้ทั่วไป หากน้องหมาของคุณขี้กลัว ตกใจง่าย หรือเห่าขู่บ่อยผิดปกติ โดยเฉพาะหากเปลี่ยนไปกะทันหัน
+      ควรพาไปพบสัตวแพทย์เพื่อตัดเรื่องปัญหาสุขภาพออกก่อน และหากต้องการวางแผนฝึกสร้างความมั่นใจ แนะนำให้ปรึกษาทีมผู้เชี่ยวชาญของ DogBooster ก่อนเริ่มโปรแกรมการฝึก</p>
+
+    <div class="divider"></div>
+
+    <h2>บทความที่เกี่ยวข้อง</h2>
+    <a href="article-fear-understand.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="shield"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">หมาทำเพราะ “เข้าใจ” หรือทำเพราะ “กลัว”</span>
+        <span class="rs">สร้างนักคิดที่เลือกทำสิ่งที่ถูกต้องด้วยตัวเอง</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+    <a href="article-grow-together.html" class="related">
+      <span class="ic" style="font-size:20px;color:var(--gold-dark);flex-shrink:0"><i data-lucide="sprout"></i></span>
+      <span style="flex:1;min-width:0;">
+        <span class="rt">ไม่ใช่ควบคุม แต่เติบโตไปด้วยกัน</span>
+        <span class="rs">ช่วงวัยลูกหมาคือช่วงที่หัวใจของเขาเปิดรับเรามากที่สุด</span>
+      </span>
+      <span class="ic" style="font-size:16px;color:var(--muted);flex-shrink:0"><i data-lucide="chevron-right"></i></span>
+    </a>
+
+    <a href="https://app.dogbooster.net/register" target="_blank" rel="noopener" class="cta" style="background:var(--dark);color:var(--cream);box-shadow:0 8px 20px -8px rgba(21,19,15,.45);">
+      <i data-lucide="user-plus"></i> สมัครเรียนกับ DogBooster
+    </a>
+    <a href="https://line.me/R/ti/p/@832nixxn" target="_blank" rel="noopener" class="cta">
+      <i data-lucide="message-circle"></i> ปรึกษาการฝึกน้องหมากับ DogBooster
+    </a>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function init() {
+      if (window.lucide && window.lucide.createIcons) { window.lucide.createIcons(); }
+      else { setTimeout(init, 80); }
+    }
+    init();
+  });
+</script>
+<script>
+  (function(){
+    try {
+      var ref = new URLSearchParams(window.location.search).get("ref");
+      if (!ref) return;
+      document.querySelectorAll('a[href^="https://app.dogbooster.net/register"]').forEach(function(a){
+        var u = new URL(a.href);
+        u.searchParams.set("ref", ref);
+        a.href = u.toString();
+      });
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
